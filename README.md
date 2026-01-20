@@ -1,4 +1,4 @@
-# PNP
+# Publishing for Nonprofits
 
 If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "presentations" branch.  For other "work in process" look at the "prelim" branch.   
 
@@ -6,7 +6,11 @@ If you are visiting this repository to examine code I presented at the NISO/JATS
 
 **Overview**
 
-The focus of this project is providing free publishing services to nonprofits, but with a special emphasis on publishing technology and formats associated with academic and scientific research.  In this context, the basic unit for sharing experience and ideas is not a single manuscript, but rather a unified collection of files packaging text, raw data, computer code, and potentially statistical graphics or multimedia.  These packages often adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, FAIR sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
+The focus of this project is providing free publishing services to nonprofit and/or charitable organizations.  
+
+The project places a special emphasis on technology associated with academic and scientific research.  Although manuscripts with only basic-level requirements are certainly supported, the code shared here might be especially useful to those who seek to develop publications alongside data sets, multimedia presentations, and other supporting materials.
+
+In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, FAIR sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
 
 Why should nonprofits care about Research Objects and science grids, apart from just publishing their own materials?  The answer is that aligning their materials with recognized scientific and academic standards helps nonprofits' work get recognized and incorporated into research ecosystems.  Ideally, pure research institutions and organizations outside of academia -- especially nonprofits -- share a symbiotic relationship.  The concepts of "translational medicine" and "translational science" are increasingly emphasized in contemporary research and focus on how theoretical investigations can be "translated" to social benefits.  All research is motivated in part by potential real-world applications, but the discipline of translational science develops rigorous models and guidelines to help organizations implement socially-conscious protocols, with special attention to community outreach, data management, ongoing assessment, and projects' sustainability.
 
