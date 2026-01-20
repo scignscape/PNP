@@ -14,6 +14,39 @@ The project places a special emphasis on technology associated with academic and
 
 In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, FAIR sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
 
+The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as FAIRsharing and Executable Research Objects.
+
+**The "diamond" publishing model**
+
+In the genre of open-access publishing, the "diamond" model indicates documents that 
+are free for both readers and authors.  This paradigm is usually contrasted with a 
+"gold" model where documents are free for readers but require authors to pay 
+"processing charges" (APCs).  The diamond model is also sometimes contrasted with a "green" 
+model where authors create private copies of articles whose "official" versions are 
+behind a paywall.
+
+Another important feature of most diamond systems is that authors retain all copyrights 
+to their work.  They are free to share and disseminate their writing however they choose.
+
+In traditional scientific publishing, research data sets and other supplemental 
+materials are open-source while the actual books or articles are paywalled as 
+commercial products.  One problem with this paradigm is that publications 
+cannot be distributed alongside their complementary assets.  This means that 
+cross-references between publications and other materials, such as data sets and 
+computer code, cannot be rigorously defined.  Also, publications cannot benefit 
+from technological integration with associated resources, via techniques 
+such as customized PDF viewers specifically designed for a shared data package.
+
+In brief, the diamond model is not only more ethical; it also permits technological 
+enhancements that are impossible otherwise.  In ScignPNP all projects are 
+assumed to follow the diamond model unless authors specifically choose 
+an alternative.
+
+Furthermore, ScignPNP maintains a list of diamond-open-access journals that authors 
+can consult if they may wish to submit their writing to a technical journal 
+without paywalls, Author Processing Charges, or relinquishing control over their manuscripts.
+
+
 **Science Grid Technology for Nonprofits**
 
 A science grid increases the visibility of its published projects and also helps them benefit from shared technology.
