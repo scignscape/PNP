@@ -391,13 +391,13 @@ the code demonstrated techniques for compiling
 linguistic data sets from example 
 sentences/fragments listed for analysis in linguistics papers.
 
-[From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
+1. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
 Cognitive Transform Grammar](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/ctg.pdf)
 
-[From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
+2. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
 Grounding and Center/Peripheral Relations](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/icg.pdf)
 
-[From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
+3. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
 Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/itm.pdf)
 
 
@@ -405,19 +405,19 @@ Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.c
 (Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
 Springer 2024: [https://link.springer.com/book/10.1007/978-3-031-29713-7](https://link.springer.com/book/10.1007/978-3-031-29713-7)).
 
-[Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
+1. [Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
 Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch20.pdf)
 
-[Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
+2. [Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
 Representations of Lambda-Style Calculi](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch21.pdf)
 
-[Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
+3. [Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
 Phenomenological and Database-Engineering insights into Computer Vision](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch22.pdf)
 
-[Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
+4. [Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
 and Robotics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch23.pdf)
 
-[Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
+5. [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
 
 
 
