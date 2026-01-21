@@ -5,6 +5,7 @@ If you are visiting this repository to examine code I presented at the NISO/JATS
 
 What follows is an informal, thematic overview.  A summary of the included source code is further down this 
 page (or click [here](#TechnicalOverview).  
+
 For a description of several projects that employed some of the code published here scroll down or click 
 here.  A list of open-access articles and book chapters created via this code is also further down on this 
 page ([here](#Sample Papers)).
@@ -92,20 +93,20 @@ manuscripts at the start of the ScignPNP pipeline.  On the surface, `GTagML`
 is similar to Markdown, albeit with many additional features 
 and constructions.  Behind the scenes, `GTagML` text encoding is 
 conceptually based on the Text As Graph Markup Language (`TagML`) although 
-the implementation has no direct connection to `TagML` toolsets.  
-The term "grounded" is intend to signify that sections of markup 
+the implementation has no direct connection to `TagML` 
+toolsets.  The term "grounded" is intend to signify that sections of markup 
 may be identified as serializing objects of a specified type.
 
 `GTagML` is readily extensible (compared to typical markup languages).  C++ programmers can add new features by 
 inserting new parsing rules and IR (intermediate representation) or 
 output handlers.  `GTagML` uses a pure-C++ parser, with no `LEX/YACC` style 
 separate compilation step.  The `GTagML` grammar has two layers of 
-contextual flags that activate or deactivate specific rule patterns.  
-All rules query the immediate next character and thereafter in a 
-parse-unfold, using a specialized Regular Expression language.  
-Each rule is connected to a callback that executes when the match 
-hits, preempting any additional rules declared later in the grammar.  
-The callback may produce code for a desired output format (`LaTeX`, `XML`, 
+contextual flags that activate or deactivate specific rule patterns.  All 
+rules query the immediate next character and thereafter in a 
+parse-unfold, using a specialized Regular Expression language.  Each 
+rule is connected to a callback that executes when the match 
+hits, preempting any additional rules declared later in the grammar.  The 
+callback may produce code for a desired output format (`LaTeX`, `XML`, 
 etc.) immediately, or contribute to a graph structure to be 
 traversed during post-parsing, or both.
 
@@ -180,18 +181,18 @@ load scripts may be used to satisfy such requirements.
 
 Compared to typical `VM`, compiler, and runtime 
 solutions, `ChasmVM` has certain unique features embodying 
-its specific focus on data publishing and Research Objects.  
-For one thing, the entire `ChasmVM` compiler and bytecode 
+its specific focus on data publishing and Research 
+Objects.  For one thing, the entire `ChasmVM` compiler and bytecode 
 stack is designed to be self-contained, with minimal 
 external dependencies.  In particular, it may be 
-included as source code alongside other dataset code.  
-Everything needed to run bytecode scripts or 
+included as source code alongside other dataset 
+code.  Everything needed to run bytecode scripts or 
 files that compile to them is thereby part of the 
 Research Object itself (apart from standard requirements 
 typical of any code in the relevant programming 
 languages, such as a `C++` compiler and `Qt` libraries 
-for data sets with cross-platform front ends).  
-Second, `ChasmVM` supports type-interface designs 
+for data sets with cross-platform front 
+ends).  Second, `ChasmVM` supports type-interface designs 
 optimized for data-publishing, in terms of 
 the use and documentation of class libraries; notation 
 and enforcement of procedural preconditions; semantic 
@@ -236,11 +237,11 @@ use cases and could serve as a components to look over
 for anyone who would like to learn more about 
 ScignPNP implementations. 
 
-The `gui-dev` branch includes some project-specific `C++` classes.  
-This material is mostly implementation for `GUI` windows intended 
+The `gui-dev` branch includes some project-specific `C++` 
+classes.  This material is mostly implementation for `GUI` windows intended 
 to be provided as part of data sets with specific front-end requirements, 
-such as videos, image series, and digital maps for `GIS` displays.  
-The code here was focused on preparations for specific 
+such as videos, image series, and digital maps for `GIS` 
+displays.  The code here was focused on preparations for specific 
 publications and therefore not particularly well documunted or 
 refined.  However, over time hopefully I can elevate these classes 
 to a more general library of `GUI` classes for reuse in multiple 
@@ -267,7 +268,7 @@ communities.  Here, I used ScignPNP tools to address both environmental
 data and Zoning/Land Use ordinances so as to explore the connections 
 between environmental health and urban development.  Part of this 
 project involved extending a New York City tool called 
-`ZoLa` (for Zoning and Land Use), which was created by  
+`ZoLa` (for Zoning and Land Use), which was created by 
 NYC Planning Labs but openly shared in the hopes that 
 other jurisdictions adopt the same technology.  Other 
 data sourecs came from the `EPA` "Toxic Release Inventory" (`TRI`) 
@@ -339,19 +340,19 @@ different areas addressing the pandemic (viral morphology, infectious
 mechanisms, diagnostics, clinical treatment assesment, vaccine development, 
 genomics, variants/mutations, epidemiology, long-term effects) discover 
 resources or research that could augment their own work, helping 
-piece together the Covid puzzle.  Unfortunately, much of CORD-19's  
+piece together the Covid puzzle.  Unfortunately, much of CORD-19's
 implementation depended on `PDF` text extraction, which 
-yielded errors and limitations I analyzed in the Elsevier book.  
+yielded errors and limitations I analyzed in the Elsevier book.
 The CORD-19 curators (from Allen Institute for AI) were open about these problems and 
 even issued a "call to arms" requesting publishers to 
-develop and adopt more rigorous text-encoding methods.  
-Hopefully ScignPNP can contribute to this initiative. 
+develop and adopt more rigorous text-encoding 
+methods.  Hopefully ScignPNP can contribute to this initiative. 
 
 Apart from text representations responding to the Allen Institute 
 "call to arms", the special code for this book involved 
 compiling and, in some cases, extending bioinformatics 
-or scientific software applicable to biomedical research.  
-One of the book's themes was how to implement data-integration 
+or scientific software applicable to biomedical 
+research.  One of the book's themes was how to implement data-integration 
 protocols that could unify disparate applications into 
 executable research collaborations.  Much of the book's discussion 
 was shaped by prototypes for plugins or extensions 
@@ -385,8 +386,8 @@ and Johns Hopkins (US).  The supplemental content
 was a data set including audio and written 
 samples for linguistic annotation, including some 
 taken as "hypothetical" sentences or fragments 
-created to illustrate linguistic themes or theories.  
-I wrote three supplemental articles to analyze 
+created to illustrate linguistic themes or 
+theories.  I wrote three supplemental essays to analyze 
 material present in the data set.  Within those 
 papers, I notated new or previously-discussed 
 linguistic samples, and employed ScignPNP to 
