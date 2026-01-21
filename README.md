@@ -8,7 +8,7 @@ page (or [skip ahead](#technical-overview-raised)).
 
 For a description of several projects that employed some of the code published here scroll down or click 
 here.  A list of open-access articles and book chapters created via this code is also further down on this 
-page ([skip ahead](#sample-documents)).
+page ([skip ahead](#sample-documents-raised)).
 
 **_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
@@ -83,6 +83,7 @@ At the same time, the need to maintain health records, intake forms, databases, 
 With that said, traditional publishing -- focused on books and articles -- is of course important to nonprofits as well.  ScignPNP will certainly work with organizations whose main emphasis is creating materials to learn about their mission, history, and the everyday stories that make their work worthwhile.  Hopefully code in this repository can facilitate both traditional and scientific/data publishing.
 
 <a id="technical-overview-raised"></a>
+
 
 ## Technical Overview
 
@@ -360,6 +361,9 @@ was shaped by prototypes for plugins or extensions
 to software commonly used for research or lab services 
 in fields such as organic chemistry, tumor simulations, 
 systems biology, bioimaging, and Computer Vision.  
+
+
+<a id="sample-documents-raised"></a>
 
 
 ## Sample Documents
