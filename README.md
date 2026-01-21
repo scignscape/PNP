@@ -4,11 +4,11 @@
 If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "prelim" branch `README-chasm.txt`.  Other "work in process" within this branch is explained in similar readme files.
 
 What follows is an informal, thematic overview.  A summary of the included source code is further down this 
-page (or click [here](#TechnicalOverview)).  
+page (or click [here](#Technical%20Overview)).  
 
 For a description of several projects that employed some of the code published here scroll down or click 
 here.  A list of open-access articles and book chapters created via this code is also further down on this 
-page ([here](#SamplePapers)).
+page ([here](#Sample%20Papers)).
 
 **_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
