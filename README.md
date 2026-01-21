@@ -9,7 +9,7 @@ For a description of several projects that employed some of the code published h
 here.  A list of open-access articles and book chapters created via this code is also further down on this 
 page ([here](#Sample Papers)).
 
-### _Personal Note_
+**_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
 of this code was originally designed to be part of a commercial product (at least on one version) 
 by a startup I was working for (see [here]() for a summary of this work in a more commercial 
@@ -23,7 +23,7 @@ to a nonprofit context is an organic next step.
 
 ---
 
-**Overview**
+### Overview
 
 The focus of this project is providing free publishing services to nonprofit and/or charitable organizations.  
 
@@ -33,7 +33,7 @@ In contemporary academic publishing, the basic unit for sharing experience and i
 
 The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`sharing and Executable Research Objects.
 
-**The "diamond" publishing model**
+### The "Diamond" Publishing Model
 
 In the genre of open-access publishing, the "diamond" model indicates documents that 
 are free for both readers and authors.  This paradigm is usually contrasted with a 
@@ -64,7 +64,7 @@ can consult if they may wish to submit their writing to a technical journal
 without paywalls, Author Processing Charges, or relinquishing control over their manuscripts.
 
 
-**Science Grid Technology for Nonprofits**
+###  Science Grid Technology for Nonprofits
 
 A science grid increases the visibility of its published projects and also helps them benefit from shared technology.
 I believe nonprofits can similarly benefit.  A "nonprofit grid" would help individuals discover nonprofits addressing issues of interest to them, and potentially share computer code and other digital resources.  Creating research-worthy publications informed by nonprofits' mission, experience, and observations is different from a full-fledged research grid, but it's a good start and valuable in its own right.
@@ -73,7 +73,7 @@ Aligning with recognized scientific and academic standards helps nonprofits' wor
 
 In the "translational" environment, academic and non-academic institutions are intrinsically linked.  Nonprofits can contribute to these partnerships by systematically warehousing information that could be useful to scientists and other researchers; by examining their day-to-day activities to consider whether there are data or observations that could be incorporated into research projects; by encouraging staff or volunteers to develop studies that could be submitted to technical journals and/or shared with the general public; and by networking with educational institutions in consideration of collaborations, internships, data sharing, and so forth.
 
-**Use cases**
+###  Use Cases
 
 Nonprofits focused on public health, education, environmental preservation, community development, and similar areas may find it especially beneficial to develop research collaborations.  But similar ideas apply to many forms of nonprofits and charities.  Concomitant research may be associated with natural/biomedical sciences, humanities, or both.  For instance, groups that work with underprivileged and marginalized communities may have a need for individuals with sociological/social-work training or language and communication experts, who may in turn benefit from experience gained "in the field".  
 
@@ -86,7 +86,8 @@ With that said, traditional publishing -- focused on books and articles -- is of
 
 There are three main software components to ScignPNP.
 
-**GTagML** ("Grounded" TagML)  This is an input language for composing 
+###  GTagML ("Grounded" TagML)  
+This is an input language for composing 
 manuscripts at the start of the ScignPNP pipeline.  On the surface, `GTagML` 
 is similar to Markdown, albeit with many additional features 
 and constructions.  Behind the scenes, `GTagML` text encoding is 
@@ -116,7 +117,8 @@ publishing services, conversion from other document
 formats (such as MS Word) to `GTagML` is normally 
 part of the overall workflow implemented on authors' behalf.
 
-**TSOM** (Topomorphic Sentence Object Model)  This refers to 
+###  TSOM (Topomorphic Sentence Object Model)  
+This refers to 
 the encoding of textual elements (such as sentences, paragraphs, 
 keyphrases, and semantic annotations) as objects of programming 
 languages such as `C++`.  `TSOM` classes also cover "discursive" 
@@ -139,8 +141,8 @@ specific `TSOM` classes employed for a particular
 document or manuscript-collection are implemented 
 separately for each project. 
 
-**ChasmVM** (Channel/Syntagm Virtual Machine)  The 
-goal of `ChasmVM` is to provide a unified basis 
+###  ChasmVM (Channel/Syntagm Virtual Machine)  
+The goal of `ChasmVM` is to provide a unified basis 
 for special-purpose code related both to text 
 documents (e.g., full-text queries) and to 
 data sets (e.g., deserializing raw data 
@@ -225,7 +227,7 @@ general idea of calling-convention channels and Syntagmatic
 Graphs) are listed among the documents in the next section.
 
 
-**Organization of this Repository**  
+###  Organization of this Repository
 
 Demonstration code for `GTagML` and `ChasmVM` is included 
 in the `prelim` branch.  This code is still under development, 
@@ -255,7 +257,7 @@ I can only describe projects and their unique coding
 requirements.  In other cases this list will include 
 links to `PDF` documents illustration some ScignPNP features.
 
-**Projects Involving Data and/or Code Packages**
+###  Projects Involving Data and/or Code Packages
 
 1.  CSV and SVG Integration:  This project coincided with the five-year cycle 
 for the Environmental Protection Agency's "Hazard Mitigation" plan.  As part 
