@@ -13,7 +13,7 @@ page ([here](#Sample Papers)).
 **_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
 of this code was originally designed to be part of a commercial product (at least on one version) 
-by a startup I was working for (see [here]() for a summary of this work in a more commercial 
+by a startup I was working for (see [here](https://raw.githubusercontent.com/scignscape/PNP/main/documents/PacTk/Publishing-Accelerator-Toolkit.pdf) for a summary of this work in a more commercial 
 context).  Prior to the Covid pandemic, we were also engaged with implementations for 
 Electronic Medical Records, clinical informatics, and diagnostic imaging, but transitioned 
 to focus more on software for publishing during the "stay-at-home" phase 
