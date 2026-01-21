@@ -7,6 +7,17 @@ What follows is an informal, thematic overview.  A summary of the included sourc
 For a description of several projects that employed some of the code published here scroll down or click 
 here.  A list of open-access articles and book chapters created via this code is also further down on this page.
 
+_Personal Note_: I have developed and used the code described here over a multi-year period.  Some 
+of this code was originally designed to be part of a commercial product (at least on one version) 
+by a startup I was working for (see HERE for a summary of this work in a more commercial 
+context).  Prior to the Covid pandemic, we were also engaged with implementations for 
+Electronic Medical Records, clinical informatics, and diagnostic imaging, but transitioned 
+to focus more on software for publishing during the "stay-at-home" phase 
+(some EMR and imaging components can be folded into Research Object class 
+libaries)  During this phase we took on several pro-bono projects to help 
+develop this technology, so self-consciously adopting the technology 
+to a nonprofit context is an organic next step.
+
 ---
 
 **Overview**
@@ -243,6 +254,175 @@ links to `PDF` documents illustration some ScignPNP features.
 
 **Projects Involving Data and/or Code Packages**
 
+1.  CSV and SVG Integration:  This project coincided with the five-year cycle 
+for the Environmental Protection Agency's "Hazard Mitigation" plan.  As part 
+of this `EPA` program, states and counties are required to submit documentation 
+for how they identify and address environmental dangers in their 
+communities.  Here, I used ScignPNP tools to address both environmental 
+data and Zoning/Land Use ordinances so as to explore the connections 
+between environmental health and urban development.  Part of this 
+project involved extending a New York City tool called 
+`ZoLa` (for Zoning and Land Use), which was created by  
+NYC Planning Labs but openly shared in the hopes that 
+other jurisdictions adopt the same technology.  Other 
+data sourecs came from the `EPA` "Toxic Release Inventory" (`TRI`) 
+data set, which publishes data files identifying reported 
+contamination incidents by geographic coordinates, and 
+has been studied for publications such as the NYC "Environmental Justice" 
+(`EJNYC`) report and mapping tool.  My goal was to examine how 
+data sets such as `TRI`, along with environmental-impact 
+data presented by states or private organizations, could be cross-referenced 
+with Zoning and Land Use maps.  Demonstration code included `CSV` deserializers 
+to handle to complex `TRI` data structures, that were hierarchical 
+more than tabular in nature but used `CSV` as a rough serialization tool, 
+as well as native-compiled `GUI` components based on `OpenStreetMap` 
+for `GIS` displays.
+
+During this work I identified a series of errors with the `TRI` encoding and 
+documentation, so another layor of components implemented for this project 
+involved mapping `TRI`-related `PDF` files to `SVG`, so that I could 
+superimpose annotations identifying the `TRI` problems and 
+how they could be corrected in code. 
+
+
+2.  Annotated Legal Documents:  This was another project leveraging 
+`PDF`-to-`SVG` conversion.  The basic material for this project 
+was a collection of legal documents that had been merged into a 
+single file and then annotated to show patterns of 
+behavior.  Applying techniques from ethnomethodology, the annotator 
+designed a controlled vocabuly to insert terms functioning 
+as "handles" into `PDF` comment boxes.  I then implemented 
+code which scanned these `PDF` annotations and identified 
+sub-documents which, according to the annotator, 
+exhibited various patterns of communicative behavior.  I then 
+split the larger `PDF` into multiple subdocuments and mapped 
+that content to hybrid `HTML`/`SVG` pages, together with an 
+online index that showed annotated classifications for 
+each subdocument, plus page-by-page as well as document-by-document 
+navigation for the linked pages.  The overall package was presented 
+to a judge as a user-friendly alternative to submitting the 
+original manuscript as a monolithic item of evidence. 
+
+3.  Building a Book's Second Edition:  This project involved merging 
+additional material added by the authors into a book they had 
+initially published in 2005.  We built an in-house full `PDF` 
+of the new edition that mimicked the style and layout of the 
+preparatory manuscripts shared by the publishers.  By cross-referencing 
+the two versions, we were able to identify errors made on the 
+publisher's end by copy editors and also fine-tune the new material.
+Significant effort went into creating and updated index.  Special 
+ScignPNP tools laid a foundation for custom `GUI`s whose goal 
+was to compare the first- and second-edition manuscripts to 
+ensure that all previous index entries were migrated to the 
+updated book, as well as creating new index material in the 
+pbulisher's desired metadata format.
+
+4.  Examining Biomedical Software:  During the Covid pandemic, 
+I wrote the text for a book called _Innovative Data Integration and Conceptual 
+Space Modeling for COVID, Cancer, and Cardiac Care_ (Elsevier, 
+2022).  This book included a detailed examination of certain 
+software components -- such as the Cancer Phenomics Toolkit, 
+and the Cancer Bioinformatics Grid (caBig) Image Annotation Toolkit) -- 
+bioinformatics file formats (and their deserialization/analytic libaries), 
+and collaborative projects (such as caBig's "Digital Model Repository" 
+and the "CORD-19" archive for Covid research).  CORD-19 (the 
+COVID-19 Open Research Dataset) grew to encompass over 400,000 open-access 
+articles focusing on SARS-COV-2 and related topics (including the original 
+SARS epidemic and Coronavirus biology in general) with freely-available 
+full-text encoding.  The goal of CORD-19 was to help scientists in 
+different areas addressing the pandemic (viral morphology, infectious 
+mechanisms, diagnostics, clinical treatment assesment, vaccine development, 
+genomics, variants/mutations, epidemiology, long-term effects) discover 
+resources or research that could augment their own work, helping 
+piece together the Covid puzzle.  Unfortunately, much of CORD-19's  
+implementation depended on `PDF` text extraction, which 
+yielded errors and limitations I analyzed in the Elsevier book.  
+The CORD-19 curators (from Allen Institute for AI) were open about these problems and 
+even issued a "call to arms" requesting publishers to 
+develop and adopt more rigorous text-encoding methods.  
+Hopefully ScignPNP can contribute to this initiative. 
+
+Apart from text representations responding to the Allen Institute 
+"call to arms", the special code for this book involved 
+compiling and, in some cases, extending bioinformatics 
+or scientific software applicable to biomedical research.  
+One of the book's themes was how to implement data-integration 
+protocols that could unify disparate applications into 
+executable research collaborations.  Much of the book's discussion 
+was shaped by prototypes for plugins or extensions 
+to software commonly used for research or lab services 
+in fields such as organic chemistry, tumor simulations, 
+systems biology, bioimaging, and Computer Vision.  
+
+
+# Sample Documents
+
+The following are examples of my own publications 
+developed via ScignPNP (not in chronological order).
+
+- "Merging Full-Text Query with Research Data Sets: A 
+perspective from compiler theory"  Presented at 
+NISO/JATS 2026.
+
+- "Ordering Conceptual Synthesis"  A paper about 
+linguistics and the philosophy of science, which uses 
+programming languages as case-studies for some 
+linguistic topics.  The ScignPNP code 
+for this manuscript included document-specific 
+algorithms to isolate linguistic samples and present 
+them alongside the index as a kind of thematic summary.
+
+- "From 'Naturalizing Phenomenology' to Formalizing 
+Cognitive Linguistics (I-III)"  These three papers were 
+developed in connection with supplemental materials 
+for an article in the International Journal of 
+Speech Technology, where I joined as a co-author 
+with researchers from Bar-Ilan University (Israel) 
+and Johns Hopkins (US).  The supplemental content 
+was a data set including audio and written 
+samples for linguistic annotation, including some 
+taken as "hypothetical" sentences or fragments 
+created to illustrate linguistic themes or theories.  
+I wrote three supplemental articles to analyze 
+material present in the data set.  Within those 
+papers, I notated new or previously-discussed 
+linguistic samples, and employed ScignPNP to 
+pull those examples as structured data available 
+to readers as part of the dataset package; in short, 
+the code demonstrated techniques for compiling 
+linguistic data sets from example 
+sentences/fragments listed for analysis in linguistics papers.
+
+“From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
+Cognitive Transform Grammar"
+
+“From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
+Grounding and Center/Peripheral Relations"
+
+“From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
+Externalism and the Interface Theory of Meaning"
+
+
+- Five chapters from the book _AI, IoT, Big Data and Cloud Computing for Industry 4.0_ 
+(Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
+Springer 2024: [https://link.springer.com/book/10.1007/978-3-031-29713-7](https://link.springer.com/book/10.1007/978-3-031-29713-7)).
+
+[Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
+Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](http://www.lingtechsys.com/videos/nc/ch20.pdf)
+
+[Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
+Representations of Lambda-Style Calculi]()
+
+[Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
+Phenomenological and Database-Engineering insights into Computer Vision]()
+
+[Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
+and Robotics]()
+
+[Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics]()
+
+
+
 
 
 
@@ -253,9 +433,7 @@ links to `PDF` documents illustration some ScignPNP features.
 
 
 
-
-  
-
-
- 
       
+
+
+
