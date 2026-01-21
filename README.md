@@ -8,7 +8,7 @@ page (or [skip ahead](#technical-overview)).
 
 For a description of several projects that employed some of the code published here scroll down or click 
 here.  A list of open-access articles and book chapters created via this code is also further down on this 
-page ([skip ahead](#sample-papers)).
+page ([skip ahead](#sample-documents)).
 
 **_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
