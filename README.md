@@ -1,15 +1,18 @@
 
 # ScignPNP: Science Grid Nodes -- Publishing for Nonprofits
 
-If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "presentations" branch.  For other "work in process" look at the "prelim" branch.   
+If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "prelim" branch `README-chasm.txt`.  Other "work in process" within this branch is explained in similar readme files.
 
-What follows is an informal, thematic overview.  A summary of the included source code is further down this page.  
+What follows is an informal, thematic overview.  A summary of the included source code is further down this 
+page (or click [here](#TechnicalOverview).  
 For a description of several projects that employed some of the code published here scroll down or click 
-here.  A list of open-access articles and book chapters created via this code is also further down on this page.
+here.  A list of open-access articles and book chapters created via this code is also further down on this 
+page ([here](#Sample Papers)).
 
-_Personal Note_: I have developed and used the code described here over a multi-year period.  Some 
+### _Personal Note_
+I have developed and used the code described here over a multi-year period.  Some 
 of this code was originally designed to be part of a commercial product (at least on one version) 
-by a startup I was working for (see HERE for a summary of this work in a more commercial 
+by a startup I was working for (see [here]() for a summary of this work in a more commercial 
 context).  Prior to the Covid pandemic, we were also engaged with implementations for 
 Electronic Medical Records, clinical informatics, and diagnostic imaging, but transitioned 
 to focus more on software for publishing during the "stay-at-home" phase 
@@ -79,7 +82,7 @@ At the same time, the need to maintain health records, intake forms, databases, 
 With that said, traditional publishing -- focused on books and articles -- is of course important to nonprofits as well.  ScignPNP will certainly work with organizations whose main emphasis is creating materials to learn about their mission, history, and the everyday stories that make their work worthwhile.  Hopefully code in this repository can facilitate both traditional and scientific/data publishing.
 
 
-# Technical Overview
+## Technical Overview
 
 There are three main software components to ScignPNP.
 
@@ -355,7 +358,7 @@ in fields such as organic chemistry, tumor simulations,
 systems biology, bioimaging, and Computer Vision.  
 
 
-# Sample Documents
+## Sample Documents
 
 The following are examples of my own publications 
 developed via ScignPNP (not in chronological order).
