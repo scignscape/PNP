@@ -418,13 +418,13 @@ the code demonstrated techniques for compiling
 linguistic data sets from example 
 sentences/fragments listed for analysis in linguistics papers.
 
-1. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
+    1.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
 Cognitive Transform Grammar](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/ctg.pdf)
 
-2. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
+    2.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
 Grounding and Center/Peripheral Relations](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/icg.pdf)
 
-3. [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
+    3.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
 Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/itm.pdf)
 
 
