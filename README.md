@@ -32,7 +32,11 @@ ScignPNP places a special emphasis on technology associated with academic and sc
 
 In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, `FAIR`sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
 
-The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`sharing and Executable Research Objects.
+The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`sharing and Executable Research Objects.  Code may be specialized for each project.  If desired, 
+ScignPNP can set up a GitHub repository to hold and/or share any files, data, and code associated with a 
+project.  This is also a no-cost way to host documents online.  Via GitHub.io pages, repositories can also 
+serve as a free-tier web hosting platform (an example of a site I created for demonstration purposes, 
+that could serve as a template for folder layout and supporting code, is [here](https://sledproc.github.io/baltimore-files/)).  
 
 ### The "Diamond" Publishing Model
 
