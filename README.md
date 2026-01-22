@@ -296,7 +296,7 @@ more than tabular in nature but used `CSV` as a rough serialization tool,
 as well as native-compiled `GUI` components based on `OpenStreetMap` 
 for `GIS` displays.
 
-During this work I identified a series of errors with the `TRI` encoding and 
+    During this work I identified a series of errors with the `TRI` encoding and 
 documentation, so another layor of components implemented for this project 
 involved mapping `TRI`-related `PDF` files to `SVG`, so that I could 
 superimpose annotations identifying the `TRI` problems and 
