@@ -339,15 +339,17 @@ pbulisher's desired metadata format.
 I wrote the text for a book called _Innovative Data Integration and Conceptual 
 Space Modeling for COVID, Cancer, and Cardiac Care_ (Elsevier, 
 2022).  This book included a detailed examination of certain 
-software components -- such as the Cancer Phenomics Toolkit, 
-and the Cancer Bioinformatics Grid (caBig) Image Annotation Toolkit) -- 
+software components -- such as the Cancer Phenomics Toolkit (`CapTk`), 
+`IQmol` molecular visualization software, `cytolib` for flow cytometry, 
+`medInria` and `Semantic PACS` (Picture Archiving and Communication System), 
+and the Cancer Bioinformatics Grid (`caBig`) Image Annotation Toolkit) -- 
 bioinformatics file formats (and their deserialization/analytic libaries), 
-and collaborative projects (such as caBig's "Digital Model Repository" 
-and the "CORD-19" archive for Covid research).  CORD-19 (the 
+and collaborative projects (such as `caBig`'s "Digital Model Repository" 
+and the `CORD-19` archive for Covid research).  `CORD-19` (the 
 COVID-19 Open Research Dataset) grew to encompass over 400,000 open-access 
 articles focusing on SARS-COV-2 and related topics (including the original 
 SARS epidemic and Coronavirus biology in general) with freely-available 
-full-text encoding.  The goal of CORD-19 was to help scientists in 
+full-text encoding.  The goal of `CORD-19` was to help scientists in 
 different areas addressing the pandemic (viral morphology, infectious 
 mechanisms, diagnostics, clinical treatment assesment, vaccine development, 
 genomics, variants/mutations, epidemiology, long-term effects) discover 
@@ -355,12 +357,12 @@ resources or research that could augment their own work, helping
 piece together the Covid puzzle.  Unfortunately, much of CORD-19's
 implementation depended on `PDF` text extraction, which 
 yielded errors and limitations I analyzed in the Elsevier book.
-The CORD-19 curators (from Allen Institute for AI) were open about these problems and 
+The `CORD-19` curators (from Allen Institute for AI) were open about these problems and 
 even issued a "call to action" requesting publishers to 
 develop and adopt more rigorous text-encoding 
 methods:
 
-    >   Though the full text of many scientific papers are available to researchers through CORD-19, a number of challenges prevent easy application of NLP and text mining techniques to these papers. First, the primary distribution format of scientific papers — PDF — is not amenable to text processing. The PDF file format is designed to share electronic documents rendered faithfully for reading and printing, and mixes visual with semantic information. Significant effort is needed to coerce PDF into a format more amenable to text mining, such as JATS XML, BioC (Comeau et al., 2019), or S2ORC JSON ... [W]e can still benefit from better PDF parsing tools for scientific documents. As a complement, scientific papers should also be made available in a structured format like JSON, XML, or HTML.
+    >   Though the full text of many scientific papers are available to researchers through `CORD-19`, a number of challenges prevent easy application of `NLP` and text mining techniques to these papers. First, the primary distribution format of scientific papers — `PDF` — is not amenable to text processing. The PDF file format is designed to share electronic documents rendered faithfully for reading and printing, and mixes visual with semantic information. Significant effort is needed to coerce `PDF` into a format more amenable to text mining, such as `JATS` `XML`, `BioC`, ... or `S2ORC` `JSON` ... [W]e can still benefit from better `PDF` parsing tools for scientific documents. As a complement, scientific papers should also be made available in a structured format like `JSON`, `XML`, or `HTML`.
 
     Hopefully ScignPNP can contribute to this initiative. 
 
