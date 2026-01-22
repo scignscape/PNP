@@ -34,10 +34,11 @@ In contemporary academic publishing, the basic unit for sharing experience and i
 
 The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`sharing and Executable Research Objects.  Code may be specialized for each project.  
 
-> If desired, ScignPNP can set up a GitHub repository to hold and/or share any files, data, and code associated with a 
-> project.  This is also a no-cost way to host documents online.  Via GitHub.io pages, repositories can also 
-> serve as a free-tier web hosting platform (an example of a site I created for demonstration purposes, 
-> that could serve as a template for folder layout and supporting code, is [here](https://sledproc.github.io/baltimore-files/)).  
+If desired, 
+ScignPNP can set up a GitHub repository to hold and/or share any files, data, and code associated with a 
+project.  This is also a no-cost way to host documents online.  Via GitHub.io pages, repositories can also 
+serve as a free-tier web hosting platform (an example of a site I created for demonstration purposes, 
+that could serve as a template for folder layout and supporting code, is [here](https://sledproc.github.io/baltimore-files/)).  
 
 ### The "Diamond" Publishing Model
 
@@ -355,12 +356,22 @@ piece together the Covid puzzle.  Unfortunately, much of CORD-19's
 implementation depended on `PDF` text extraction, which 
 yielded errors and limitations I analyzed in the Elsevier book.
 The CORD-19 curators (from Allen Institute for AI) were open about these problems and 
-even issued a "call to arms" requesting publishers to 
+even issued a "call to action" requesting publishers to 
 develop and adopt more rigorous text-encoding 
-methods.  Hopefully ScignPNP can contribute to this initiative. 
+methods:
+
+> Though the full text of many scientific papers are available to researchers through CORD-19, a number of challenges prevent
+> easy application of NLP and text mining techniques to these papers. First, the primary distribution format of scientific papers
+> — PDF — is not amenable to text processing. The PDF file format is designed to share electronic documents rendered faithfully
+> for reading and printing, and mixes visual with semantic information. Significant effort is needed to coerce PDF into a format
+> more amenable to text mining, such as JATS XML, BioC (Comeau et al., 2019), or S2ORC JSON ... [W]e can still benefit
+> from better PDF parsing tools for scientific documents. As a complement, scientific papers should also be made available in a
+> structured format like JSON, XML, or HTML.
+
+Hopefully ScignPNP can contribute to this initiative. 
 
 Apart from text representations responding to the Allen Institute 
-"call to arms", the special code for this book involved 
+"call to action", the special code for this book involved 
 compiling and, in some cases, extending bioinformatics 
 or scientific software applicable to biomedical 
 research.  One of the book's themes was how to implement data-integration 
