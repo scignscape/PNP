@@ -17,7 +17,7 @@ by a startup I was working for (see [here](https://raw.githubusercontent.com/sci
 context).  Prior to the Covid pandemic, we were also engaged with implementations for 
 Electronic Medical Records, clinical informatics, and diagnostic imaging, but transitioned 
 to focus more on software for publishing during the "stay-at-home" phase 
-(some EMR and imaging components can be folded into Research Object class 
+(some `EMR` and imaging components can be folded into Research Object class 
 libaries)  During this phase we took on several pro-bono projects to help 
 develop this technology, so self-consciously adopting the technology 
 to a nonprofit context is an organic next step.
@@ -84,7 +84,7 @@ In the "translational" environment, academic and non-academic institutions are i
 
 Nonprofits focused on public health, education, environmental preservation, community development, and similar areas may find it especially beneficial to develop research collaborations.  But similar ideas apply to many forms of nonprofits and charities.  Concomitant research may be associated with natural/biomedical sciences, humanities, or both.  For instance, groups that work with underprivileged and marginalized communities may have a need for individuals with sociological/social-work training or language and communication experts, who may in turn benefit from experience gained "in the field".  
 
-At the same time, the need to maintain health records, intake forms, databases, statistical modules, and user-interface tools can serve to integrate nonprofits into the broader ecosystem of EMR/EHR (Electronic Medical and Health Records) and bioinformatics.  
+At the same time, the need to maintain health records, intake forms, databases, statistical modules, and user-interface tools can serve to integrate nonprofits into the broader ecosystem of `EMR`/`EHR` (Electronic Medical and Health Records) and bioinformatics.  
 
 With that said, traditional publishing — focused on books and articles — is of course important to nonprofits as well.  ScignPNP will certainly work with organizations whose main emphasis is creating materials to learn about their mission, history, and the everyday stories that make their work worthwhile.  Hopefully code in this repository can facilitate both traditional and scientific/data publishing.
 
