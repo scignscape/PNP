@@ -30,9 +30,9 @@ The focus of this project is providing free publishing services to nonprofit and
 
 ScignPNP places a special emphasis on technology associated with academic and scientific research.  Although manuscripts with only basic-level requirements are certainly supported, the code shared here might be especially useful to those who seek to develop publications alongside data sets, multimedia presentations, and other supporting materials.
 
-In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, `FAIR`sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
+In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, `FAIR` - sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
 
-The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`sharing and Executable Research Objects.  Code may be specialized for each project.  
+The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR` - sharing and Executable Research Objects.  Code may be specialized for each project.  
 
 If desired, 
 ScignPNP can set up a GitHub repository to hold and/or share any files, data, and code associated with a 
@@ -173,7 +173,7 @@ on interop with `Qt` applications, so that it hopefully
 can be used for `GUI` and plugin scripting to help 
 fine-tune software applications to load Research Object 
 data sets and present their contents to users in 
-accessible, interactive ways (consistent with `FAIR`sharing). 
+accessible, interactive ways (consistent with `FAIR` - sharing). 
 Executable Research Objects need an execution environment; 
 this could be implemented directly in the dataset code 
 or supported by a host application where the data set is 
@@ -187,7 +187,7 @@ state and user interactions that must
 be implemented within the host runtime, and 
 load scripts may be used to satisfy such requirements.
 
-Compared to typical `VM`, compiler, and runtime 
+Compared to typical VM, compiler, and runtime 
 solutions, `ChasmVM` has certain unique features embodying 
 its specific focus on data publishing and Research 
 Objects.  For one thing, the entire `ChasmVM` compiler and bytecode 
@@ -255,7 +255,7 @@ refined.  However, over time hopefully I can elevate these classes
 to a more general library of `GUI` classes for reuse in multiple 
 Executable Research Objects.
 
-The `mid` branch includes experimental code related to `IR` transforms 
+The `mid` branch includes experimental code related to IR transforms 
 for mid-end compiler pipelines subsequent to parsing but prior 
 to bytecode generation.  
 
