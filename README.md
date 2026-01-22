@@ -1,5 +1,5 @@
 
-# ScignPNP: Science Grid Nodes -- Publishing for Nonprofits
+# ScignPNP: Science Grid Nodes — Publishing for Nonprofits
 
 If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "prelim" branch `README-chasm.txt`.  Other "work in process" within this branch is explained in similar readme files.
 
@@ -22,7 +22,7 @@ libaries)  During this phase we took on several pro-bono projects to help
 develop this technology, so self-consciously adopting the technology 
 to a nonprofit context is an organic next step.
 
----
+—-
 
 ### Overview
 
@@ -76,7 +76,7 @@ without paywalls, Author Processing Charges, or relinquishing control over their
 A science grid increases the visibility of its published projects and also helps them benefit from shared technology.
 I believe nonprofits can similarly benefit.  A "nonprofit grid" would help individuals discover nonprofits addressing issues of interest to them, and potentially share computer code and other digital resources.  Creating research-worthy publications informed by nonprofits' mission, experience, and observations is different from a full-fledged research grid, but it's a good start and valuable in its own right.
 
-Aligning with recognized scientific and academic standards helps nonprofits' work get recognized and incorporated into research ecosystems.  Ideally, pure research institutions and organizations outside of academia -- especially nonprofits -- share a symbiotic relationship.  In particulr, the concepts of "translational medicine" and "translational science" are increasingly emphasized in contemporary research and focus on how theoretical investigations can be "translated" to social benefits.  All research is motivated in part by potential real-world applications, but the discipline of translational science develops rigorous models and guidelines to help organizations implement socially-conscious protocols, with special attention to community outreach, data management, ongoing assessment, and projects' sustainability.
+Aligning with recognized scientific and academic standards helps nonprofits' work get recognized and incorporated into research ecosystems.  Ideally, pure research institutions and organizations outside of academia — especially nonprofits — share a symbiotic relationship.  In particulr, the concepts of "translational medicine" and "translational science" are increasingly emphasized in contemporary research and focus on how theoretical investigations can be "translated" to social benefits.  All research is motivated in part by potential real-world applications, but the discipline of translational science develops rigorous models and guidelines to help organizations implement socially-conscious protocols, with special attention to community outreach, data management, ongoing assessment, and projects' sustainability.
 
 In the "translational" environment, academic and non-academic institutions are intrinsically linked.  Nonprofits can contribute to these partnerships by systematically warehousing information that could be useful to scientists and other researchers; by examining their day-to-day activities to consider whether there are data or observations that could be incorporated into research projects; by encouraging staff or volunteers to develop studies that could be submitted to technical journals and/or shared with the general public; and by networking with educational institutions in consideration of collaborations, internships, data sharing, and so forth.
 
@@ -86,7 +86,7 @@ Nonprofits focused on public health, education, environmental preservation, comm
 
 At the same time, the need to maintain health records, intake forms, databases, statistical modules, and user-interface tools can serve to integrate nonprofits into the broader ecosystem of EMR/EHR (Electronic Medical and Health Records) and bioinformatics.  
 
-With that said, traditional publishing -- focused on books and articles -- is of course important to nonprofits as well.  ScignPNP will certainly work with organizations whose main emphasis is creating materials to learn about their mission, history, and the everyday stories that make their work worthwhile.  Hopefully code in this repository can facilitate both traditional and scientific/data publishing.
+With that said, traditional publishing — focused on books and articles — is of course important to nonprofits as well.  ScignPNP will certainly work with organizations whose main emphasis is creating materials to learn about their mission, history, and the everyday stories that make their work worthwhile.  Hopefully code in this repository can facilitate both traditional and scientific/data publishing.
 
 <a id="technical-overview-raised"></a>
 
@@ -260,7 +260,7 @@ for mid-end compiler pipelines subsequent to parsing but prior
 to bytecode generation.  
 
 
---- 
+—- 
 
 
 # Projects and Documents Using ScignPNP
@@ -339,10 +339,10 @@ pbulisher's desired metadata format.
 I wrote the text for a book called _Innovative Data Integration and Conceptual 
 Space Modeling for COVID, Cancer, and Cardiac Care_ (Elsevier, 
 2022).  This book included a detailed examination of certain 
-software components -- such as the Cancer Phenomics Toolkit (`CapTk`), 
+software components — such as the Cancer Phenomics Toolkit (`CapTk`), 
 `IQmol` molecular visualization software, `cytolib` for flow cytometry, 
 `medInria` and `Semantic PACS` (Picture Archiving and Communication System), 
-and the Cancer Bioinformatics Grid (`caBig`) Image Annotation Toolkit) -- 
+and the Cancer Bioinformatics Grid (`caBig`) Image Annotation Toolkit — 
 bioinformatics file formats (and their deserialization/analytic libaries), 
 and collaborative projects (such as `caBig`'s "Digital Model Repository" 
 and the `CORD-19` archive for Covid research).  `CORD-19` (the 
@@ -354,7 +354,7 @@ different areas addressing the pandemic (viral morphology, infectious
 mechanisms, diagnostics, clinical treatment assesment, vaccine development, 
 genomics, variants/mutations, epidemiology, long-term effects) discover 
 resources or research that could augment their own work, helping 
-piece together the Covid puzzle.  Unfortunately, much of CORD-19's
+piece together the Covid puzzle.  Unfortunately, much of `CORD-19`'s
 implementation depended on `PDF` text extraction, which 
 yielded errors and limitations I analyzed in the Elsevier book.
 The `CORD-19` curators (from Allen Institute for AI) were open about these problems and 
@@ -432,19 +432,19 @@ Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.c
 (Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
 Springer 2024: [https://link.springer.com/book/10.1007/978-3-031-29713-7](https://link.springer.com/book/10.1007/978-3-031-29713-7)).
 
-1. [Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
+1. [Chapter 20 — Multi-Component Interoperability and Virtual Machines: Examples from
 Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch20.pdf)
 
-2. [Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
+2. [Chapter 21 — Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
 Representations of Lambda-Style Calculi](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch21.pdf)
 
-3. [Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
+3. [Chapter 22 — GUI Integration and Virtual Machine Constructions for Image Processing:
 Phenomenological and Database-Engineering insights into Computer Vision](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch22.pdf)
 
-4. [Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
+4. [Chapter 23 — The Missing Links Between Computer and Human Languages: Animal Cognition
 and Robotics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch23.pdf)
 
-5. [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
+5. [Chapter 24 — GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
 
 
 
