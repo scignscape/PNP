@@ -30,9 +30,9 @@ The focus of this project is providing free publishing services to nonprofit and
 
 ScignPNP places a special emphasis on technology associated with academic and scientific research.  Although manuscripts with only basic-level requirements are certainly supported, the code shared here might be especially useful to those who seek to develop publications alongside data sets, multimedia presentations, and other supporting materials.
 
-In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, `FAIR` - sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
+In contemporary academic publishing, the basic unit for sharing experience and ideas often is not a single manuscript, but rather a collection of files packaging variegated content-types, including PDF files for viewing documents, but also machine-readable text encoding, computer code, raw data, and statistical/graphics summaries.  These packages typically adhere to collaborative standards such as Research Object Bundles, Executable Research Objects, `FAIR`-sharing (Findable, Accessible, Interoperable, Reusable), and research-grid specifications for packages deposited on decentralized but searchable community networks.
 
-The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR` - sharing and Executable Research Objects.  Code may be specialized for each project.  
+The computer code published with this repository can help authors and digital editors create publications that adhere to standards such as `FAIR`-sharing and Executable Research Objects.  Code may be specialized for each project.  
 
 If desired, 
 ScignPNP can set up a GitHub repository to hold and/or share any files, data, and code associated with a 
