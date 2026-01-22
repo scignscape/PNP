@@ -173,7 +173,7 @@ on interop with `Qt` applications, so that it hopefully
 can be used for `GUI` and plugin scripting to help 
 fine-tune software applications to load Research Object 
 data sets and present their contents to users in 
-accessible, interactive ways (consistent with `FAIR` - sharing). 
+accessible, interactive ways (consistent with `FAIR`-sharing). 
 Executable Research Objects need an execution environment; 
 this could be implemented directly in the dataset code 
 or supported by a host application where the data set is 
