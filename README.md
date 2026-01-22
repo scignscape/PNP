@@ -22,7 +22,7 @@ libaries)  During this phase we took on several pro-bono projects to help
 develop this technology, so self-consciously adopting the technology 
 to a nonprofit context is an organic next step.
 
-—-
+---
 
 ### Overview
 
@@ -260,7 +260,7 @@ for mid-end compiler pipelines subsequent to parsing but prior
 to bytecode generation.  
 
 
-—- 
+--- 
 
 
 # Projects and Documents Using ScignPNP
@@ -432,19 +432,19 @@ Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.c
 (Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
 Springer 2024: [https://link.springer.com/book/10.1007/978-3-031-29713-7](https://link.springer.com/book/10.1007/978-3-031-29713-7)).
 
-1. [Chapter 20 — Multi-Component Interoperability and Virtual Machines: Examples from
+    1.  [Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
 Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch20.pdf)
 
-2. [Chapter 21 — Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
+    2.  [Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
 Representations of Lambda-Style Calculi](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch21.pdf)
 
-3. [Chapter 22 — GUI Integration and Virtual Machine Constructions for Image Processing:
+    3.  [Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
 Phenomenological and Database-Engineering insights into Computer Vision](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch22.pdf)
 
-4. [Chapter 23 — The Missing Links Between Computer and Human Languages: Animal Cognition
+    4.  [Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
 and Robotics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch23.pdf)
 
-5. [Chapter 24 — GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
+    5.  [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
 
 
 
