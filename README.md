@@ -360,17 +360,11 @@ even issued a "call to action" requesting publishers to
 develop and adopt more rigorous text-encoding 
 methods:
 
-> Though the full text of many scientific papers are available to researchers through CORD-19, a number of challenges prevent
-> easy application of NLP and text mining techniques to these papers. First, the primary distribution format of scientific papers
-> — PDF — is not amenable to text processing. The PDF file format is designed to share electronic documents rendered faithfully
-> for reading and printing, and mixes visual with semantic information. Significant effort is needed to coerce PDF into a format
-> more amenable to text mining, such as JATS XML, BioC (Comeau et al., 2019), or S2ORC JSON ... [W]e can still benefit
-> from better PDF parsing tools for scientific documents. As a complement, scientific papers should also be made available in a
-> structured format like JSON, XML, or HTML.
+    >   Though the full text of many scientific papers are available to researchers through CORD-19, a number of challenges prevent easy application of NLP and text mining techniques to these papers. First, the primary distribution format of scientific papers — PDF — is not amenable to text processing. The PDF file format is designed to share electronic documents rendered faithfully for reading and printing, and mixes visual with semantic information. Significant effort is needed to coerce PDF into a format more amenable to text mining, such as JATS XML, BioC (Comeau et al., 2019), or S2ORC JSON ... [W]e can still benefit from better PDF parsing tools for scientific documents. As a complement, scientific papers should also be made available in a structured format like JSON, XML, or HTML.
 
-Hopefully ScignPNP can contribute to this initiative. 
+    Hopefully ScignPNP can contribute to this initiative. 
 
-Apart from text representations responding to the Allen Institute 
+    Apart from text representations responding to the Allen Institute 
 "call to action", the special code for this book involved 
 compiling and, in some cases, extending bioinformatics 
 or scientific software applicable to biomedical 
