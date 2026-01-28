@@ -46,7 +46,7 @@ are no longer single manuscripts but rather
 composite packages including text, code, and
 data. According to <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content> (Findable,
 Accessible, Interoperable, Reusable) principles
-such content should be in available in a
+such content should be available in a
 largely standalone fashion, hopefully
 usable as soon as downloaded. To this
 end, this paper will consider
@@ -627,7 +627,7 @@ on <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> co
 functionality requested in the document's context would
 typically be activated via a context menu rather than a
 <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> button or other clickable area (the menu could be
-localized to individual words/ text segments, particularly
+localized to individual words/text segments, particularly
 for keyphrases and indexed headings; or figure graphics,
 hyperlinks, and other components of a publication that
 might have extra programming attached). However,
@@ -2683,7 +2683,7 @@ of temporary objects.
         <p id="Para-96">Apart from illustrating one use for channels, these
 points are relevant to the general protocols
 and style of a scripting language. Observe
-that passing an object/ value by (non-constant) reference
+that passing an object/value by (non-constant) reference
 can serve one of several purposes:<list><list-item><p>  The primary goal of the callee is to initialize or modify
 that object</p></list-item><list-item><p>  The object is intended mostly to provide information the callee
 needs for its main purpose, but cannot be made constant
