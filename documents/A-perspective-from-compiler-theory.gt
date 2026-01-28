@@ -23,7 +23,7 @@ end, this paper will consider
 how compiler and Virtual Machine tools 
 may be embedded within data-set 
 code, built from source files with 
-few external dependencies.  The paper will consider how a 
+few external dependencies.  The paper will discuss how a 
 self-contained environment for scripting 
 or query language implementations 
 can promote text search, raw-data 
@@ -51,7 +51,7 @@ document more rigorously the raw data, methodology, and analytic
 details behind published findings.  Such initiatives in turn 
 led to "/Minimum Information/" standards (e.g., 
 Minimum Information for Biological and Biomedical Investigations, or 
-;/MIBBI/, which encompasses several dozen more specific specifications) 
+;/MIBBI/, which encompasses several dozen more targeted specifications) 
 and to mixed data/ code/multimedia formats such as ;/FAIR/sharing  
 (Findable, Accessible, Interoperable, Reusable) and 
 Research Objects (including "/Executable Research Objects/", 
@@ -64,19 +64,19 @@ model, see [/LimorPeerEtAl/].  For "/executable papers/",
 [/NickGarabedianEtAl/].  For the "/Whole Tale/", [/BertramLudascherEtAl/]. >}  
 
 A common theme of these various formats is that the basic unit of 
-disseminating scientific or academic research is not (or no longer) 
+disseminating scientific or academic scholarship is not (or no longer) 
 a single document, but rather a 
 collection of distinct files representing text, data, and potentially 
 graphics or computer code.  Natural-language text is still important 
 %-- readers are most likely to learn about data sets or Research 
 Objects via publications that introduce them %-- but in a Research 
 Object context manuscripts are packaged alongside sibling assets 
-with their own requisite functionality.  `enlargethispage<6pt>;This affects functionality 
+with their own requisite \resizebox{51pt}{!}{capabilities}.  `enlargethispage<6pt>;This affects functionality 
 intrinsic to text `whitepatch<documents insofar as, to begin with, the various components 
 of a data package can be mutually cross-referenced.>;`vspace<1.5pt>;  
 documents insofar as, to begin with, the various components 
 of a data package can be mutually cross-referenced.  For instance, 
-terms and keyphrases within a manuscript could be annotated 
+terms and keywords/keyphrases within a manuscript could be annotated 
 with links to data, code, or graphics content, if the 
 same concepts appear as statistical parameters, units of 
 measurement, data types, record fields, etc., within raw 
@@ -147,8 +147,8 @@ notating these (potentially semantically significant)
 textual elements (or, at least, structured data 
 was not preserved in the final ;/PDF/).{< 
 In my own analysis of ,/CORD19/ mentioned above, 
-I gave the example of a compound &=/2'-C-ethynyl/, 
-which is also notated as &=/2 0-C-ethynyl/.  With 
+I gave the example of a fragment &=/2'-C-ethynyl/, 
+which was also notated as &=/2 0-C-ethynyl/.  With 
 these alternatives, plus the fact that the ;JSON 
 markup appeared sometimes to incorrectly parse 
 the strings %-- i.e., breaking the character-sequence 
@@ -194,7 +194,7 @@ currently produced from ;/XML/ formats such as
 ;/JATS/ or ;/BITS/; if these intermediate assets (or at least 
 links thereto) were embedded in 
 ;/PDF/ directly then they could be extracted and employed by 
-;/PDF/ viewers as structured text encoding, in preference to the 
+;/PDF/ viewers as a structured text encoding, in preference to the 
 more "/semi-structured/" data one may obtain from 
 methods such as ;;/text()/ in the ;Poppler library 
 (which I've mentioned in footnote \lhRef{poppler-adj}{\thetrackFNpoppler}).  
@@ -223,16 +223,16 @@ of text with raw data and/or code within unified data packages,
 we can consider to what extent User Experience and structural 
 models should be conceptualized as applying simultaneously to 
 text and to data sets, as well as ;/GUI/ components that present 
-them respectively in the form of visual resources.
+both of such content-types, respectively, in the form of visual resources.
 
-For example, we can isolate specific areas of potential 
-;/GUI/ functionality in contexts where human readers are seeing 
+For example, there are specific areas of potential 
+;/GUI/ functionality that could be isolated, in contexts where human readers are seeing 
 renderings of text documents (or pages therefrom): copying 
 the words of a sentence to the clipboard; searching for 
 information about a single word, phrase, or term; examining the 
 original text from which a quote was sampled; accessing a data 
 set and/or multimedia resources that are indirectly included 
-in text documents through figures/ graphics (for instance, 
+in text documents through figures/graphics (for instance, 
 if a picture shows one frame from a video, finding and 
 watching the video in its entirety).  We can 
 then identify related capabilities operational in the 
@@ -433,7 +433,7 @@ query format rather than manually rewriting ;/C++/ code.  For instance,
 context menus tend to need specific action options unique to the 
 current data set, so "/scripts/" against an embedded ;/VM/ might be 
 employed to populate those menus, being called somewhere after 
-the triggering event (a right mouse-button click or ,/ctrlleft/ button) 
+the triggering event (a right mouse-button click, or ,/ctrlleft/ with a single button) 
 is registered.  Similar comments could be made about areas of 
 functionality such as setting up initial parameters for a 
 `enlargethispage<2em>;simulation; managing text/data cross-references; logic for 

@@ -53,7 +53,7 @@ end, this paper will consider
 how compiler and Virtual Machine tools
 may be embedded within data-set
 code, built from source files with
-few external dependencies. The paper will consider how a
+few external dependencies. The paper will discuss how a
 self-contained environment for scripting
 or query language implementations
 can promote text search, raw-data
@@ -96,7 +96,7 @@ document more rigorously the raw data, methodology, and analytic
 details behind published findings. Such initiatives in turn
 led to <styled-content style="double-quote">Minimum Information</styled-content> standards (e.g.,
 Minimum Information for Biological and Biomedical Investigations, or
-<styled-content style="emph-acronym"><abbrev>MIBBI</abbrev></styled-content>, which encompasses several dozen more specific specifications)
+<styled-content style="emph-acronym"><abbrev>MIBBI</abbrev></styled-content>, which encompasses several dozen more targeted specifications)
 and to mixed data/ code/multimedia formats such as <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>sharing
 (Findable, Accessible, Interoperable, Reusable) and
 Research Objects (including <styled-content style="double-quote">Executable Research Objects</styled-content>,
@@ -118,18 +118,18 @@ model, see <xref ref-type="bibr" rid="B15">15</xref>. For <styled-content style=
 
 <!--enter p.1-->
         <p id="Para-2">A common theme of these various formats is that the basic unit of
-disseminating scientific or academic research is not (or no longer)
+disseminating scientific or academic scholarship is not (or no longer)
 a single document, but rather a
 collection of distinct files representing text, data, and potentially
 graphics or computer code. Natural-language text is still important
 &#x2014; readers are most likely to learn about data sets or Research
 Objects via publications that introduce them &#x2014; but in a Research
 Object context manuscripts are packaged alongside sibling assets
-with their own requisite functionality. This affects functionality
+with their own requisite capabilities. This affects functionality
 intrinsic to text 
 documents insofar as, to begin with, the various components
 of a data package can be mutually cross-referenced. For instance,
-terms and keyphrases within a manuscript could be annotated
+terms and keywords/keyphrases within a manuscript could be annotated
 with links to data, code, or graphics content, if the
 same concepts appear as statistical parameters, units of
 measurement, data types, record fields, etc., within raw
@@ -218,8 +218,8 @@ textual elements (or, at least, structured data
 was not preserved in the final <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content>).
 
 <fn id="fn-4"><p>In my own analysis of <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> mentioned above,
-I gave the example of a compound <styled-content style="ital-literal-boxed">2'-C-ethynyl</styled-content>,
-which is also notated as <styled-content style="ital-literal-boxed">2 0-C-ethynyl</styled-content>. With
+I gave the example of a fragment <styled-content style="ital-literal-boxed">2'-C-ethynyl</styled-content>,
+which was also notated as <styled-content style="ital-literal-boxed">2 0-C-ethynyl</styled-content>. With
 these alternatives, plus the fact that the <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>
 markup appeared sometimes to incorrectly parse
 the strings &#x2014; i.e., breaking the character-sequence
@@ -275,7 +275,7 @@ currently produced from <styled-content style="emph-acronym"><abbrev>XML</abbrev
 <styled-content style="emph-acronym"><abbrev>JATS</abbrev></styled-content> or <styled-content style="emph-acronym"><abbrev>BITS</abbrev></styled-content>; if these intermediate assets (or at least
 links thereto) were embedded in
 <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> directly then they could be extracted and employed by
-<styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> viewers as structured text encoding, in preference to the
+<styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> viewers as a structured text encoding, in preference to the
 more <styled-content style="double-quote">semi-structured</styled-content> data one may obtain from
 methods such as <styled-content style="emph-symbol">text()</styled-content> in the <styled-content style="emph-acronym_some-lc">Poppler</styled-content> library
 (which I've mentioned in footnote&#xa0;<xref ref-type="fn" rid="fn-3">3</xref>).
@@ -308,20 +308,20 @@ of text with raw data and/or code within unified data packages,
 we can consider to what extent User Experience and structural
 models should be conceptualized as applying simultaneously to
 text and to data sets, as well as <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> components that present
-them respectively in the form of visual resources.
+both of such content-types, respectively, in the form of visual resources.
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
 
 
 <!--enter p.1-->
-        <p id="Para-7">For example, we can isolate specific areas of potential
-<styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> functionality in contexts where human readers are seeing
+        <p id="Para-7">For example, there are specific areas of potential
+<styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> functionality that could be isolated, in contexts where human readers are seeing
 renderings of text documents (or pages therefrom): copying
 the words of a sentence to the clipboard; searching for
 information about a single word, phrase, or term; examining the
 original text from which a quote was sampled; accessing a data
 set and/or multimedia resources that are indirectly included
-in text documents through figures/ graphics (for instance,
+in text documents through figures/graphics (for instance,
 if a picture shows one frame from a video, finding and
 watching the video in its entirety). We can
 then identify related capabilities operational in the
@@ -577,7 +577,7 @@ query format rather than manually rewriting <styled-content style="emph-acronym"
 context menus tend to need specific action options unique to the
 current data set, so <styled-content style="double-quote">scripts</styled-content> against an embedded <styled-content style="emph-acronym"><abbrev>VM</abbrev></styled-content> might be
 employed to populate those menus, being called somewhere after
-the triggering event (a right mouse-button click or <styled-content style="emph-macro"><![CDATA[ctrlleft]]></styled-content> button)
+the triggering event (a right mouse-button click, or <styled-content style="emph-macro"><![CDATA[ctrlleft]]></styled-content> with a single button)
 is registered. Similar comments could be made about areas of
 functionality such as setting up initial parameters for a
 simulation; managing text/data cross-references; logic for
