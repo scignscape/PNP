@@ -86,9 +86,9 @@ or &#x2014; as with the name of one US <styled-content style="double-quote">Data
 initiative &#x2014; <styled-content style="double-quote">the Whole Tale</styled-content>.
 
 <fn><p>For the <styled-content style="double-quote">compendium</styled-content>
-model, see <xref ref-type="bibr" rid="B15"/>. For <styled-content style="double-quote">executable papers</styled-content>,
-<xref ref-type="bibr" rid="B18"/>. For <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>data,
-<xref ref-type="bibr" rid="B10"/>. For the <styled-content style="double-quote">Whole Tale</styled-content>, <xref ref-type="bibr" rid="B13"/>.</p></fn>
+model, see <xref ref-type="bibr" rid="B15">15</xref>. For <styled-content style="double-quote">executable papers</styled-content>,
+<xref ref-type="bibr" rid="B18">18</xref>. For <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>data,
+<xref ref-type="bibr" rid="B10">10</xref>. For the <styled-content style="double-quote">Whole Tale</styled-content>, <xref ref-type="bibr" rid="B13">13</xref>.</p></fn>
             <!--leave footnote-->
 
 
@@ -140,13 +140,13 @@ find useful information in articles they might not
 discover by mere chance.
 
 <fn><p>For a general introduction
-to <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> see <xref ref-type="bibr" rid="B20"/>. Several other
+to <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> see <xref ref-type="bibr" rid="B20">20</xref>. Several other
 publications have described analysis that <italic>used</italic>
 the repository, in contrast to presenting computational
 details about its implementation. Also as relevant in
 this context (I hope), I wrote an extended
 analysis of <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> in the second half of
-Chapter 3 of <xref ref-type="bibr" rid="B8"/>.</p></fn>
+Chapter 3 of <xref ref-type="bibr" rid="B8">8</xref>.</p></fn>
             <!--leave footnote-->
 
 
@@ -233,7 +233,7 @@ format more amenable to text mining, such as <styled-content style="emph-acronym
 community must define and agree upon an
 appropriate standard of representation.</styled-content>
 <!-- source: Allen Institute -->
-                <xref ref-type="bibr" rid="B20">p. 8</xref></p></fn>
+                <xref ref-type="bibr" rid="B20">20, p. 8</xref></p></fn>
             <!--leave footnote-->
 
 
@@ -387,7 +387,7 @@ interpreters). However, I make the assumption here that Executable
 Research Objects are predominantly disseminated in source-code fashion.
 This is different from projects such as Kaggle (or other digital-notebook
 software, holding out the possibility that data sets might be
-distributed as Kaggle notebooks or similar), or <styled-content style="emph-acronym_all-lc">reprozip</styled-content> <xref ref-type="bibr" rid="B17"/> (which packages
+distributed as Kaggle notebooks or similar), or <styled-content style="emph-acronym_all-lc">reprozip</styled-content> <xref ref-type="bibr" rid="B17">17</xref> (which packages
 up all necessary binary components that can be identified as preconditions
 for data-set code to run on the developer's own computer).
 </p> <!--/p.1-->
@@ -408,7 +408,7 @@ information encoded in a data set may be approached <italic>de facto</italic> as
 database which accepts queries in an <styled-content style="emph-acronym"><abbrev>SQL</abbrev></styled-content>-like (or some flavor of <styled-content style="emph-acronym_some-lc">NoSQL</styled-content>)
 format &#x2014; potentially extended to <styled-content style="double-quote">full-text search</styled-content> with
 associated text documents, via query specifications
-geared to text content (<italic>cf.</italic> <xref ref-type="bibr" rid="B5"/>, for example). In other scenarios, an Executable Research Object
+geared to text content (<italic>cf.</italic> <xref ref-type="bibr" rid="B5">5</xref>, for example). In other scenarios, an Executable Research Object
 could employ something like a built-in scripting language to run
 analytic code, fine-tune <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content>s, compose plugins for external scientific applications,
 etc. (The principle that Research Object code should be self-contained and source-based
@@ -905,7 +905,7 @@ to the inner structure of text content than generic
 formats (<styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content>, <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>, etc.).
 
 <fn><p>For <styled-content style="emph-acronym"><abbrev>TAGML</abbrev></styled-content>, see
-<xref ref-type="bibr" rid="B3"/> or <xref ref-type="bibr" rid="B4"/>. This
+<xref ref-type="bibr" rid="B3">3</xref> or <xref ref-type="bibr" rid="B4">4</xref>. This
 is one of the more recent proposals for markup languages
 that incorporate <styled-content style="emph-acronym"><abbrev>SGML</abbrev></styled-content>-style features such as
 concurrent/overlapping markup, and on theoretical grounds
@@ -926,7 +926,7 @@ expressiveness.</p></fn>
 <!--enter p.1-->
         <p id="Para-31">Debating the merits of, say, <styled-content style="emph-acronym"><abbrev>TAGML</abbrev></styled-content> versus <styled-content style="emph-acronym"><abbrev>JATS</abbrev></styled-content>/<styled-content style="emph-acronym"><abbrev>BITS</abbrev></styled-content> &#x2014; or
 alternative <styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content> languages like <styled-content style="emph-acronym_some-lc">BioC</styled-content>, developed for
-PubMed Central <xref ref-type="bibr" rid="B9"/> &#x2014; is outside the scope of this paper.
+PubMed Central <xref ref-type="bibr" rid="B9">9</xref> &#x2014; is outside the scope of this paper.
 I will note, however, that the important details
 for questions about the most efficient text representation
 is less the actual structures modeled by a given format
@@ -949,7 +949,7 @@ graphs: for instance, <styled-content style="double-quote">property hypergraphs<
 have nodes inside other nodes, plus
 key/value attribute lists on nodes and/or edges.
 
-<fn><p>For property hypergraphs, see <xref ref-type="bibr" rid="B1"/>.
+<fn><p>For property hypergraphs, see <xref ref-type="bibr" rid="B1">1</xref>.
 There is extensive literature on both
 property graphs (conventional graphs
 with key/value tuples added) and hypergraphs
@@ -960,7 +960,7 @@ both of those representational devices.
 I have an overview of how different graph
 formats extend one another, in terms
 of expressiveness and structural
-features <xref ref-type="bibr" rid="B8">pp. 134&amp;#x2013;143</xref>.
+features <xref ref-type="bibr" rid="B8">8, pp. 134&#x2013;143</xref>.
 The property-hypergraph model can itself
 be subsumed into others. For instance,
 (hyper)edges may be associated with contexts
@@ -1815,7 +1815,7 @@ and does not require users to first have something like
 <styled-content style="emph-acronym"><abbrev>LLVM</abbrev></styled-content> or <styled-content style="emph-acronym_some-lc">libClang</styled-content> on hand. Two examples that I
 am familiar with, and which might be relevant as case-studies,
 are <styled-content style="emph-acronym"><abbrev>ECL</abbrev></styled-content> (Embeddable Common Lisp)
-and <styled-content style="emph-acronym_some-lc">AngelScript</styled-content> <xref ref-type="bibr" rid="B16"/>, <xref ref-type="bibr" rid="B11"/>,
+and <styled-content style="emph-acronym_some-lc">AngelScript</styled-content> <xref ref-type="bibr" rid="B16">16</xref>, <xref ref-type="bibr" rid="B11">11</xref>,
 both of which seem relatively easy to build from source. These
 languages still are slightly different from what I envision
 here, partly because &#x2014; despite being well-designed from the
@@ -2316,7 +2316,7 @@ imply that the typical results of a contract violation
 are either calls to a <styled-content style="double-quote">handler</styled-content> (which might implement
 some alternative sequence that avoid depending on the precondition
 givens, or potentially throw an exception) or immediate
-program-termination <xref ref-type="bibr" rid="B2"/>. Structurally this is not too far off
+program-termination <xref ref-type="bibr" rid="B2">2</xref>. Structurally this is not too far off
 from the handler being a <italic>de facto</italic> <styled-content style="double-quote">catch</styled-content> block that
 could either rescue or propagate an exception. As far as
 I can tell, these semantics are similar to those
@@ -2594,7 +2594,7 @@ of arrangement in
 ordinary-looking <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> (this mechanism is similar
 to how compilers implement Return Value Optimization).
 
-<fn><p>For Return Value Optimization (<styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>) see <xref ref-type="bibr" rid="B14"/> or <xref ref-type="bibr" rid="B21"/>.
+<fn><p>For Return Value Optimization (<styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>) see <xref ref-type="bibr" rid="B14">14</xref> or <xref ref-type="bibr" rid="B21">21</xref>.
 Readers might be interested in an overview of
 user-visible <styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>-related techniques that I present as
 a <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> code excerpt at <styled-content style="hlink1">https://cppinsights.io/s/cac923c9</styled-content>
@@ -2795,7 +2795,7 @@ conditions, iterators, etc.).
 <fn><p>A good introduction to <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> lifetime issues &#x2014;
 and solutions via <styled-content style="double-quote">lifetime annotations</styled-content>
 (often associated with the <styled-content style="emph-acronym_some-lc">Rust</styled-content> language)
-&#x2014; is <xref ref-type="bibr" rid="B7"/>. I believe some of these
+&#x2014; is <xref ref-type="bibr" rid="B7">7</xref>. I believe some of these
 issues can be addressed by offering programmers
 more control over lifetime termination, in
 particular allowing variables to be associated
@@ -2878,7 +2878,7 @@ be <styled-content style="emph-symbol">int</styled-content>, <styled-content sty
 
 <fn><p>For the general motivation and theory
 of dependent types a good
-source is <xref ref-type="bibr" rid="B6"/>,
+source is <xref ref-type="bibr" rid="B6">6</xref>,
 which looks particularly at
 the <styled-content style="emph-acronym_some-lc">Idris</styled-content> language
 &#x2014; one of just a small group
@@ -2886,7 +2886,7 @@ of relatively general-purpose
 languages to support
 them. An interesting look at potential
 applications for languages in general
-is <xref ref-type="bibr" rid="B12"/>.</p></fn>
+is <xref ref-type="bibr" rid="B12">12</xref>.</p></fn>
             <!--leave footnote-->
 
  If the aforementioned <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> is a compile-time
@@ -3470,7 +3470,7 @@ regexes (the point is not, necessarily, to create a subpattern
 that occurs multiple times in a grammar serving similar roles).
 In some places, also, variable-width lookbehind (rarely supported) would be nice to have.
 Another consideration is how to merge the functionality of
-capturing (via group) and positive lookaround <xref ref-type="bibr" rid="B19"/>.
+capturing (via group) and positive lookaround <xref ref-type="bibr" rid="B19">19</xref>.
 Regular Expressions in a (one might say) <styled-content style="double-quote">unfolding</styled-content> grammar premised on
 rules anchored to one <styled-content style="double-quote">cursor</styled-content> position &#x2014; which is continually
 advanced forward &#x2014; have their own techniques, and one frequent issue is
@@ -3846,10 +3846,10 @@ includes both raw-data and text objects.
 
 <ref id="B1">
   <element-citation>
-    <string-name>Bansal, Aruna</string-name>, <article-title>HgMed: Hypergraphs Mediating Schematic 
+    <name><surname>Bansal</surname><given-names>Aruna</given-names></name> <etal/> <article-title>HgMed: Hypergraphs Mediating Schematic 
 Translations Between Data Models</article-title> 
-    <source>Proceedings of the <conf-name>27th International Database 
-Engineered Applications Symposium (IDEAS '23)</conf-name></source>, <conf-date>May <year>2023</year></conf-date>.
+    <source>Proceedings</source> <conf-name>27th International Database 
+Engineered Applications Symposium (IDEAS '23)</conf-name> <conf-date><month>May</month> <year>2023</year></conf-date>
 
     <ext-link xlink:href="https://dl.acm.org/doi/pdf/10.1145/3589462.3589476" ext-link-type="url"><uri>https://dl.acm.org/doi/pdf/10.1145/3589462.3589476</uri></ext-link>
 
@@ -3861,7 +3861,7 @@ Engineered Applications Symposium (IDEAS '23)</conf-name></source>, <conf-date>M
 
 <ref id="B2">
   <element-citation>
-    <string-name>Berne, Joshua</string-name>, <italic>et al.</italic>, <article-title>Contracts for C++</article-title>  ISO-C++ (<year>2025</year>).
+    <name><surname>Berne</surname><given-names>Joshua</given-names></name> <etal/> <article-title>Contracts for C++</article-title>  <source>ISO-C++</source> <year>2025</year>
 
     <ext-link xlink:href="https://isocpp.org/files/papers/P2900R6.pdf" ext-link-type="url"><uri>https://isocpp.org/files/papers/P2900R6.pdf</uri></ext-link>
 
@@ -3871,11 +3871,11 @@ Engineered Applications Symposium (IDEAS '23)</conf-name></source>, <conf-date>M
 
 <ref id="B3">
   <element-citation>
-    <string-name>Bleeker, Elli</string-name>, <italic>et al.</italic>, <article-title>Between Flexibility and Universality: Combining TAGML
+    <name><surname>Bleeker</surname><given-names>Elli</given-names></name> <etal/> <article-title>Between Flexibility and Universality: Combining TAGML
 and XML to Enhance the Modeling of Cultural Heritage
 Text</article-title>
-    <source>Proceedings of <conf-name>CHR 2020: Workshop on Computational Humanities Research</conf-name> 
-<conf-date>(November <year>2020</year>)</conf-date></source>, pp. <fpage>340</fpage>&#x2013;<lpage>350</lpage>.
+    <source>Proceedings of</source> <conf-name>CHR 2020: Workshop on Computational Humanities Research</conf-name> 
+<conf-date>November <year>2020</year></conf-date> <fpage>340</fpage><lpage>350</lpage>
 
     <ext-link xlink:href="https://ceur-ws.org/Vol-2723/short39.pdf" ext-link-type="url"><uri>https://ceur-ws.org/Vol-2723/short39.pdf</uri></ext-link>
 
@@ -3883,11 +3883,11 @@ Text</article-title>
 </ref>
 
 
-<ref id="B3TEI">
+<ref id="B4">
   <element-citation>
-    <string-name>Bleeker, Elli</string-name>, <italic>et al.</italic>, <article-title>Texts as Hypergraphs: An Intuitive Representation
+    <name><surname>Bleeker</surname><given-names>Elli</given-names></name> <etal/> <article-title>Texts as Hypergraphs: An Intuitive Representation
 of Interpretations of Text</article-title>
-    <source>Journal of the Text Encoding Initiative</source>, Vol. <volume>14</volume> (April 2021&#x2013;March 2023)
+    <source>Journal of the Text Encoding Initiative</source> <volume>14</volume> <year>April 2021&#x2013;March 2023</year>
 
     <ext-link xlink:href="https://journals.openedition.org/jtei/3919" ext-link-type="url"><uri>https://journals.openedition.org/jtei/3919</uri></ext-link>
 
@@ -3898,10 +3898,10 @@ of Interpretations of Text</article-title>
 
 <ref id="B5">
   <element-citation>
-    <string-name>Botev, Chavdar</string-name>, <italic>et al.</italic>, 
+    <name><surname>Botev</surname><given-names>Chavdar</given-names></name> <etal/> 
 <article-title>Expressiveness and Performance of Full-Text Search Languages</article-title> 
-    <source>Proceedings of the <conf-name>10th International Conference on 
-Extending Database Technology</conf-name> <conf-date>(March <year>2006</year>)</conf-date></source>. 
+    <source>Proceedings</source> <conf-name>10th International Conference on 
+Extending Database Technology</conf-name> <conf-date>March <year>2006</year></conf-date>
 
     <ext-link xlink:href="https://ecommons.cornell.edu/server/api/core/bitstreams/68074eab-f0fa-441c-81ea-0b4debf66f87/content" ext-link-type="url"><uri>https://ecommons.cornell.edu/server/api/core/bitstreams/68074eab-f0fa-441c-81ea-0b4debf66f87/content</uri></ext-link>
 
@@ -3912,7 +3912,7 @@ Extending Database Technology</conf-name> <conf-date>(March <year>2006</year>)</
 
 <ref id="B6">
   <element-citation>
-    <string-name>Brady, Edwin C.</string-name>, <article-title>IDRIS &#x2014; Systems Programming Meets Full Dependent Types</article-title>
+    <name><surname>Brady</surname><given-names>Edwin C.</given-names></name> <article-title>IDRIS &#x2014; Systems Programming Meets Full Dependent Types</article-title>
 
     <ext-link xlink:href="https://www.type-driven.org.uk/edwinb/papers/plpv11.pdf" ext-link-type="url"><uri>https://www.type-driven.org.uk/edwinb/papers/plpv11.pdf</uri></ext-link>
 
@@ -3923,8 +3923,8 @@ Extending Database Technology</conf-name> <conf-date>(March <year>2006</year>)</
 
 <ref id="B7">
   <element-citation>
-    <string-name>Braenne, Martin</string-name>, <italic>et al.</italic>, <article-title>Lifetime annotations for C++</article-title>
-(Request for Comment), <year>2022</year>.
+    <name><surname>Braenne</surname><given-names>Martin</given-names></name> <etal/> <article-title>Lifetime annotations 
+for C++ (Request for Comment)</article-title> <year>2022</year>
  
     <ext-link xlink:href="https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377" ext-link-type="url"><uri>https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377</uri></ext-link>
 
@@ -3934,10 +3934,11 @@ Extending Database Technology</conf-name> <conf-date>(March <year>2006</year>)</
 
 <ref id="B8">
   <element-citation publication-type="book">
-    <string-name>Christen, Nathaniel</string-name> and <string-name>Neustein, Amy</string-name>, 
-<book-title>Innovative Data Integration 
-and Conceptual Space Modeling for COVID, Cancer, and Cardiac Care</book-title>
-Elsevier, <year>2022</year>.
+    <person-group>
+    <name><surname>Christen</surname><given-names>Nathaniel</given-names></name> <name><surname>Neustein</surname><given-names>Amy</given-names></name></person-group> 
+<source>Innovative Data Integration 
+and Conceptual Space Modeling for COVID, Cancer, and Cardiac Care</source>
+<publisher-name>Elsevier</publisher-name> <year>2022</year>
 
     <ext-link xlink:href="https://shop.elsevier.com/books/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care/neustein/978-0-323-85197-8" ext-link-type="url"><uri>https://shop.elsevier.com/books/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care/neustein/978-0-323-85197-8</uri></ext-link>
 
@@ -3950,10 +3951,10 @@ Elsevier, <year>2022</year>.
 
 <ref id="B9">
   <element-citation>
-    <string-name>Comeau, Donald C.</string-name>, <italic>et al.</italic>, 
+    <name><surname>Comeau</surname><given-names>Donald C.</given-names></name> <etal/> 
 <article-title>BioC: a minimalist approach to
 interoperability for biomedical text processing</article-title> 
-    <source>Database</source>, Vol. <volume><year>2013</year></volume>.
+    <source>Database</source> <year>2013</year>
 
     <ext-link xlink:href="https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content" ext-link-type="url"><uri>https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content</uri></ext-link>
 
@@ -3963,10 +3964,10 @@ interoperability for biomedical text processing</article-title>
 
 <ref id="B10">
   <element-citation>
-    <string-name>Garabedian, Nick</string-name>, <italic>et al.</italic>, <article-title>A Framework to Generate, Store, and Publish FAIR Data
+    <name><surname>Garabedian</surname><given-names>Nick</given-names></name> <etal/> <article-title>A Framework to Generate, Store, and Publish FAIR Data
 in Experimental Sciences</article-title> 
-    <source>Proceedings of the <conf-name>19th International Conference on 
-Semantic Systems</conf-name> <conf-date>(September <year>2023</year>)</conf-date></source>. 
+    <source>Proceedings</source> <conf-name>19th International Conference on 
+Semantic Systems</conf-name> <conf-date>September <year>2023</year></conf-date> 
 
     <ext-link xlink:href="https://ceur-ws.org/Vol-3526/paper-01.pdf" ext-link-type="url"><uri>https://ceur-ws.org/Vol-3526/paper-01.pdf</uri></ext-link>
 
@@ -3978,10 +3979,10 @@ Semantic Systems</conf-name> <conf-date>(September <year>2023</year>)</conf-date
 
 <ref id="B11">
   <element-citation>
-    <string-name>Grinbergs, Harijs</string-name>, <article-title>Production Quality Decision Support Using 
+    <name><surname>Grinbergs</surname><given-names>Harijs</given-names></name> <article-title>Production Quality Decision Support Using 
 Real-Time Computer Vision Framework</article-title> 
-    <source>Proceedings of <conf-name>Engineering for Rural 
-Development</conf-name> <conf-date>(May <year>2016</year>)</conf-date></source>, pp. <fpage>442</fpage>&#x2013;<lpage>447</lpage>.
+    <source>Proceedings of</source> <conf-name>Engineering for Rural 
+Development</conf-name> <conf-date><month>May</month> <year>2016</year></conf-date> <fpage>442</fpage><lpage>447</lpage>
 
     <ext-link xlink:href="https://www.iitf.lbtu.lv/conference/proceedings2016/Papers/N081.pdf" ext-link-type="url"><uri>https://www.iitf.lbtu.lv/conference/proceedings2016/Papers/N081.pdf</uri></ext-link>
 
@@ -3992,11 +3993,11 @@ Development</conf-name> <conf-date>(May <year>2016</year>)</conf-date></source>,
 
 <ref id="B12">
   <element-citation>
-    <string-name>Harisanker, Pottayil</string-name>, <italic>et al.</italic>, <article-title>A Practical, Typed Variant Object Model:
+    <name><surname>Harisanker</surname><given-names>Pottayil</given-names></name> <etal/> <article-title>A Practical, Typed Variant Object Model:
 Or, How to Stand On Your Head and Enjoy the View</article-title> 
-    <source>Proceedings of the <conf-name>19th International 
+    <source>Proceedings</source> <conf-name>19th International 
 Workshop on Foundations of Object-Oriented Languages</conf-name>
-(Tucson, AZ)</source> <year>2012</year>.
+<conf-loc>Tucson, AZ</conf-loc> <year>2012</year>
 
     <ext-link xlink:href="https://www.cs.swarthmore.edu/~zpalmer/publications/fool12.pdf" ext-link-type="url"><uri>https://www.cs.swarthmore.edu/~zpalmer/publications/fool12.pdf</uri></ext-link>
 
@@ -4008,10 +4009,10 @@ Workshop on Foundations of Object-Oriented Languages</conf-name>
 
 <ref id="B13">
   <element-citation>
-    <string-name>Ludaescher, Bertram</string-name>, <italic>et al.</italic>, 
+    <name><surname>Ludaescher</surname><given-names>Bertram</given-names></name> <etal/> 
 <article-title>Capturing the 'Whole Tale' of Computational Research: Reproducibility 
-in Computing Environments</article-title>. 
-    <source>arXiv</source> 1610.09958 (<year>2016</year>).
+in Computing Environments</article-title>
+    <source>arXiv 1610.09958</source>  <year>2016</year>
 
     <ext-link xlink:href="https://arxiv.org/abs/1610.09958" ext-link-type="url"><uri>https://arxiv.org/abs/1610.09958</uri></ext-link>
 
@@ -4022,8 +4023,8 @@ in Computing Environments</article-title>.
 
 <ref id="B14">
   <element-citation>
-    <string-name>Murphy, Sean</string-name>, <italic>et al.</italic>, <article-title>Return value optimization (RVO)</article-title> 
-    <source>Special Interest Group on C++</source>, <year>2020</year>.
+    <name><surname>Murphy</surname><given-names>Sean</given-names></name> <etal/> <article-title>Return value optimization (RVO)</article-title> 
+    <source>Special Interest Group on C++</source> <year>2020</year>
 
     <ext-link xlink:href="https://sigcpp.github.io/2020/06/08/return-value-optimization" ext-link-type="url"><uri>https://sigcpp.github.io/2020/06/08/return-value-optimization</uri></ext-link>
 
@@ -4033,11 +4034,11 @@ in Computing Environments</article-title>.
 
 <ref id="B15">
   <element-citation>
-    <string-name>Peer, Limor</string-name>, <italic>et al.</italic>, <article-title>Reproducible Research Publication Workflow:
+    <name><surname>Peer</surname><given-names>Limor</given-names></name> <etal/> <article-title>Reproducible Research Publication Workflow:
 A Canonical Workflow Framework and FAIR Digital
 Object Approach to Quality Research Output</article-title> 
-    <source>Data Intelligence</source>, Vol. <volume>4</volume>, 
-Num. <issue>2</issue> (<year>2022</year>), pp. <fpage>306</fpage>&#x2013;<lpage>319</lpage>.
+    <source>Data Intelligence</source> <volume>4</volume> 
+<issue>2</issue> <year>2022</year> <fpage>306</fpage> <lpage>319</lpage>
 
     <ext-link xlink:href="https://www.sciengine.com/DI/doi/10.1162/dint_a_00133" ext-link-type="url"><uri>https://www.sciengine.com/DI/doi/10.1162/dint_a_00133</uri></ext-link>
 
@@ -4048,7 +4049,7 @@ Num. <issue>2</issue> (<year>2022</year>), pp. <fpage>306</fpage>&#x2013;<lpage>
 
 <ref id="B16">
   <element-citation>
-    <article-title>Simplex Numerica User Manual</article-title>, <year>2023</year>.
+    <article-title>Simplex Numerica User Manual</article-title> <year>2023</year>
 
     <ext-link xlink:href="https://www.simplexnumerica.com/app/download/10205099171/Manual.pdf" ext-link-type="url"><uri>https://www.simplexnumerica.com/app/download/10205099171/Manual.pdf</uri></ext-link>
 
@@ -4059,9 +4060,9 @@ Num. <issue>2</issue> (<year>2022</year>), pp. <fpage>306</fpage>&#x2013;<lpage>
 
 <ref id="B17">
   <element-citation>
-    <string-name>Stevens, Vicky</string-name>, <italic>et al.</italic>, <article-title>Using ReproZip for 
+    <name><surname>Stevens</surname><given-names>Vicky</given-names></name> <etal/> <article-title>Using ReproZip for 
 Reproducibility and Library Services</article-title>
-    <source>ASSIST Quarterly</source>, Vol. <volume>42</volume>, Num. <issue>1</issue>, pp. <fpage>1</fpage>--<lpage>14</lpage>, 
+    <source>ASSIST Quarterly</source> <volume>42</volume> <issue>1</issue> <fpage>1</fpage> <lpage>14</lpage> 
 
     <ext-link xlink:href="https://iassistquarterly.com/index.php/iassist/article/view/18" ext-link-type="url"><uri>https://iassistquarterly.com/index.php/iassist/article/view/18</uri></ext-link>
 
@@ -4071,9 +4072,9 @@ Reproducibility and Library Services</article-title>
 
 <ref id="B18">
   <element-citation>
-    <string-name>Strijkers, Rudolf</string-name>, <italic>et al.</italic>, <article-title>Toward Executable Scientific Publications</article-title> 
-    <source>Proceedings of the <conf-name>International Conference on Computational 
-Science (ICCS)</conf-name></source>, <year>2011</year> 
+    <name><surname>Strijkers</surname><given-names>Rudolf</given-names></name> <etal/> <article-title>Toward Executable Scientific Publications</article-title> 
+    <source>Proceedings</source> <conf-name>International Conference on Computational 
+Science (ICCS)</conf-name> <year>2011</year> 
 
     <ext-link xlink:href="https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629" ext-link-type="url"><uri>https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629</uri></ext-link>
 
@@ -4084,9 +4085,9 @@ Science (ICCS)</conf-name></source>, <year>2011</year>
 
 <ref id="B19">
   <element-citation>
-    <string-name>Uezato, Yuya</string-name>,  
-<article-title>Regular Expressions with Backreferences and Lookaheads Capture NLOG</article-title>. 
-    <source>arXiv</source> 2404.17492 (<year>2024</year>).
+    <name><surname>Uezato</surname><given-names>Yuya</given-names></name>  
+<article-title>Regular Expressions with Backreferences and Lookaheads Capture NLOG</article-title>
+    <source>arXiv 2404.17492</source> <year>2024</year>
 
     <ext-link xlink:href="https://arxiv.org/pdf/2404.17492" ext-link-type="url"><uri>https://arxiv.org/pdf/2404.17492</uri></ext-link>
 
@@ -4097,7 +4098,7 @@ Science (ICCS)</conf-name></source>, <year>2011</year>
 
 <ref id="B20">
   <element-citation>
-    <string-name>Wang, Lucy Lu</string-name>, <italic>et al.</italic>, <article-title>CORD-19: The COVID-19 Open Research Dataset</article-title>
+    <name><surname>Wang</surname><given-names>Lucy Lu</given-names></name> <etal/> <article-title>CORD-19: The COVID-19 Open Research Dataset</article-title>
 
     <ext-link xlink:href="https://openreview.net/pdf?id=0gLzHrE_t3z" ext-link-type="url"><uri>https://openreview.net/pdf?id=0gLzHrE_t3z</uri></ext-link>
 
@@ -4108,8 +4109,7 @@ Science (ICCS)</conf-name></source>, <year>2011</year>
 
 <ref id="B21">
   <element-citation>
-    <string-name>Zhilin, Anton</string-name>, <article-title>Guaranteed copy elision for named return objects</article-title>
-(Published Proposal), <year>2020</year>.
+    <name><surname>Zhilin</surname><given-names>Anton</given-names></name> <article-title>Guaranteed copy elision for named return objects (Published Proposal)</article-title> <year>2020</year>
 
     <ext-link xlink:href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p2025r0.html" ext-link-type="url"><uri>https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p2025r0.html</uri></ext-link>
 
