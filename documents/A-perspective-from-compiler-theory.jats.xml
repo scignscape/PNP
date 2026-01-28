@@ -97,7 +97,7 @@ details behind published findings. Such initiatives in turn
 led to <styled-content style="double-quote">Minimum Information</styled-content> standards (e.g.,
 Minimum Information for Biological and Biomedical Investigations, or
 <styled-content style="emph-acronym"><abbrev>MIBBI</abbrev></styled-content>, which encompasses several dozen more specific specifications)
-and to mixed data/code/multimedia formats such as <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>sharing
+and to mixed data/ code/multimedia formats such as <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>sharing
 (Findable, Accessible, Interoperable, Reusable) and
 Research Objects (including <styled-content style="double-quote">Executable Research Objects</styled-content>,
 <styled-content style="double-quote">Executable Papers</styled-content>,
@@ -105,7 +105,7 @@ Research Object <styled-content style="double-quote">Bundles</styled-content>, R
 or &#x2014; as with the name of one US <styled-content style="double-quote">Data Infrastructure Building Blocks</styled-content> (<styled-content style="emph-acronym"><abbrev>DIBBs</abbrev></styled-content>)
 initiative &#x2014; <styled-content style="double-quote">the Whole Tale</styled-content>.
 
-<fn><p>For the <styled-content style="double-quote">compendium</styled-content>
+<fn id="fn-1"><p>For the <styled-content style="double-quote">compendium</styled-content>
 model, see <xref ref-type="bibr" rid="B15">15</xref>. For <styled-content style="double-quote">executable papers</styled-content>,
 <xref ref-type="bibr" rid="B18">18</xref>. For <styled-content style="emph-acronym"><abbrev>FAIR</abbrev></styled-content>data,
 <xref ref-type="bibr" rid="B10">10</xref>. For the <styled-content style="double-quote">Whole Tale</styled-content>, <xref ref-type="bibr" rid="B13">13</xref>.</p></fn>
@@ -159,7 +159,7 @@ held potential for scientists with one specialization to
 find useful information in articles they might not
 discover by mere chance.
 
-<fn><p>For a general introduction
+<fn id="fn-2"><p>For a general introduction
 to <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> see <xref ref-type="bibr" rid="B20">20</xref>. Several other
 publications have described analysis that <italic>used</italic>
 the repository, in contrast to presenting computational
@@ -188,8 +188,8 @@ details as ligatures, headers/footers, hyphenation, and
 font-face variations can introduce artifacts in
 text extraction (or <styled-content style="double-quote">scraping</styled-content>) from <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> files.
 
-<fn><p>To clarify these remarks: <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> code libraries typically
-have some procedure that can be called to obtain text
+<fn id="fn-3"><p>To clarify these remarks: <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> code
+libraries typically have some procedure that can be called to obtain text
 from one page and/or window area. In <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content>, for example,
 the <styled-content style="emph-acronym_some-lc">Poppler</styled-content> library has a <styled-content style="emph-symbol">text</styled-content> method of
 <styled-content style="emph-symbol">Poppler::Page</styled-content> which optionally takes a rectangular subarea (this allows
@@ -217,7 +217,7 @@ notating these (potentially semantically significant)
 textual elements (or, at least, structured data
 was not preserved in the final <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content>).
 
-<fn><p>In my own analysis of <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> mentioned above,
+<fn id="fn-4"><p>In my own analysis of <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> mentioned above,
 I gave the example of a compound <styled-content style="ital-literal-boxed">2'-C-ethynyl</styled-content>,
 which is also notated as <styled-content style="ital-literal-boxed">2 0-C-ethynyl</styled-content>. With
 these alternatives, plus the fact that the <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>
@@ -238,7 +238,7 @@ described the steps they took to (imperfectly) convert
 a <styled-content style="double-quote">call to action</styled-content> encouraging publishers to adopt a
 more consistent text representation.
 
-<fn><p>Under a section explicitly titled <styled-content style="double-quote">call to action</styled-content> they
+<fn id="fn-5"><p>Under a section explicitly titled <styled-content style="double-quote">call to action</styled-content> they
 counsel that <styled-content style="double-quote">a number of
 challenges prevent easy application of <styled-content style="emph-acronym"><abbrev>NLP</abbrev></styled-content>
 and text mining techniques to these papers [T]he
@@ -278,7 +278,7 @@ links thereto) were embedded in
 <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> viewers as structured text encoding, in preference to the
 more <styled-content style="double-quote">semi-structured</styled-content> data one may obtain from
 methods such as <styled-content style="emph-symbol">text()</styled-content> in the <styled-content style="emph-acronym_some-lc">Poppler</styled-content> library
-(which I've mentioned in footnote <xref ref-type="fn">3</xref>).
+(which I've mentioned in footnote&#xa0;<xref ref-type="fn" rid="fn-3">3</xref>).
 Similar use cases might be compiling human-readable document
 indexes, or comparing two different versions of a manuscript
 during an editing/reviewing changes cycle.
@@ -389,7 +389,7 @@ dependencies. Nonetheless, publishers should be careful to
 ensure that clear instructions are given for users who need to
 set up a prototypical development environment to begin with.
 
-<fn><p>And external
+<fn id="fn-6"><p>And external
 dependencies should be favored which are easier to use. For instance,
 if two <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> libraries provide similar functionality, developers should
 compare them based on how easy or difficult it is to install
@@ -467,7 +467,7 @@ into tuples of scalar data points (instead, <styled-content style="emph-acronym"
 structures, or values sampled from enumerated classes, or special-purpose fields
 that are usually undefined or default-initialized and thus encoded as empty cells).
 
-<fn><p>One example I am familiar with is the Toxic Release Inventory (<styled-content style="emph-acronym"><abbrev>TRI</abbrev></styled-content>) project
+<fn id="fn-7"><p>One example I am familiar with is the Toxic Release Inventory (<styled-content style="emph-acronym"><abbrev>TRI</abbrev></styled-content>) project
 of the Environmental Protection Agency. The <styled-content style="emph-acronym"><abbrev>EPA</abbrev></styled-content> publishes annual reports,
 available on a state-by-state basis, recording incidents of
 environmental contamination due to toxic leaks (from a list of several
@@ -547,7 +547,7 @@ or hierarchical <styled-content style="double-quote">accordions</styled-content>
 overviews, presented via (interactive) graphics (charts, plots,
 diagrams, histograms, etc.).
 
-<fn><p><styled-content style="double-quote">Accordion</styled-content> is a common term for a sort
+<fn id="fn-8"><p><styled-content style="double-quote">Accordion</styled-content> is a common term for a sort
 of <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content> control that has multiple inner segments, usually stacked
 vertically (i.e., higher on the screen to lower) each of
 which can be independently expanded or contracted (i.e., fully hidden).
@@ -768,7 +768,7 @@ support scripting dialects which attempt to
 make code assumptions and pedagogical use cases
 as transparent as possible.
 
-<fn><p>To put it differently, the original
+<fn id="fn-9"><p>To put it differently, the original
 analysis might be performed in <styled-content style="emph-acronym"><abbrev>C</abbrev></styled-content>, <styled-content style="emph-acronym_some-lc">Python</styled-content>,
 <styled-content style="emph-acronym_some-lc">Matlab</styled-content>, <styled-content style="emph-acronym_all-lc">fortran</styled-content>, etc., but all or some
 of that code would then get reimplemented in a more
@@ -924,7 +924,7 @@ not just a realization or dialect of <styled-content style="emph-acronym"><abbre
 to the inner structure of text content than generic
 formats (<styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content>, <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>, etc.).
 
-<fn><p>For <styled-content style="emph-acronym"><abbrev>TAGML</abbrev></styled-content>, see
+<fn id="fn-10"><p>For <styled-content style="emph-acronym"><abbrev>TAGML</abbrev></styled-content>, see
 <xref ref-type="bibr" rid="B3">3</xref> or <xref ref-type="bibr" rid="B4">4</xref>. This
 is one of the more recent proposals for markup languages
 that incorporate <styled-content style="emph-acronym"><abbrev>SGML</abbrev></styled-content>-style features such as
@@ -969,7 +969,7 @@ graphs: for instance, <styled-content style="double-quote">property hypergraphs<
 have nodes inside other nodes, plus
 key/value attribute lists on nodes and/or edges.
 
-<fn><p>For property hypergraphs, see <xref ref-type="bibr" rid="B1">1</xref>.
+<fn id="fn-11"><p>For property hypergraphs, see <xref ref-type="bibr" rid="B1">1</xref>.
 There is extensive literature on both
 property graphs (conventional graphs
 with key/value tuples added) and hypergraphs
@@ -1071,7 +1071,7 @@ against a <styled-content style="emph-acronym"><abbrev>DOM</abbrev></styled-cont
 of node-overlap semantics to a non-concurrent
 environment.
 
-<fn><p>Milestone tags, in their
+<fn id="fn-12"><p>Milestone tags, in their
 structural (emulative) purpose, are not
 intrinsic parts of tools such as <styled-content style="emph-acronym_some-lc">XPath</styled-content>
 and <styled-content style="emph-acronym_some-lc">XQuery</styled-content> &#x2014; apart from their basic status as zero-width
@@ -1167,7 +1167,7 @@ siblings, parent node, and first child; potentially
 expanded to its full child-node set and
 parent-ancestry.
 
-<fn><p>An algorithm might only
+<fn id="fn-13"><p>An algorithm might only
 ever need to visit child nodes in sibling order.
 However, at least some <styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content> processors
 present the option of moving to any
@@ -1372,7 +1372,7 @@ supplemental data and annotations can be relevant, such as
 visualization tools, transcriptions between names and
 formulae, etc. It would be reasonable to include access to
 such information among context-menus activated both in
-<styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> window areas proximate to names/formulas in text
+<styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> window areas proximate to names/ formulas in text
 form, and in software tools that might be drafted
 for interactive displays or scientific analysis.
 In other words, context-menu implementations
@@ -1562,7 +1562,7 @@ by the matched text &#x2014; which is how
 results are typically presented by <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> libraries' own search routines
 &#x2014; assuming <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> coordinate data is available).
 
-<fn><p>The page-view rendering engine would then take
+<fn id="fn-14"><p>The page-view rendering engine would then take
 area coordinates and apply styling &#x2014; usually
 background shading &#x2014; to visually mark
 off search matches. The complications arise when
@@ -1678,7 +1678,7 @@ With no separate specification, <styled-content style="double-quote">exported</s
 for things like copy/paste should be as simple as
 possible,
 
-<fn><p>There is no guarantee that the program wherever
+<fn id="fn-15"><p>There is no guarantee that the program wherever
 the copied content is pasted will understand anything
 other than alphanumerics and basic punctuation.</p></fn>
             <!--leave footnote-->
@@ -2015,7 +2015,7 @@ Methods and procedures can be called, in general, through
 type-agnostic function pointers so long as the byte-lengths
 of all arguments match what the procedure expects.
 
-<fn><p>A terminological
+<fn id="fn-16"><p>A terminological
 note on words such as <styled-content style="double-quote">procedure</styled-content> and <styled-content style="double-quote">function</styled-content>. In most
 contexts I prefer the former, because there is less confusion
 with the more mathematical sense of <styled-content style="double-quote">function</styled-content> as a
@@ -2291,7 +2291,7 @@ simply assume that the lists are indeed same-sized.
 
 <!--enter p.1-->
         <p id="Para-75">Explicitly checking preconditions
-via <styled-content style="emph-highlight">if</styled-content><styled-content style="emph-highlight">then</styled-content> tests is better than blind faith, all else being
+via <styled-content style="emph-highlight">if</styled-content>/<styled-content style="emph-highlight">then</styled-content> tests is better than blind faith, all else being
 equal, but that convention does violate
 <styled-content style="double-quote">separation of concerns</styled-content>: arguably, checking
 that arguments agree to stipulated contracts
@@ -2374,8 +2374,8 @@ an empty map, or the code could scale the longer list down in size
 to match the shorter, or supply default values for unpaired keys
 (or vice-versa).
 
-<fn><p>For the map to be invertible, these cannot just
-be default <italic>constructed</italic></p></fn>
+<fn id="fn-17"><p>For the map to be invertible, these cannot just
+be default <italic>constructed</italic>.</p></fn>
             <!--leave footnote-->
 
  A <styled-content style="emph-acronym"><abbrev>VM</abbrev></styled-content> compiler and
@@ -2545,7 +2545,7 @@ supplied by a reified boolean, but the programmer
 could explicitly declare such a proof as invariant in the
 current scope.
 
-<fn><p>And, if desired, the expression which achieves
+<fn id="fn-18"><p>And, if desired, the expression which achieves
 this could, under debug modes, also serve behaviorally
 as an assertion.</p></fn>
             <!--leave footnote-->
@@ -2614,7 +2614,7 @@ of arrangement in
 ordinary-looking <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> (this mechanism is similar
 to how compilers implement Return Value Optimization).
 
-<fn><p>For Return Value Optimization (<styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>) see <xref ref-type="bibr" rid="B14">14</xref> or <xref ref-type="bibr" rid="B21">21</xref>.
+<fn id="fn-19"><p>For Return Value Optimization (<styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>) see <xref ref-type="bibr" rid="B14">14</xref> or <xref ref-type="bibr" rid="B21">21</xref>.
 Readers might be interested in an overview of
 user-visible <styled-content style="emph-acronym"><abbrev>RVO</abbrev></styled-content>-related techniques that I present as
 a <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> code excerpt at <styled-content style="hlink1">https://cppinsights.io/s/cac923c9</styled-content>
@@ -2812,7 +2812,7 @@ is bound to inner or outer scope; this is merely one detail
 among numerous points of attention (terminating
 conditions, iterators, etc.).
 
-<fn><p>A good introduction to <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> lifetime issues &#x2014;
+<fn id="fn-20"><p>A good introduction to <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> lifetime issues &#x2014;
 and solutions via <styled-content style="double-quote">lifetime annotations</styled-content>
 (often associated with the <styled-content style="emph-acronym_some-lc">Rust</styled-content> language)
 &#x2014; is <xref ref-type="bibr" rid="B7">7</xref>. I believe some of these
@@ -2896,7 +2896,7 @@ its specification depends on a <italic>value</italic>
 <styled-content style="emph-symbol">vector&lt;T&gt;</styled-content> where <styled-content style="emph-symbol">T</styled-content> could
 be <styled-content style="emph-symbol">int</styled-content>, <styled-content style="emph-symbol">double</styled-content>, etc.).
 
-<fn><p>For the general motivation and theory
+<fn id="fn-21"><p>For the general motivation and theory
 of dependent types a good
 source is <xref ref-type="bibr" rid="B6">6</xref>,
 which looks particularly at
@@ -2913,7 +2913,7 @@ is <xref ref-type="bibr" rid="B12">12</xref>.</p></fn>
 constant, then the relevant type
 may be called <italic>weakly</italic> dependent.
 
-<fn><p>Although <styled-content style="double-quote">strong</styled-content> and <styled-content style="double-quote">weak</styled-content> sometimes
+<fn id="fn-22"><p>Although <styled-content style="double-quote">strong</styled-content> and <styled-content style="double-quote">weak</styled-content> sometimes
 appear in related contexts, my proposed
 usage is not the same. But in the general
 case &#x2014; considering just types themselves
@@ -2997,7 +2997,7 @@ distinction exists (in the context of Software Language
 Engineering, if not mathematics) between
 types and their extensions.
 
-<fn><p>This is not
+<fn id="fn-23"><p>This is not
 true of all types; one has no issue equating
 the extension of a <styled-content style="emph-symbol">byte</styled-content> type with unsigned
 integers less than or equal
@@ -3480,7 +3480,7 @@ Several of these exist for <styled-content style="emph-acronym"><abbrev>C++</abb
 <styled-content style="emph-acronym_some-lc">Qt</styled-content> for cross-platform <styled-content style="emph-acronym"><abbrev>GUI</abbrev></styled-content>, the <styled-content style="emph-symbol">QRegularExpression</styled-content> classes
 are adequate.
 
-<fn><p>For the record, I'll add a few comments however
+<fn id="fn-24"><p>For the record, I'll add a few comments however
 based on practical experience applying <styled-content style="emph-symbol">QRegularExpression</styled-content> for
 this kind of grammar. One nice addition (which is not hard to
 implement via a string preprocessor for regex patterns) is to

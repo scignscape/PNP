@@ -52,7 +52,7 @@ details behind published findings.  Such initiatives in turn
 led to "/Minimum Information/" standards (e.g., 
 Minimum Information for Biological and Biomedical Investigations, or 
 ;/MIBBI/, which encompasses several dozen more specific specifications) 
-and to mixed data/code/multimedia formats such as ;/FAIR/sharing  
+and to mixed data/ code/multimedia formats such as ;/FAIR/sharing  
 (Findable, Accessible, Interoperable, Reusable) and 
 Research Objects (including "/Executable Research Objects/", 
 "/Executable Papers/",  
@@ -121,8 +121,8 @@ content (e.g., when seeing it rendered in a ;/PDF/ viewer).  Such
 details as ligatures, headers/footers, hyphenation, and 
 font-face variations can introduce artifacts in 
 text extraction (or "/scraping/") from ;/PDF/ files.{< 
-`label<fn:poppler>;To clarify these remarks: ;PDF code libraries typically 
-have some procedure that can be called to obtain text 
+`fntrackLabel<poppler>;To clarify these remarks: ;PDF code 
+libraries typically have some procedure that can be called to obtain text 
 from one page and/or window area.  In ;/C++/, for example, 
 the ;Poppler library has a ;;text method of 
 ;;/Poppler::Page/ which optionally takes a rectangular subarea (this allows 
@@ -197,7 +197,7 @@ links thereto) were embedded in
 ;/PDF/ viewers as structured text encoding, in preference to the 
 more "/semi-structured/" data one may obtain from 
 methods such as ;;/text()/ in the ;Poppler library 
-(which I've mentioned in footnote \lhRef{poppler-adj}{3}).  
+(which I've mentioned in footnote \lhRef{poppler-adj}{\thetrackFNpoppler}).  
 Similar use cases might be compiling human-readable document 
 indexes, or comparing two different versions of a manuscript 
 during an editing/reviewing changes cycle.
@@ -1095,7 +1095,7 @@ supplemental data and annotations can be relevant, such as
 visualization tools, transcriptions between names and 
 formulae, etc.  It would be reasonable to include access to 
 such information among context-menus activated both in  
-;PDF window areas proximate to names/formulas in text 
+;PDF window areas proximate to names/ formulas in text 
 form, and in software tools that might be drafted 
 for interactive displays or scientific analysis.  
 In other words, context-menu implementations 
@@ -1838,7 +1838,7 @@ procedure could throw an exception.  Or, it could
 simply assume that the lists are indeed same-sized.
 
 Explicitly checking preconditions 
-via ,,/if/,,/then/ tests is better than blind faith, all else being 
+via ,,/if//,,/then/ tests is better than blind faith, all else being 
 equal, but that convention does violate 
 "/separation of concerns/": arguably, checking 
 that arguments agree to stipulated contracts 
