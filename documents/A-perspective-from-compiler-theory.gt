@@ -4,6 +4,7 @@
 %. Abstract
 
 -%> `noindent;`pgl; In data sharing and publishing 
+"!/test ;/GGG/ ok./"
 contexts such as "/Executable Research Objects/", 
 natural-language documents coexist with raw 
 data files and, potentially, multimedia resources.  
@@ -165,7 +166,7 @@ described the steps they took to (imperfectly) convert
 a "/call to action/" encouraging publishers to adopt a 
 more consistent text representation.{<
 Under a section explicitly titled "/call to action/" they 
-counsel that "/a number of 
+counsel that "!/a number of 
 challenges prevent easy application of ;NLP
 and text mining techniques to these papers.... [T]he 
 primary distribution format of scientific papers
@@ -175,7 +176,7 @@ rendered faithfully for reading and printing, and
 mixes visual with semantic information.
 Significant effort is needed to coerce ;PDF into a
 format more amenable to text mining, such as ;JATS
-;XML, ;BioC ... or ;S2ORC ;JSON .... [T]he
+;/XML/, ;BioC ... or ;S2ORC ;JSON .... [T]he
 community must define and agree upon an 
 appropriate standard of representation./"
 [/LucyLuWangEtAl:8==Allen Institute/]
