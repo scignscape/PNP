@@ -249,7 +249,7 @@ rendered faithfully for reading and printing, and
 mixes visual with semantic information.
 Significant effort is needed to coerce <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> into a
 format more amenable to text mining, such as <styled-content style="emph-acronym"><abbrev>JATS</abbrev></styled-content>
-<styled-content style="emph-acronym"><abbrev>XML,</abbrev></styled-content> <styled-content style="emph-acronym_some-lc">BioC</styled-content>  or <styled-content style="emph-acronym"><abbrev>S2ORC</abbrev></styled-content> <styled-content style="emph-acronym"><abbrev>JSON....</abbrev></styled-content> [T]he
+<styled-content style="emph-acronym"><abbrev>XML,</abbrev></styled-content> <styled-content style="emph-acronym_some-lc">BioC</styled-content>  or <styled-content style="emph-acronym"><abbrev>S2ORC</abbrev></styled-content> <styled-content style="emph-acronym"><abbrev>JSON&#x2026;.</abbrev></styled-content> [T]he
 community must define and agree upon an
 appropriate standard of representation.</styled-content>
 <!-- source: Allen Institute -->
@@ -1363,7 +1363,7 @@ protocol or by embedding the entire <styled-content style="emph-acronym"><abbrev
 plugin or extension. Ideally, one or more molecular visualization
 applications themselves can be modified to work directly
 with these special <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> components, because &#x2014; once
-<styled-content style="emph-macro"><![CDATA[ThreeD]]></styled-content> files are loaded into the software &#x2014; the
+<styled-content style="emph-macro"><![CDATA[3D]]></styled-content> files are loaded into the software &#x2014; the
 specific chemical compound being studied, and its properties,
 could be cross-referenced to locations in
 the original research manuscript (or, analogously, the students' textbooks).} 
@@ -3876,8 +3876,9 @@ includes both raw-data and text objects.
     <name><surname>Bansal</surname> <given-names>Aruna</given-names></name>, <etal/>, <article-title>HgMed: Hypergraphs Mediating Schematic 
 Translations Between Data Models</article-title>. 
     <source>Proceedings</source> <conf-name>27th International Database 
-Engineered Applications Symposium (IDEAS '23)</conf-name> (<conf-date><!--month-->May<!--/month-->, <!--year-->2023<!--/year--></conf-date>)
+Engineered Applications Symposium (IDEAS '23)</conf-name> (<conf-date><!--month-->May<!--/month-->, <!--year-->2023<!--/year--></conf-date>).
 
+    DOI: <pub-id pub-id-type="doi">10.1145/3589462.3589476</pub-id>
     <ext-link xlink:href="https://dl.acm.org/doi/pdf/10.1145/3589462.3589476" ext-link-type="url"><!--uri-->https://dl.acm.org/doi/pdf/10.1145/3589462.3589476<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -3914,8 +3915,9 @@ Text</article-title>.
   <mixed-citation>
     <name><surname>Bleeker</surname> <given-names>Elli</given-names></name>, <etal/>, 
     <article-title>Texts as Hypergraphs: An Intuitive Representation of Interpretations of Text</article-title>.
-    <source>Journal of the Text Encoding Initiative</source>, <volume>14</volume> (April 2021&#x2013;March 2023)
+    <source>Journal of the Text Encoding Initiative</source>, <volume>14</volume> (April 2021&#x2013;March 2023).
 
+    DOI: <pub-id pub-id-type="doi">10.4000/jtei.3919</pub-id>
     <ext-link xlink:href="https://journals.openedition.org/jtei/3919" ext-link-type="url"><!--uri-->https://journals.openedition.org/jtei/3919<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -3941,7 +3943,8 @@ Extending Database Technology</conf-name> (<conf-date><!--month-->March<!--/mont
   <mixed-citation>
     <name><surname>Brady</surname> <given-names>Edwin C.</given-names></name>, <article-title>IDRIS &#x2014; Systems Programming Meets Full Dependent Types</article-title>.
 
-    <ext-link xlink:href="https://www.type-driven.org.uk/edwinb/papers/plpv11.pdf" ext-link-type="url"><!--uri-->https://www.type-driven.org.uk/edwinb/papers/plpv11.pdf<!--/uri--></ext-link>
+    DOI: <pub-id pub-id-type="doi">10.1145/1929529.1929536</pub-id>
+    <ext-link xlink:href="https://dl.acm.org/doi/pdf/10.1145/1929529.1929536" ext-link-type="url"><!--uri-->https://dl.acm.org/doi/pdf/10.1145/1929529.1929536<!--/uri--></ext-link>
 
   </mixed-citation>
 </ref>
@@ -3981,8 +3984,9 @@ and Conceptual Space Modeling for COVID, Cancer, and Cardiac Care</source>
     <name><surname>Comeau</surname> <given-names>Donald C.</given-names></name>, <etal/>, 
 <article-title>BioC: a minimalist approach to
 interoperability for biomedical text processing</article-title>. 
-    <source>Database</source>, <!--year-->2013<!--/year-->
+    <source>Database</source>, <!--year-->2013<!--/year-->.
 
+    DOI: <pub-id pub-id-type="doi">10.1093/database/bat064</pub-id>    
     <ext-link xlink:href="https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content" ext-link-type="url"><!--uri-->https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -4039,8 +4043,9 @@ Workshop on Foundations of Object-Oriented Languages</conf-name>
     <name><surname>Ludaescher</surname> <given-names>Bertram</given-names></name>, <etal/>, 
 <article-title>Capturing the 'Whole Tale' of Computational Research: Reproducibility 
 in Computing Environments</article-title>.
-    <source>arXiv 1610.09958</source>, <!--year-->2016<!--/year-->
+    <source>arXiv 1610.09958</source>, <!--year-->2016<!--/year-->.
 
+    DOI: <pub-id pub-id-type="doi">10.48550/arXiv.1610.09958</pub-id>    
     <ext-link xlink:href="https://arxiv.org/abs/1610.09958" ext-link-type="url"><!--uri-->https://arxiv.org/abs/1610.09958<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -4065,8 +4070,9 @@ in Computing Environments</article-title>.
 A Canonical Workflow Framework and FAIR Digital
 Object Approach to Quality Research Output</article-title>. 
     <source>Data Intelligence</source>, Vol. <volume>4</volume>, Num.  
-<issue>2</issue> (<!--year-->2022<!--/year-->), pp. <fpage>306</fpage>&#x2013;<lpage>319</lpage>
+<issue>2</issue> (<!--year-->2022<!--/year-->), pp. <fpage>306</fpage>&#x2013;<lpage>319</lpage>.
 
+    DOI: <pub-id pub-id-type="doi">10.1162/dint_a_00133</pub-id>    
     <ext-link xlink:href="https://www.sciengine.com/DI/doi/10.1162/dint_a_00133" ext-link-type="url"><!--uri-->https://www.sciengine.com/DI/doi/10.1162/dint_a_00133<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -4090,8 +4096,9 @@ Object Approach to Quality Research Output</article-title>.
     <name><surname>Stevens</surname> <given-names>Vicky</given-names></name>, <etal/>, <article-title>Using ReproZip for 
 Reproducibility and Library Services</article-title>.
     <source>ASSIST Quarterly</source>, Vol. <volume>42</volume>, 
-Num. <issue>1</issue>, pp. <fpage>1</fpage>&#x2013;<lpage>14</lpage> 
+Num. <issue>1</issue>, pp. <fpage>1</fpage>&#x2013;<lpage>14</lpage>.
 
+    DOI: <pub-id pub-id-type="doi">10.29173/iq18</pub-id>    
     <ext-link xlink:href="https://iassistquarterly.com/index.php/iassist/article/view/18" ext-link-type="url"><!--uri-->https://iassistquarterly.com/index.php/iassist/article/view/18<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -4102,8 +4109,9 @@ Num. <issue>1</issue>, pp. <fpage>1</fpage>&#x2013;<lpage>14</lpage>
   <mixed-citation>
     <name><surname>Strijkers</surname> <given-names>Rudolf</given-names></name>, <etal/>, <article-title>Toward Executable Scientific Publications</article-title>. 
     <source>Proceedings</source> <conf-name>International Conference on Computational 
-Science (ICCS)</conf-name>, <!--year-->2011<!--/year--> 
+Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->.
 
+    DOI: <pub-id pub-id-type="doi">10.1016/J.PROCS.2011.04.074</pub-id>    
     <ext-link xlink:href="https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629" ext-link-type="url"><!--uri-->https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629<!--/uri--></ext-link>
 
   </mixed-citation>
@@ -4115,9 +4123,10 @@ Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->
   <mixed-citation>
     <name><surname>Uezato</surname> <given-names>Yuya</given-names></name>,  
 <article-title>Regular Expressions with Backreferences and Lookaheads Capture NLOG</article-title>.
-    <source>arXiv 2404.17492</source>, <!--year-->2024<!--/year-->
+    <source>arXiv 2404.17492</source>, <!--year-->2024<!--/year-->.
 
-    <ext-link xlink:href="https://arxiv.org/pdf/2404.17492" ext-link-type="url"><!--uri-->https://arxiv.org/pdf/2404.17492<!--/uri--></ext-link>
+    DOI: <pub-id pub-id-type="doi">10.48550/arXiv.2404.17492</pub-id>    
+s    <ext-link xlink:href="https://arxiv.org/pdf/2404.17492" ext-link-type="url"><!--uri-->https://arxiv.org/pdf/2404.17492<!--/uri--></ext-link>
 
   </mixed-citation>
 </ref>
