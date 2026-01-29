@@ -66,7 +66,7 @@ understand and assess published
 findings or theories.
 
 <fn fn-type="supplementary-material"><p>
-SOURCES: PDF <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf</pdf>
+SOURCES: PDF <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf</uri>
          Demo code <uri>https://github.com/scignscape/PNP</uri>
          JATS <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.jats.xml</uri>
          .gt file (parses into C++ objects): <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.gt</uri>
@@ -249,7 +249,7 @@ rendered faithfully for reading and printing, and
 mixes visual with semantic information.
 Significant effort is needed to coerce <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> into a
 format more amenable to text mining, such as <styled-content style="emph-acronym"><abbrev>JATS</abbrev></styled-content>
-<styled-content style="emph-acronym"><abbrev>XML,</abbrev></styled-content> <styled-content style="emph-acronym_some-lc">BioC</styled-content>  or <styled-content style="emph-acronym"><abbrev>S2ORC</abbrev></styled-content> <styled-content style="emph-acronym"><abbrev>JSON&#x2026;.</abbrev></styled-content> [T]he
+<styled-content style="emph-acronym"><abbrev>XML,</abbrev></styled-content> <styled-content style="emph-acronym_some-lc">BioC</styled-content>  or <styled-content style="emph-acronym"><abbrev>S2ORC</abbrev></styled-content> <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>  [T]he
 community must define and agree upon an
 appropriate standard of representation.</styled-content>
 <!-- source: Allen Institute -->
