@@ -175,7 +175,7 @@ rendered faithfully for reading and printing, and
 mixes visual with semantic information.
 Significant effort is needed to coerce ;PDF into a
 format more amenable to text mining, such as ;JATS
-;XML, ;BioC ... or ;S2ORC ;JSON.... [T]he
+;XML, ;BioC ... or ;S2ORC ;JSON .... [T]he
 community must define and agree upon an 
 appropriate standard of representation./"
 [/LucyLuWangEtAl:8==Allen Institute/]
@@ -2974,7 +2974,7 @@ compiler topics.  For clarification, I should review the
 connection between these two subjects.
 
 First. computer code in a Research Object context 
-is (hopeful) annotated and documented, so it is subject 
+is (hopefully) annotated and documented, so it is subject 
 to searching and indexing analogous to textual 
 content.  One consequence is that types' and 
 components' "/public interface/" stands in an environment  
