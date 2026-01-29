@@ -577,7 +577,7 @@ query format rather than manually rewriting <styled-content style="emph-acronym"
 context menus tend to need specific action options unique to the
 current data set, so <styled-content style="double-quote">scripts</styled-content> against an embedded <styled-content style="emph-acronym"><abbrev>VM</abbrev></styled-content> might be
 employed to populate those menus, being called somewhere after
-the triggering event (a right mouse-button click, or <styled-content style="emph-macro"><![CDATA[ctrlleft]]></styled-content> with a single button)
+the triggering event (a right mouse-button click, or <styled-content style="emph-macro"><![CDATA[ctrl+click]]></styled-content> with a single button)
 is registered. Similar comments could be made about areas of
 functionality such as setting up initial parameters for a
 simulation; managing text/data cross-references; logic for
@@ -909,7 +909,7 @@ for representing the written word. In recent years,
 popular, producing human-readable <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content>s through techniques
 like <styled-content style="emph-acronym"><abbrev>XSL-FO</abbrev></styled-content> while also enabling natural-language
 content to be analyzed via generic <styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content> protocols, such as
-<styled-content style="emph-acronym_some-lc">XQuery</styled-content> and <styled-content style="emph-acronym"><abbrev>XQSE</abbrev></styled-content> (<styled-content style="emph-acronym_some-lc">XQuery</styled-content> Scripting Extensions). <styled-content style="emph-macro"><![CDATA[lJSON]]></styled-content>-based
+<styled-content style="emph-acronym_some-lc">XQuery</styled-content> and <styled-content style="emph-acronym"><abbrev>XQSE</abbrev></styled-content> (<styled-content style="emph-acronym_some-lc">XQuery</styled-content> Scripting Extensions). <styled-content style="emph-macro"><![CDATA[JSON]]></styled-content>-based
 formats are also used, like the <styled-content style="emph-acronym"><abbrev>JSON</abbrev></styled-content>-<styled-content style="emph-acronym"><abbrev>S2ORC</abbrev></styled-content> protocol adopted
 by <styled-content style="emph-macro"><![CDATA[CORD19]]></styled-content> (mentioned earlier). Specifications such as the
 Text Encoding Initiative (<styled-content style="emph-acronym"><abbrev>TEI</abbrev></styled-content>) may employ a generic
@@ -1206,9 +1206,9 @@ underlying representation. For instance,
 navigation between consecutive paragraphs would amount
 (presumably) to navigating between sibling paragraph
 elements in an <styled-content style="emph-acronym"><abbrev>XML</abbrev></styled-content> tree, assuming that paragraphs
-are the basic units of encoding. However, natural-language
+are the basic units of encoding (in a document hierarchy). However, natural-language
 text has its own topomorphic profile which is only
-approximately captured by <styled-content style="double-quote">topomorphic regimes</styled-content> <italic>in toto</italic> of
+approximately captured by <styled-content style="double-quote">topomorphic regimes</styled-content> of
 generic formats adopted for text encoding. In this
 section I will consider topomorphic properties of
 text on its own terms, separate and apart from
@@ -1587,13 +1587,14 @@ etc.) can be preserved via mechanisms such as
 <styled-content style="emph-macro"><![CDATA[LaTeX]]></styled-content> <styled-content style="emph-symbol">pgfsavepos</styled-content>.</p></fn>
             <!--leave footnote-->
 
- In the absence
-of any restrictions, every sentence in a document should
-thus be checked, with potential branching to account
+ Sentences (not, say, context-unaware k-windows) are the
+basic match-containers. Sentences, on this approach
+(not, say, context-unaware k-windows) are the basic containers seen to surround a match. Absent
+any restrictions otherwise, all sentence in a document are search candidates, with potential branching to account
 for <styled-content style="double-quote">nesting</styled-content> relationships (as with footnotes and block quotes, potentially)
 as well as divergent possibilities for <styled-content style="double-quote">next sibling</styled-content> (consider a footnote
 marked just after the end of one sentence: we can visualize the discourse
-as continuing on two tracks, one within the footnote and one continuing the main text.
+as continuing on two tracks, one within the footnote and one continuing the main text).
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
 
@@ -1604,7 +1605,7 @@ explicitly narrow the scope to exclude or include specific
 areas of text. They might filter searches to consider
 only main document content, not (say) footnotes or endnotes;
 conversely, perhaps they <italic>only</italic> want to search within
-footnote lines, quotes, bulleted content, etc. From a topomorphic
+footnotes' lines, quotations, bulleted content, etc. From a topomorphic
 perspective, the relevant details here are not so much
 the explicit <styled-content style="double-quote">tags</styled-content> or other markup via which special
 segments like quotes and footnotes are introduced, but
@@ -1674,8 +1675,8 @@ code points and their discursive roles.
 
 <!--enter p.1-->
         <p id="Para-50">Such details of <italic>internal</italic> representation, furthermore,
-are distinct from user functionality like copy-paste
-or <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> annotations. For example, consider requests
+are distinct from such <styled-content style="emph-acronym"><abbrev>UX</abbrev></styled-content> protocols as copy-paste
+or <styled-content style="emph-acronym"><abbrev>PDF</abbrev></styled-content> comment-annotations. For example, consider requests
 to copy the current sentence to clipboard. Presumably
 the user then intends to paste those contents into some
 other location, but that could be many things
@@ -1704,7 +1705,7 @@ suppose a desired match is one single word enclosed
 in double quotes. Quite plausibly the <styled-content style="double-quote">input</styled-content> to
 that query could have either the straight/<styled-content style="emph-acronym"><abbrev>ASCII</abbrev></styled-content> form
 (if the user is typing from a keyboard) or
-the curved left-versus-right forms (e.g., if they've copied
+the curved left-versus-right forms (e.g., if they were copied
 from some other document). Internally, meanwhile,
 the encoded text elements might not use quote delimiters at
 all, but rather some form of quotation object.
@@ -1712,7 +1713,7 @@ Thus, testing whether an input string matches text/discourse
 objects at a particular point in the character-stream
 is more involved than simply comparing numeric glyph-codes.
 Likewise, a text-query engine should assume that results
-might be requested in a variety of formats (<styled-content style="emph-acronym_some-lc">Latin1</styled-content>, <styled-content style="emph-acronym"><abbrev>UTF-16</abbrev></styled-content>,
+could be requested in a variety of formats (<styled-content style="emph-acronym_some-lc">Latin1</styled-content>, <styled-content style="emph-acronym"><abbrev>UTF-16</abbrev></styled-content>,
 <styled-content style="emph-acronym"><abbrev>HTML</abbrev></styled-content>, etc.) such that how text is conveyed, in a variety of
 potential reporting protocols, becomes data for each
 text element (e.g., sentence objects) that might deviate
@@ -1725,7 +1726,7 @@ of ellipses and emendations for quotes; etc.?
 
 
 <!--enter p.1-->
-        <p id="Para-52">In short, there are structural differences between <italic>query input</italic>
+        <p id="Para-52">In short, there are structural differences between queries' <italic>input</italic>
 formats, <italic>internal</italic> (object-based) encoding, and various result
 <italic>output</italic> formats; and nontrivial algorithms might be
 needed to map both the first to second (and evaluate potential
@@ -1734,9 +1735,9 @@ should be considered by a <styled-content style="emph-acronym"><abbrev>VM</abbre
 compilation target for a text-query language. Suppose
 that all discursive content is stored internally as
 <styled-content style="emph-acronym"><abbrev>C++</abbrev></styled-content> objects, and that methods on those objects
-handle all the complicating factors related to whether a
-specific part of a given sentence (canonically) is a successful
-match to a query string. Robust query-evaluation algorithms
+handle any complicating factors regarding whether a
+specific part of a given sentence (or other potential match-container) is a successful
+hit for a query string. Robust query-evaluation algorithms
 would presumably encompass a variety of parameters/flags and
 protocol variation, considering the range of discursive
 contexts which have somewhat different match-evaluation
@@ -1784,11 +1785,11 @@ text-search queries against documents and queries in general
 topomorphic capabilities specific to the structures of
 written discourse, the <styled-content style="emph-acronym"><abbrev>VM</abbrev></styled-content>'s operations might also navigate
 through various raw data formats, depending on how the
-Research Object is encoded. <styled-content style="emph-macro"><![CDATA[lVM]]></styled-content>s, that is, may need to be
+Research Object is encoded. <styled-content style="emph-macro"><![CDATA[VM]]></styled-content>s, that is, may need to be
 adaptable for multiple kinds of <styled-content style="double-quote">topomorphic regimes</styled-content>.
-But algorithms specific to text searches may also
+But algorithms specific to text searches could also
 be applied to these different data formats, insofar as
-a query might be applied against data entities
+a query might be evaluated against data entities
 (column labels, text which is an individual field for some
 record) and/or computer code. Questions about character
 encoding and converting from query-input formats are relevant
@@ -2895,7 +2896,7 @@ into search and documentation assets.
         <p id="Para-107">Constraints such as two lists having the same size,
 which here I have examined via contracts, are also studied
 in terms of dependent type theory. A type whose instances
-are lists of length <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> is <styled-content style="double-quote">dependent</styled-content> in that
+are lists of length <styled-content style="emph-macro"><![CDATA[l]]></styled-content> is <styled-content style="double-quote">dependent</styled-content> in that
 its specification depends on a <italic>value</italic>
 (by contrast to <italic>meta-types</italic> that depend on a
 <italic>type</italic> to be specialized, as in
@@ -2915,7 +2916,7 @@ applications for languages in general
 is <xref ref-type="bibr" rid="B12">12</xref>.</p></fn>
             <!--leave footnote-->
 
- If the aforementioned <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> is a compile-time
+ If the aforementioned <styled-content style="emph-macro"><![CDATA[l]]></styled-content> is a compile-time
 constant, then the relevant type
 may be called <italic>weakly</italic> dependent.
 
@@ -2958,8 +2959,8 @@ is expressed via the type system alone
 (without the added machinery of contracts
 or something similar). Specifically, the
 type of the second list would depend
-on a length <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content>, but the actual value of
-<styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> is unspecified
+on a length <styled-content style="emph-macro"><![CDATA[l]]></styled-content>, but the actual value of
+<styled-content style="emph-macro"><![CDATA[l]]></styled-content> is unspecified
 until the actual procedure-call, and
 derived from the list's sibling argument
 in the channel package.
@@ -3055,17 +3056,17 @@ This is a <italic>runtime</italic> detail
 and therefore that specific value cannot
 be manipulated at compile time. Instead,
 one presumably would need something like a
-<italic>variable</italic> <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> that holds <styled-content style="emph-highlight">y</styled-content>'s size.
-Such <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> functions as a constant
+<italic>variable</italic> <styled-content style="emph-macro"><![CDATA[l]]></styled-content> that holds <styled-content style="emph-highlight">y</styled-content>'s size.
+Such <styled-content style="emph-macro"><![CDATA[l]]></styled-content> functions as a constant
 only within one execution of the procedure's
 implementation body; it works
 <italic>de facto</italic> like a parameter.
 The procedure needs to be prepared to
-handle any possible <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> value
+handle any possible <styled-content style="emph-macro"><![CDATA[l]]></styled-content> value
 within its overall range (which in turn
 depends on the maximum legal size for <styled-content style="emph-highlight">y</styled-content>).
 Any dispatch or fine-tuning which relies on
-particular values for <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> has to be
+particular values for <styled-content style="emph-macro"><![CDATA[l]]></styled-content> has to be
 implemented in terms of runtime
 checks (<styled-content style="emph-symbol">if/else</styled-content> and so on). By extension,
 the same applies to <styled-content style="emph-highlight">y</styled-content>, at least
@@ -3085,11 +3086,11 @@ has to treat <styled-content style="emph-highlight">y</styled-content> non-depen
 it were actually assigned a more general
 type (e.g., the relevant list type without
 any size data). We can certainly obtain a
-runtime variable like <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> from,
+runtime variable like <styled-content style="emph-macro"><![CDATA[l]]></styled-content> from,
 say, <styled-content style="emph-highlight">y.size()</styled-content>, but that's not doing
 anything we wouldn't do with an
 ordinary type system. Having
-such an <styled-content style="emph-macro"><![CDATA[lLen]]></styled-content> precomputed seems
+such an <styled-content style="emph-macro"><![CDATA[l]]></styled-content> precomputed seems
 basically syntactic sugar. At best the dependent
 specification is ornamental, for documentation
 but not computational purposes.

@@ -1239,7 +1239,7 @@ From the topomorphic perspective, such details
 inform how we model text content as a "/space/" to 
 be navigated within and traversed across.  This, 
 in turn, is dependent on the goals of algorithms 
-that operate against textual objects.
+that operate against textual objects.`enlargethispage<1em>;
 
 An obvious class of procedures are those which 
 attempt to locate matches to query strings (typically 
@@ -1269,20 +1269,21 @@ context have to be correlated with the former.
 In special cases, however, ;/PDF/ page coordinates 
 of preselected items of interest (keywords, index entries, 
 etc.) can be preserved via mechanisms such as 
-,/LaTeX/ ;;/pgfsavepos/. >}  In the absence 
-of any restrictions, every sentence in a document should 
-thus be checked, with potential branching to account 
+,/LaTeX/ ;;/pgfsavepos/. >}  Sentences (not, say, context-unaware k-windows) are the
+basic match-containers.  Sentences, on this approach  
+(not, say, context-unaware k-windows) are the basic containers seen to surround a match.  Absent
+any restrictions otherwise, all sentence in a document are search candidates, with potential branching to account 
 for "/nesting/" relationships (as with footnotes and block quotes, potentially) 
 as well as divergent possibilities for "/next sibling/" (consider a footnote 
 marked just after the end of one sentence: we can visualize the discourse 
-as continuing on two tracks, one within the footnote and one continuing the main text.
+as continuing on two tracks, one within the footnote and one continuing the main text).`enlargethispage<1em>;
 
 In some cases, however, whomever initiates a search might 
 explicitly narrow the scope to exclude or include specific 
 areas of text.  They might filter searches to consider 
 only main document content, not (say) footnotes or endnotes; 
 conversely, perhaps they */only/* want to search within 
-footnote lines, quotes, bulleted content, etc.  From a topomorphic 
+footnotes' lines, quotations, bulleted content, etc.  From a topomorphic 
 perspective, the relevant details here are not so much 
 the explicit "/tags/" or other markup via which special 
 segments like quotes and footnotes are introduced, but 
@@ -1340,8 +1341,8 @@ closer to a one-to-one match between symbols'
 code points and their discursive roles.
 
 Such details of */internal/* representation, furthermore, 
-are distinct from user functionality like copy-paste 
-or ;/PDF/ annotations.  For example, consider requests 
+are distinct from such ;/UX/ protocols as copy-paste 
+or ;/PDF/ comment-annotations.  For example, consider requests 
 to copy the current sentence to clipboard.  Presumably 
 the user then intends to paste those contents into some 
 other location, but that could be many things 
@@ -1361,7 +1362,7 @@ suppose a desired match is one single word enclosed
 in double quotes.  Quite plausibly the "/input/" to 
 that query could have either the straight/;/ASCII/ form 
 (if the user is typing from a keyboard) or 
-the curved left-versus-right forms (e.g., if they've copied 
+the curved left-versus-right forms (e.g., if they were copied 
 from some other document).  Internally, meanwhile, 
 the encoded text elements might not use quote delimiters at 
 all, but rather some form of quotation object.  
@@ -1369,7 +1370,7 @@ Thus, testing whether an input string matches text/discourse
 objects at a particular point in the character-stream 
 is more involved than simply comparing numeric glyph-codes.  
 Likewise, a text-query engine should assume that results 
-might be requested in a variety of formats (;/Latin1/, ;/UTF-16/, 
+could be requested in a variety of formats (;/Latin1/, ;/UTF-16/, 
 ;/HTML/, etc.) such that how text is conveyed, in a variety of 
 potential reporting protocols, becomes data for each 
 text element (e.g., sentence objects) that might deviate 
@@ -1378,7 +1379,7 @@ how should results note the presence of footnote markers;
 of citations (in the form of numbers in square brackets, for instance); 
 of ellipses and emendations for quotes; etc.? 
 
-In short, there are structural differences between */query input/* 
+In short, there are structural differences between queries' */input/* 
 formats, */internal/* (object-based) encoding, and various result 
 */output/* formats; and nontrivial algorithms might be 
 needed to map both the first to second (and evaluate potential 
@@ -1387,9 +1388,9 @@ should be considered by a ;/VM/ whose roles include serving as a
 compilation target for a text-query language.  Suppose 
 that all discursive content is stored internally as 
 ;/C++/ objects, and that methods on those objects 
-handle all the complicating factors related to whether a 
-specific part of a given sentence (canonically) is a successful 
-match to a query string.  Robust query-evaluation algorithms 
+handle any complicating factors regarding whether a 
+specific part of a given sentence (or other potential match-container) is a successful 
+hit for a query string.  Robust query-evaluation algorithms 
 would presumably encompass a variety of parameters/flags and 
 protocol variation, considering the range of discursive 
 contexts which have somewhat different match-evaluation 
@@ -1431,9 +1432,9 @@ written discourse, the ;/VM/'s operations might also navigate
 through various raw data formats, depending on how the 
 Research Object is encoded.  ,/lVM/s, that is, may need to be 
 adaptable for multiple kinds of "/topomorphic regimes/".  
-But algorithms specific to text searches may also 
+But algorithms specific to text searches could also 
 be applied to these different data formats, insofar as 
-a query might be applied against data entities 
+a query might be evaluated against data entities 
 (column labels, text which is an individual field for some 
 record) and/or computer code.  Questions about character 
 encoding and converting from query-input formats are relevant 
