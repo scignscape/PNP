@@ -40,7 +40,7 @@ findings or theories.
 
 In the context of "/publishing technology/", one would traditionally 
 understand a "/publication/" to be a natural-language document 
-(e.g. an article, book, or book chapter).  But several 
+(e.g., an article, book, or book chapter).  But several 
 more recent trends in publishing and science have complicated 
 this picture.  For example: the idea of a "/replication crisis/" 
 %-- concerns that results of influential experiments in natural and social 
@@ -52,7 +52,7 @@ details behind published findings.  Such initiatives in turn
 led to "/Minimum Information/" standards (e.g., 
 Minimum Information for Biological and Biomedical Investigations, or 
 ;/MIBBI/, which encompasses several dozen more targeted specifications) 
-and to mixed data/ code/multimedia formats such as ;/FAIR/sharing  
+and to mixed data/code/multimedia formats such as ;/FAIR/sharing  
 (Findable, Accessible, Interoperable, Reusable) and 
 Research Objects (including "/Executable Research Objects/", 
 "/Executable Papers/",  
@@ -671,7 +671,7 @@ The discussion will address both compiler and runtime
 concerns, and also consider the forms of information 
 structures %-- both textual and data sets %-- that 
 ;/VM/-compiled components would likely 
-need to traverse/navigate, insofar as the relevant 
+need to traverse/ navigate, insofar as the relevant 
 structural details may be directly incorporated 
 into the ;/VM/'s instruction roster. 
 
@@ -1593,14 +1593,14 @@ to reuse those examples).  If the components are
 included as source code within data sets, it is  
 possible for all project-specific customizations to be 
 implemented simply by modifying the relevant ;/C++/ code.  
-Nonetheless, adapting them to a given data publications 
+Nonetheless, adapting them to a given data publication 
 may be less time-consuming if done via a scripting 
 or query language explicitly built for components 
 like those being fine-tuned.
 
 I therefore see numerous use cases for a ;/VM/ to buttress 
 scripting or query languages that express 
-customizations that would be more complex  
+customizations which would be more complex  
 to achieve via manually editing ;/C++/ code itself.  
 At the same time, computationally intensive routines 
 %-- or simply ones that for stylistic reasons are 
@@ -1609,9 +1609,9 @@ coded (specifically for the data set) in ;/C++/.
 One consequence is that interfacing with 
 ;/C++/ should be easy.  Making calls to ;/C++/ procedures 
 (and marshaling input/return arguments) should 
-require less effort that evident in languages 
+require less effort than evident in languages 
 like ;/Python/, ;/JavaScript/, or ;/Haskell/, which 
-serve more as generic languages in their own right.
+serve more as generic, multi-purpose languages in their own right.
 
 Conceptually, a "/foreign-function interface/" (;/FFI/) to 
 ;/C++/ procedures is relatively straightforward.  The called 
@@ -1638,7 +1638,7 @@ then ,,/f/ with its result.  Here "/composition/"
 acts like a binary operator on two function objects.  
 For languages that support similar notation, 
 certain functional values could be expressed 
-without an implementation body on their 
+without any implementation body on their 
 own.  This leaves open the possibility 
 of construing functions as a superset of procedures, 
 where the latter are always written out in 
@@ -1696,8 +1696,8 @@ could be adopted to different calling conventions and
 ;/ABI/s relevant to the ;/VM/ environment, both the 
 host language (which, in the general case, is not 
 necessarily ;/C++/) and calls to procedures 
-implemented via the ;/VM/ itself (i.e., as opcode/argument 
-sequences).  Instead of a single program stack, 
+implemented via the ;/VM/ itself (i.e., 
+as sequences of opcode/argument pairs).  In lieu of a single program stack, 
 procedure inputs and outputs are instead split 
 into a series of channels, each with specific 
 roles and semantics.  Every call is performed 
@@ -1756,12 +1756,12 @@ than other scripting languages, I believe. `vspace<1em>;
 
 Another purpose for channels is to support a wider range of 
 inter-procedure communication behind the scenes, 
-some use cases for which will be discussed in the next section.
+some use cases for which will be reviewed in the next section.
 
 
 // //   Proof-Scope and Contract Overloads
 
-As discussed, one purpose for scripts within Executable Research Objects 
+As I've discussed earlier, one purpose for scripts within Executable Research Objects 
 is to document analyses and data structures pertinent to 
 published investigations.  The resulting programs are not necessarily 
 exactly the same as originary code, but they can introduce or 
@@ -1770,7 +1770,7 @@ To put it differently, the demonstrative code should foreground
 details such as preconditions, type invariants, 
 units of measurement, and value ranges, whether or not 
 these factor directly into algorithm implementations.  
-The code serves not merely computational ends but 
+Code in this style serves not merely computational ends but 
 also expressive roles as concrete tools for human 
 examiners to understand theoretical models and programming 
 techniques visible through the sources.
@@ -1816,7 +1816,7 @@ simply via procedures' type signatures.
 
 For another concrete example, consider a procedure 
 whose role is to initialize a "/double-associative/" 
-array or "/reversible map/"; that is, a tuple of pairs that uniquely map 
+array or "/reversible map/"; that is, a tuple of pairs which uniquely map 
 each key to a unique value, so the association 
 may be inverted (keys can be obtained from values 
 as much as vice-versa).  To build such a container, 
@@ -2131,7 +2131,7 @@ of temporary objects.
 Apart from illustrating one use for channels, these 
 points are relevant to the general protocols 
 and style of a scripting language.  Observe 
-that passing an object/value by (non-constant) reference 
+that passing an \makebox{object/value} by (non-constant) reference 
 can serve one of several purposes:`upAdj<7pt>;
 
 %/ enums
@@ -2592,7 +2592,7 @@ made assumptions about the
 full type objects and rarely 
 if ever practice type erasure.  
 Implementing templates 
-via duplicate generated bytecode-blocks 
+via duplicate generated bytecode blocks 
 is not the only tactic.  But, 
 for ;/VM/s in the Research Object 
 milieu relevant to this paper, 
@@ -2766,7 +2766,7 @@ naturally with the issue of extending */syntax/*, which I discuss next.
 so here I assume that initial parsing is performed via techniques 
 that could be built into source code directly.  In particular, 
 I assume that language grammars are defined via regular expressions, which 
-are matched against input files via conventional Regex libraries.  
+are matched against input files via conventional regex libraries.  
 Several of these exist for ;/C++/; within Research Objects employing 
 ;/Qt/ for cross-platform ;/GUI/, the ;;/QRegularExpression/ classes 
 are adequate.{<  For the record, I'll add a few comments however 

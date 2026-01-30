@@ -34,7 +34,6 @@ permission to archive and post a copy of this paper on the Journal Article Tag S
 
 
 <abstract><p>In data sharing and publishing
-<styled-content style-type="long-double-quote" style="color:rgb(48, 14, 40)">&#x201c;test <styled-content style-type="emph-acronym_in-ql" style="color:rgb(154, 14, 19)"><abbrev>GGG</abbrev></styled-content> ok.&#x201d;</styled-content>
 contexts such as <styled-content style-type="double-quote">&#x201c;Executable Research Objects&#x201d;</styled-content>,
 natural-language documents coexist with raw
 data files and, potentially, multimedia resources.
@@ -86,7 +85,7 @@ SOURCES: PDF <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-
 <!--enter p.1-->
         <p id="Para-1">In the context of <styled-content style-type="double-quote">&#x201c;publishing technology&#x201d;</styled-content>, one would traditionally
 understand a <styled-content style-type="double-quote">&#x201c;publication&#x201d;</styled-content> to be a natural-language document
-(e.g. an article, book, or book chapter). But several
+(e.g., an article, book, or book chapter). But several
 more recent trends in publishing and science have complicated
 this picture. For example: the idea of a <styled-content style-type="double-quote">&#x201c;replication crisis&#x201d;</styled-content>
 &#x2014; concerns that results of influential experiments in natural and social
@@ -98,7 +97,7 @@ details behind published findings. Such initiatives in turn
 led to <styled-content style-type="double-quote">&#x201c;Minimum Information&#x201d;</styled-content> standards (e.g.,
 Minimum Information for Biological and Biomedical Investigations, or
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>MIBBI</abbrev></styled-content>, which encompasses several dozen more targeted specifications)
-and to mixed data/ code/multimedia formats such as <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>sharing
+and to mixed data/code/multimedia formats such as <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>sharing
 (Findable, Accessible, Interoperable, Reusable) and
 Research Objects (including <styled-content style-type="double-quote">&#x201c;Executable Research Objects&#x201d;</styled-content>,
 <styled-content style-type="double-quote">&#x201c;Executable Papers&#x201d;</styled-content>,
@@ -1379,7 +1378,7 @@ supplemental data and annotations can be relevant, such as
 visualization tools, transcriptions between names and
 formulae, etc. It would be reasonable to include access to
 such information among context-menus activated both in
-<styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> window areas proximate to names/ formulas in text
+<styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> window areas proximate to names/formulas in text
 form, and in software tools that might be drafted
 for interactive displays or scientific analysis.
 In other words, context-menu implementations
@@ -1985,7 +1984,7 @@ to reuse those examples). If the components are
 included as source code within data sets, it is
 possible for all project-specific customizations to be
 implemented simply by modifying the relevant <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> code.
-Nonetheless, adapting them to a given data publications
+Nonetheless, adapting them to a given data publication
 may be less time-consuming if done via a scripting
 or query language explicitly built for components
 like those being fine-tuned.
@@ -1996,7 +1995,7 @@ like those being fine-tuned.
 <!--enter p.1-->
         <p id="Para-63">I therefore see numerous use cases for a <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>VM</abbrev></styled-content> to buttress
 scripting or query languages that express
-customizations that would be more complex
+customizations which would be more complex
 to achieve via manually editing <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> code itself.
 At the same time, computationally intensive routines
 &#x2014; or simply ones that for stylistic reasons are
@@ -2005,9 +2004,9 @@ coded (specifically for the data set) in <styled-content style-type="emph-acrony
 One consequence is that interfacing with
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> should be easy. Making calls to <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> procedures
 (and marshaling input/return arguments) should
-require less effort that evident in languages
+require less effort than evident in languages
 like <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Python</styled-content>, <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">JavaScript</styled-content>, or <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Haskell</styled-content>, which
-serve more as generic languages in their own right.
+serve more as generic, multi-purpose languages in their own right.
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
 
@@ -2040,7 +2039,7 @@ then <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">
 acts like a binary operator on two function objects.
 For languages that support similar notation,
 certain functional values could be expressed
-without an implementation body on their
+without any implementation body on their
 own. This leaves open the possibility
 of construing functions as a superset of procedures,
 where the latter are always written out in
@@ -2113,8 +2112,8 @@ could be adopted to different calling conventions and
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>ABI</abbrev></styled-content>s relevant to the <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>VM</abbrev></styled-content> environment, both the
 host language (which, in the general case, is not
 necessarily <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content>) and calls to procedures
-implemented via the <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>VM</abbrev></styled-content> itself (i.e., as opcode/argument
-sequences). Instead of a single program stack,
+implemented via the <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>VM</abbrev></styled-content> itself (i.e.,
+as sequences of opcode/argument pairs). In lieu of a single program stack,
 procedure inputs and outputs are instead split
 into a series of channels, each with specific
 roles and semantics. Every call is performed
@@ -2185,7 +2184,7 @@ than other scripting languages, I believe.
 <!--enter p.1-->
         <p id="Para-70">Another purpose for channels is to support a wider range of
 inter-procedure communication behind the scenes,
-some use cases for which will be discussed in the next section.
+some use cases for which will be reviewed in the next section.
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
 
@@ -2199,7 +2198,7 @@ some use cases for which will be discussed in the next section.
 
 
 <!--enter p.1-->
-        <p id="Para-71">As discussed, one purpose for scripts within Executable Research Objects
+        <p id="Para-71">As I've discussed earlier, one purpose for scripts within Executable Research Objects
 is to document analyses and data structures pertinent to
 published investigations. The resulting programs are not necessarily
 exactly the same as originary code, but they can introduce or
@@ -2208,7 +2207,7 @@ To put it differently, the demonstrative code should foreground
 details such as preconditions, type invariants,
 units of measurement, and value ranges, whether or not
 these factor directly into algorithm implementations.
-The code serves not merely computational ends but
+Code in this style serves not merely computational ends but
 also expressive roles as concrete tools for human
 examiners to understand theoretical models and programming
 techniques visible through the sources.
@@ -2266,7 +2265,7 @@ simply via procedures' type signatures.
 <!--enter p.1-->
         <p id="Para-74">For another concrete example, consider a procedure
 whose role is to initialize a <styled-content style-type="double-quote">&#x201c;double-associative&#x201d;</styled-content>
-array or <styled-content style-type="double-quote">&#x201c;reversible map&#x201d;</styled-content>; that is, a tuple of pairs that uniquely map
+array or <styled-content style-type="double-quote">&#x201c;reversible map&#x201d;</styled-content>; that is, a tuple of pairs which uniquely map
 each key to a unique value, so the association
 may be inverted (keys can be obtained from values
 as much as vice-versa). To build such a container,
@@ -3250,7 +3249,7 @@ made assumptions about the
 full type objects and rarely
 if ever practice type erasure.
 Implementing templates
-via duplicate generated bytecode-blocks
+via duplicate generated bytecode blocks
 is not the only tactic. But,
 for <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>VM</abbrev></styled-content>s in the Research Object
 milieu relevant to this paper,
@@ -3483,7 +3482,7 @@ naturally with the issue of extending <italic>syntax</italic>, which I discuss n
 so here I assume that initial parsing is performed via techniques
 that could be built into source code directly. In particular,
 I assume that language grammars are defined via regular expressions, which
-are matched against input files via conventional Regex libraries.
+are matched against input files via conventional regex libraries.
 Several of these exist for <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content>; within Research Objects employing
 <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Qt</styled-content> for cross-platform <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>GUI</abbrev></styled-content>, the <styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">QRegularExpression</styled-content> classes
 are adequate.
@@ -3572,7 +3571,7 @@ theory, are logically subsequent.
 
 <!--enter p.1-->
         <p id="Para-133">It is worth noting here that the parsing techniques under discussion
-are considered both for markup and scripting/ query languages; that is,
+are considered both for markup and scripting/query languages; that is,
 they might be used for an input language to create textual
 documents as well as programs in a scripting or query format. Suppose
 that one intends manuscripts eventually to be shared as
@@ -3847,7 +3846,7 @@ in languages like <styled-content style-type="emph-acronym" style="color:rgb(2, 
 
 <!--enter p.1-->
         <p id="Para-146">That is, both textual phenomena and raw data
-records/ observations are merged into a
+records/observations are merged into a
 common runtime (and, canonically,
 Object-Oriented) information space.
 Under this assumption, it is reasonable
