@@ -21,7 +21,7 @@ largely standalone fashion, hopefully
 usable as soon as downloaded.  To this 
 end, this paper will consider 
 how compiler and Virtual Machine tools 
-may be embedded within data-set 
+may be embedded within dataset 
 code, built from source files with 
 few external dependencies.  The paper will discuss how a 
 self-contained environment for scripting 
@@ -124,7 +124,7 @@ text extraction (or "/scraping/") from ;/PDF/ files.{<
 `fntrackLabel<poppler>;To clarify these remarks: ;PDF code 
 libraries typically have some procedure that can be called to obtain text 
 from one page and/or window area.  In ;/C++/, for example, 
-the ;Poppler library has a ;;text method of 
+the ;Poppler library has a ,,text method of 
 ;;/Poppler::Page/ which optionally takes a rectangular subarea (this allows 
 scrapers to eliminate headers and footers, for instance).  
 The strings returned by this method, however, will 
@@ -241,7 +241,7 @@ data fields of tuple-like records, for instance, are semantic
 objects potentially governed by analogous conventions as 
 technical terms present in text; algorithms described in a 
 manuscript can be studied concretely in the implementation 
-bodies of data-set functions; readers could replicate simulations 
+bodies of dataset functions; readers could replicate simulations 
 discussed in research papers with their own parameters.  
 
 Perhaps it is not obvious that the same computational toolsets that 
@@ -256,7 +256,7 @@ that implementations regarding text and data as part of a
 common computational value-space should be seriously considered.  
 For example, the code supporting an Executable Research Object 
 might be engineered to treat both text elements (e.g., 
-sentences and keywords/phrases/annotations) and data-set 
+sentences and keywords/phrases/annotations) and dataset 
 records as objects accessed and ;/GUI/-rendered via similar 
 protocols.  As a concrete example, similar methods might be 
 used to populate context menus whether activated in the area 
@@ -266,7 +266,7 @@ data field, record/tuple, or statistical aggregate.  Likewise,
 search protocols %-- whether triggered by an actual query language 
 or rather by a query-like interface within a (for instance) 
 ;/C++/ code library %-- might be engineered in parallel within 
-text-manuscript and data-set contexts.         
+text-manuscript and dataset contexts.         
   
 For the purpose of this paper, text/data integration will 
 be envisioned to be performed via a dedicated Virtual Machine.  
@@ -307,7 +307,7 @@ This is different from projects such as Kaggle (or other digital-notebook
 software, holding out the possibility that data sets might be 
 distributed as Kaggle notebooks or similar), or ;/reprozip/ [/VickyStevensEtAl/] (which packages 
 up all necessary binary components that can be identified as preconditions 
-for data-set code to run on the developer's own computer). 
+for dataset code to run on the developer's own computer). 
 
 I will not specifically address the question of whether binary or source-based 
 dissemination is easier for end-users, either in general or ,visavis any 
@@ -329,8 +329,9 @@ etc.  (The principle that Research Object code should be self-contained and sour
 does not preclude users exploring data sets, or individual files therein, 
 via discipline-specific applications that have analytic or visualization capabilities 
 conducive to advanced research %-- the idea of Executable Research Objects is not necessarily 
-to replace the tools that scientists use for their core investigations, but rather to 
-provide accessible code for evaluative and pedagogical purposes and/or for 
+to replace the tools that scientists use for their core investigations, but 
+rather`forcehypertarget<section-one-one>; 
+to provide accessible code for evaluative and pedagogical purposes and/or for 
 anyone not familiar with or able to run the "/professional/" software).
 
 
@@ -629,7 +630,7 @@ serves as middleware such that Research Object plugins
 could be implemented as scripts compiling to that ;/VM/, rather 
 than interfacing with the host software's plugin mechanism directly.
 
-Having thereby outlined several use cases on the data-set side, 
+Having thereby outlined several use cases on the dataset side, 
 I will also touch on how ;/VM/ technology could support text-related 
 tasks, such as indexing and full-text search.  One obvious 
 possibility is to achieve search functionality via a 
@@ -657,7 +658,7 @@ suggest that ;/VM/s embedded in Executable Research Objects
 can be useful across their different asset-types (documents, 
 code, raw data, graphics/multimedia).  Under the assumption 
 that a compiler and runtime environment (bytecode interpreter) 
-is offered among the data-set package, then other 
+is offered among the dataset package, then other 
 components %-- ;/GUI/ classes, a customized ;/PDF/ viewer, deserialization 
 code %-- could each utilize (e.g., link against) the 
 ;/VM/ implementation in turn, achieving consistent scripting/query 
@@ -1081,7 +1082,7 @@ protocol or by embedding the entire ;PDF code base itself as a
 plugin or extension.  Ideally, one or more molecular visualization 
 applications themselves can be modified to work directly 
 with these special ;PDF components, because %-- once 
-,/ThreeD/ files are loaded into the software %-- the 
+;3D files are loaded into the software %-- the 
 specific chemical compound being studied, and its properties, 
 could be cross-referenced to locations in 
 the original research manuscript (or, analogously, the students' textbooks).}
@@ -1107,7 +1108,7 @@ among different parts of a Research Object, including
 text (e.g., ;/PDF/) viewers.
 
 
-[|Papers with Geospatial Datasets|]    Suppose a manus\-cript takes 
+[|Papers with Geospatial Data Sets|]    Suppose a manus\-cript takes 
 its place among a 
 Research Object whose information content includes geospatial data, with 
 ;GIS "/attribute layers/" encoded via columns 
@@ -1169,7 +1170,7 @@ treatments may be notated by conventions like
 domain-specific ;XML tags, but actually implementing 
 the cross-component interop needed to leverage them 
 almost certainly requires programming over 
-textual content as well as data-set materials as a whole.  
+textual content as well as dataset materials as a whole.  
 In other words, these are concrete User Interaction 
 features that illustrate the principle that 
 text content (including objects modeling rhetorical/discourse 
@@ -1779,7 +1780,7 @@ There are multiple ways of handling such details as
 algorithm preconditions, including "/assert/" statements, 
 boolean checks performed prior to a procedure entering 
 its primary logic, exceptions, comments, and code 
-annotations.  Insofar has code has a documentary/pedagogical 
+annotations.  Insofar as code has a documentary/pedagogical 
 role, precondition requirements (and/or axiom/postcondition when applicable) 
 should potentially be handled in a more structured manner 
 via (for instance) typestates (subdividing types' extensions 
@@ -1797,7 +1798,7 @@ behind code contracts is that procedures' implementation
 bodies will often make specific assumptions about 
 their parameters (or other relevant values) that are 
 more detailed than ensured by data types alone.  
-For example, writing to a file only possible if the 
+For example, writing to a file is only possible if the 
 file exists; and dividing by an integer is only 
 possible if it is non-zero.  Some invariants 
 are extensional properties of types themselves (for 
@@ -1814,7 +1815,7 @@ Preconditions such as demanding existent files
 or non-zero numbers cannot, then, be enforced 
 simply via procedures' type signatures.
 
-For another concrete example, consider a procedure 
+For another example, consider a procedure 
 whose role is to initialize a "/double-associative/" 
 array or "/reversible map/"; that is, a tuple of pairs which uniquely map 
 each key to a unique value, so the association 
@@ -1834,20 +1835,21 @@ how to enforce this.  Such a procedure could simply
 check the two sizes and refuse to continue if 
 they are unequal; the question then is 
 what to return (perhaps an empty map, but 
-such would also be the result of a call with 
+such would also be returned from  
 two empty lists, and in that case the same-size 
 requirement is technically satisfied).  The 
 procedure could throw an exception.  Or, it could 
-simply assume that the lists are indeed same-sized.
+simply assume that the lists are indeed same-sized (no check at all).
 
 Explicitly checking preconditions 
 via ,,/if//,,/then/ tests is better than blind faith, all else being 
 equal, but that convention does violate 
-"/separation of concerns/": arguably, checking 
-that arguments agree to stipulated contracts 
-is a separate process than actually carrying out 
-the procedure's computations, and should be factored 
-into a different function.  In other words, some 
+"/separation of concerns/": validating inputs versus calculating with them.
+Arguably, that is, testing
+parameters' agreement to stipulated contracts
+is a separate process than in fact carrying out
+the procedure's computations, and should be factored
+into a different function. Some 
 distinct code should perform the "/gatekeeping/" 
 role of rejecting contract-violating inputs, 
 and the visible separation of that logic from 
@@ -1865,7 +1867,8 @@ check.  If it is evident that a contract necessarily
 */cannot/* be upheld, then this could be a compiler 
 error immediately.  Otherwise, if the compiler 
 can ensure that for all execution branches, external states, 
-or value-combinations a contract is */guaranteed/*, then 
+or value-combinations a contract is */guaranteed/* (perhaps 
+even via annotations to this effect) 
 the compiler can emit code for the call without further 
 intervention.
 
@@ -1876,7 +1879,7 @@ falling back on a language's exception mechanism, or something
 similar.  For example, recent ;/C++/ contract specifications 
 imply that the typical results of a contract violation 
 are either calls to a "/handler/" (which might implement 
-some alternative sequence that avoid depending on the precondition 
+some alternative sequence that avoids depending on the precondition 
 givens, or potentially throw an exception) or immediate 
 program-termination [/ContractsforC++/].  Structurally this is not too far off 
 from the handler being a */de facto/* "/catch/" block that 
@@ -1886,19 +1889,20 @@ employed by most ;/DbC/ supporting languages.
  
 This all seems wrong.  I believe a more intuitive 
 framework would employ what might be called "/overload by contract/", 
-in which the presence of absence of violations serves as 
-state-variations suitable for overloading.  I hesitate 
+in which the presence or absence of violations serves as 
+a state-variation suitable for overloading.  I hesitate 
 to claim definitively that something along those lines 
 is indeed rather counter-paradigmatic in programming language 
 design, because its omission is puzzling, which might 
-signal that I'm missing something.  But in any case, a 
+signal that I'm missing something.  But in any case, one 
 ;/VM/ use case I wish to examine here is to support "/Overload by Contract/" 
 (;/ObC/) as one version of ;/DbC/.
 
 Consider again the double-array example.  At any point in time, there are 
 essentially three possibilities: we might have enough information 
-to confirm that the list-size precondition is satisfied; or, we might 
-know that it is */not/* satisfied; or, that status might still be 
+to confirm that the list-size precondition (key length equals value length) 
+is satisfied; or, we might 
+know it is */not/* satisfied; or, this status might still be 
 unresolved.  At the moment when we do need to call the relevant procedure, 
 conceptually (and perhaps literally) we are in effect overloading 
 on that information-state.  In other words, the procedure needs 
@@ -1947,12 +1951,12 @@ is part of its type, and any operation to add a value increases the length
 by one and thereby changes its type).
 
 In practice, then, we should not assume even that the compiler would recognize an 
-;;/if/-expression like ,,/x.size() == y.size()/ as testing the exact same state of affairs 
+,,/if/-expression like ,,/x.size() == y.size()/ as testing the exact same state of affairs 
 that is reported necessary for a contract.  Instead, accept the notion 
 that programmers need to hold the compiler's hand somewhat, both to make 
 assumptions visible and to simplify compiler implementations.  In the present 
 context, one way to achieve this is via what might be termed a "/reified boolean/".  
-This term hopefully connotes how the result of ,,/x.size() == y.size()/ is not just a boolean 
+This term hopefully connotes how the result of ,,/x.size() == y.size()/ would be (on this proposal) not just a boolean 
 ;;/true/ or ;;/false/, but a more substantial object that */evaluates/* to boolean 
 in the first clause of the ,,/if//,,/then/ expression, but also persists as an 
 object in the subsequent code blocks (whether the true branch or, if present, 
@@ -1960,10 +1964,11 @@ a false one).  I assume that some added syntax is available to indicate where
 programmers intend apparent boolean expressions 
 to evaluate not only to a boolean return value but to a "/reified/" object in this sense.
 
-When an ,,/if//,,/then/ construction does involve a */reified/* boolean I assume 
+When an ,,/if//,,/then/ construction does involve a */reified/* boolean, 
+according to the above outline, I assume 
 this object remains "/in scope/" for the associated code blocks; and 
 that similar branching or loop formations could have similar 
-conventions.  Conceptually, ,,/if-then-else/, ,,/do-while/, etc., are not
+conventions.  Conceptually, ;;/if-then-else/, ;;/do-while/, etc., are not
 necessarily special constructions in the language; 
 they could possibly be expressed as ordinary procedures, taking 
 code blocks as arguments.  In this case, the language could 
@@ -2009,7 +2014,7 @@ only calls by constant reference while a proof object
 is in scope).  A more refined approach is to reject 
 only mutable calls whose effects are (or include) 
 changing the size of one or the other list.  But one 
-might certainly imagine cases where, although a given 
+may certainly imagine cases where, although a given 
 method */might/* change a size, it would do so 
 only in circumstances which the programmer knows 
 do not apply in the current scope.
@@ -2023,7 +2028,7 @@ rather to make the proof object a visual part of
 the source code and thus a reminder of contract 
 obligations that must be fulfilled.
 
-There are also cases where a codewriter might be confident 
+There are also cases where a codewriter can be confident 
 that the kind of proof embodied by a reified boolean 
 applies even in the absence of a test like 
 ,,/x.size() == y.size()/.  If the second list 
@@ -2105,7 +2110,7 @@ is closer to how the code is conceived: the
 purpose of the call is to initialize that pointed-to value.  
 Initializing a mutable reference is behaviorally 
 similar, but it less clearly documents the relationship 
-between the callee and the initialized variable. 
+between the callee and the affected variable. 
 Moreover, sometimes the caller */wants/* a 
 pointer return because the value should outlast 
 its lifetime.
@@ -2137,24 +2142,24 @@ can serve one of several purposes:`upAdj<7pt>;
 %/ enums
 
 1.  The primary goal of the callee is to initialize or modify 
-that object
+that object.
 
 2.  The object is intended mostly to provide information the callee 
 needs for its main purpose, but cannot be made constant 
 either because one of the callee's secondary roles 
 might be to update some field in the object, or else 
 it may need non-constant members even 
-if in this case the object is unaltered 
+if in this case the object is unaltered.
 
 3.  Modifying the object is a primary role of the callee, 
 but a return value is separately needed (perhaps to 
 provide information about the status of that modification 
-or other side-effects associated with it)
+or other side-effects associated with it).
 
 /+
 
 Woven with these alternatives are questions about 
-potential modifications: e.g., whether the callee 
+desired side-effects: e.g., whether the callee 
 is */guaranteed/* to modify (as when a default-initialized 
 object is in an invalid state).  All changes 
 are not the same: some may be necessary to render the 
@@ -2181,8 +2186,8 @@ should use syntactic cues to help clarify
 these issues, more so than in ;/C++/, for example.  
 For instance, with pass-by-reference there is no 
 visible mechanism to distinguish objects that 
-will */necessarily/* be modified, or will be 
-so assuming the callee returns normally, 
+will */necessarily/* be modified %-- or will be 
+so assuming the callee returns normally %--  
 or instead only */might/* be modified.
 
 In ;/C++/, moreover, pass-by-reference serves as a workaround 
@@ -2212,7 +2217,7 @@ semantic possibilities.  In the case of pointer-return
 versus pass-by-reference (or ;/RVO/) 
 one option would be what might be called "/Janus/" 
 (metaphorically "/two-faced/") channels 
-that (unlike the typical case) may be */either/* input or output.  
+that (unlike usual channel semantics) may be */either/* input or output.  
 For sake of discussion, suppose we coin the phrase "/Janus pointer/" 
 to be an object that, depending on context, could 
 serve as a pointer, reference, or non-initialized memory buffer.  
@@ -2277,8 +2282,8 @@ data types, fields, procedures, and so forth.  We can assume
 Research Objects will try to compile a sort of concordance 
 listing (at least public-interface) procedure names, signatures, 
 and pre-/post-conditions.  Many projects automate this kind of step 
-via (e.g.) Doxygen, but for data-set code a concordance 
-should be more fine-grained.  For instance, details such as 
+via (e.g.) Doxygen, but for dataset code a concordance along these lines 
+could be more fine-grained.  For instance, details such as 
 functions' assumed units should be both notated in code and 
 described in documentation in a structured manner, rather than 
 relying on source comments.
@@ -2320,8 +2325,9 @@ is [/PottayilHarisankerMenonEtAl/]. >}  If the aforementioned ,/lLen/ is a compi
 constant, then the relevant type 
 may be called */weakly/* dependent.{< 
 Although "/strong/" and "/weak/" sometimes 
-appear in related contexts, my proposed 
-usage is not the same.  But in the general 
+appear in related contexts, I think how I propose 
+to use these terms is not the same.  But (to justify 
+that) in the general 
 case %-- considering just types themselves 
 %-- a dependent type is one of a type 
 */family/* associated with some 
@@ -2348,14 +2354,15 @@ one to declare templated types
 where (at least some) template parameters 
 are values rather than other types; 
 but those values must be 
-compile-time constants. >}  However, the running example of lists for a 
+compile-time constants. >}  However, as in my running example from the 
+prior subsection, lists for a 
 reversible map would involve a */strongly/* 
 dependent type if the relevant constraint 
 is expressed via the type system alone 
 (without the added machinery of contracts 
 or something similar).  Specifically, the 
 type of the second list would depend 
-on a length ,/lLen/, but the actual value of 
+on a length ,/lLen/, but the exact value of 
 ,/lLen/ is unspecified 
 until the actual procedure-call, and 
 derived from the list's sibling argument 
@@ -2443,7 +2450,7 @@ depends on the maximum legal size for ,,/y/).
 Any dispatch or fine-tuning which relies on 
 particular values for ,/lLen/ has to be 
 implemented in terms of runtime 
-checks (;;/if/else/ and so on).  By extension, 
+checks (,,/if//,,/else/ and so on).  By extension, 
 the same applies to ,,/y/, at least 
 in the context of behavior affected by ,,/y/'s size.
 
@@ -2461,10 +2468,10 @@ runtime variable like ,/lLen/ from,
 say, ,,/y.size()/, but that's not doing 
 anything we wouldn't do with an 
 ordinary type system.  Having 
-such an ,/lLen/ precomputed seems 
-basically syntactic sugar.  At best the dependent 
-specification is ornamental, for documentation 
-but not computational purposes.
+such an ,/lLen/ precomputed feels 
+basically like syntactic sugar.  At best the dependent 
+specification (qua */type/* and not just */value/*) is 
+ornamental, for documentation but not computational purposes.
 
 One way to see this explicitly is to consider 
 the procedure being templated in terms 
@@ -2486,8 +2493,8 @@ must be modeled as a runtime value.  That is to say: within
 the bytecode for a template instantiation, 
 there must be some dynamic symbol or holder 
 representing the runtime granule of 
-,,/y/'s fine-grained type.  But from a 
-;VM perspective we are entitled to 
+,,/y/'s fine-grained type.  Yet, with that 
+said: from a ;VM perspective we are entitled to 
 argue that details represented 
 via dynamic bytecode symbols are 
 not */types/* but rather some 
@@ -2557,7 +2564,7 @@ channel marked for a &/constructor/ role.  Then a
 "/constructor contract/" could be any contract 
 defined on such procedures.
 
-But with this setup, we are free to abstract constructor 
+To go further, with this setup we are free to abstract constructor 
 contracts from constructors' implementations.  
 Consider a type of all floats whose integer 
 value is exactly ,,/n/.  The check for a 
@@ -2620,7 +2627,7 @@ are scaled the same.  These concerns are endemic
 to dimensional analysis and (for instance) ;SI units 
 in a scientific context, but they also extend to areas 
 which do not obviously employ numbers measuring such clearly physical 
-magnitudes as size, time, temperature, etc.
+magnitudes as size, time, temperature, and so on.
 
 Consider the case of ;/2D/ graphics.  There are many (e.g.)
 ;/C++/ graphics and image libraries, and they are inconsistent 
@@ -2653,10 +2660,10 @@ If coordinates are just integer-pairs, there
 is no way to overload these two rectangle constructors, 
 but that could be alleviated with pairs being explicitly decorated 
 as "/&/width-then-height//" %-- a different type than 
-"/&/x-then-y//".  More substantially, we can consider a 
+"/,,/x/&/-then-/,,/y//".  More substantially, we can consider a 
 spectrum of distinct ;/2D/ coordinate types representing 
 how horizontal and vertical axes are conceptualized: 
-&/x-then-y/; &/row-then-column/; &/first-then-second/ (as with 
+,,/x/&/-then-/,,/y/; &/row-then-column/; &/first-then-second/ (as with 
 generic pairs); &/width-then-height/; or &/horizontal-then-vertical/ 
 (plus inverses of all these).  The strings 
 "/,,/s4wh//" or "/,,/u2cr//", say, might encode signed 4-byte 
@@ -2721,7 +2728,7 @@ matches for searches given such terms as "/;/FPS//",
 "/kilohertz/", etc.  Insofar as a code-documentation "/concordance/" 
 is exposed to the package's overall query system, 
 granular typing such a unit-decoration facilitates the 
-integration between data-set code and the overall Research Object.
+integration between dataset code and the overall Research Object.
 
 Similar points could be made about value-ranges.  Annotations 
 might declare that the value held by some variable 
@@ -2733,10 +2740,10 @@ guarantee such restrictions.  For instance, the demo code
 uses the term "/carrier-handoff/" to refer to 
 actions such as transferring a value from one package's 
 "/return/" channel to another's "/lambda/" channel 
-(which is the default for inputs).  This would be a natural 
+(the default place for input values, though the idea works elsewhere too).  This would be a natural 
 place for runtime "/hooks/" confirming a range.
 
-In brief, in a channel-oriented framework */most/* of a compiler's 
+To summarize, in a channel-oriented framework */most/* of a compiler's 
 operations involve pushing values into a channel and then transferring 
 control to a callee.  That comment might sound underwhelming, because 
 for normal compilers one could equally say that much of their work 
@@ -2754,7 +2761,7 @@ kinds of contracts, etc., the extra code would generally apply
 either to channel-manipulation (especially points where values are 
 pushed, carrier-handoffs, and validations executed immediate 
 prior to a control-transfer) or to code-block operations 
-(enter, leaving, and registering lexical symbols within a local or parent scope).
+(entering, leaving, and registering lexical symbols within a local or parent scope).
 
 These comments apply mostly to */semantic/* customization.  They pair 
 naturally with the issue of extending */syntax/*, which I discuss next.
@@ -2766,7 +2773,7 @@ naturally with the issue of extending */syntax/*, which I discuss next.
 so here I assume that initial parsing is performed via techniques 
 that could be built into source code directly.  In particular, 
 I assume that language grammars are defined via regular expressions, which 
-are matched against input files via conventional regex libraries.  
+get matched against input files via conventional regex libraries.  
 Several of these exist for ;/C++/; within Research Objects employing 
 ;/Qt/ for cross-platform ;/GUI/, the ;;/QRegularExpression/ classes 
 are adequate.{<  For the record, I'll add a few comments however 
@@ -2780,11 +2787,11 @@ that occurs multiple times in a grammar serving similar roles).
 In some places, also, variable-width lookbehind (rarely supported) would be nice to have.
 Another consideration is how to merge the functionality of 
 capturing (via group) and positive lookaround [/YuyaUezato/].  
-Regular Expressions in a (one might say) "/unfolding/" grammar premised on 
-rules anchored to one "/cursor/" position %-- which is continually 
-advanced forward %-- have their own techniques, and one frequent issue is 
+Regular Expressions in a (one might say) "/unfolding/" grammar %-- one premised on 
+rules anchored to a given "/cursor/" position (which is continually 
+advanced forward) have their own techniques %-- and a recurring issue is 
 where to situate the cursor after a successful match.  Normally this is 
-directly after the overall match end, but that is affected by lookahead 
+directly after the overall match-end, but that is affected by lookahead 
 assertions; in general, it would be nice to control the post-rule positioning 
 in regex patterns directly. 
 Note that capture groups generally have two properties: first, all of their 
@@ -2794,7 +2801,7 @@ that overall match for the next rule, the new position will be
 further ahead than any group.  But there are occasions where 
 one or both of these results is not what you want.  
 For example, you might intend to leave content for some later 
-match (which is a purpose of lookahead, rather than just 
+match (which is indeed a main purpose of lookahead, rather than just 
 consuming the relevant characters) but you also want to 
 "/read/" that content to handle 
 the */current/* rule.  >}  Meanwhile, most ;/C++/ regular expression libraries take ordinary 
@@ -2841,8 +2848,8 @@ It is worth noting here that the parsing techniques under discussion
 are considered both for markup and scripting/ query languages; that is, 
 they might be used for an input language to create textual 
 documents as well as programs in a scripting or query format.  Suppose 
-that one intends manuscripts eventually to be shared as 
-,/LaTeX/ files.  Sometimes the desired output is evident immediately 
+that one intends manuscripts eventually to be prepared as 
+,/LaTeX/ files for (at least) ;/PDF/ generation.  Sometimes the desired output is evident immediately 
 from a grammar rule, and waiting for some future graph-traversal 
 step to produce such ,/LaTeX/ code makes the overall pipeline more obfuscated.
 
@@ -2865,7 +2872,7 @@ off the nodes could then add material to the bytecode at
 those insertion points.
 
 The bytecode statements themselves need not be very complex 
-(again, we need not engage directly with things like 
+(again, we have no requirement to engage directly with things like 
 ;/x86/ registers).  Both for the "/preliminary/" and "/primary/" 
 ;/VM/s a single instruction can take either a single value 
 or no value at all.  The instructions in general could 
@@ -2892,11 +2899,11 @@ uncomplicated.  Developers could work first off the
 human-readable bytecode versions (which, admittedly, are 
 not really bytecode in themselves, but the optimizations 
 are automatable).  New instructions may be introduced 
-just by implementing new methods in the interpreter 
-class, and adding the name to a dispatch table.  
-New syntax leveraging those instructions can be 
+just by implementing novel methods in the interpreter 
+class, and adding their names to a dispatch table.  
+Specialized syntax leveraging those instructions can be 
 recorded as custom grammar rules with their own callback 
-handlers.  New "/preliminary/" ;/VM/ instructions may 
+handlers.  Novel "/preliminary/" ;/VM/ instructions may 
 likewise be implemented similarly via methods in the 
 pre-;/VM/ interpreter, and the rule-callbacks can 
 work by emitting instructions for the pre-;/VM/ extensions.  
@@ -2906,11 +2913,11 @@ The kind of overall compiler/;/VM/ stack outlined
 here has, I believe, a relatively clear "/roadmap/" for where 
 extensions and customizations could be woven into 
 the basic code, with the effect that scripting 
-and query languages could be adapted to 
+and query languages may be adapted to 
 individual Research Objects more fluidly 
 than general-purpose standards like 
 ;/Python/ or ;/JavaScript/ (or even fairly "/insular/" 
-languages such as ;/AngelScript/ and ;/ECL/).  
+languages such as ;/AngelScript/ and ;/ECL/).`vspace<7pt>;  
 
 
 // //  Script-Enabled Parsing for Deserialization
@@ -2921,15 +2928,16 @@ in this section.  In so doing, one option is to
 register a ;/VM/ interpreter with the grammar 
 directly, so that rule callbacks may invoke scripts 
 or script-implemented functions instead of C++ ones.  
-That is, some or all parts of a grammar could 
-be implemented in a scripting language compiling to the 
+That is, it would be possible to implement some or all 
+parts of a grammar in domain-specific or 
+scripting languages compiling to the 
 relevant Virtual Machine.
 
-This would be a step toward implementing deserializers 
+This may then be a step toward implementing deserializers 
 via ;/VM/ bytecode, where the ;/VM/ in question is 
 distributed as source code within Research Objects 
-themselves.  That solution would address the requirements 
-discussed in Section 1, insofar as data sets could 
+themselves.  Such solutions would address the requirements 
+discussed in Section \lhRef{section-one-one}{\soneone}, insofar as data sets could 
 thereby obviate the need for external deserialization libraries.
 
 As with scripting, query, or markup languages, for reasons touched 
@@ -2961,10 +2969,11 @@ materials are tractable to the ;/VM/ in a common search
 and front-end protocol.  In short, the tools for working 
 with raw data %-- via a ;/VM/ implemented internally 
 in an Executable Research Object %-- encompass 
-manuscript content as well, bridging different data set components 
-into a common computational space.  Here I also circle back 
-from data-related topics to textual encoding as discussed in the 
-first section. `thispagestyle<two>;
+manuscript content as well, bridging different dataset components 
+into a common computational and representational 
+space.  And with that I have also circled back a little from data-related topics 
+to textual encoding as discussed in the 
+first two sections. `thispagestyle<two>;
 
 ///   Conclusion
 
@@ -2984,8 +2993,8 @@ design goal.  The structure of procedures' input and
 output parameters, as well as how their preconditions 
 get expressed and verified, influences how 
 code-components may be presented and queried 
-in consort with other Research Object facets.  
-I believe that Overload by Contract 
+in consort with other Research Object dimensions.  
+I believe that "/Overload by Contract/" 
 and lexically-scoped proof objects facilitate 
 such integration, insofar as implementing 
 multiple versions of a procedure differing 
@@ -3015,15 +3024,19 @@ populating context menus,
 but via tips or interactive information 
 available as functionality within 
 ;/GUI/ displays), and so forth, depend 
-of code-introspection features whose 
+on code-introspection features whose 
 capabilities are shaped by sources' 
-syntactic and semantic properties.`newpage;
+syntactic and semantic properties.  The 
+"/Executable Research Objects/" paradigm 
+should be taken to include "/self-documenting/" 
+interface design, in both senses;
+class (type) and ;/GUI/ (user).
 
-Similar points apply to those places in an interface 
+Similar points apply to those places in a code library 
 where something other than return-by-value is 
 intended.  Merging pointer-return, reference-initialization, 
 and Return Value Optimization into a common 
-interface design can help, I believe, 
+interface pattern (which I've nickamed "/Janus/" pointers/channels) can help, I believe, 
 yield interfaces that cover variegated 
 coding requirements in a unified and 
 intuitive manner.  Similar techniques also 
@@ -3043,7 +3056,7 @@ to similar programming conventions.
 In particular, linguistic and discursive 
 phenomena such as individual sentences, 
 publication elements (quotations, footnotes, 
-citations, and so forth), special character-sequences 
+citations, bibliographies, indexes, and so forth), special character-sequences 
 (chemical formulae, annotations for linguistics, 
 terms governed by controlled vocabularies, etc.) 
 and others are modeled by runtime objects 
