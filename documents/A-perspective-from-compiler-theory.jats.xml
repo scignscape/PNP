@@ -31,9 +31,12 @@ permission to archive and post a copy of this paper on the Journal Article Tag S
 
    <self-uri xlink:href="https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf">A
 PDF version of this article is stored at https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf 
-(this is the version included with the demo-code repository).  That PDF files show locations 
+(this is the version included with the demo-code repository).  That PDF file shows locations 
 for dataset code and other resources.
    </self-uri>
+
+
+
 
     
 
@@ -112,7 +115,7 @@ initiative &#x2014; <styled-content style-type="double-quote">&#x201c;the Whole 
 
 <fn id="fn-1"><p>For the <styled-content style-type="double-quote">&#x201c;compendium&#x201d;</styled-content>
 model, see <xref ref-type="bibr" rid="B15">15</xref>. For <styled-content style-type="double-quote">&#x201c;executable papers&#x201d;</styled-content>,
-<xref ref-type="bibr" rid="B18">18</xref>. For <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>data,
+<xref ref-type="bibr" rid="B65536">65536</xref>. For <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>data,
 <xref ref-type="bibr" rid="B10">10</xref>. For the <styled-content style-type="double-quote">&#x201c;Whole Tale&#x201d;</styled-content>, <xref ref-type="bibr" rid="B13">13</xref>.</p></fn>
             <!--leave footnote-->
 
@@ -283,7 +286,7 @@ links thereto) were embedded in
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> viewers as a structured text encoding, in preference to the
 more <styled-content style-type="double-quote">&#x201c;semi-structured&#x201d;</styled-content> data one may obtain from
 methods such as <styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">text()</styled-content> in the <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Poppler</styled-content> library
-(which I've mentioned in footnote&#xa0;<xref ref-type="fn" rid="fn-3">3</xref>).
+(which I've mentioned in footnote&#xa0;<xref ref-type="fn" rid="fn-3"></xref>).
 Similar use cases might be compiling human-readable document
 indexes, or comparing two different versions of a manuscript
 during an editing/reviewing changes cycle.
@@ -421,7 +424,7 @@ for dataset code to run on the developer's own computer).
 
 <!--enter p.1-->
         <p id="Para-10">I will not specifically address the question of whether binary or source-based
-dissemination is easier for end-users, either in general or <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> any
+dissemination is easier for end-users, either in general or <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> any
 particular data set. My goal is rather to examine requirements for a
 Virtual Machine that can function in the former context &#x2014; in particular,
 that itself could be built with minimal external dependencies. I assume
@@ -577,7 +580,7 @@ journal title, science grid, and so on. Assume, again, that such
 each Research Object could thereby reuse generic components but
 adopt the underlying <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> code for their own purposes, given the
 unique research methods and data profiles driving their investigation.
-At least <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> some functionality, however, such adaptations might
+At least <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> some functionality, however, such adaptations might
 fit predictable patterns conducive to a special-purpose script or
 query format rather than manually rewriting <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> code. For instance,
 context menus tend to need specific action options unique to the
@@ -1028,7 +1031,7 @@ approach over the other is a rather abstract question.
 A more concrete assessment might consider actual processing
 tasks and address whether algorithms that <styled-content style-type="double-quote">&#x201c;quantify&#x201d;</styled-content>
 over concurrent markup structures, or conversely
-purely hierarchical ones, are easer to implement (or,
+purely hierarchical ones, are easier to implement (or,
 likewise, test, or maintain).
 Assuming that most algorithms navigate around a structure
 by tracking a <styled-content style-type="double-quote">&#x201c;foreground&#x201d;</styled-content> node &#x2014; some sort of visitor
@@ -1059,7 +1062,7 @@ there is no logical mandate for this relationship
 in a single <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> page, but paragraphs are not intrinsically
 situated within pages). There are then, at least
 four different varieties of nesting: overlap either
-<styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> beginning and end, and interiority either
+<styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> beginning and end, and interiority either
 via domination or containment. By contrast,
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> has a single parent/child relationship. The more
 complex <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>TAGML</abbrev></styled-content> architecture may or may not make
@@ -1130,7 +1133,7 @@ parameters that articulate the individual properties of an
 of <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> (etc.) structure takes its identity from the
 full set of details endemic to the <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> format: element
 names, attribute keys and values, text content (if any),
-and nodes' parent/child and sibling relationship.
+and nodes' parent/child and sibling relationships.
 The parameters constituting a <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>TAGML</abbrev></styled-content> instance are
 different, given the latter's alternative approach
 to nesting (discussed above), attributes (which here are
@@ -1143,7 +1146,7 @@ We can, however, compare <styled-content style-type="double-quote">&#x201c;meta&
 we can present the suite of parameters through which
 any single <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> instance is individuated, and by comparison
 the analogous parameters constituting the <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>TAGML</abbrev></styled-content> architecture.
-Similar comparisons can be made <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>JSON</abbrev></styled-content> and
+Similar comparisons can be made <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>JSON</abbrev></styled-content> and
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>RDF</abbrev></styled-content>-like formats (e.g., text encoding via property-hypergraphs).
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
@@ -1239,7 +1242,7 @@ difficult to use for certain kinds of search and content-management
 requirements. These are situations where computing
 over text/discourse elements represented as objects in computer
 memory is more efficient than traversing <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>DOM</abbrev></styled-content> nodes
-and hierarchies. As such, a framework such as a
+and hierarchies. Consequently, a framework such as a
 <styled-content style-type="double-quote">&#x201c;Sentence Object Model&#x201d;</styled-content> &#x2014;
 where sentences and other discursive units are already
 converted to code objects &#x2014; is more convenient
@@ -1266,7 +1269,7 @@ web navigators, and so forth.
                 <p id="P-list_1-2">To complete this task it is necessary to execute procedures that
 can obtain the content of all <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> annotations, indexed by
 page number. One would then search each annotation-text for
-every characteristic handle that indicates relevance <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> individual themes, building
+every characteristic handle that indicates relevance <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> individual themes, building
 up an <styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">std::map</styled-content> style data structure whose keys
 are theme objects/labels. Following the comment box page number,
 one could moreover identify the chapter or inner document including
@@ -1282,7 +1285,7 @@ whose values are file names (while creating those files
 as necessary). These coding requirements &#x2014; working with
 object-based data structures and local filesystems &#x2014; call
 for programming in full-fledged languages such as <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> rather
-than queries or <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> transforms.
+than search-queries or <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> transforms.
 </p>
                 <!--end of list paragraph-->
                 <p id="P-list_1-3">As a related use case, consider how comment boxes
@@ -1291,13 +1294,13 @@ a search-engine/vector-database sort of index) with attention to
 rhetorical details. When the text of a manuscript provides a
 citation or names a person or theory, authors could be
 encouraged --- either directly through input sources or via <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content>
-annotations --- to summarize positions taken <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content>
+annotations --- to summarize positions taken <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content>
 that subject matter (e.g., endorse, critique, or neutral/evaluative).
 When the sources or comments are analyzed to extract those
 notations, the printed index could be extended by
 incorporating that material into index entries. For example,
 instead of an undifferentiated heading locating <styled-content style-type="double-quote">&#x201c;Keynesian economics&#x201d;</styled-content>,
-the index might produce subheadings such as
+the index might produce (autogenerated) subheadings such as
 <styled-content style-type="double-quote">&#x201c;Keynesian economics, arguments for&#x201d;</styled-content>; <styled-content style-type="double-quote">&#x201c;Keynesian economics, arguments against&#x201d;</styled-content>;
 <styled-content style-type="double-quote">&#x201c;Keynesian economics, mathematical models&#x201d;</styled-content>;
 <styled-content style-type="double-quote">&#x201c;Keynesian economics, and macroeconomic theory&#x201d;</styled-content> and so on.
@@ -1306,12 +1309,12 @@ the index might produce subheadings such as
 
 </list-item><list-item><title>Extracting Linguistics Annotations</title>
                 <p id="P-list_2-1"> You are working with a
-linguistic article that contains a list of sample sentences/passages,
+linguistics article that contains a list of sample sentences or fragments,
 according to a common linguistics presentation style. These
 examples are intended to demonstrate specific claims (about
 parsing structure, conceptualization, cognitive schemas, etc.) or to serve
 as a basis for subsequent analysis. Such samples &#x2014; which
-might be obtained from written corpora, audio records, or simply
+might be obtained from written corpora, audio records, but could also just be
 invented by the author to highlight specific linguistic topics
 &#x2014; are commonly used in this discipline and typeset in
 formats that visually distinguish examples from primary
@@ -1327,12 +1330,12 @@ papers may be scanned for listed samples and each of those
 examples extracted into a common format, to be folded into a
 multi-publication database. Interested readers could then
 browse the samples to find articles that address specific
-syntactic or semantic themes, particularly if each item
+syntactic or semantic (or pragmatic) themes, particularly if each item
 is classified according to the linguistic subject they
 exemplify (or serve thereto as a basis for analysis). Moreover, it is not uncommon
 for the same case study
 to be analyzed by multiple authors, potentially creating
-interesting contrasts in theories and paradigms.
+interesting intertextual links and contrasts in theories and paradigms.
 The whole process would be accelerated if publications employ a
 common format (e.g., distinct <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>XML</abbrev></styled-content> tags) to notate the examples;
 but the full extracting and database persistence logic
@@ -1382,14 +1385,14 @@ context). With these specific technical entities, special-purpose
 supplemental data and annotations can be relevant, such as
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDB</abbrev></styled-content> accession numbers, launch-requests for external
 visualization tools, transcriptions between names and
-formulae, etc. It would be reasonable to include access to
+formulae, etc. It would be reasonable to include coverage for
 such information among context-menus activated both in
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content> window areas proximate to names/formulas in text
 form, and in software tools that might be drafted
 for interactive displays or scientific analysis.
 In other words, context-menu implementations
-&#x2014; or at least hooks into points where menu options
-are populated &#x2014; will ideally be synchronized
+&#x2014; or at least hooks into points where their options
+are set out &#x2014; will ideally be synchronized
 among different parts of a Research Object, including
 text (e.g., <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>PDF</abbrev></styled-content>) viewers.
 
@@ -1427,9 +1430,9 @@ objects. Harmful substances can be detected
 in soil, water, or accident reports, and each
 data point involves both the geographic location/area
 where an observation occurs and the specific compound
-inolved. The former lends itself to digital maps;
+involved. The former lends itself to digital maps;
 the latter to molecular visualization displays
-(to help explain visually those qualities that make a substance
+(to help explain <styled-content style-type="double-quote">&#x201c;experientially&#x201d;</styled-content> those qualities that make a substance
 dangerous to people or ecosystems). Class types
 and <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>GUI</abbrev></styled-content>s for both of these genres would
 then be applicable to Executable Research
@@ -1747,7 +1750,7 @@ hit for a query string. Robust query-evaluation algorithms
 would presumably encompass a variety of parameters/flags and
 protocol variation, considering the range of discursive
 contexts which have somewhat different match-evaluation
-characteristics, both <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> fairly canonical
+characteristics, both <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> fairly canonical
 writing conventions (block quotes, citations, etc.) and
 special-purpose symbols, formulae, or character strings that
 might be commonplace in a particular academic/scientific discipline.
@@ -1925,7 +1928,7 @@ each Research Object has its own specialized
 This is not analogous to large-scale scientific
 applications that embed a scripting interpreter
 for customizations, like <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Python</styled-content> in the context of
-<styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ParaView</styled-content> or <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ArcGIS</styled-content>, <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">JavaScript</styled-content> <styled-content style-type="emph-macro"><![CDATA[visavis]]></styled-content> <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">OpenCV.js</styled-content>,
+<styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ParaView</styled-content> or <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ArcGIS</styled-content>, <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">JavaScript</styled-content> <styled-content style-type="emph-macro"><![CDATA[vis-a-vis]]></styled-content> <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">OpenCV.js</styled-content>,
 or <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> itself (as an interpreted language) in <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>CERN</abbrev></styled-content>-<styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>ROOT</abbrev></styled-content>.
 Clearly the entirety of <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ParaView</styled-content>, <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">ArcGIS</styled-content>, <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">OpenCV</styled-content>,
 or <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>ROOT</abbrev></styled-content> (not to mention <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>LLVM</abbrev></styled-content> and <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">Clang</styled-content> for the latter)
@@ -2040,7 +2043,7 @@ understood as functions with implementation bodies
 actually written in source code. Note that
 functions sometimes have algebraic relationships
 wherein they may be considered individual values:
-the composition <styled-content style-type="emph-macro"><![CDATA[fOFg]]></styled-content> means to call <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">g</styled-content> first,
+the composition <styled-content style-type="emph-macro"><![CDATA[f-of-g]]></styled-content> means to call <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">g</styled-content> first,
 then <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">f</styled-content> with its result. Here <styled-content style-type="double-quote">&#x201c;composition&#x201d;</styled-content>
 acts like a binary operator on two function objects.
 For languages that support similar notation,
@@ -2102,7 +2105,7 @@ Research Object is expected to have some <styled-content style-type="emph-acrony
 functions. Overall, any collection of exposed
 procedures can be grouped into equivalence classes via their
 micro-signatures. If two procedures have the same code,
-they can called via the same cast of a function-pointer
+they can be called via the same cast of a function-pointer
 (or pointer-to-member). Wrappers are needed only for
 those functions whose codes do not fall within any
 of the supported equivalence classes.
@@ -2456,7 +2459,7 @@ that programmers need to hold the compiler's hand somewhat, both to make
 assumptions visible and to simplify compiler implementations. In the present
 context, one way to achieve this is via what might be termed a <styled-content style-type="double-quote">&#x201c;reified boolean&#x201d;</styled-content>.
 This term hopefully connotes how the result of <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">x.size() == y.size()</styled-content> would be (on this proposal) not just a boolean
-<styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">true</styled-content> or <styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">false</styled-content>, but a more substantial object that <italic>evaluates</italic> to boolean
+true or false, but a more substantial object that <italic>evaluates</italic> to boolean
 in the first clause of the <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">if</styled-content>/<styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">then</styled-content> expression, but also persists as an
 object in the subsequent code blocks (whether the true branch or, if present,
 a false one). I assume that some added syntax is available to indicate where
@@ -2476,7 +2479,7 @@ necessarily special constructions in the language;
 they could possibly be expressed as ordinary procedures, taking
 code blocks as arguments. In this case, the language could
 have a mechanism such that procedures which <italic>call</italic> code blocks
-have the ability to attached reified booleans to them (by
+have the ability to attach reified booleans to them (by
 analogy to how a closure captures variables from enclosing scopes).
 </p> <!--/p.1-->
         <!--end of p1 paragraph-->
@@ -3467,7 +3470,7 @@ In general, if someone wants to customize a compiler to perform
 extra checks (or schedule them at runtime), implement new
 kinds of contracts, etc., the extra code would generally apply
 either to channel-manipulation (especially points where values are
-pushed, carrier-handoffs, and validations executed immediate
+pushed, carrier-handoffs, and validations executed immediately
 prior to a control-transfer) or to code-block operations
 (entering, leaving, and registering lexical symbols within a local or parent scope).
 </p> <!--/p.1-->
@@ -3543,7 +3546,7 @@ generated.
         <p id="Para-131">Here (consistent with the demo code) I make the following assumptions: first, all
 grammar rules are expressed in terms of patterns that are implicitly
 anchored on the current point in a left-to-right parser (corresponding
-to a <styled-content style-type="double-quote">&#x201c;slash-A&#x201d;</styled-content>, i.e., <styled-content style-type="emph-macro"><![CDATA[slashA]]></styled-content>, in Perl-compatible expressions). That is, no rule
+to a <styled-content style-type="double-quote">&#x201c;slash-A&#x201d;</styled-content>, i.e., <styled-content style-type="emph-macro"><![CDATA[\A]]></styled-content>, in Perl-compatible expressions). That is, no rule
 will <styled-content style-type="double-quote">&#x201c;skip over&#x201d;</styled-content> characters, and rules will not in general shift the <styled-content style-type="double-quote">&#x201c;current&#x201d;</styled-content>
 parse-point except via the matches they consume. Fallback rules may
 implement logic to skip over characters or parts of the input that
@@ -3829,7 +3832,7 @@ class (type) and <styled-content style-type="emph-acronym" style="color:rgb(2, 3
 where something other than return-by-value is
 intended. Merging pointer-return, reference-initialization,
 and Return Value Optimization into a common
-interface pattern (which I've nickamed <styled-content style-type="double-quote">&#x201c;Janus&#x201d;</styled-content> pointers/channels) can help, I believe,
+interface pattern (which I've nicknamed <styled-content style-type="double-quote">&#x201c;Janus&#x201d;</styled-content> pointers/channels) can help, I believe,
 yield interfaces that cover variegated
 coding requirements in a unified and
 intuitive manner. Similar techniques also
@@ -3986,9 +3989,10 @@ for C++ (Request for Comment)</article-title>, <!--year-->2022<!--/year-->.
     <name><surname>Christen</surname> <given-names>Nathaniel</given-names></name>, <name><surname>Neustein</surname> <given-names>Amy</given-names></name>,</person-group> 
 <source>Innovative Data Integration 
 and Conceptual Space Modeling for COVID, Cancer, and Cardiac Care</source>
-<publisher-name>Elsevier</publisher-name>, <!--year-->2022<!--/year-->
+<publisher-name>Elsevier</publisher-name>, <!--year-->2022<!--/year-->.
 
-    <ext-link xlink:href="https://shop.elsevier.com/books/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care/neustein/978-0-323-85197-8" ext-link-type="url"><!--uri-->https://shop.elsevier.com/books/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care/neustein/978-0-323-85197-8<!--/uri--></ext-link>
+    ISBN <isbn>9780323853569</isbn>
+    <ext-link xlink:href="https://www.sciencedirect.com/book/monograph/9780323851978/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care" ext-link-type="url"><!--uri-->https://https://www.sciencedirect.com/book/monograph/9780323851978/innovative-data-integration-and-conceptual-space-modeling-for-covid-cancer-and-cardiac-care<!--/uri--></ext-link>
 
   </mixed-citation>
 </ref>
@@ -4006,6 +4010,19 @@ interoperability for biomedical text processing</article-title>.
 
     DOI: <pub-id pub-id-type="doi">10.1093/database/bat064</pub-id>    
     <ext-link xlink:href="https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content" ext-link-type="url"><!--uri-->https://dash.harvard.edu/server/api/core/bitstreams/7312037d-13b7-6bd4-e053-0100007fdf3b/content<!--/uri--></ext-link>
+
+  </mixed-citation>
+</ref>
+
+
+<ref id="B18">
+  <mixed-citation>
+    <name><surname>Strijkers</surname> <given-names>Rudolf</given-names></name>, <etal/>, <article-title>Toward Executable Scientific Publications</article-title>. 
+    <source>Proceedings</source> <conf-name>International Conference on Computational 
+Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->.
+
+    DOI: <pub-id pub-id-type="doi">10.1016/J.PROCS.2011.04.074</pub-id>    
+    <ext-link xlink:href="https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629" ext-link-type="url"><!--uri-->https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629<!--/uri--></ext-link>
 
   </mixed-citation>
 </ref>
@@ -4122,18 +4139,6 @@ Num. <issue>1</issue>, pp. <fpage>1</fpage>&#x2013;<lpage>14</lpage>.
   </mixed-citation>
 </ref>
 
-
-<ref id="B18">
-  <mixed-citation>
-    <name><surname>Strijkers</surname> <given-names>Rudolf</given-names></name>, <etal/>, <article-title>Toward Executable Scientific Publications</article-title>. 
-    <source>Proceedings</source> <conf-name>International Conference on Computational 
-Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->.
-
-    DOI: <pub-id pub-id-type="doi">10.1016/J.PROCS.2011.04.074</pub-id>    
-    <ext-link xlink:href="https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629" ext-link-type="url"><!--uri-->https://www.academia.edu/109735244/Toward_Executable_Scientific_Publications?uc-sb-sw=37138629<!--/uri--></ext-link>
-
-  </mixed-citation>
-</ref>
 
 
 
