@@ -114,9 +114,9 @@ or &#x2014; as with the name of one US <styled-content style-type="double-quote"
 initiative &#x2014; <styled-content style-type="double-quote">&#x201c;the Whole Tale&#x201d;</styled-content>.
 
 <fn id="fn-1"><p>For the <styled-content style-type="double-quote">&#x201c;compendium&#x201d;</styled-content>
-model, see [<xref ref-type="bibr" rid="B15">15</xref>]. For <styled-content style-type="double-quote">&#x201c;executable papers&#x201d;</styled-content>,
-[<xref ref-type="bibr" rid="B65536">65536</xref>]. For <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>data,
-[<xref ref-type="bibr" rid="B10">10</xref>]. For the <styled-content style-type="double-quote">&#x201c;Whole Tale&#x201d;</styled-content>, [<xref ref-type="bibr" rid="B13">13</xref>].</p></fn>
+model, see [<xref ref-type="bibr" rid="B16">16</xref>]. For <styled-content style-type="double-quote">&#x201c;executable papers&#x201d;</styled-content>,
+[<xref ref-type="bibr" rid="B10">10</xref>]. For <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>FAIR</abbrev></styled-content>data,
+[<xref ref-type="bibr" rid="B11">11</xref>]. For the <styled-content style-type="double-quote">&#x201c;Whole Tale&#x201d;</styled-content>, [<xref ref-type="bibr" rid="B14">14</xref>].</p></fn>
             <!--leave footnote-->
 
 
@@ -414,7 +414,7 @@ interpreters). However, I make the assumption here that Executable
 Research Objects are predominantly disseminated in source-code fashion.
 This is different from projects such as Kaggle (or other digital-notebook
 software, holding out the possibility that data sets might be
-distributed as Kaggle notebooks or similar), or <styled-content style-type="emph-acronym_all-lc" style="color:rgb(2, 37, 48)">reprozip</styled-content> [<xref ref-type="bibr" rid="B17">17</xref>] (which packages
+distributed as Kaggle notebooks or similar), or <styled-content style-type="emph-acronym_all-lc" style="color:rgb(2, 37, 48)">reprozip</styled-content> [<xref ref-type="bibr" rid="B18">18</xref>] (which packages
 up all necessary binary components that can be identified as preconditions
 for dataset code to run on the developer's own computer).
 </p> <!--/p.1-->
@@ -1850,7 +1850,7 @@ and does not require users to first have something like
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>LLVM</abbrev></styled-content> or <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">libClang</styled-content> on hand. Two examples that I
 am familiar with, and which might be relevant as case-studies,
 are <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>ECL</abbrev></styled-content> (Embeddable Common Lisp)
-and <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">AngelScript</styled-content> [<xref ref-type="bibr" rid="B16">16</xref>], [<xref ref-type="bibr" rid="B11">11</xref>],
+and <styled-content style-type="emph-acronym_some-lc" style="color:rgb(2, 37, 48)">AngelScript</styled-content> [<xref ref-type="bibr" rid="B17">17</xref>], [<xref ref-type="bibr" rid="B12">12</xref>],
 both of which seem relatively easy to build from source. These
 languages still are slightly different from what I envision
 here, partly because &#x2014; despite being well-designed from the
@@ -2633,7 +2633,7 @@ of arrangement in
 ordinary-looking <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> (this mechanism is similar
 to how compilers implement Return Value Optimization).
 
-<fn id="fn-19"><p>For Return Value Optimization (<styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>RVO</abbrev></styled-content>) see [<xref ref-type="bibr" rid="B14">14</xref>] or [<xref ref-type="bibr" rid="B21">21</xref>].
+<fn id="fn-19"><p>For Return Value Optimization (<styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>RVO</abbrev></styled-content>) see [<xref ref-type="bibr" rid="B15">15</xref>] or [<xref ref-type="bibr" rid="B21">21</xref>].
 Readers might be interested in an overview of
 user-visible <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>RVO</abbrev></styled-content>-related techniques that I present as
 a <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> code excerpt at <styled-content style-type="hlink1">https://cppinsights.io/s/cac923c9</styled-content>
@@ -2925,7 +2925,7 @@ of relatively general-purpose
 languages to support
 them. An interesting look at potential
 applications for languages in general
-is [<xref ref-type="bibr" rid="B12">12</xref>].</p></fn>
+is [<xref ref-type="bibr" rid="B13">13</xref>].</p></fn>
             <!--leave footnote-->
 
  If the aforementioned <styled-content style-type="emph-macro"><![CDATA[l]]></styled-content> is a compile-time
@@ -3888,8 +3888,10 @@ includes both raw-data and text objects.
     <!--ended body-->
     <!--inserting bibliography-->
 
-<back><ref-list>
-        
+<back>
+        <ref-list>
+            <title>Bibliography</title>
+            
 
 <ref id="B1">
   <mixed-citation>
@@ -4014,9 +4016,9 @@ interoperability for biomedical text processing</article-title>.
 </ref>
 
 
-<ref id="B18">
+<ref id="B10">
   <mixed-citation>
-    <name><surname>Strijkers</surname> <given-names>Rudolf</given-names></name>, <etal/>, <article-title>Toward Executable Scientific Publications</article-title>. 
+    <name><surname>Cushing</surname> <given-names>Reginald</given-names></name>, <etal/>, <article-title>Toward Executable Scientific Publications</article-title>. 
     <source>Proceedings</source> <conf-name>International Conference on Computational 
 Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->.
 
@@ -4027,7 +4029,7 @@ Science (ICCS)</conf-name>, <!--year-->2011<!--/year-->.
 </ref>
 
 
-<ref id="B10">
+<ref id="B11">
   <mixed-citation>
     <name><surname>Garabedian</surname> <given-names>Nick</given-names></name>, <etal/>, <article-title>A Framework to Generate, Store, and Publish FAIR Data
 in Experimental Sciences</article-title>. 
@@ -4042,7 +4044,7 @@ Semantic Systems</conf-name> (<conf-date><!--month-->September<!--/month-->, <!-
 
 
 
-<ref id="B11">
+<ref id="B12">
   <mixed-citation>
     <name><surname>Grinbergs</surname> <given-names>Harijs</given-names></name>, <article-title>Production Quality Decision Support Using 
 Real-Time Computer Vision Framework</article-title>. 
@@ -4056,7 +4058,7 @@ Development</conf-name> (<conf-date><!--month-->May<!--/month-->, <!--year-->201
 
 
 
-<ref id="B12">
+<ref id="B13">
   <mixed-citation>
     <name><surname>Harisanker</surname> <given-names>Pottayil</given-names></name>, <etal/>, <article-title>A Practical, Typed Variant Object Model:
 Or, How to Stand On Your Head and Enjoy the View</article-title>. 
@@ -4072,7 +4074,7 @@ Workshop on Foundations of Object-Oriented Languages</conf-name>
 
 
 
-<ref id="B13">
+<ref id="B14">
   <mixed-citation>
     <name><surname>Ludaescher</surname> <given-names>Bertram</given-names></name>, <etal/>, 
 <article-title>Capturing the 'Whole Tale' of Computational Research: Reproducibility 
@@ -4087,7 +4089,7 @@ in Computing Environments</article-title>.
 
 
 
-<ref id="B14">
+<ref id="B15">
   <mixed-citation>
     <name><surname>Murphy</surname> <given-names>Sean</given-names></name>, <etal/>, <article-title>Return value optimization (RVO)</article-title>. 
     <source>Special Interest Group on C++</source>, <!--year-->2020<!--/year-->
@@ -4098,7 +4100,7 @@ in Computing Environments</article-title>.
 </ref>
 
 
-<ref id="B15">
+<ref id="B16">
   <mixed-citation>
     <name><surname>Peer</surname> <given-names>Limor</given-names></name>, <etal/>, <article-title>Reproducible Research Publication Workflow:
 A Canonical Workflow Framework and FAIR Digital
@@ -4114,7 +4116,7 @@ Object Approach to Quality Research Output</article-title>.
 
 
 
-<ref id="B16">
+<ref id="B17">
   <mixed-citation>
     <article-title>Simplex Numerica User Manual</article-title>, <!--year-->2023<!--/year-->.
 
@@ -4125,7 +4127,7 @@ Object Approach to Quality Research Output</article-title>.
 
 
 
-<ref id="B17">
+<ref id="B18">
   <mixed-citation>
     <name><surname>Stevens</surname> <given-names>Vicky</given-names></name>, <etal/>, <article-title>Using ReproZip for 
 Reproducibility and Library Services</article-title>.
@@ -4180,7 +4182,8 @@ s    <ext-link xlink:href="https://arxiv.org/pdf/2404.17492" ext-link-type="url"
 
 
 
-    </ref-list></back>
+        </ref-list>
+    </back>
 </article>
 
 <!--ended document-->
