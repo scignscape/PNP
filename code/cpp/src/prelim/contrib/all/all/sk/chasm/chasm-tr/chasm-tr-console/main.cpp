@@ -1,19 +1,9 @@
 
 
-#ifdef USE_OpenCV
-
-#include <opencv2/opencv.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-
-#include <opencv2/xfeatures2d/nonfree.hpp>
-
-#include "opencv2/features2d/features2d.hpp"
-#include "opencv2/xfeatures2d.hpp"
-
-#endif
-
-
+//           Copyright Nathaniel Christen 2026.
+//  Distributed under the Boost Software License, Version 1.0.
+//     (See accompanying file LICENSE_1_0.txt or copy at
+//           http://www.boost.org/LICENSE_1_0.txt)
 
 
 
@@ -22,41 +12,6 @@
 USING_KANS(TextIO)
 
 
-/*
-
-<! <x>[retval] <\ [proc](pr)  [lambda](<*>[retval] <\ [proc](add) [lambda](5 7) ) !>
-
-.,
-load-pst $ /test ;.
-,.
-
-,x int
-
-.<x>[r] [p](pr)  [l](<*>[r] [p](add) [l](5 7) )
-
-.[p](unless) [l]($1 $2) = .[p](if) [l](<*>[r] [l](;1) ;2)
-
-
-[p] = %
-[r] = @
-[l] = \
-[m] = &
-[s] =
-[e] =
-[c] = @.
-
-.<x>@ %(pr) \(<*>@ %(add) \(5 7) )
-
-
-.&(unless) \($1 $2) = .%(if) \(<*>@ \(;1) ;2)
-
-
-.<x>@. %(test) \+(this)
-
-
-.<x>[c]
-
- */
 
 #include "chasm-tr-parser/chtr-document.h"
 
@@ -82,11 +37,6 @@ USING_AQNS(Chasm_TR)
 #include "chasm-procedure-table/chasm-procedure-table.h"
 
 
-
-//#include "stats/slico/slico.h"
-
-#include "chgr/chgr-environment.h"
-#include "chgr/chgr-hypernode.h"
 
 
 void testqvar(QVariant arg1, r8 arg2, u2 arg3)

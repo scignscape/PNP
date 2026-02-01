@@ -1,6 +1,6 @@
 
 
-//           Copyright Nathaniel Christen 2020.
+//           Copyright Nathaniel Christen 2026.
 //  Distributed under the Boost Software License, Version 1.0.
 //     (See accompanying file LICENSE_1_0.txt or copy at
 //           http://www.boost.org/LICENSE_1_0.txt)
@@ -36,6 +36,7 @@ ChVM_Code_Statement_Generator ChVM_Code_Generator::statement_generator(caon_ptr<
 
 void ChVM_Code_Generator::graph_to_chvm(QString& chvm)
 {
+#ifdef HIDE
  ChTR_Node* root_node = ir_graph_->root_node();
  if(caon_ptr<ChTR_Node> n = qry_.Root_Sequence(root_node))
  {
@@ -49,6 +50,7 @@ void ChVM_Code_Generator::graph_to_chvm(QString& chvm)
   // graph_to_chvm(chvm, ccs);
   }
  }
+#endif
 }
 
 

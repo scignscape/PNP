@@ -1,5 +1,5 @@
 
-#           Copyright Nathaniel Christen 2020.
+#           Copyright Nathaniel Christen 2026.
 #  Distributed under the Boost Software License, Version 1.0.
 #     (See accompanying file LICENSE_1_0.txt or copy at
 #           http://www.boost.org/LICENSE_1_0.txt)
@@ -20,57 +20,6 @@ exists($$ROOT_DIR/../preferred/compiler.pri): include($$ROOT_DIR/../preferred/co
 
 CONFIG += c++17
 
-## FEATURE_OpenCV = USE_OpenCV
-
-# ### For OpenCV
-defined(FEATURE_OpenCV ,var) {
- message(Using OpenCV)
-
- DEFINES += USE_OpenCV
- exists($$ROOT_DIR/../preferred/opencv.pri): include($$ROOT_DIR/../preferred/opencv.pri)
- INCLUDEPATH += $$OPENCV_INCLUDE_DIR
-
- QT += widgets
-
- LIBS += -L$$OPENCV_LIB_DIR -lopencv_core  -lopencv_imgproc  -lopencv_imgcodecs
-
- LIBS += -L$$OPENCV_LIB_DIR  -lopencv_xfeatures2d  \
-   -lopencv_features2d
-
-
-
-
- HEADERS += \
-  $$SRC_DIR/stats/feature-classifier-transform.h \
-  $$SRC_DIR/stats/slic/slic.h \
-  $$SRC_DIR/stats/slico/slico.h \
-  $$SRC_DIR/stats/stat-test-image.h \
-  $$SRC_DIR/stats/test-stat-assessment.h \
-  $$SRC_DIR/chgr/chgr-hypernode.h \
-  $$SRC_DIR/chgr/chgr-environment.h \
-  $$SRC_DIR/chgr/chgr-mempad.h \
-
-
- SOURCES += \
-  $$SRC_DIR/stats/feature-classifier-transform.cpp \
-  $$SRC_DIR/stats/slic/slic.cpp \
-  \# $$SRC_DIR/stats/slico/slic-demo.cpp \
-  $$SRC_DIR/stats/slico/slico.cpp \
-  $$SRC_DIR/stats/stat-test-image.cpp \
-  $$SRC_DIR/stats/test-stat-assessment.cpp \
-  $$SRC_DIR/stats/test-stat-assessment.demo-test.cpp \
-  $$SRC_DIR/chgr/chgr-hypernode.cpp \
-  $$SRC_DIR/chgr/chgr-environment.cpp \
-  $$SRC_DIR/chgr/chgr-mempad.cpp \
-
-###
-
-}
-
-
-
-###
-#?defined(USE_OpenCV)
 
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 
