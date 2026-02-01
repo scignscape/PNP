@@ -75,7 +75,7 @@ SOURCES += \
 
 
 LIBS += -L$$TARGETSDIR  \   #\ -lchasm-runtime-bridge -lchasm-vm -lchasm-procedure-table \
-  -lchasm-lib -lchasm-lib-X1 -lchasm-lib-X2 \
+  -lchasm-lib-X1 -lchasm-lib-X2 \
   -lchasm-lib-33 -lchasm-lib-43
 
 
