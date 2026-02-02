@@ -1,4 +1,4 @@
-# PNP
+## ChasmVM Demo Code
 
 The code included within this branch of the current repository is intended 
 to provide a basic overview of my ideas concerning "channel" based VMs and 
