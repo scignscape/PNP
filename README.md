@@ -45,20 +45,20 @@ then project files fit a pattern like `ROOT/code/cpp/projects/qt/qtm/both/prelim
 followed by a two-part project name.  Calling the above folder "`SK`" (or "scripting kernel"), 
 the projects can be loaded and compiled in this order:
 
-chasm-lib-33
-chasm-lib-43
-chasm-lib-X1
-chasm-lib-X2
-chasm-lib
-chasm-lib-console
-chasm-tr
-chasm-tr-parser
-chasm-tr-console
-chasm-procedure-table
-chasm-runtime-bridge
-chasm-vm
-crb-console
-chasm-vm-console
+ - chasm-lib-33
+ - chasm-lib-43
+ - chasm-lib-X1
+ - chasm-lib-X2
+ - chasm-lib
+ - chasm-lib-console
+ - chasm-tr
+ - chasm-tr-parser
+ - chasm-tr-console
+ - chasm-procedure-table
+ - chasm-runtime-bridge
+ - chasm-vm
+ - crb-console
+ - chasm-vm-console
 
 Here, the projects whose name ends with "-console" are compiled 
 as command-line programs that can be run from Qt Creator.  The 
