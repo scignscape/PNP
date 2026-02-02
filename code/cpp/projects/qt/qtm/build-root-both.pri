@@ -11,6 +11,8 @@ CONFIG   += console
 
 TEMPLATE = lib
 
+QT_DISABLE_DEPRECATED_BEFORE=0x060000
+
 
 ####  These regex matches should identify the pertinent directories and
 ##    build settings for Qt and qmake, based on the qmake output directory
@@ -20,8 +22,6 @@ TEMPLATE = lib
 ##    To see the settings obtained from these substitutions,
 ##    uncomment the "message" lines below.
 
-#?ROOT_DIR = $$OUT_PWD
-#?ROOT_DIR ~= s!/cpp/projects.qt/.*!!
 
 ROOT_DIR = $$_PRO_FILE_PWD_
 ROOT_DIR ~= s!/code/cpp/projects/qt/.*!!
@@ -135,6 +135,6 @@ include(./build-root-both--groups.pri)
 
 # #  make this the default ... projects could override if necessary ...
 
-CONFIG += c++17
+QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 

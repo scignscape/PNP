@@ -14,6 +14,8 @@ QT -= gui
 exists($$ROOT_DIR/../preferred/sysr.pri) : include($$ROOT_DIR/../preferred/sysr.pri)
 
 
+
+
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 
 

@@ -17,10 +17,6 @@ exists($$ROOT_DIR/../preferred/sysr-c.pri): include($$ROOT_DIR/../preferred/sysr
 exists($$ROOT_DIR/../preferred/compiler.pri): include($$ROOT_DIR/../preferred/compiler.pri)
 
 
-
-CONFIG += c++17
-
-
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 
 INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
