@@ -106,7 +106,7 @@ public:
   key_.set_fcode(val);
  }
 
- void set_lcode(u4 val)
+ void set_lcode(s4 val)
  {
   key_.set_lcode(val);
  }

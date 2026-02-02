@@ -15,143 +15,17 @@
 
 #include <QPoint>
 
-//#define FULL_INCLUDE
-//#ifdef HIDE
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re0.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re1.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re2.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re3.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re4.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re5.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re6.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re7.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re8.cpp"
-//#include "../dev/consoles/fns/s01/a3/run-s01_3_re9.cpp"
-
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re0.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re1.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re2.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re3.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re4.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re5.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re6.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re7.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re8.cpp"
-//#include "../dev/consoles/fns/s01/a2/run-s01_2_re9.cpp"
-
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re0.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re1.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re2.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re3.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re4.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re5.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re6.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re7.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re8.cpp"
-//#include "../dev/consoles/fns/s01/a1/run-s01_1_re9.cpp"
-
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re0.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re1.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re2.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re3.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re4.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re5.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re6.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re7.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re8.cpp"
-//#include "../dev/consoles/fns/s01/a0/run-s01_0_re9.cpp"
-//#endif //def HIDE
-
 //#include "kans.h"
 //USING_KANS(GTagML)
 
 #include <QDebug>
 
-//#include "compilation-unit-object.h"
-//#include "unified-runtime-object.h"
-//#include "metatype-object.h"
 
 #include "chasm-call-package.h"
 #include "chasm-channel.h"
 
 #include "types/chasm-type-object.h"
 
-
-//#include "chasm-runtime.op-cfc.cpp"
-//#include "chasm-runtime.eval-4of3.cpp"
-//#include "chasm-runtime.eval-3of3.cpp"
-//#include "chasm-runtime.eval-Xof2.cpp"
-//#include "chasm-runtime.eval-Xof1.cpp"
-
-
-
-
-// Chasm_Channel* lambda = ccp->channel("lambda");
-// if(!lambda)
-//   return;
-
-// Chasm_Channel* retv = ccp->channel("retv");
-// if(!retv)
-//   return;
-
-// Chasm_Carrier cc = retv->first_carrier();
-
-// void* rr = cc.value<void*>();
-
-// Chasm_Channel* sigma = ccp->channel("sigma");
-// void* _this;
-// if(sigma)
-//   _this = sigma->first_carrier().value<void*>();
-// else
-//   _this = nullptr;
-
-// u2 index = type_patterns_4of3_map.value(fncode.distinct_pretype_pattern);
-
-// run_s01_4of3_re9(fncode.type_pattern, index, (minimal_fn_s0_re9_type) fn,
-//   (minimal_fn_s1_re9_type) sfn, lambda->pasn8(1), lambda->pasn8(2),
-//   lambda->pasn8(3), lambda->pasn8(4), rr, _this);
-
-// if(rcar)
-//   rcar->set_value(rr);
-
-// run_s01_4of3_re9(u4 pattern, u4 index, minimal_fn_s0_re9_type fn,
-//   minimal_fn_s1_re9_type sfn, n8 arg1, n8 arg2, n8 arg3, n8 arg4, void*& retv,  void* _this)
-//
-//}
-
-
-//void Chasm_Runtime::evaluate_4of1_re9(Chasm_Call_Package* ccp, Chasm_Function_Code fncode,
-//  minimal_fn_s0_re9_type fn, minimal_fn_s1_re9_type sfn, Chasm_Carrier* rcar)
-//{
-// Chasm_Channel* lambda = ccp->channel("lambda");
-// if(!lambda)
-//  return;
-
-// Chasm_Channel* retv = ccp->channel("retv");
-// if(!retv)
-//  return;
-
-// Chasm_Channel* sigma = ccp->channel("sigma");
-// void* _this;
-// if(sigma)
-//  _this = sigma->first_carrier().value<void*>();
-// else
-//  _this = nullptr;
-
-// Chasm_Carrier cc = retv->first_carrier();
-
-// void* rr = cc.value<void*>();
-
-//// u2 index = type_patterns_4of3_map.value(fncode.distinct_pretype_pattern);
-////
-// run_s01_4of1_re9(fncode.type_pattern, index, (minimal_fn_s0_re9_type) fn,
-//  (minimal_fn_s1_re9_type) sfn, lambda->pasn8(1), lambda->pasn8(2), lambda->pasn8(3), lambda->pasn8(4), rr, _this);
-
-// if(rcar)
-//  rcar->set_value(rr);
-
-// //#include "../dev/consoles/fns/eval/a4of3/ch-eval-s01_4of3_re9.cpp"
-//}
 
 n8 Chasm_Function_Code::collapsed(n8 cue)
 {
@@ -218,9 +92,13 @@ n8 Chasm_Function_Code::collapsed(n8 cue)
 
 
 Chasm_Runtime::Chasm_Runtime()
- :  gen_trisym_line_index_(0), gen_trisym_file_index_(0),
-    gen_trisym_col_index_(0), call_package_index_(0),
-    current_no_file_session_(0)
+ :  gen_trisym_line_index_(0),
+    gen_trisym_file_index_(0),
+    gen_trisym_col_index_(0),
+    call_package_index_(0),
+    current_no_file_session_(0),
+    current_source_file_index_(0),
+    current_statement_line_number_(0)
 {
 }
 
@@ -228,13 +106,6 @@ Chasm_Carrier Chasm_Runtime::gen_shared_ref_carrier(std::shared_ptr<n8>* ss)
 {
  return gen_carrier(0).take_shared_ref_value(ss);
 }
-
-//Chasm_Carrier Chasm_Runtime::gen_shared_ref_carrier(n8 val)
-//{
-// std::shared_ptr<n8>* ss = new std::shared_ptr<n8>((n8*) val);
-// return gen_carrier(0).take_twice_shared_ref_value(ss);
-//}
-
 
 template<>
 Chasm_Carrier Chasm_Runtime::gen_carrier<n8&>()
@@ -372,16 +243,6 @@ Chasm_Carrier Chasm_Runtime::gen_carrier_by_type_object(Chasm_Type_Object* cto, 
 
 Chasm_Carrier Chasm_Runtime::gen_carrier(u1 type_flag, QString rep)
 {
-// Chasm_Typed_Value_Representation tvr({(*pretype_type_objects_)[type_flag], 0, rep});
-// return gen_carrier(tvr);
-
- // ccp->add_new_channel("lambda");
- // QStringList qsl;
- // void* h = &qsl;
- // Chasm_Carrier cc = csr_->gen_carrier<n8&>(h);
- // ccp->add_carrier(cc);
-
-
  switch (type_flag)
  {
  case 0:
@@ -389,8 +250,6 @@ Chasm_Carrier Chasm_Runtime::gen_carrier(u1 type_flag, QString rep)
   QStringList qsl{rep};
   void** handle = new void*(&qsl);
   return gen_carrier<n8&>(handle);
-   //n8 v = rep.toULongLong(); return gen_carrier<n8&>(&v);
-
   }
  case 1: { u1 v = rep.toUShort(); return gen_carrier<u1>(&v); }
  case 2: { u2 v = rep.toUShort(); return gen_carrier<u2>(&v); }
@@ -509,12 +368,23 @@ void Chasm_Runtime::release(Chasm_Call_Package* ccp)
 }
 
 
-
-Chasm_Carrier Chasm_Runtime::gen_carrier(QString type_name)
+// QString type_name
+// //  This is not called from a script
+Chasm_Carrier Chasm_Runtime::gen_carrier()
 {
  trisym tri;
- tri.set_fcode(current_no_file_session_);
- tri.set_lcode(-(++gen_trisym_line_index_));
+
+ if(current_no_file_session_)
+ {
+  tri.set_fcode(current_no_file_session_);
+  tri.set_lcode(-(++gen_trisym_line_index_));
+ }
+ else
+ {
+  tri.set_fcode(current_source_file_index_);
+  tri.set_lcode(current_statement_line_number_);
+ }
+
  tri.set_ccode(1);
  Chasm_Carrier result;
  result.set_key(tri);
@@ -711,255 +581,3 @@ void _evaluate_s01_0_rX(Chasm_Call_Package* ccp, Chasm_Function_Code fncode,
   }
  }
 }
-
-
-#ifdef HIDE
-
-void Chasm_Runtime::evaluate_3_re0(Chasm_Call_Package* ccp, u2 fncode,
-  minimal_fn_s0_re0_type fn, minimal_fn_s1_re0_type sfn)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re0.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re1(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re1_type fn, minimal_fn_s1_re1_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re1.cpp"
-}
-
-
-void Chasm_Runtime::evaluate_3_re2(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re2_type fn, minimal_fn_s1_re2_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re2.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re3(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re3_type fn, minimal_fn_s1_re3_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re3.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re4(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re4_type fn, minimal_fn_s1_re4_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re4.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re5(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re5_type fn, minimal_fn_s1_re5_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re5.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re6(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re6_type fn, minimal_fn_s1_re6_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re6.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re7(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re7_type fn, minimal_fn_s1_re7_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re7.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re8(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re8_type fn, minimal_fn_s1_re8_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re8.cpp"
-}
-
-void Chasm_Runtime::evaluate_3_re9(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re9_type fn, minimal_fn_s1_re9_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a3/ch-eval-s01_3_re9.cpp"
-}
-
-
-
-void Chasm_Runtime::evaluate_2_re0(Chasm_Call_Package* ccp, u2 fncode,
-  minimal_fn_s0_re0_type fn, minimal_fn_s1_re0_type sfn)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re0.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re1(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re1_type fn, minimal_fn_s1_re1_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re1.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re2(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re2_type fn, minimal_fn_s1_re2_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re2.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re3(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re3_type fn, minimal_fn_s1_re3_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re3.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re4(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re4_type fn, minimal_fn_s1_re4_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re4.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re5(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re5_type fn, minimal_fn_s1_re5_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re5.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re6(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re6_type fn, minimal_fn_s1_re6_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re6.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re7(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re7_type fn, minimal_fn_s1_re7_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re7.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re8(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re8_type fn, minimal_fn_s1_re8_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re8.cpp"
-}
-
-void Chasm_Runtime::evaluate_2_re9(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re9_type fn, minimal_fn_s1_re9_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a2/ch-eval-s01_2_re9.cpp"
-}
-
-
-void Chasm_Runtime::evaluate_1_re0(Chasm_Call_Package* ccp, u2 fncode, minimal_fn_s0_re0_type fn,
-  minimal_fn_s1_re0_type sfn)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re0.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re1(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re1_type fn, minimal_fn_s1_re1_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re1.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re2(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re2_type fn, minimal_fn_s1_re2_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re2.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re3(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re3_type fn, minimal_fn_s1_re3_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re3.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re4(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re4_type fn, minimal_fn_s1_re4_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re4.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re5(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re5_type fn, minimal_fn_s1_re5_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re5.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re6(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re6_type fn, minimal_fn_s1_re6_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re6.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re7(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re7_type fn, minimal_fn_s1_re7_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re7.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re8(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re8_type fn, minimal_fn_s1_re8_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re8.cpp"
-}
-
-void Chasm_Runtime::evaluate_1_re9(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re9_type fn, minimal_fn_s1_re9_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a1/ch-eval-s01_1_re9.cpp"
-}
-
-
-
-void Chasm_Runtime::evaluate_0_re0(Chasm_Call_Package* ccp,
-  u2 fncode, minimal_fn_s0_re0_type fn, minimal_fn_s1_re0_type sfn)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re0.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re1(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re1_type fn, minimal_fn_s1_re1_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re1.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re2(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re2_type fn, minimal_fn_s1_re2_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re2.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re3(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re3_type fn, minimal_fn_s1_re3_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re3.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re4(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re4_type fn, minimal_fn_s1_re4_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re4.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re5(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re5_type fn, minimal_fn_s1_re5_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re5.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re6(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re6_type fn, minimal_fn_s1_re6_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re6.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re7(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re7_type fn, minimal_fn_s1_re7_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re7.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re8(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re8_type fn, minimal_fn_s1_re8_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re8.cpp"
-}
-
-void Chasm_Runtime::evaluate_0_re9(Chasm_Call_Package* ccp,
- u2 fncode, minimal_fn_s0_re9_type fn,
- minimal_fn_s1_re9_type sfn, Chasm_Carrier* rcar)
-{
-#include "../dev/consoles/fns/s01/a0/ch-eval-s01_0_re9.cpp"
-}
-
-#endif // HIDE

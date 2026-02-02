@@ -37,8 +37,6 @@ Chasm_Runtime_Bridge::Chasm_Runtime_Bridge(Chasm_Runtime* csr)
      current_loaded_raw_value_(0), current_ghost_scope_(nullptr),
      current_lexical_scope_(nullptr),
      proctable_(nullptr),
-     current_source_file_index_(0),
-     current_statement_line_number_(0),
      max_interned_symbol_(0)
 {
  const QVector<Chasm_Type_Object*>& pto = *csr_->pretype_type_objects();
@@ -205,12 +203,12 @@ void Chasm_Runtime_Bridge::gen_return_channels()
 
 void Chasm_Runtime_Bridge::statement_line_number(QString value)
 {
- current_statement_line_number_ = value.toUInt();
+ csr_->set_current_statement_line_number(value.toUInt());
 }
 
 void Chasm_Runtime_Bridge::source_file_index(QString value)
 {
- current_source_file_index_  = value.toUInt();
+ csr_->set_current_source_file_index(value.toUInt());
 }
 
 void Chasm_Runtime_Bridge::reset_carrier_deque()
@@ -384,8 +382,10 @@ void Chasm_Runtime_Bridge::gen_carrier()
 void Chasm_Runtime_Bridge::gen_carrier(QString symbol, Chasm_Type_Object* cto)
 {
  Chasm_Carrier cc = csr_->gen_carrier_by_type_object(cto);
- cc.set_fcode(current_source_file_index_);
- cc.set_lcode(current_statement_line_number_);
+
+// cc.set_fcode(current_source_file_index_);
+// cc.set_lcode(current_statement_line_number_);
+
  cc.set_ccode(interned(symbol));
 
  n8 val = current_lexical_scope_->retrieve_value(symbol);

@@ -157,6 +157,9 @@ class Chasm_Runtime
 
  u4 current_no_file_session_;
 
+ u4 current_source_file_index_;
+ u4 current_statement_line_number_;
+
  Chasm_Type_System type_system_;
 
 public:
@@ -164,6 +167,9 @@ public:
  Chasm_Runtime();
 
  ACCESSORS__RGET(Chasm_Type_System ,type_system)
+
+ ACCESSORS(u4 ,current_source_file_index)
+ ACCESSORS(u4 ,current_statement_line_number)
 
  QVector<Chasm_Type_Object*>* pretype_type_objects()
  {
@@ -182,7 +188,11 @@ public:
  Chasm_Call_Package* pull_call_package();
 
  Chasm_Carrier gen_carrier(Chasm_Typed_Value_Representation& tvr);
- Chasm_Carrier gen_carrier(QString type_name = {});
+
+ //?Chasm_Carrier gen_carrier(QString type_name = {});
+
+ Chasm_Carrier gen_carrier();
+
  Chasm_Carrier gen_carrier(u1 type_flag);
  Chasm_Carrier gen_carrier(u1 type_flag, QString rep);
 
@@ -207,9 +217,7 @@ public:
  void evaluate(Chasm_Call_Package* ccp, QPair<Chasm_Function_Code, Chasm_Function_Code> fncodes,
    RETURN_Type (CLASS_Type::*sfn), Chasm_Carrier* rcar = nullptr)
  {
-  //
   Chasm_Function_Code  fncode = fncodes.second;
-  //Chasm_Function_Code fncode = fncodes.first;
 
   if(fncode.convention != 1)
     UNEXPECTED_CONVENTION_CODE
@@ -236,9 +244,7 @@ public:
  void evaluate(Chasm_Call_Package* ccp, QPair<Chasm_Function_Code, Chasm_Function_Code> fncodes,
    FN_Type fn, Chasm_Carrier* rcar = nullptr)
  {
-  //
   Chasm_Function_Code fncode = fncodes.second;
-  //Chasm_Function_Code fncode = fncodes.first;
 
   if(fncode.convention != 0)
     UNEXPECTED_CONVENTION_CODE

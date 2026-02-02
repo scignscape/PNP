@@ -80,8 +80,6 @@ class Chasm_Runtime_Bridge
 
  Chasm_Procedure_Table* proctable_;
 
- u4 current_source_file_index_;
- u4 current_statement_line_number_;
 
  QMap<QString, u4> interned_symbols_;
  u4 max_interned_symbol_;
