@@ -28,7 +28,7 @@ INCLUDEPATH += $$SRC_PROSET_DIR/chasm-lib
 
 
 
-DEFINES += DEMO_CVM_FOLDER=\\\"$$ROOT_DIR/../chtr\\\"
+DEFINES += DEMO_CVM_FOLDER=\\\"$$ROOT_DIR/../dev/chtr\\\"
 
 CONFIG += no_keywords
 

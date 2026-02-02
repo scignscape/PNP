@@ -32,5 +32,50 @@ relevant for this demo code (not relevant at all, currently).  I have
 also included the instruction `QT_DISABLE_DEPRECATED_BEFORE=0x060000` 
 to detect whether I use any construction that is not present in Qt6.
 
+The simplest way to examine this code is probably to use the Qt Creator 
+IDE.  One then has the option of building each object in groups 
+or individually.  The repo's file structure has many layers, with 
+the anticipation that similar code could form the basis of 
+Executable Research Objects, which may progress through several 
+versions and multiplie contributors.  I have chosen a file layout 
+that could keep multiple work-in-progress organized without 
+(needing to) split the code into multiple git branches.
+With that said, assuming this brach is cloned into ROOT, 
+then project files fit a pattern like `ROOT/code/cpp/projects/qt/qtm/both/prelim/contrib/all/all/sk` 
+followed by a two-part project name.  Calling the above folder "`SK`" (or "scripting kernel"), 
+the projects can be loaded and compiled in this order:
 
+chasm-lib-33
+chasm-lib-43
+chasm-lib-X1
+chasm-lib-X2
+chasm-lib
+chasm-lib-console
+chasm-tr
+chasm-tr-parser
+chasm-tr-console
+chasm-procedure-table
+chasm-runtime-bridge
+chasm-vm
+crb-console
+chasm-vm-console
+
+Here, the projects whose name ends with "-console" are compiled 
+as command-line programs that can be run from Qt Creator.  The 
+others are libaries.  See the "`main.cpp`" files for each console 
+program for a description of its purpose.
+
+An additional step is needed to compile and run some of these projects.  This 
+is because, first, some of the VM compiler code is auto-generated.  Rather than 
+just including this specific code as part of the repository, I have 
+included it as a zipped file (specifically ROOT/dev.zip).  This gives 
+me an option of swapping some different batch of auto-generated code 
+if I want to test some variation.  The code presented here expects this 
+generated code to be in a folder called `dev` that is sibling to ROOT, so 
+just extract the zip file to its parent directory.  The `dev` folder 
+will also have a sample script to run for the VM demo.
+
+
+
+ 
 
