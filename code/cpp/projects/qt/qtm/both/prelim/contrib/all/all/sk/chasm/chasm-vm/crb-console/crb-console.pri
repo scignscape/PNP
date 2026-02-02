@@ -15,6 +15,7 @@ TEMPLATE = app
 
 exists($$ROOT_DIR/../preferred/sysr.pri): include($$ROOT_DIR/../preferred/sysr.pri)
 
+QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 
