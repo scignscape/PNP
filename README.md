@@ -1,7 +1,7 @@
 
 # ScignPNP: Science Grid Nodes — Publishing for Nonprofits
 
-If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "prelim" branch `README-chasm.txt`.  Other "work in process" within this branch is explained in similar readme files.
+If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "`presentations`" branch (and its `README` file).  Other "work in process" will be deposited in the "`prelim`" branch.
 
 What follows is an informal, thematic overview.  A summary of the included source code is further down this 
 page (or [skip ahead](#technical-overview-raised)).  
