@@ -41,24 +41,24 @@ versions and multiplie contributors.  I have chosen a file layout
 that could keep multiple work-in-progress organized without 
 (needing to) split the code into multiple git branches.
 With that said, assuming this brach is cloned into ROOT, 
-then project files fit a pattern like `ROOT/code/cpp/projects/qt/qtm/both/prelim/contrib/all/all/sk` 
-followed by a two-part project name.  Calling the above folder "`SK`" (or "scripting kernel"), 
+then project files fit a pattern like `ROOT/code/cpp/projects/qt/qtm/isobuild/prelim/contrib/all/all/sk` 
+followed by a two-part project name.  Calling the above folder "`SK`" (for "scripting kernel"), 
 the projects can be loaded and compiled in this order:
 
- - chasm-lib-33
- - chasm-lib-43
- - chasm-lib-X1
- - chasm-lib-X2
- - chasm-lib
- - chasm-lib-console
- - chasm-tr
- - chasm-tr-parser
- - chasm-tr-console
- - chasm-procedure-table
- - chasm-runtime-bridge
- - chasm-vm
- - crb-console
- - chasm-vm-console
+ - chasm/chasm-lib/chasm-lib-33
+ - chasm/chasm-lib/chasm-lib-43
+ - chasm/chasm-lib/chasm-lib-X1
+ - chasm/chasm-lib/chasm-lib-X2
+ - chasm/chasm-lib/chasm-lib
+ - chasm/chasm-lib/chasm-lib-console
+ - chasm/chasm-tr/chasm-tr
+ - chasm/chasm-tr/chasm-tr-parser
+ - chasm/chasm-tr/chasm-tr-console
+ - chasm/chasm-vm/chasm-procedure-table
+ - chasm/chasm-vm/chasm-runtime-bridge
+ - chasm/chasm-vm/chasm-vm
+ - chasm/chasm-vm/crb-console
+ - chasm/chasm-vm/chasm-vm-console
 
 Here, the projects whose name ends with "-console" are compiled 
 as command-line programs that can be run from Qt Creator.  The 
@@ -75,7 +75,11 @@ generated code to be in a folder called `dev` that is sibling to ROOT, so
 just extract the zip file to its parent directory.  The `dev` folder 
 will also have a sample script to run for the VM demo.
 
+As a shortcut instead of building each project individually, there are 
+three project that use Qt's "`subdirs`" system to group the projects 
+together.  With `SK` being `ROOT/code/cpp/projects/qt/qtm/unibuild/prelim/contrib/all/all/sk` 
+these are at `SK/chasm/chasm-lib/chasm-lib-uni/chasm-lib-uni.pro`, 
+`SK/chasm/chasm-tr/chasm-tr-uni/chasm-tr-uni.pro`, and 
+`SK/chasm/chasm-vm/chasm-vm-uni/chasm-vm-uni.pro`
 
-
- 
 

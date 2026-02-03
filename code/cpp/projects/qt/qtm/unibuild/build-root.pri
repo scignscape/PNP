@@ -5,7 +5,7 @@
 #           http://www.boost.org/LICENSE_1_0.txt)
 
 
-
+UNIBUILD_TARGET_DIR = uni
 
 defined(QMAKE_CONSOLE_TARGET_DIR, var){
  CHOICE_CODE = qmake-console-choices
@@ -13,11 +13,13 @@ defined(QMAKE_CONSOLE_TARGET_DIR, var){
  exists(../_choices/$${WHICH_BUILD_DIR_CODE}_choices.pri): include(../_choices/$${WHICH_BUILD_DIR_CODE}_choices.pri)
  BUILD_DIR_CODE = qmake-console
 } else {
- CHOICE_CODE = isobuild-choices
- WHICH_BUILD_DIR_CODE = isobuild
+ isEmpty(UNI_BUILD_CODE) {
+  UNI_BUILD_CODE = nomark
+ }
+ CHOICE_CODE = unibuild-choices
+ WHICH_BUILD_DIR_CODE = uni-$$UNI_BUILD_CODE
  exists(../_choices/$${WHICH_BUILD_DIR_CODE}_choices.pri): include(../_choices/$${WHICH_BUILD_DIR_CODE}_choices.pri)
- BUILD_DIR_CODE = $$OUT_PWD
- BUILD_DIR_CODE ~= s!.*/(build|release)-($$PROJECT_NAME)-(.*)-(Debug|Release)!\3
+ BUILD_DIR_CODE = _subdirs_
 }
 
 include(../build-root-both.pri)

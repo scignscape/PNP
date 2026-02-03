@@ -48,10 +48,6 @@ SOURCES += \
   $$SRC_DIR/_eval-Xof2.cpp \
 
 
-#$$SRC_DIR/chasm/chasm-runtime.eval-4of3.cpp \
-#$$SRC_DIR/chasm/chasm-runtime.eval-3of3.cpp \
-#$$SRC_DIR/chasm/chasm-runtime.eval-Xof2.cpp \
-#$$SRC_DIR/chasm/chasm-runtime.eval-Xof1.cpp \
 
 
 message(choice: $$CPP_ROOT_DIR/targets/$$CHOICE_CODE/$$PROJECT_SET--$$PROJECT_GROUP--$$PROJECT_NAME)

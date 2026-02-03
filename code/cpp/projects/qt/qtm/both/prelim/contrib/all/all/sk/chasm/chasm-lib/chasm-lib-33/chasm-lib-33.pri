@@ -8,6 +8,7 @@ QT -= gui
 
 include(../build-group.pri)
 
+message(D= $$DESTDIR)
 
 exists($$ROOT_DIR/../preferred/sysr.pri): include($$ROOT_DIR/../preferred/sysr.pri)
 

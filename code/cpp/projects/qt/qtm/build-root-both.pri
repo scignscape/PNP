@@ -112,6 +112,8 @@ CONFIG(debug, debug|release) {
 }
 
 
+
+
 DESTDIR = $$TARGETSDIR
 
 
