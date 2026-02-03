@@ -427,6 +427,19 @@ Grounding and Center/Peripheral Relations](https://raw.githubusercontent.com/sci
     3.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
 Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/itm.pdf)
 
+- The chapters of the book _Innovative Data Integration and Conceptual Space Modeling 
+for COVID, Cancer, and Cardiac Care_ (Elsevier, 2022).  These are individual chapters' penultimate versions, 
+not identical to the printed book.
+
+  1.  [Chapter 1 -- Introduction](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter1.pdf)
+  2.  [Chapter 2 -- Data Structures Associated with Biomedical Research](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter2.pdf)
+  3.  [Chapter 3 -- Data Mining and Predictive Analytics for Cancer and COVID-19](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter3.pdf)
+  4.  [Chapter 4 -- Modular Design, Image Biomarkers, and Radiomics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter4.pdf)
+  5.  [Chapter 5 -- Types’ Internal Structure and ‘Nonconstructive’ (‘NC4’) Type Theory](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter5.pdf)
+  6.  [Chapter 6 -- Using Code Models to Instantiate Data Models](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter6.pdf)
+  7.  [Chapter 7 -- Multi-Aspect Modules and Image Annotation](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter7.pdf)
+  8.  [Chapter 8 -- Image Annotation as a Multi-Aspect Case-Study](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter8.pdf)
+  9.  [Chapter 9 -- Conceptual Spaces and Scientific Data Models](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter9.pdf)
 
 - Five chapters from the book _AI, IoT, Big Data and Cloud Computing for Industry 4.0_ 
 (Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
@@ -447,7 +460,7 @@ and Robotics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/io
     5.  [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
 
 
-
+- My doctoral dissertation on ["Phenomenological Reductionism"](https://raw.githubusercontent.com/scignscape/PNP/main/documents/nc/dissertation.pdf).  This document has fairly basic layout, but I still stand by the content.
 
 
 
