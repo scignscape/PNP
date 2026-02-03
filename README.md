@@ -13,7 +13,7 @@ page ([skip ahead](#sample-documents-raised)).
 **_Personal Note_**
 I have developed and used the code described here over a multi-year period.  Some 
 of this code was originally designed to be part of a commercial product (at least on one version) 
-by a startup I was working for (see [here](https://raw.githubusercontent.com/scignscape/PNP/main/documents/PacTk/Publishing-Accelerator-Toolkit.pdf) for a summary of this work in a more commercial 
+by a startup I was working for (see [here](https://scignscape.github.io/PNP/documents/PacTk/Publishing-Accelerator-Toolkit.pdf) for a summary of this work in a more commercial 
 context).  Prior to the Covid pandemic, we were also engaged with implementations for 
 Electronic Medical Records, clinical informatics, and diagnostic imaging, but transitioned 
 to focus more on software for publishing during the "stay-at-home" phase 
@@ -387,10 +387,10 @@ systems biology, bioimaging, and Computer Vision.
 The following are examples of my own publications 
 developed via ScignPNP (not in chronological order).
 
-- [Merging Full-Text Query with Research Data Sets: A perspective from compiler theory](https://raw.githubusercontent.com/scignscape/PNP/main/documents/A-perspective-from-compiler-theory.pdf)  Presented at NISO/JATS 2026.
+- [Merging Full-Text Query with Research Data Sets: A perspective from compiler theory](https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf)  Presented at NISO/JATS 2026.
 
 - [Ordering Conceptual Synthesis: The Implications of Cognitive Phenomenology
-for Syntactic Theory](https://raw.githubusercontent.com/scignscape/PNP/main/documents/Ordering-Conceptual-Synthesis.pdf)  A paper about linguistics and the philosophy of science, which uses 
+for Syntactic Theory](https://scignscape.github.io/PNP/documents/Ordering-Conceptual-Synthesis.pdf)  A paper about linguistics and the philosophy of science, which uses 
 programming languages as case-studies for some 
 linguistic topics.  The ScignPNP code 
 for this manuscript included document-specific 
@@ -419,48 +419,48 @@ linguistic data sets from example
 sentences/fragments listed for analysis in linguistics papers.
 
     1.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (I):
-Cognitive Transform Grammar](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/ctg.pdf)
+Cognitive Transform Grammar](https://scignscape.github.io/PNP/documents/ijst/ctg.pdf)
 
     2.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (II):
-Grounding and Center/Peripheral Relations](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/icg.pdf)
+Grounding and Center/Peripheral Relations](https://scignscape.github.io/PNP/documents/ijst/icg.pdf)
 
     3.  [From 'Naturalizing Phenomenology' to Formalizing Cognitive Linguistics (III):
-Externalism and the Interface Theory of Meaning](https://raw.githubusercontent.com/scignscape/PNP/main/documents/ijst/itm.pdf)
+Externalism and the Interface Theory of Meaning](https://scignscape.github.io/PNP/documents/ijst/itm.pdf)
 
 - The chapters of the book _Innovative Data Integration and Conceptual Space Modeling 
 for COVID, Cancer, and Cardiac Care_ (Elsevier, 2022).  These are individual chapters' penultimate versions, 
 not identical to the printed book.
 
-  1.  [Chapter 1 -- Introduction](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter1.pdf)
-  2.  [Chapter 2 -- Data Structures Associated with Biomedical Research](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter2.pdf)
-  3.  [Chapter 3 -- Data Mining and Predictive Analytics for Cancer and COVID-19](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter3.pdf)
-  4.  [Chapter 4 -- Modular Design, Image Biomarkers, and Radiomics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter4.pdf)
-  5.  [Chapter 5 -- Types’ Internal Structure and ‘Nonconstructive’ (‘NC4’) Type Theory](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter5.pdf)
-  6.  [Chapter 6 -- Using Code Models to Instantiate Data Models](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter6.pdf)
-  7.  [Chapter 7 -- Multi-Aspect Modules and Image Annotation](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter7.pdf)
-  8.  [Chapter 8 -- Image Annotation as a Multi-Aspect Case-Study](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter8.pdf)
-  9.  [Chapter 9 -- Conceptual Spaces and Scientific Data Models](https://raw.githubusercontent.com/scignscape/PNP/main/documents/data-integration/Chapter9.pdf)
+  1.  [Chapter 1 -- Introduction](https://scignscape.github.io/PNP/documents/data-integration/Chapter1.pdf)
+  2.  [Chapter 2 -- Data Structures Associated with Biomedical Research](https://scignscape.github.io/PNP/documents/data-integration/Chapter2.pdf)
+  3.  [Chapter 3 -- Data Mining and Predictive Analytics for Cancer and COVID-19](https://scignscape.github.io/PNP/documents/data-integration/Chapter3.pdf)
+  4.  [Chapter 4 -- Modular Design, Image Biomarkers, and Radiomics](https://scignscape.github.io/PNP/documents/data-integration/Chapter4.pdf)
+  5.  [Chapter 5 -- Types’ Internal Structure and ‘Nonconstructive’ (‘NC4’) Type Theory](https://scignscape.github.io/PNP/documents/data-integration/Chapter5.pdf)
+  6.  [Chapter 6 -- Using Code Models to Instantiate Data Models](https://scignscape.github.io/PNP/documents/data-integration/Chapter6.pdf)
+  7.  [Chapter 7 -- Multi-Aspect Modules and Image Annotation](https://scignscape.github.io/PNP/documents/data-integration/Chapter7.pdf)
+  8.  [Chapter 8 -- Image Annotation as a Multi-Aspect Case-Study](https://scignscape.github.io/PNP/documents/data-integration/Chapter8.pdf)
+  9.  [Chapter 9 -- Conceptual Spaces and Scientific Data Models](https://scignscape.github.io/PNP/documents/data-integration/Chapter9.pdf)
 
 - Five chapters from the book _AI, IoT, Big Data and Cloud Computing for Industry 4.0_ 
 (Amy Neustein, Parikshit N. Mahalle, Prachi Joshi, Gitanjali Rahul Shinde, eds., 
 Springer 2024: [https://link.springer.com/book/10.1007/978-3-031-29713-7](https://link.springer.com/book/10.1007/978-3-031-29713-7)).
 
     1.  [Chapter 20 -- Multi-Component Interoperability and Virtual Machines: Examples from
-Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch20.pdf)
+Architecture, Engineering, Cyber-Physical Networks, and Geographic Information Systems](https://scignscape.github.io/PNP/documents/iot/ch20.pdf)
 
     2.  [Chapter 21 -- Virtual Machines and Hypergraph Data/Code Models: Graph-Theoretic
-Representations of Lambda-Style Calculi](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch21.pdf)
+Representations of Lambda-Style Calculi](https://scignscape.github.io/PNP/documents/iot/ch21.pdf)
 
     3.  [Chapter 22 -- GUI Integration and Virtual Machine Constructions for Image Processing:
-Phenomenological and Database-Engineering insights into Computer Vision](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch22.pdf)
+Phenomenological and Database-Engineering insights into Computer Vision](https://scignscape.github.io/PNP/documents/iot/ch22.pdf)
 
     4.  [Chapter 23 -- The Missing Links Between Computer and Human Languages: Animal Cognition
-and Robotics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch23.pdf)
+and Robotics](https://scignscape.github.io/PNP/documents/iot/ch23.pdf)
 
-    5.  [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://raw.githubusercontent.com/scignscape/PNP/main/documents/iot/ch24.pdf)
+    5.  [Chapter 24 -- GUIs, Robots, and Language: Toward a Neo-Davidsonian Procedural Semantics](https://scignscape.github.io/PNP/documents/iot/ch24.pdf)
 
 
-- My doctoral dissertation on ["Phenomenological Reductionism"](https://raw.githubusercontent.com/scignscape/PNP/main/documents/nc/dissertation.pdf).  This document has fairly basic layout, but I still stand by the content.
+- My doctoral dissertation on ["Phenomenological Reductionism"](https://scignscape.github.io/PNP/documents/nc/dissertation.pdf).  This document has fairly basic layout, but I still stand by the content.
 
 
 
