@@ -18,7 +18,22 @@ USING_KANS(TextIO)
 USING_OTNS(Chasm_TR)
 
 
+#include "otqr-sdi-parser/otqr-sdi-parser.h"
+
+USING_OTNS(SDI)
+
+
 int main(int argc, char *argv[])
+{
+
+ OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/paper-conf.gt.sentences.sdi");
+
+ osp.parse();
+
+ return 0;
+}
+
+int main1(int argc, char *argv[])
 {
 
  ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/otqr/t1.ot");

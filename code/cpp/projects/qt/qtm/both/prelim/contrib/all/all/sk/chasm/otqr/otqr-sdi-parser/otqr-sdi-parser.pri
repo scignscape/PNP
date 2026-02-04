@@ -9,8 +9,6 @@ PROJECT_NAME = chasm-console
 
 include(../build-group.pri)
 
-TEMPLATE = app
-
 
 exists($$ROOT_DIR/../preferred/sysr.pri): include($$ROOT_DIR/../preferred/sysr.pri)
 exists($$ROOT_DIR/../preferred/sysr-c.pri): include($$ROOT_DIR/../preferred/sysr-c.pri)
@@ -19,17 +17,6 @@ exists($$ROOT_DIR/../preferred/compiler.pri): include($$ROOT_DIR/../preferred/co
 
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 
-INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
-INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
-
-
-INCLUDEPATH += $$SRC_PROSET_DIR/chasm-tr
-INCLUDEPATH += $$SRC_PROSET_DIR/chasm-tr/chasm-tr
-
-INCLUDEPATH += $$SRC_PROSET_DIR/chasm-vm
-INCLUDEPATH += $$SRC_PROSET_DIR/chasm-lib
-
-
 CONFIG += no_keywords
 
 DEFINES += USE_OTNS
@@ -37,13 +24,20 @@ DEFINES += USE_OTNS
 DEFINES += ROOT_FOLDER=\\\"$$ROOT_DIR\\\"
 DEFINES += DEMO_CVM_FOLDER=\\\"$$ROOT_DIR/../dev/chtr\\\"
 
+
+HEADERS += \
+  $$SRC_DIR/otqr-sdi-parser.h \
+  $$SRC_DIR/sdi-sentence-reader.h \
+  $$SRC_DIR/sentences/sdi-sentence.h \
+
+
 SOURCES += \
-  $$SRC_DIR/main.cpp \
+  $$SRC_DIR/otqr-sdi-parser.cpp \
+  $$SRC_DIR/sdi-sentence-reader.cpp \
+  $$SRC_DIR/sentences/sdi-sentence.cpp \
 
 
 LIBS += -L$$TARGETSDIR -lchasm-tr  -lchasm-tr-parser
-
-LIBS += -L$$TARGETSDIR -lotqr-sdi-parser
 
 
 #  these are not needed if the demo for this project only concerns emitting chvm
