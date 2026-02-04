@@ -20,6 +20,7 @@ OTQR_SDI_Parser::OTQR_SDI_Parser(QString file_path)
 
 void OTQR_SDI_Parser::process_line(QString line)
 {
+ qDebug() << line;
  reader_.parse_line(line);
 }
 

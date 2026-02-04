@@ -56,12 +56,19 @@ public:
 
  SDI_Sentence_Reader();
 
+ void init_sentence(QString data);
+
  void parse_line(QString line);
+
+ void read_sentence_end_id(QStringList read_dispatch);
+ void read_sentence_switch_id(QStringList read_dispatch);
+
 
 // void sdi_check(QString gt_contents, QString out_path);
 
  void read_Sentence_field(QString data, QStringList spl, QString field_style);
  void read_Paragraph_field(QString data, QStringList spl, QString field_style);
+ void read_Section_field(QString data, QStringList spl, QString field_style);
 
  void parse_blank_line();
  void parse_data_line(s2 pos, QString line, QString* simpptr = nullptr);

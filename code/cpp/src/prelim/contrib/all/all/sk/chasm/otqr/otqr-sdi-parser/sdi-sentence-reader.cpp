@@ -77,6 +77,11 @@ void SDI_Sentence_Reader::parse_numbers_line(QString field, QString data)
  read_field(field, data, "#");
 }
 
+void SDI_Sentence_Reader::init_sentence(QString data)
+{
+ sdi_sentences_.push_back(SDI_Sentence(data.simplified().toInt()));
+ current_sentence_ = &sdi_sentences_.last();
+}
 
 void SDI_Sentence_Reader::parse_colon_line(QString field, QString data)
 {
@@ -84,14 +89,11 @@ void SDI_Sentence_Reader::parse_colon_line(QString field, QString data)
  {
   if(current_prelim_ == "Sentence/start")
   {
-   sdi_sentences_.push_back(SDI_Sentence(data.simplified().toInt()));
-   current_sentence_ = &sdi_sentences_.last();
+   init_sentence(data);
    return;
   }
  }
-
  read_field(field, data, ".");
-
 }
 
 void SDI_Sentence_Reader::parse_data_line(s2 pos, QString line, QString* simpptr)
@@ -124,6 +126,13 @@ void SDI_Sentence_Reader::read_Paragraph_field(QString data, QStringList spl, QS
 
 }
 
+
+void SDI_Sentence_Reader::read_Section_field(QString data, QStringList spl, QString field_style)
+{
+
+}
+
+
 void SDI_Sentence_Reader::read_field(QString field, QString text, QString field_style)
 {
  QStringList spl = current_prelim_split(field);
@@ -148,6 +157,7 @@ void SDI_Sentence_Reader::read_field(QStringList spl, QString text, QString fiel
  typedef void (SDI_Sentence_Reader::*fn_type)(QString, QStringList, QString);
 
  static QMap<QString, fn_type> static_map {{
+   {"Section", &SDI_Sentence_Reader::read_Section_field},
    {"Sentence", &SDI_Sentence_Reader::read_Sentence_field},
    {"Paragraph", &SDI_Sentence_Reader::read_Paragraph_field}
    }};
@@ -166,14 +176,35 @@ void SDI_Sentence_Reader::read_field(QStringList spl, QString text, QString fiel
 //   read_Sentence_field(text, spl, ".");
 }
 
+
+void SDI_Sentence_Reader::read_sentence_end_id(QStringList read_dispatch)
+{
+
+}
+
+
+void SDI_Sentence_Reader::read_sentence_switch_id(QStringList read_dispatch)
+{
+ init_sentence(read_dispatch.last());
+ current_prelim_ = "Sentence/switch";
+}
+
 void SDI_Sentence_Reader::read_Sentence_field(QString data, QStringList spl, QString field_style)
 {
- typedef void (SDI_Sentence::*fn_type_qsl)(QStringList);
- typedef void (SDI_Sentence::*fn_type_numbers)(QStringList, QVector<s4>);
+ typedef void (SDI_Sentence::*sfn_type_qsl)(QStringList);
+ typedef void (SDI_Sentence::*sfn_type_numbers)(QStringList, QVector<s4>);
 
- union fn_union {
-   fn_type_qsl _dot;
-   fn_type_numbers _hash;
+ typedef void (SDI_Sentence_Reader::*rfn_type_qsl)(QStringList);
+ typedef void (SDI_Sentence_Reader::*rfn_type_numbers)(QStringList, QVector<s4>);
+
+ union sfn_union {
+   sfn_type_qsl _dot;
+   sfn_type_numbers _hash;
+ };
+
+ union rfn_union {
+   rfn_type_qsl _dot;
+   rfn_type_numbers _hash;
  };
 
  QString key = spl.first() + field_style + spl.at(1);
@@ -182,15 +213,38 @@ void SDI_Sentence_Reader::read_Sentence_field(QString data, QStringList spl, QSt
 // fn_union read_sentence_gaps = { ._qsl = &SDI_Sentence::read_sentence_text};
 // fn_union read_sentence_range = { ._nums = &SDI_Sentence::read_sentence_range};
 
- static QMap<QString, fn_union> static_map {{
+ static QMap<QString, sfn_union> SDI_Sentence_map {{
    {"_end.t", { ._dot = &SDI_Sentence::read_sentence_text} },
    {"_end.g", { ._dot = &SDI_Sentence::read_sentence_gaps} },
-   {"start#r", { ._hash =  &SDI_Sentence::read_sentence_range} }
+//   {"start#r", { ._hash =  &SDI_Sentence::read_sentence_range} }
+   {"_end#r", { ._hash =  &SDI_Sentence::read_sentence_range} }
    }};
 
- auto it = static_map.find(key);
+ static QMap<QString, rfn_union> SDI_Sentence_Reader_map {{
+   {"_end.id", { ._dot = &SDI_Sentence_Reader::read_sentence_end_id} },
+   {"switch.id", { ._dot = &SDI_Sentence_Reader::read_sentence_switch_id} },
+   //{"_end#r", { ._hash =  &SDI_Sentence::read_sentence_range} }
+   }};
 
- if(it != static_map.end())
+
+ auto it = SDI_Sentence_map.find(key);
+
+ if(it == SDI_Sentence_map.end())
+ {
+  auto it1 = SDI_Sentence_Reader_map.find(key);
+  if(it1 != SDI_Sentence_Reader_map.end())
+  {
+   switch (field_style[0].toLatin1())
+   {
+   case '.':  (this->*(it1.value()._dot))(spl << data); break;
+
+//   case '.':  (current_sentence_->*(it.value()._dot))(spl << data); break;
+//   case '#':  (current_sentence_->*(it.value()._hash))(spl, parse_numbers(data)); break;
+   default: break;
+   }
+  }
+ }
+ else
  {
   switch (field_style[0].toLatin1())
   {

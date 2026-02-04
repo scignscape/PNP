@@ -42,6 +42,8 @@ public:
  void read_sentence_text(QStringList read_dispatch);
  void read_sentence_gaps(QStringList read_dispatch);
 
+ void read_sentence_end_id(QStringList read_dispatch);
+
  void read_sentence_range(QStringList read_dispatch, QVector<s4> numbers);
 
  void read_sentence_gaps(QString lines);

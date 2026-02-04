@@ -26,7 +26,8 @@ USING_OTNS(SDI)
 int main(int argc, char *argv[])
 {
 
- OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/paper-conf.gt.sentences.sdi");
+// OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/paper-conf.gt.sentences.sdi");
+ OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/sentences.sdi");
 
  osp.parse();
 
