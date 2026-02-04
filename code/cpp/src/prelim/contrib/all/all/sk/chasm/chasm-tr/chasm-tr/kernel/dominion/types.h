@@ -19,7 +19,7 @@ DOMINION_TYPE(phhn, phaong<pg_t>::Hypernode, Phaong_Hypernode)
 
 //?#include "relae-graph/dominion-macros.h"
 
-#define DOMINION_OUTER_NAMESPACE Aq
+#define DOMINION_OUTER_NAMESPACE OTQR
 
 
 

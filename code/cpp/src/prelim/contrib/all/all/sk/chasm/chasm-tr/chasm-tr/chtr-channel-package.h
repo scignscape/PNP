@@ -12,7 +12,7 @@
 
 #include "accessors.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 #include "flags.h"
 
@@ -25,7 +25,7 @@
 
 #include "chtr-channel-object.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 
 class ChTR_Channel_Object;
@@ -84,7 +84,7 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif // CHTR_CHANNEL_PACKAGE__H

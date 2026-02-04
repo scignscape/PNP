@@ -12,7 +12,7 @@
 #include "chtr-carrier.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Channel_Object::ChTR_Channel_Object(QString channel_kind)

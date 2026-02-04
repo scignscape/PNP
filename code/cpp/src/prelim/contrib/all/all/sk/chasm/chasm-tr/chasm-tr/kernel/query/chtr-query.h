@@ -12,9 +12,9 @@
 
 #include "relae-graph/relae-node-ptr.h"
 
-#include "aqns.h"
+#include "otns.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 class ChTR_Relae_Query : public node_query<ChTR_Dominion>
 {
@@ -29,6 +29,6 @@ public:
  static const ChTR_Relae_Query& instance();
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 #endif

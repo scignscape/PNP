@@ -7,9 +7,9 @@
 
 #include "chtr-graph.h"
 
-#include "aqns.h"
+#include "otns.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Graph::ChTR_Graph(ChTR_Node* root_node)

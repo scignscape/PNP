@@ -11,7 +11,7 @@
 
 #include "chtr-type-object.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Type_System::ChTR_Type_System()

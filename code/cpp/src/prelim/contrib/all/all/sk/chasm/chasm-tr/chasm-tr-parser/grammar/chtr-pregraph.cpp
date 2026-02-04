@@ -34,7 +34,7 @@
 //?#include "chasm-tr/kernel/dominion/types.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,

@@ -10,7 +10,7 @@
 #include "chtr-channel-package.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 void* (*ChTR_Channel_Package::channel_object_encoder_)(ChTR_Channel_Object*) = nullptr;
 ChTR_Channel_Object* (*ChTR_Channel_Package::channel_object_decoder_)(void*) = nullptr;

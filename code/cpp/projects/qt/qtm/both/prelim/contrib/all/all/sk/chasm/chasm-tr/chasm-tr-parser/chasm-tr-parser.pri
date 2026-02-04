@@ -29,7 +29,7 @@ message($$SRC_GROUP_DIR/chasm-tr)
 CONFIG += no_keywords
 
 DEFINES += USE_KANS
-DEFINES += USE_AQNS
+DEFINES += USE_OTNS
 
 
 

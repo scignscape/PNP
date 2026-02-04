@@ -9,12 +9,12 @@
 
 #include "kernel/graph/chtr-node.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 #include <QDebug>
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 ChTR_Relae_Frame::ChTR_Relae_Frame()
  : node_frame<ChTR_Dominion>()

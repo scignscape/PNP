@@ -21,7 +21,7 @@ USING_OTNS(Chasm_TR)
 int main(int argc, char *argv[])
 {
 
- ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/t1/t1.cr");
+ ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/otqr/t1.ot");
 
  chrd.parse();
 

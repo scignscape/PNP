@@ -42,7 +42,7 @@ USING_KANS(TextIO)
 //?#include "chasm-tr/kernel/dominion/types.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g)

@@ -10,7 +10,7 @@
 #include "chtr-code-statement.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Code_Statement::ChTR_Code_Statement()

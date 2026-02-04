@@ -14,14 +14,14 @@
 
 #include "accessors.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 #include <QFile>
 #include <QTextStream>
 
 #include "kernel/graph/chtr-graph.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 
 class ChTR_Parser;
@@ -88,7 +88,7 @@ public:
  void load_pregraph(QString file_path);
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif // CHTR_DOCUMENT__H

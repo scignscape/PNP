@@ -10,7 +10,7 @@
 #include "chtr-type-object.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Type_Object::ChTR_Type_Object(QString name, bool built_in)

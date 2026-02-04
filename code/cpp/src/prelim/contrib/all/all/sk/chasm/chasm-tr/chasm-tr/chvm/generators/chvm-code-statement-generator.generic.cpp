@@ -22,7 +22,7 @@
 #include <QDebug>
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 void ChVM_Code_Statement_Generator::statement_line(QString* ln)

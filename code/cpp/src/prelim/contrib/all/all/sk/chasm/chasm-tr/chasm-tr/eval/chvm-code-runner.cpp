@@ -10,7 +10,7 @@
 #include "chvm-code-runner.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChVM_Code_Runner::ChVM_Code_Runner()

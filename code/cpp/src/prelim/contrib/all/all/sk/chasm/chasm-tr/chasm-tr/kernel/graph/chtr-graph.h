@@ -13,16 +13,16 @@
 
 #include "accessors.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 
 #include "chtr-node.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 #include "kernel/chtr-dominion.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 
 class ChTR_Graph : public phaong<pg_t>
@@ -54,7 +54,7 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif

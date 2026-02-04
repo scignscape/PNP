@@ -13,9 +13,9 @@
 
 #include "kernel/chtr-dominion.h"
 
-#include "aqns.h"
+#include "otns.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 class ChTR_Relae_Frame : public node_frame<ChTR_Dominion>
 {
@@ -28,6 +28,6 @@ class ChTR_Relae_Frame : public node_frame<ChTR_Dominion>
 };
 
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 #endif

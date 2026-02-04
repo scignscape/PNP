@@ -12,7 +12,7 @@
 
 #include "accessors.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 #include "flags.h"
 
@@ -23,7 +23,7 @@
 
 #include "global-types.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 
 class ChTR_Source_Token
@@ -43,7 +43,7 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif // CHTR_SOURCE__TOKEN__H

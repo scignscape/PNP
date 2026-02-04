@@ -8,7 +8,7 @@
 #include "chtr-parse-context.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Parse_Context::ChTR_Parse_Context(): Flags(0)

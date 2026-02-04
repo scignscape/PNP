@@ -7,5 +7,5 @@
 
 #include "chtr-node.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 

@@ -25,7 +25,7 @@
 #include <QDebug>
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChVM_Code_Statement_Generator::ChVM_Code_Statement_Generator(ChVM_Code_Generator& gen,

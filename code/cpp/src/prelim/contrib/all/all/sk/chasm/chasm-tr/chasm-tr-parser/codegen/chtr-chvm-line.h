@@ -10,8 +10,8 @@
 
 #include "global-types.h"
 
-#include "aqns.h"
-AQNS_(Chasm_TR)
+#include "otns.h"
+OTNS_(Chasm_TR)
 
 
 class ChTR_CHVM_Line
@@ -34,7 +34,7 @@ public:
 };
 
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 #endif //  ChTR_CHVM_LINE
 

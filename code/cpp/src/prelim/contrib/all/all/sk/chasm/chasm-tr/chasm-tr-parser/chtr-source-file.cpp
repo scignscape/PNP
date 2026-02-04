@@ -8,7 +8,7 @@
 #include "chtr-source-file.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Source_File::ChTR_Source_File(QString path)

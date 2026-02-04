@@ -7,10 +7,10 @@
 
 #include "chtr-query.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Relae_Query::ChTR_Relae_Query()

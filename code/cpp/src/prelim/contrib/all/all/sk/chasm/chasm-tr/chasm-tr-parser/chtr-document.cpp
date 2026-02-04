@@ -21,7 +21,7 @@
 
 #include "textio.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Document::ChTR_Document(QString path)
@@ -85,7 +85,9 @@ QString ChTR_Document::save_pregraph(QString path_or_extension)
 
 QString ChTR_Document::save_chvm(QString path_or_extension)
 {
- return save_file(path_or_extension, graph_build_->chvm_code());
+ QString result = save_file(path_or_extension, graph_build_->chvm_code());
+ QFileInfo qfi(result);
+ return qfi.absoluteFilePath();
 }
 
 QString ChTR_Document::save_file(QString path_or_extension, QString contents)

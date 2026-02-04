@@ -8,7 +8,7 @@
 
 #include "kernel/graph/chtr-node.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 ChTR_Node_Factory::ChTR_Node_Factory()
   :  call_entry_count_(0), block_entry_count_(0), tuple_entry_count_(0)

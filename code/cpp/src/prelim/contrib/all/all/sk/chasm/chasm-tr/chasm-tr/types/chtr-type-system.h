@@ -12,7 +12,7 @@
 
 #include "accessors.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 #include "flags.h"
 
@@ -25,7 +25,7 @@
 
 #include <QVector>
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 
 class ChTR_Type_Object;
@@ -45,7 +45,7 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif // CHTR_TYPE_SYSTEM__H

@@ -10,7 +10,7 @@
 #include "chvm-code-block.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChVM_Code_Block::ChVM_Code_Block()

@@ -20,7 +20,7 @@
 #include "chvm/chvm-code-statement.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChVM_Code_Generator::ChVM_Code_Generator(ChTR_Graph* ir_graph)

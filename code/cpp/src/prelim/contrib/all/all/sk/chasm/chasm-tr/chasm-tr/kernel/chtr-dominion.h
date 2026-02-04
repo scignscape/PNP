@@ -19,9 +19,9 @@
 #undef DOMINION_TYPE
 #undef DOMINION_HIDE_NO_NAMESPACE
 
-#include "aqns.h"
+#include "otns.h"
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 struct ChTR_Galaxy;
 class ChTR_Node;
@@ -104,6 +104,6 @@ struct ChTR_Annotated_Connectors :
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 #endif

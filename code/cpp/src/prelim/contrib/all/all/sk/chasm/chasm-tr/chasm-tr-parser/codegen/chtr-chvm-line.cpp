@@ -9,7 +9,7 @@
 
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_CHVM_Line::ChTR_CHVM_Line(u4 line_id, QString text)

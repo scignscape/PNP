@@ -7,7 +7,7 @@
 
 #include "chtr-parser.h"
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 ChTR_Parser::ChTR_Parser(caon_ptr<ChTR_Graph> g)
  : Relae_Parser<ChTR_Galaxy>(g)

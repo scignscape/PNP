@@ -10,7 +10,7 @@
 #include "chtr-source-token.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Source_Token::ChTR_Source_Token(QString text)

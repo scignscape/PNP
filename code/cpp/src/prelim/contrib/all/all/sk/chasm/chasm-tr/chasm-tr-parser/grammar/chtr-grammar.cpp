@@ -20,7 +20,7 @@
 #include <QDebug>
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_Grammar::ChTR_Grammar()

@@ -13,8 +13,8 @@
 #include "global-types.h"
 
 
-#include "aqns.h"
-AQNS_(Chasm_TR)
+#include "otns.h"
+OTNS_(Chasm_TR)
 
 class ChTR_Node;
 
@@ -72,6 +72,6 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 #endif //CHTR_NODE_FACTORY__H

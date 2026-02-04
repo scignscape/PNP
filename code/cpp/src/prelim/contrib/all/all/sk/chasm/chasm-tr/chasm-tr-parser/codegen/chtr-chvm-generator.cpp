@@ -17,7 +17,7 @@
 #include "chtr-chvm-line.h"
 
 
-USING_AQNS(Chasm_TR)
+USING_OTNS(Chasm_TR)
 
 
 ChTR_CHVM_Generator::ChTR_CHVM_Generator()

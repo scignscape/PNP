@@ -10,10 +10,10 @@
 
 #include "relae-graph/relae-grammar.h"
 
-#include "aqns.h"
+#include "otns.h"
 
 
-AQNS_(Chasm_TR)
+OTNS_(Chasm_TR)
 
 class ChTR_Graph;
 class ChTR_Graph_Build;
@@ -35,7 +35,7 @@ public:
 
 };
 
-_AQNS(Chasm_TR)
+_OTNS(Chasm_TR)
 
 
 #endif // CHTR_GRAMMAR__H
