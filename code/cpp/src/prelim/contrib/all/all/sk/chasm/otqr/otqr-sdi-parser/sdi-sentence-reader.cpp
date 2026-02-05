@@ -303,6 +303,9 @@ void SDI_Sentence_Reader::parse_line(QString line)
 
 void SDI_Sentence_Reader::parse_pipe_line(QString line)
 {
+ if(!pipe_acc_.isEmpty())
+   pipe_acc_ += " ";
+
  pipe_acc_ += line.mid(3);
 }
 
