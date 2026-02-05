@@ -43,6 +43,8 @@
 struct _min_{};
 
 
+
+
 OTNS_(Chasm_TR)
 
 class Chasm_Call_Package;
@@ -110,6 +112,10 @@ inline QPair<Chasm_Function_Code, Chasm_Function_Code> _cfc(n8 cue)
 // return operator""_cfc(cue);
 //}
 
+_OTNS(Chasm_TR)
+
+USING_OTNS(Chasm_TR)
+
 extern void _evaluate_s01_3of3(Chasm_Call_Package* ccp, Chasm_Function_Code fncode,
   void(*fn)(), void(_min_::*sfn)(), Chasm_Carrier* rcar);
 
@@ -125,6 +131,8 @@ extern void _evaluate_s01_Xof2(Chasm_Call_Package* ccp, Chasm_Function_Code fnco
 void _evaluate_s01_0_rX(Chasm_Call_Package* ccp, Chasm_Function_Code fncode,
   void(*fn)(), void(_min_::*sfn)(), Chasm_Carrier* rcar);
 
+
+OTNS_(Chasm_TR)
 
 class Chasm_Runtime
 {

@@ -24,7 +24,7 @@ USING_KANS(TextIO)
 #include "chasm-lib/chasm/chasm-runtime.h"
 #include "chasm-lib/chasm/chasm-call-package.h"
 
-
+USING_OTNS(Chasm_TR)
 
 typedef void (*_temp_minimal_fn_s0_r0_type)();
 

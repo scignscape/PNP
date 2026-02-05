@@ -307,7 +307,10 @@ Chasm_Function_Code _parse_cfc(n8 cue) //, bool condensed = false)
 
 //}
 
-QPair<Chasm_Function_Code, Chasm_Function_Code>  operator""_cfc(n8 cue)
+OTNS_(Chasm_TR)
+
+QPair<Chasm_Function_Code, Chasm_Function_Code>
+operator""_cfc(n8 cue)
 {
  Chasm_Function_Code cfc1 = _parse_cfc(cue);
  n8 cue2 = cfc1.collapsed(cue);
@@ -325,3 +328,4 @@ QPair<Chasm_Function_Code, Chasm_Function_Code>  operator""_cfc(n8 cue)
  //return {_parse_cfc(cue), _parse_cfc(cue, true)};
 }
 
+_OTNS(Chasm_TR)

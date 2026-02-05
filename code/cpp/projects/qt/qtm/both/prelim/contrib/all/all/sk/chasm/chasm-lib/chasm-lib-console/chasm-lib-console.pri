@@ -48,8 +48,6 @@ SOURCES += \
   $$SRC_DIR/main.cpp \
 
 
-message(T $$TARGETSDIR)
-
 
 LIBS += -L$$TARGETSDIR -lchasm-lib
 
