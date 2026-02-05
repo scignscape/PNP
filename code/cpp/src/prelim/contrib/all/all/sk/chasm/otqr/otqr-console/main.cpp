@@ -23,7 +23,7 @@ USING_OTNS(Chasm_TR)
 USING_OTNS(SDI)
 
 
-int main(int argc, char *argv[])
+int main1(int argc, char *argv[])
 {
 
 // OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/paper-conf.gt.sentences.sdi");
@@ -34,8 +34,52 @@ int main(int argc, char *argv[])
  return 0;
 }
 
-int main1(int argc, char *argv[])
+#include "chasm-lib/chasm/chasm-runtime.h"
+
+#include "chasm-vm/chasm-vm.h"
+#include "chasm-runtime-bridge/chasm-runtime-bridge.h"
+#include "chasm-procedure-table/chasm-procedure-table.h"
+
+
+void prn(u1 arg)
 {
+ qDebug() << "arg = " << arg;
+}
+
+Chasm_VM* setup_chvm()
+{
+ Chasm_Runtime* csr = new Chasm_Runtime;
+ Chasm_Runtime_Bridge* crb = new Chasm_Runtime_Bridge(csr);
+ Chasm_Procedure_Table* cpt = new Chasm_Procedure_Table(csr);
+ crb->set_proctable(cpt);
+
+// cpt.register_s0(testqvar, @300762);
+ cpt->register_s0(prn, @1001);
+// cpt.register_s0(prn2, @20044);
+
+// cpt.register_procedure_s0("+",
+//   (_minimal_fn_s0_type) &add, "@20444");
+
+ Chasm_VM* result = new Chasm_VM(crb);
+
+ return result;
+}
+
+void run_chvm(Chasm_VM* vm, QString chvm_path)
+{
+ vm->load_program(chvm_path);
+ vm->run_current_source_proc_name();
+}
+
+
+
+int main(int argc, char *argv[])
+{
+
+ OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/sentences.sdi");
+
+ osp.parse();
+
 
  ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/otqr/t1.ot");
 
@@ -47,7 +91,11 @@ int main1(int argc, char *argv[])
 
  QString chvm_path = chrd.save_chvm("..chvm");
 
- qDebug() << "You can now run " << chvm_path;
+ Chasm_VM* vm = setup_chvm();
+
+ run_chvm(vm, chvm_path);
+
+ //  qDebug() << "You can now run " << chvm_path;
 
  return 0;
 }

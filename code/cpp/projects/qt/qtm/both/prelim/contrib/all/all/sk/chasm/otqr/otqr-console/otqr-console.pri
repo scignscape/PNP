@@ -47,10 +47,10 @@ LIBS += -L$$TARGETSDIR -lotqr-sdi-parser
 
 
 #  these are not needed if the demo for this project only concerns emitting chvm
-#LIBS += -L$$TARGETSDIR -lchasm-lib \
-#  -lchasm-vm -lchasm-runtime-bridge -lchasm-procedure-table \
-#  -lchasm-lib-X1 -lchasm-lib-X2 \
-#  -lchasm-lib-33 -lchasm-lib-43
+LIBS += -L$$TARGETSDIR -lchasm-lib \
+  -lchasm-vm -lchasm-runtime-bridge -lchasm-procedure-table \
+  -lchasm-lib-X1 -lchasm-lib-X2 \
+  -lchasm-lib-33 -lchasm-lib-43
 
 
 
