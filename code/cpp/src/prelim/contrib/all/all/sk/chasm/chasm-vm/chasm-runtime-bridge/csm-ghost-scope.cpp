@@ -8,6 +8,9 @@
 #include "csm-ghost-scope.h"
 
 
+USING_OTNS(Chasm_TR)
+
+
 #include "textio.h"
 USING_KANS(TextIO)
 

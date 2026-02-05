@@ -15,30 +15,25 @@ USING_KANS(TextIO)
 #include "chasm-tr-parser/chtr-document.h"
 #include "chasm-tr/chvm/chvm-code-generator.h"
 
-USING_OTNS(Chasm_TR)
-
-
-#include "otqr-sdi-parser/otqr-sdi-parser.h"
-
-USING_OTNS(SDI)
-
-
-int main1(int argc, char *argv[])
-{
-
-// OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/paper-conf.gt.sentences.sdi");
- OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/sentences.sdi");
-
- osp.parse();
-
- return 0;
-}
 
 #include "chasm-lib/chasm/chasm-runtime.h"
 
 #include "chasm-vm/chasm-vm.h"
 #include "chasm-runtime-bridge/chasm-runtime-bridge.h"
 #include "chasm-procedure-table/chasm-procedure-table.h"
+
+
+#include "otqr-sdi-parser/otqr-sdi-parser.h"
+
+USING_OTNS(SDI)
+USING_OTNS(Chasm_TR)
+
+
+
+void test(void* arg)
+{
+ qDebug() << "arg = " << arg;
+}
 
 
 void prn(u1 arg)
@@ -55,6 +50,9 @@ Chasm_VM* setup_chvm()
 
 // cpt.register_s0(testqvar, @300762);
  cpt->register_s0(prn, @1001);
+
+ cpt->register_s0(test, @>1009);
+
 // cpt.register_s0(prn2, @20044);
 
 // cpt.register_procedure_s0("+",

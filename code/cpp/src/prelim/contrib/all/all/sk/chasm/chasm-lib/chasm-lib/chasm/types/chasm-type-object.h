@@ -19,7 +19,7 @@
 
 #include <functional>
 
-#include "kans.h"
+#include "otns.h"
 
 //#include "chasm-carrier.h"
 
@@ -27,7 +27,7 @@
 
 #include "flags.h"
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 class Chasm_Type_Object
 {
@@ -95,7 +95,8 @@ public:
 
 };
 
-// _KANS(GTagML)
+
+_OTNS(Chasm_TR)
 
 #endif // CHASM_TYPE_OBJECT__H
 

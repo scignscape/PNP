@@ -7,6 +7,8 @@
 
 #include "chasm-vm.h"
 
+USING_OTNS(Chasm_TR)
+
 #include "chasm-lib/chasm/chasm-runtime.h"
 
 #include "chasm-runtime-bridge/chasm-runtime-bridge.h"

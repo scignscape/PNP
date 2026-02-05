@@ -19,10 +19,10 @@
 
 #include <functional>
 
-#include "kans.h"
+#include "otns.h"
 
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 struct trisym
 {
@@ -283,7 +283,7 @@ VALUE_Type Chasm_Carrier::value()
 
 
 
-// _KANS(GTagML)
+ _OTNS(Chasm_TR)
 
 #endif // CHASM_CARRIER__H
 

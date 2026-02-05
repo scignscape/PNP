@@ -26,6 +26,9 @@
 #include <QRegularExpression>
 
 
+USING_OTNS(Chasm_TR)
+
+
 Chasm_Runtime_Eval::Chasm_Runtime_Eval(Chasm_Runtime* csr)
   :  csr_(csr), proctable_(nullptr)
 {

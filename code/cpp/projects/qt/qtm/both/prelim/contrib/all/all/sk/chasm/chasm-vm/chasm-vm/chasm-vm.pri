@@ -28,7 +28,7 @@ INCLUDEPATH += $$SRC_PROSET_DIR/chasm-lib
 
 CONFIG += no_keywords
 
-DEFINES += USE_KANS
+DEFINES += USE_OTNS
 DEFINES += USE_OTNS
 
 

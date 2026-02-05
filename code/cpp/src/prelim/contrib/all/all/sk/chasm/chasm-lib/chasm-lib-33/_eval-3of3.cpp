@@ -12,6 +12,8 @@
 
 //#include "_eval-3of3.h"
 
+USING_OTNS(Chasm_TR)
+
 #define FULL_INCLUDE
 #include "../dev/consoles/fns/run/run-a3of3/run-s01-3of3-re0.cpp"
 #include "../dev/consoles/fns/run/run-a3of3/run-s01-3of3-re1.cpp"

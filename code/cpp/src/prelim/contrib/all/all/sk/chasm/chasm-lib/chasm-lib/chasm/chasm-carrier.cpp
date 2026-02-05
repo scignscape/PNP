@@ -8,8 +8,8 @@
 #include "chasm-carrier.h"
 
 
-//#include "kans.h"
-//USING_KANS(GTagML)
+USING_OTNS(Chasm_TR)
+
 
 #include <QDebug>
 

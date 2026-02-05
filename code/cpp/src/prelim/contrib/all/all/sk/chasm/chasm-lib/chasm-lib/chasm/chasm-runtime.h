@@ -33,14 +33,17 @@
 #include <QVariant>
 #include <QByteArray>
 
-#include "kans.h"
+#include "otns.h"
+
 
 #include "chasm-carrier.h"
 
 #include "types/chasm-type-system.h"
 
-
 struct _min_{};
+
+
+OTNS_(Chasm_TR)
 
 class Chasm_Call_Package;
 class Chasm_Type_Object;
@@ -268,6 +271,6 @@ public:
  }
 };
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHASM_RUNTIME__H

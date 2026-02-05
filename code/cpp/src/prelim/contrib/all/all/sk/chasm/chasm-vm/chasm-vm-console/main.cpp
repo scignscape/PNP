@@ -17,6 +17,7 @@ USING_KANS(TextIO)
 #include "chasm-runtime-bridge/chasm-runtime-bridge.h"
 #include "chasm-procedure-table/chasm-procedure-table.h"
 
+USING_OTNS(Chasm_TR)
 
 void testqvar(QVariant arg1, r8 arg2, u2 arg3)
 {

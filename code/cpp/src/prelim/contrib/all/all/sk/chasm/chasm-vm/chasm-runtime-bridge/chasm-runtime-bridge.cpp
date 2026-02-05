@@ -29,6 +29,8 @@
 
 #include <QPoint>
 
+USING_OTNS(Chasm_TR)
+
 
 Chasm_Runtime_Bridge::Chasm_Runtime_Bridge(Chasm_Runtime* csr)
   :  csr_(csr), current_call_package_(nullptr),
@@ -101,7 +103,15 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
  if(pr.first.first.convention == 0)
  {
   if(pr.first.first.return_code == 0)
-    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
+  {
+   if(proc_name.contains("@>"))
+   {
+    QString* test = new QString("test");
+    Chasm_Carrier cc = csr_->gen_carrier<void*>(test);
+    current_call_package_->channel("lambda")->coalesce_to_query(cc);
+   }
+   csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
+  }
   else
   {
    Chasm_Carrier rcar;

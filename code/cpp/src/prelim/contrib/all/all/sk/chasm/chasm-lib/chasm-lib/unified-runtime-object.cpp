@@ -11,9 +11,7 @@
 #include "metatype-object.h"
 
 
-#include "kans.h"
-
-//USING_KANS(GTagML)
+USING_OTNS(Chasm_TR)
 
 
 Unified_Runtime_Object::Unified_Runtime_Object(QString file_path)

@@ -6,6 +6,8 @@
 
 #include "chasm-runtime.h"
 
+USING_OTNS(Chasm_TR)
+
 u1 _early_parse(Chasm_Function_Code& cfc, n8& cue)
 {
  if(cue >= 10000000000) // 11 digits

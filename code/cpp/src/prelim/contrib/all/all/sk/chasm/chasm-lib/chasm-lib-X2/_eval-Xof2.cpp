@@ -11,6 +11,7 @@
 #include "types/chasm-type-object.h"
 
 //#include "_eval-Xof2.h"
+USING_OTNS(Chasm_TR)
 
 #define FULL_INCLUDE
 #include "../dev/consoles/fns/run/run-aXof2/run-s01-Xof2-re0.cpp"

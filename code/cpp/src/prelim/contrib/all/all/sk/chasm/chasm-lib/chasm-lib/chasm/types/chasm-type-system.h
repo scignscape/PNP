@@ -18,6 +18,9 @@
 #include "accessors.h"
 #include "global-types.h"
 
+#include "otns.h"
+
+OTNS_(Chasm_TR)
 class Chasm_Type_Object;
 
 class Chasm_Type_System
@@ -40,6 +43,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHASM_TYPE_SYSTEM__H

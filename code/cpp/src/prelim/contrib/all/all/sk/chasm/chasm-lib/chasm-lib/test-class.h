@@ -17,10 +17,10 @@
 
 #include <functional>
 
-#include "kans.h"
+#include "otns.h"
 
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 
 class Test_Class
@@ -43,6 +43,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+ _OTNS(Chasm_TR)
 
 #endif

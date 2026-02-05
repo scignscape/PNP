@@ -7,6 +7,7 @@
 
 #include "chasm-type-object.h"
 
+USING_OTNS(Chasm_TR)
 
 #include <QDebug>
 

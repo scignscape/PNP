@@ -23,9 +23,13 @@
 #include "flags.h"
 
 #include "global-types.h"
-#include "kans.h"
+
+#include "otns.h"
 
 #include "chasm-lib/chasm/chasm-runtime.h"
+
+
+OTNS_(Chasm_TR)
 
 class Chasm_Type_Object;
 
@@ -111,6 +115,6 @@ public:
 
 
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHASM_VALUE_EXPRESSION__H

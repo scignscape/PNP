@@ -34,7 +34,7 @@ DEFINES += RELAE_LABEL_NODES
 CONFIG += no_keywords
 
 
-DEFINES += USE_KANS
+DEFINES += USE_OTNS
 
 
 INCLUDEPATH += $$SRC_GROUP_DIR/chasm-lib/chasm \

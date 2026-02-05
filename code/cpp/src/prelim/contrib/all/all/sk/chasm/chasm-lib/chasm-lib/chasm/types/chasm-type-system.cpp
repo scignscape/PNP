@@ -16,8 +16,8 @@
 #include <QPoint>
 
 
-//#include "kans.h"
-//USING_KANS(GTagML)
+#include "otns.h"
+USING_OTNS(Chasm_TR)
 
 #include <QDebug>
 

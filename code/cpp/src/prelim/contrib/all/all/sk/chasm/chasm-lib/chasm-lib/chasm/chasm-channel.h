@@ -17,14 +17,14 @@
 
 #include <functional>
 
-#include "kans.h"
+#include "otns.h"
 
 #include "chasm-carrier.h"
 
 #include <deque>
 
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 class Chasm_Channel
 {
@@ -40,6 +40,8 @@ public:
  ACCESSORS(QString ,name)
  ACCESSORS(QVector<Chasm_Carrier> ,carriers)
 
+ void coalesce_to_query(const Chasm_Carrier& cc);
+
  void add_carrier(const Chasm_Carrier& cc)
  {
   carriers_.push_back(cc);
@@ -48,6 +50,11 @@ public:
  void add_carriers(const QVector<Chasm_Carrier>& ccs)
  {
   carriers_.append(ccs);
+ }
+
+ void enqueue_carrier(const Chasm_Carrier& cc)
+ {
+  carriers_.push_front(cc);
  }
 
  void add_carriers(std::deque<Chasm_Carrier>& ccs);
@@ -68,7 +75,7 @@ public:
 
 };
 
-// _KANS(GTagML)
+ _OTNS(Chasm_TR)
 
 #endif // CHASM_CHANNEL__H
 

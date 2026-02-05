@@ -22,8 +22,10 @@
 #include "flags.h"
 
 #include "global-types.h"
-#include "kans.h"
+#include "otns.h"
 
+
+OTNS_(Chasm_TR)
 
 class Chasm_Runtime;
 
@@ -71,6 +73,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHVM_LEXICAL_SCOPE__H

@@ -29,7 +29,7 @@ DEFINES += RELAE_LABEL_NODES
 CONFIG += no_keywords
 
 
-DEFINES += USE_KANS
+DEFINES += USE_OTNS
 
 
 # Most projects don't use ROOT_DIR as a basis

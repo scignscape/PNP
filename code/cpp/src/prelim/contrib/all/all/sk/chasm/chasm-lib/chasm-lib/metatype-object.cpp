@@ -8,9 +8,7 @@
 #include "metatype-object.h"
 
 
-#include "kans.h"
-
-//USING_KANS(GTagML)
+USING_OTNS(Chasm_TR)
 
 
 Metatype_Object::Metatype_Object(QString local_name)

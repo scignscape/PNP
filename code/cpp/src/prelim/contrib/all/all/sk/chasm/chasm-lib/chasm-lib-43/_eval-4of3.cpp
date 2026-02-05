@@ -11,6 +11,7 @@
 #include "types/chasm-type-object.h"
 
 //#include "_eval-4of3.h"
+USING_OTNS(Chasm_TR)
 
 #define FULL_INCLUDE
 #include "../dev/consoles/fns/run/run-a4of3/run-s01-4of3-re0.cpp"

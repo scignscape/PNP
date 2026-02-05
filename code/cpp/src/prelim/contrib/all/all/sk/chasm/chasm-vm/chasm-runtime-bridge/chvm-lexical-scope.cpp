@@ -20,6 +20,8 @@ USING_KANS(TextIO)
 
 #include <QPoint>
 
+USING_OTNS(Chasm_TR)
+
 
 CHVM_Lexical_Scope::CHVM_Lexical_Scope(CHVM_Lexical_Scope* parent_scope)
   :  parent_scope_(parent_scope)

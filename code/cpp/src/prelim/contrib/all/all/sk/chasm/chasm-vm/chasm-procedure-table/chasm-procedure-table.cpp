@@ -21,6 +21,7 @@
 
 #include <QRegularExpression>
 
+USING_OTNS(Chasm_TR)
 
 Chasm_Procedure_Table::Chasm_Procedure_Table(Chasm_Runtime* csr)
 {

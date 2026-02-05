@@ -9,9 +9,8 @@
 
 #include "unified-runtime-object.h"
 
-#include "kans.h"
 
-//USING_KANS(GTagML)
+USING_OTNS(Chasm_TR)
 
 //uro
 

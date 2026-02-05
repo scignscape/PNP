@@ -11,8 +11,7 @@
 //#include "./dev/consoles/fns/run-s0_3_r3.cpp"
 
 
-//#include "kans.h"
-//USING_KANS(GTagML)
+USING_OTNS(Chasm_TR)
 
 #include <QDebug>
 

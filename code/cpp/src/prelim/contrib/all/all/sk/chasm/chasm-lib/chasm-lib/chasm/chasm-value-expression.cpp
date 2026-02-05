@@ -23,6 +23,8 @@
 
 #include <tuple>
 
+USING_OTNS(Chasm_TR)
+
 Chasm_Value_Expression::Chasm_Value_Expression(n8 raw_value)
   :  raw_value_(raw_value)
 {

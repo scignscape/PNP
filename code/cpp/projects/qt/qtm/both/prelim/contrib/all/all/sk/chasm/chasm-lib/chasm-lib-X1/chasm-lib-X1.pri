@@ -10,7 +10,7 @@ QT -= gui
 include(../build-group.pri)
 
 
-include($$ROOT_DIR/../preferred/sysr.pri)
+exists($$ROOT_DIR/../preferred/sysr.pri): include($$ROOT_DIR/../preferred/sysr.pri)
 
 
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
@@ -34,7 +34,7 @@ DEFINES += RELAE_LABEL_NODES
 CONFIG += no_keywords
 
 
-DEFINES += USE_KANS
+DEFINES += USE_OTNS
 
 
 INCLUDEPATH += $$SRC_GROUP_DIR/chasm-lib/chasm \

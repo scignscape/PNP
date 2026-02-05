@@ -7,6 +7,9 @@
 
 #include "chasm-runtime.h"
 
+USING_OTNS(Chasm_TR)
+
+
 #include <QString>
 #include <QVariant>
 #include <QByteArray>
@@ -15,8 +18,6 @@
 
 #include <QPoint>
 
-//#include "kans.h"
-//USING_KANS(GTagML)
 
 #include <QDebug>
 

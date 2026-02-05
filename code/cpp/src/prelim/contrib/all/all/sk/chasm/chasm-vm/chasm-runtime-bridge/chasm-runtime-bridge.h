@@ -25,7 +25,7 @@
 #include "flags.h"
 
 #include "global-types.h"
-#include "kans.h"
+#include "otns.h"
 
 #include "chasm-lib/chasm/chasm-runtime.h"
 #include "chasm-lib/chasm/chasm-carrier.h"
@@ -34,6 +34,10 @@
 //#define register_s1(proc ,code) register_procedure_s1(#proc, (void(_min_::*)()) &proc, #code)
 
 #include "chasm-procedure-table/chasm-procedure-table.h"
+
+
+OTNS_(Chasm_TR)
+
 
 class Chasm_Call_Package;
 class Chasm_Type_Object;
@@ -238,6 +242,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHASM_RUNTIME_BRIDGE__H

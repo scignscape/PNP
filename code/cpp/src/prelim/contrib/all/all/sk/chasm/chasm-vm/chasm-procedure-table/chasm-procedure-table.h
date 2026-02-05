@@ -23,7 +23,7 @@
 #include "flags.h"
 
 #include "global-types.h"
-#include "kans.h"
+#include "otns.h"
 
 #include "chasm-lib/chasm/chasm-runtime.h"
 
@@ -33,6 +33,7 @@
 #define register_s1(proc ,code) register_procedure_s1(#proc, (void(_min_::*)()) &proc, #code)
 
 
+OTNS_(Chasm_TR)
 
 class Chasm_Call_Package;
 class Chasm_Type_Object;
@@ -46,6 +47,8 @@ typedef n8(*_minimal_fn_s0_r1_type)();
 union _minimal_fn_type { _minimal_fn_s0_type s0; _minimal_fn_s1_type s1; _minimal_fn_s0_r1_type s0r1; };
 
 typedef QPair<Chasm_Function_Code, Chasm_Function_Code> CFC_Pair;
+
+
 
 class Chasm_Procedure_Table
 {
@@ -107,6 +110,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+_OTNS(Chasm_TR)
 
 #endif // CHASM_PROCEDURE_TABLE__H

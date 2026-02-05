@@ -19,10 +19,10 @@
 
 #include "global-types.h"
 
-#include "kans.h"
+#include "otns.h"
 
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 
 class Metatype_Object
@@ -51,6 +51,6 @@ public:
 
 };
 
-// _KANS(GTagML)
+ _OTNS(Chasm_TR)
 
 #endif // METATYPE_OBJECT__H

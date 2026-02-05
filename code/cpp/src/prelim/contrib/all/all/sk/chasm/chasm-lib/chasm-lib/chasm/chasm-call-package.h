@@ -17,13 +17,13 @@
 
 #include <functional>
 
-#include "kans.h"
+#include "otns.h"
 
 #include "chasm-carrier.h"
 
 #include <deque>
 
-//KANS_(GTagML)
+OTNS_(Chasm_TR)
 
 class Chasm_Channel;
 
@@ -71,7 +71,7 @@ public:
 
 };
 
-// _KANS(GTagML)
+ _OTNS(Chasm_TR)
 
 #endif // CHASM_CALL_PACKAGE__H
 

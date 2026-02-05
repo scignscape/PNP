@@ -7,6 +7,8 @@
 
 #include "chasm-channel.h"
 
+USING_OTNS(Chasm_TR)
+
 
 #include <QDebug>
 
@@ -19,6 +21,11 @@ Chasm_Channel::Chasm_Channel(QString name)
  :  name_(name)
 {
 
+}
+
+void Chasm_Channel::coalesce_to_query(const Chasm_Carrier& cc)
+{
+ enqueue_carrier(cc);
 }
 
 void Chasm_Channel::pasn8vector(QVector<n8>& result, u1 size)
