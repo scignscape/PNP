@@ -107,7 +107,8 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
    if(proc_name.contains("@>"))
    {
     QString* test = new QString("test");
-    Chasm_Carrier cc = csr_->gen_carrier<void*>(test);
+    qDebug() << "t = " << test;
+    Chasm_Carrier cc = csr_->gen_carrier<void*>(&test);
     current_call_package_->channel("lambda")->coalesce_to_query(cc);
    }
    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);

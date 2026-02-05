@@ -32,7 +32,9 @@ USING_OTNS(Chasm_TR)
 
 void test(void* arg)
 {
- qDebug() << "arg = " << arg;
+ QString* t = (QString*) arg;
+ qDebug() << "t = " << arg;
+ qDebug() << "arg = " << *t;
 }
 
 

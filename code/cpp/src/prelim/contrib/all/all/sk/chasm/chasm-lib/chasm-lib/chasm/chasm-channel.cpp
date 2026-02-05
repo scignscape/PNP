@@ -25,6 +25,7 @@ Chasm_Channel::Chasm_Channel(QString name)
 
 void Chasm_Channel::coalesce_to_query(const Chasm_Carrier& cc)
 {
+ carriers_.clear();
  enqueue_carrier(cc);
 }
 
