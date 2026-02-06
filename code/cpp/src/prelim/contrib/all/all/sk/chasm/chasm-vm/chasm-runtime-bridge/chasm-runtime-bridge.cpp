@@ -158,7 +158,7 @@ void Chasm_Runtime_Bridge::load_ql_token(QString token)
  auto& pr = current_ql_vector_->back();
 
  QStringList* qsl = new QStringList({token});
- Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(qsl);
+ Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(&qsl);
 //? cc.set_value(qv);
  pr.second.push_back(cc);
 }
@@ -192,7 +192,7 @@ void Chasm_Runtime_Bridge::new_qlambda()
 
 void Chasm_Runtime_Bridge::insert_ql_vector_ptr()
 {
- Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(current_ql_vector_);
+ Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(&current_ql_vector_);
  check_claims(cc);
  current_carrier_deque_->push_back(cc);
 }

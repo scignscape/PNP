@@ -168,7 +168,7 @@ private:
 
  caon_ptr<ChTR_Node> current_parse_node_;
 
-
+ void ql_tokens_init(QString last_instruction = {});
 
 
 public:

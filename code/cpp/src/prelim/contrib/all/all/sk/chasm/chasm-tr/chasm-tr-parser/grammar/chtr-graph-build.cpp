@@ -258,14 +258,24 @@ void ChTR_Graph_Build::query_proc_name(QString token)
  current_channel_state_ = Channel_States::Implicit_QLambda;
 }
 
+void ChTR_Graph_Build::ql_tokens_init(QString last_instruction)
+{
+ QStringList qsl = {"add-new-channel $ lambda", "gen-voidp-carrier",
+   "add-carriers", "reset-carrier-deque",
+   "add-new-channel $ qlambda", "insert-ql-vector-ptr"};
+
+ if(!last_instruction.isEmpty())
+   qsl.push_back(last_instruction);
+
+ gen.dissolve(qsl.toVector()).blank();
+}
 
 void ChTR_Graph_Build::ql_keyword_token(QString token)
 {
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_QLambda:
-   gen.dissolve({"add-new-channel $ lambda", "gen-voidp-carrier",
-     "add-new-channel $ qlambda", "insert-ql-vector-ptr"}).blank();
+   ql_tokens_init();
    current_channel_state_ = Channel_States::Explicit_QLambda;
    // //  fall through
  case Channel_States::Explicit_QLambda:
@@ -281,8 +291,7 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_QLambda:
-   gen.dissolve({"add-new-channel $ lambda", "gen-voidp-carrier",
-     "add-new-channel $ qlambda", "insert-ql-vector-ptr", "ql-key-empty"}).blank();
+   ql_tokens_init("ql-key-empty");
    current_channel_state_ = Channel_States::Explicit_QLambda;
    // //  fall through
  case Channel_States::Explicit_QLambda:

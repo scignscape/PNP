@@ -175,7 +175,7 @@ void Chasm_VM::read_line(QString inst)
   { "insert-ql-vector-ptr", &Chasm_Runtime_Bridge::insert_ql_vector_ptr },
   { "ql-key-empty", &Chasm_Runtime_Bridge::ql_key_empty },
   { "gen-voidp-carrier", &Chasm_Runtime_Bridge::gen_voidp_carrier },
-
+  { "reset-carrier-deque", &Chasm_Runtime_Bridge::reset_carrier_deque },
 
 
   { "push_carrier_deque", &Chasm_Runtime_Bridge::push_carrier_deque },
