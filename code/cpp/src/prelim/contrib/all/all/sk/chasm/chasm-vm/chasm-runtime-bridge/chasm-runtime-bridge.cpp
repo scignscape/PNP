@@ -164,7 +164,11 @@ void Chasm_Runtime_Bridge::load_ql_token(QString token)
 
 void Chasm_Runtime_Bridge::append_ql_token(QString token)
 {
+ auto& pr = current_ql_vector_->back();
 
+ Chasm_Carrier cc = pr.second.last();
+ QStringList* qsl = cc.value_as<QStringList*>();
+ qsl->push_back(token);
 }
 
 

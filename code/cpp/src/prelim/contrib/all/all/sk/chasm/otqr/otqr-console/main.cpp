@@ -91,8 +91,6 @@ int main(int argc, char *argv[])
 
  QString chvm_path = chrd.save_chvm("..chvm");
 
- return 0;
-
  Chasm_VM* vm = setup_chvm();
 
  run_chvm(vm, chvm_path);

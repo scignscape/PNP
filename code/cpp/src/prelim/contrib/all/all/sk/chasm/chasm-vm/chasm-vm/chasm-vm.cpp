@@ -215,6 +215,9 @@ void Chasm_VM::read_line(QString inst, QString arg)
   { "load-unsigned-literal-int", &Chasm_Runtime_Bridge::load_unsigned_literal_int },
   { "resolve-handoffs", &Chasm_Runtime_Bridge::resolve_handoffs },
 
+  { "load-ql-token", &Chasm_Runtime_Bridge::load_ql_token },
+  { "load-ql-key", &Chasm_Runtime_Bridge::load_ql_key },
+  { "append-ql-token", &Chasm_Runtime_Bridge::append_ql_token },
 
   { "add_new_channel", &Chasm_Runtime_Bridge::add_new_channel },
   { "gen_carrier_tvr", &Chasm_Runtime_Bridge::gen_carrier_tvr },
