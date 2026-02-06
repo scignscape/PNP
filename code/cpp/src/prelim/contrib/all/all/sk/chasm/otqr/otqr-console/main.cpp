@@ -30,7 +30,7 @@ USING_OTNS(Chasm_TR)
 
 
 
-void test(void* arg)
+void find(void* arg)
 {
  QString* t = (QString*) arg;
  qDebug() << "t = " << arg;
@@ -53,7 +53,7 @@ Chasm_VM* setup_chvm()
 // cpt.register_s0(testqvar, @300762);
  cpt->register_s0(prn, @1001);
 
- cpt->register_s0(test, @>1009);
+ cpt->register_s0(find, @>1009);
 
 // cpt.register_s0(prn2, @20044);
 

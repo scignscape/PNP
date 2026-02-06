@@ -40,7 +40,7 @@ public:
  ACCESSORS(QString ,name)
  ACCESSORS(QVector<Chasm_Carrier> ,carriers)
 
- void coalesce_to_query(const Chasm_Carrier& cc);
+ void coalesce_to_query(Chasm_Carrier& cc);
 
  void add_carrier(const Chasm_Carrier& cc)
  {

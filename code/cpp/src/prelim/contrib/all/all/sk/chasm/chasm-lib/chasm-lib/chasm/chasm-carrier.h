@@ -159,6 +159,12 @@ public:
  }
 
  template<typename VALUE_Type>
+ VALUE_Type& value_as() const
+ {
+  return *(VALUE_Type*)raw_value_;
+ }
+
+ template<typename VALUE_Type>
  VALUE_Type raw_value_as()
  {
   return (VALUE_Type)raw_value_;

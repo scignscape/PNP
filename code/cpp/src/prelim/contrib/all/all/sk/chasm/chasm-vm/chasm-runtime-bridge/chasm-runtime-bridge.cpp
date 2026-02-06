@@ -107,10 +107,11 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   {
    if(proc_name.contains("@>"))
    {
-    QString* test = new QString("test");
-    qDebug() << "t = " << test;
-    Chasm_Carrier cc = csr_->gen_carrier<void*>(&test);
-    current_call_package_->channel("lambda")->coalesce_to_query(cc);
+//    QString* test = new QString("test");
+//    qDebug() << "t = " << test;
+//    Chasm_Carrier cc = csr_->gen_carrier<void*>(&test);
+    Chasm_Carrier cc = current_call_package_->channel("lambda")->first_carrier();
+    current_call_package_->channel("qlambda")->coalesce_to_query(cc);
    }
    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
   }
@@ -172,6 +173,13 @@ void Chasm_Runtime_Bridge::append_ql_token(QString token)
 }
 
 
+void Chasm_Runtime_Bridge::gen_voidp_carrier()
+{
+ Chasm_Carrier cc = csr_->gen_carrier<void*>();
+ check_claims(cc);
+ current_carrier_deque_->push_back(cc);
+}
+
 void Chasm_Runtime_Bridge::ql_key_empty()
 {
  current_ql_vector_->push_back({{}, {}});
@@ -181,6 +189,14 @@ void Chasm_Runtime_Bridge::new_qlambda()
 {
  current_ql_vector_ = new QVector<QPair<QString, QVector<Chasm_Carrier>>>;
 }
+
+void Chasm_Runtime_Bridge::insert_ql_vector_ptr()
+{
+ Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(current_ql_vector_);
+ check_claims(cc);
+ current_carrier_deque_->push_back(cc);
+}
+
 
 void Chasm_Runtime_Bridge::pop_proc_name()
 {

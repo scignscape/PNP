@@ -199,12 +199,15 @@ public:
  void load_type_n8();
  void load_type_ptr();
 
+ void gen_voidp_carrier();
+
  void load_ql_key(QString token);
  void load_ql_token(QString token);
  void append_ql_token(QString token);
 
  void ql_key_empty();
  void new_qlambda();
+ void insert_ql_vector_ptr();
 
  void pop_call_package();
  void pull_call_package();

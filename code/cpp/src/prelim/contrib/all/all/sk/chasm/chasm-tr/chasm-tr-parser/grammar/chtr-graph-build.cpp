@@ -264,7 +264,8 @@ void ChTR_Graph_Build::ql_keyword_token(QString token)
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_QLambda:
-   gen.dissolve({"add-new-channel $ qlambda"}).blank();
+   gen.dissolve({"add-new-channel $ lambda", "gen-voidp-carrier",
+     "add-new-channel $ qlambda", "insert-ql-vector-ptr"}).blank();
    current_channel_state_ = Channel_States::Explicit_QLambda;
    // //  fall through
  case Channel_States::Explicit_QLambda:
@@ -280,7 +281,8 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_QLambda:
-   gen.dissolve({"add-new-channel $ qlambda", "ql-key-empty"}).blank();
+   gen.dissolve({"add-new-channel $ lambda", "gen-voidp-carrier",
+     "add-new-channel $ qlambda", "insert-ql-vector-ptr", "ql-key-empty"}).blank();
    current_channel_state_ = Channel_States::Explicit_QLambda;
    // //  fall through
  case Channel_States::Explicit_QLambda:
@@ -449,6 +451,8 @@ void ChTR_Graph_Build::resolve_statement()
  {
  case Channel_States::Implicit_Lambda:
  case Channel_States::Explicit_Lambda:
+ case Channel_States::Implicit_QLambda:  // //   anything different with these?
+ case Channel_States::Explicit_QLambda:   //     ...
   if(current_expression_state_ != Expression_States::Expression_Return)
    gen
      .blank()

@@ -23,10 +23,27 @@ Chasm_Channel::Chasm_Channel(QString name)
 
 }
 
-void Chasm_Channel::coalesce_to_query(const Chasm_Carrier& cc)
+void Chasm_Channel::coalesce_to_query(Chasm_Carrier& cc)
 {
- carriers_.clear();
- enqueue_carrier(cc);
+ typedef QVector<QPair<QString, QVector<QVariant>>> w_qvariant;
+ typedef QVector<QPair<QString, QVector<Chasm_Carrier>>> w_qsl;
+
+ w_qvariant* qvptr = new w_qvariant;
+ w_qsl& qslref = first_carrier().value_as<w_qsl>();
+
+ for(auto pr : qslref)
+ {
+  qvptr->push_back({pr.first, {}});
+  for(const Chasm_Carrier& qcc : pr.second)
+  {
+   QStringList& qsl = qcc.value_as<QStringList>();
+   qDebug() << qsl;
+  }
+
+ }
+
+// carriers_.clear();
+// enqueue_carrier(cc);
 }
 
 void Chasm_Channel::pasn8vector(QVector<n8>& result, u1 size)
