@@ -145,6 +145,29 @@ void Chasm_Runtime_Bridge::resolve_handoffs(QMap<QString, QString> channels)
  }
 }
 
+
+void Chasm_Runtime_Bridge::load_ql_key(QString token)
+{
+ current_ql_vector_->push_back({token, {}});
+}
+
+
+void Chasm_Runtime_Bridge::load_ql_token(QString token)
+{
+ auto& pr = current_ql_vector_->back();
+
+ QStringList* qsl = new QStringList({token});
+ Chasm_Carrier cc = csr_->gen_carrier<void*>().take_value(qsl);
+//? cc.set_value(qv);
+ pr.second.push_back(cc);
+}
+
+void Chasm_Runtime_Bridge::append_ql_token(QString token)
+{
+
+}
+
+
 void Chasm_Runtime_Bridge::ql_key_empty()
 {
  current_ql_vector_->push_back({{}, {}});

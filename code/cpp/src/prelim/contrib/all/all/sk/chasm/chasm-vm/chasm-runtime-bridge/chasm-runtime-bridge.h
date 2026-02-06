@@ -199,6 +199,10 @@ public:
  void load_type_n8();
  void load_type_ptr();
 
+ void load_ql_key(QString token);
+ void load_ql_token(QString token);
+ void append_ql_token(QString token);
+
  void ql_key_empty();
  void new_qlambda();
 
