@@ -145,6 +145,8 @@ class Chasm_Runtime_Bridge
 
  QMap<QString, QVector<Chasm_Carrier>> held_handoff_carriers_;
 
+ QVector<QPair<QString, QVector<Chasm_Carrier>>>* current_ql_vector_;
+
 public:
 
  ACCESSORS(Chasm_Procedure_Table* ,proctable)
@@ -196,6 +198,9 @@ public:
  void load_type_QVariant();
  void load_type_n8();
  void load_type_ptr();
+
+ void ql_key_empty();
+ void new_qlambda();
 
  void pop_call_package();
  void pull_call_package();

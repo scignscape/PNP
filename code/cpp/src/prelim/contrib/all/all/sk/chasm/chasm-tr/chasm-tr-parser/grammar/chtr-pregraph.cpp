@@ -171,9 +171,18 @@ void ChTR_Pregraph::check_lines(QString text)
 }
 
 
-void ChTR_Pregraph::query_lambda_token(QString token)
+void ChTR_Pregraph::query_lambda_token(QString token, QString post)
 {
+ if(token.startsWith(":"))
+   acc << ".ql-keyword-token $ " << token;
 
+ else if(post == ";")
+   acc << ".query-lambda-token-expecting-another $ " << token;
+
+ else
+   acc << ".query-lambda-token $ " << token;
+
+ cut();
 }
 
 void ChTR_Pregraph::symbol_token(QString token)

@@ -156,6 +156,7 @@ private:
  enum class Channel_States : s2 {
 
   N_A, Implicit_Lambda = 1, Explicit_Lambda = 2, Named_Channel_Entered = 4, Named_Channel_Exited = 8,
+  Implicit_QLambda = 16, Explicit_QLambda = 32
   //Expression_Return = 256
  };
 
@@ -211,7 +212,13 @@ public:
  void type_expression_token(QString token);
  void scoped_symbol_pin(QString symbol);
  void proc_name(QString token);
+ void query_proc_name(QString token);
+
  void symbol_token(QString token);
+ void query_lambda_token(QString token);
+
+ void ql_keyword_token(QString token);
+
  void pin_value_literal(QString token);
 
  void source_file_end();

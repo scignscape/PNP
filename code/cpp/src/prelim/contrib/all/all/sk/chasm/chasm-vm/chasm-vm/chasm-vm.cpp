@@ -171,6 +171,8 @@ void Chasm_VM::read_line(QString inst)
   { "pull-call-package", &Chasm_Runtime_Bridge::pull_call_package },
   { "pop-proc-name", &Chasm_Runtime_Bridge::pop_proc_name },
 
+  { "new-qlambda", &Chasm_Runtime_Bridge::new_qlambda },
+  { "ql-key-empty", &Chasm_Runtime_Bridge::ql_key_empty },
 
 
 

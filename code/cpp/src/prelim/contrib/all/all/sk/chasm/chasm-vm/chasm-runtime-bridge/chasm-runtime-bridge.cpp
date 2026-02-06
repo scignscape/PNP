@@ -39,7 +39,8 @@ Chasm_Runtime_Bridge::Chasm_Runtime_Bridge(Chasm_Runtime* csr)
      current_loaded_raw_value_(0), current_ghost_scope_(nullptr),
      current_lexical_scope_(nullptr),
      proctable_(nullptr),
-     max_interned_symbol_(0)
+     max_interned_symbol_(0),
+     current_ql_vector_(nullptr)
 {
  const QVector<Chasm_Type_Object*>& pto = *csr_->pretype_type_objects();
 
@@ -142,6 +143,16 @@ void Chasm_Runtime_Bridge::resolve_handoffs(QMap<QString, QString> channels)
    held_handoff_carriers_[*it].push_back(cc);
   }
  }
+}
+
+void Chasm_Runtime_Bridge::ql_key_empty()
+{
+ current_ql_vector_->push_back({{}, {}});
+}
+
+void Chasm_Runtime_Bridge::new_qlambda()
+{
+ current_ql_vector_ = new QVector<QPair<QString, QVector<Chasm_Carrier>>>;
 }
 
 void Chasm_Runtime_Bridge::pop_proc_name()

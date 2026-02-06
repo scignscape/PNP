@@ -141,7 +141,7 @@ public:
 
  void non_anchored_call(QString pre, QString proc_name);
 
- void query_lambda_token(QString token);
+ void query_lambda_token(QString token, QString post = {});
 
  void anchor_or_pin(QString symbol, QString tween, QString token);
 

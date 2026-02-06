@@ -246,6 +246,50 @@ void ChTR_Graph_Build::proc_name(QString token)
  current_channel_state_ = Channel_States::Implicit_Lambda;
 }
 
+void ChTR_Graph_Build::query_proc_name(QString token)
+{
+ gen
+   .dissolve({"new-qlambda", "add-new-channel $ proc"})
+   << "load-proc-name $ " << token;
+
+ cut();
+ gen.blank();
+
+ current_channel_state_ = Channel_States::Implicit_QLambda;
+}
+
+
+void ChTR_Graph_Build::ql_keyword_token(QString token)
+{
+ switch(current_channel_state_)
+ {
+ case Channel_States::Implicit_QLambda:
+   gen.dissolve({"add-new-channel $ qlambda"}).blank();
+   current_channel_state_ = Channel_States::Explicit_QLambda;
+   // //  fall through
+ case Channel_States::Explicit_QLambda:
+  {
+   gen << "load-ql-key $ " << token; cut();
+  }
+ }
+
+}
+
+void ChTR_Graph_Build::query_lambda_token(QString token)
+{
+ switch(current_channel_state_)
+ {
+ case Channel_States::Implicit_QLambda:
+   gen.dissolve({"add-new-channel $ qlambda", "ql-key-empty"}).blank();
+   current_channel_state_ = Channel_States::Explicit_QLambda;
+   // //  fall through
+ case Channel_States::Explicit_QLambda:
+  {
+   gen << "load-ql-token $ " << token; cut();
+  }
+ }
+}
+
 void ChTR_Graph_Build::symbol_token(QString token)
 {
  switch(current_channel_state_)
@@ -464,6 +508,12 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".pin-value-literal", &ChTR_Graph_Build::pin_value_literal },
    { ".proc-name", &ChTR_Graph_Build::proc_name },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
+
+   { ".query-proc-name", &ChTR_Graph_Build::query_proc_name },
+   { ".query-lambda-token", &ChTR_Graph_Build::query_lambda_token },
+   { ".ql-keyword-token", &ChTR_Graph_Build::ql_keyword_token },
+   { ".symbol-token", &ChTR_Graph_Build::symbol_token },
+
  }};
 
  auto it = static_map.find(fn);
@@ -488,6 +538,7 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".resolve-statement", &ChTR_Graph_Build::resolve_statement },
    { ".expression-to-expression", &ChTR_Graph_Build::expression_to_expression },
    { ".expression-to-statement", &ChTR_Graph_Build::expression_to_statement },
+
 
  }};
 
