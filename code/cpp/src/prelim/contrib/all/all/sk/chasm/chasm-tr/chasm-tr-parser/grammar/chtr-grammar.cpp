@@ -67,17 +67,6 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
 
  ChTR_Parse_Context& parse_context = graph_build.parse_context();
 
-
-
-// add_rule(report_context,
-//   "qj-enter",
-//   "@at  .spaces. (?<line-number> \\d+ )  .spaces-optional. :  .spaces. "
-////     "Qj \\( (?<context-name> .non-parens. ) \\) ",
-//   ,[&]
-// {
-//  graph_build.enter_qj_context(p.matched("line-number").toUShort(), p.matched("context-name"));
-// });
-
  add_rule(source_context,
    "carrier-declaration",
    ", (?<symbol> \\S+) (?<tween> \\s+) (?<tx> [^,;*&)\\]] \\S*)"
@@ -89,6 +78,14 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
   QString tween = p.matched("tween");
   QString tx = p.matched("tx");
   pregraph.prepare_carrier_declaration(sym, tween, tx);
+ });
+
+ add_rule(flags_all_(parse_context ,active_query_lambda), run_call_context,
+   "query-lambda-token",
+   "(?<token> \\S+)"
+   ,[&]
+ {
+  pregraph.query_lambda_token(p.matched("token"));
  });
 
  add_rule(source_context,
@@ -140,13 +137,14 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
 
  add_rule(source_context,
    "non-anchored-call",
-   "\\) \\s* (?<proc-name> \\S+)"
+   "(?<pre> [\\)>]) \\s* (?<proc-name> \\S+)"
    ,[&]
  {
   pregraph.reenter_statement_level();
 
+  QString pre = p.matched("pre");
   QString proc = p.matched("proc-name");
-  pregraph.non_anchored_call(proc);
+  pregraph.non_anchored_call(pre, proc);
  });
 
  add_rule(run_call_context,

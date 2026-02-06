@@ -24,11 +24,12 @@ class ChTR_Parse_Context
  typedef ChTR_Node tNode;
 
 public:
- flags_(1)
+ flags_(2)
   flag_(1, open_channel_declaration)
   flag_(2, active_channel)
   flag_(3, open_channel_body)
   flag_(4, awaiting_statement_body)
+  flag_(5, active_query_lambda)
  _flags_
 
  ChTR_Parse_Context();

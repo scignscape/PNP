@@ -78,7 +78,7 @@ private:
 // void acc(QString text);
 
 
- ChTR_Parse_Context parse_context_;
+ ChTR_Parse_Context& parse_context_;
 
 
  ChTR_Document* document_;
@@ -112,7 +112,7 @@ private:
 
 public:
 
- ChTR_Pregraph(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g);
+ ChTR_Pregraph(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g, ChTR_Parse_Context& pc);
 
  ACCESSORS__RGET(ChTR_Parse_Context ,parse_context)
 
@@ -139,7 +139,9 @@ public:
 
  void check_enter_infix_mode();
 
- void non_anchored_call(QString proc_name);
+ void non_anchored_call(QString pre, QString proc_name);
+
+ void query_lambda_token(QString token);
 
  void anchor_or_pin(QString symbol, QString tween, QString token);
 

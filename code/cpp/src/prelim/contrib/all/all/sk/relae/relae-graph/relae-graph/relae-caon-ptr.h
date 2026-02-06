@@ -35,10 +35,6 @@ using caon_ptr = typename get_pointer<T>::type;
 
 #else // NO_CAON
 
-
-#define CAON_CAT_(a, b) a ## b
-#define CAON_CAT(a, b) CAON_CAT_(a, b)
-
 #ifdef CAON_DEBUG
 #define CAON_EVALUATE_DEBUG(type, name ,ptr) \
  const type& name = *ptr;
@@ -48,7 +44,7 @@ using caon_ptr = typename get_pointer<T>::type;
  CAON_EVALUATE_DEBUG(type, _##ptr, b.ptr)
 #define CAON_PTR_BUNDLE_DEBUG(type ,ptr) \
  CAON_EVALUATE_DEBUG(type, _##ptr, b.ptr)
-#define CAON_DEBUG_NOOP int CAON_CAT(_CAON_DEBUG_NOOP_, __LINE__) = 0;
+#define CAON_DEBUG_NOOP int _CAON_DEBUG_NOOP_ = 0;
 #else
 #define CAON_PTR_DEBUG(type ,ptr)
 #define CAON_EVALUATE_DEBUG(type, name ,ptr)

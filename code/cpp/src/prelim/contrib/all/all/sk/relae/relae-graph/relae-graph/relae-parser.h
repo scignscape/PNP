@@ -51,6 +51,8 @@ public:
  ACCESSORS(caon_ptr<tGraph> ,graph)
  ACCESSORS(void* ,end_of_file_info)
 
+ ACCESSORS(int ,current_position)
+
  Relae_Parser(caon_ptr<tGraph> g):graph_(g),match_(nullptr),
    cancel_info_(nullptr), end_of_file_info_(nullptr), current_position_(0)
  {

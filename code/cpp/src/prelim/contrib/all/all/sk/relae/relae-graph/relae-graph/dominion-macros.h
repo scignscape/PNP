@@ -63,10 +63,8 @@
 #define DOMINION_TYPE_METHOD(node_method_name, cpp_type_name, type_code_name) \
    caon_ptr<DOMINION_NAMESPACED(cpp_type_name)> node_method_name() const { \
     if(type_code_ == Type_Codes_type::type_code_name) \
-      return vertex_.ptr_cast<DOMINION_NAMESPACED(cpp_type_name)>(); \
-    return caon_ptr<DOMINION_NAMESPACED(cpp_type_name)>();} \
-   caon_ptr<DOMINION_NAMESPACED(cpp_type_name)> node_method_name##_Unchecked() const { \
-    return vertex_.ptr_cast<DOMINION_NAMESPACED(cpp_type_name)>(); }
+     return vertex_.ptr_cast<DOMINION_NAMESPACED(cpp_type_name)>(); \
+    return caon_ptr<DOMINION_NAMESPACED(cpp_type_name)>();}
 #endif
 #endif
 

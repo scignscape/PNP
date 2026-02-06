@@ -106,6 +106,7 @@ struct RZ_Flags_type<8>
  typedef qint64 type;
 };
 
+#include <QDebug>
 
 struct RZ_Flag_Test
 {
@@ -116,7 +117,6 @@ struct RZ_Flag_Test
  unsigned long mask;
  RZ_Flag_Test(Test_Type tt, void* v, size_t l, unsigned long m):test_type(tt), bitset(v), bitset_byte_length(l), mask(m)
  {
-
  }
 
  #define TEST_IMPL_RESTORE_BITS(byte_count) \
@@ -296,6 +296,7 @@ union { RZ_Flags_type<byte_count>::type Flags; struct \
 #define _flag(name) \
  bool name:1;
 #endif
+
 
 
 #endif //FLAGS__H

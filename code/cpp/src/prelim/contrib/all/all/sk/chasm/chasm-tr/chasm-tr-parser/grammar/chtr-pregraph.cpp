@@ -38,11 +38,12 @@ USING_OTNS(Chasm_TR)
 
 
 ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
-  ChTR_Parser& p, ChTR_Graph& g)
+  ChTR_Parser& p, ChTR_Graph& g, ChTR_Parse_Context& pc)
  : Flags(0)
    ,document_(d)
    ,graph_(g)
    ,parser_(p)
+   ,parse_context_(pc)
    ,fr_(ChTR_Relae_Frame::instance())
    ,qy_(ChTR_Relae_Query::instance())
    ,acc(&acc_)
@@ -170,6 +171,11 @@ void ChTR_Pregraph::check_lines(QString text)
 }
 
 
+void ChTR_Pregraph::query_lambda_token(QString token)
+{
+
+}
+
 void ChTR_Pregraph::symbol_token(QString token)
 {
  if(flags.infix_mode)
@@ -272,9 +278,21 @@ void ChTR_Pregraph::check_enter_infix_mode()
  }
 }
 
-void ChTR_Pregraph::non_anchored_call(QString proc_name)
+void ChTR_Pregraph::non_anchored_call(QString pre, QString proc_name)
 {
  check_write_line_number();
+
+ QString proc_name_instruction;
+
+ if(pre == ">")
+ {
+  parse_context_.flags.active_query_lambda = true;
+  proc_name_instruction = ".query-proc-name";
+ }
+ else
+ {
+  proc_name_instruction = ".proc-name";
+ }
 
  proc_names_.push_back(proc_name);
 
@@ -293,7 +311,7 @@ void ChTR_Pregraph::non_anchored_call(QString proc_name)
   flags.active_statement = true;
  }
 
- acc << ".proc-name $ " << proc_name; cut();
+ acc << proc_name_instruction << " $ " << proc_name; cut();
 
  grammar_->activate_context("run-call-context");
  flags.active_run_call = true;

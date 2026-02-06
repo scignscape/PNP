@@ -104,10 +104,10 @@ class node_connectors
  {
   const self_type* _this;
   Connection_Caon_type& write_connection;
-  Node_Caon_type operator()(const Frame_type& frame, Node_Caon_type node) const
+  Node_Caon_type operator()(Node_Caon_type node) const
   {
    const Connectors_type* cast = static_cast<const Connectors_type*>(_this);
-   return node->retrieve(&frame, write_connection, *cast);
+   return node->retrieve(write_connection, *cast);
   }
  };
 
@@ -335,8 +335,6 @@ public:
 
 public:
 
- typedef Type_Codes_type Type_Code;
-
  ACCESSORS(Type_Codes_type ,type_code)
  ACCESSORS(VERTEX_Type ,vertex)
 
@@ -367,11 +365,11 @@ public:
   return targets_[const_cast<Frame_type*>(fr)].value(caon_ptr<Connectors_type>(&connector));
  }
 
- Node_Caon_type retrieve(const Frame_type* fr, Connection_Caon_type& connection, const Connectors_type& connector)
+ Node_Caon_type retrieve(Frame_type* fr, Connection_Caon_type& connection, const Connectors_type& connector)
  {
-  if(annotated_targets_[const_cast<Frame_type*>(fr)].contains(caon_ptr<Connectors_type>(&connector)))
+  if(annotated_targets_[fr].contains(caon_ptr<Connectors_type>(&connector)))
   {
-   auto result = annotated_targets_[const_cast<Frame_type*>(fr)].value(caon_ptr<Connectors_type>(&connector));
+   auto result = annotated_targets_.value(caon_ptr<Connectors_type>(&connector));
    connection = result.first;
    return result.second;
   }
@@ -416,12 +414,6 @@ public:
 
  template<typename T>
  caon_ptr<T> as()
- {
-  return vertex_.template as<T>();
- }
-
- template<typename T>
- caon_ptr<T> as() const
  {
   return vertex_.template as<T>();
  }

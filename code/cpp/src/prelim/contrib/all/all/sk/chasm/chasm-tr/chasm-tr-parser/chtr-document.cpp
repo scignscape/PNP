@@ -141,7 +141,7 @@ void ChTR_Document::parse(int start_position, int end_position)
  graph_build_ = new ChTR_Graph_Build(this, *parser_, *graph_);
  graph_build_->init();
 
- pregraph_ = new ChTR_Pregraph(this, *parser_, *graph_);
+ pregraph_ = new ChTR_Pregraph(this, *parser_, *graph_, graph_build_->parse_context());
  pregraph_->init();
 
  grammar_ = new ChTR_Grammar;
