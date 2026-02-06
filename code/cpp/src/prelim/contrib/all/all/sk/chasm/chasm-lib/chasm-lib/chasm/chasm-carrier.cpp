@@ -99,6 +99,12 @@ Chasm_Carrier& Chasm_Carrier::take_shared_ref_value(std::shared_ptr<n8>* ss)
 
 }
 
+void Chasm_Carrier::dispose()
+{
+ delete (void*) raw_value_;
+ raw_value_ = 0;
+}
+
 
 Chasm_Carrier& Chasm_Carrier::take_value(void* pv)
 {

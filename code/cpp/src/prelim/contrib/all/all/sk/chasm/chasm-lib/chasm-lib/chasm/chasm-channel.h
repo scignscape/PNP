@@ -61,6 +61,7 @@ public:
 
 
  Chasm_Carrier first_carrier();
+ Chasm_Carrier& first_carrier_ref();
 
  void pasn8vector(QVector<n8>& result, u1 size);
 

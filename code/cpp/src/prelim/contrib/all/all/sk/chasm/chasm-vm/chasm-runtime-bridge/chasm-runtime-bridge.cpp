@@ -107,10 +107,7 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   {
    if(proc_name.contains("@>"))
    {
-//    QString* test = new QString("test");
-//    qDebug() << "t = " << test;
-//    Chasm_Carrier cc = csr_->gen_carrier<void*>(&test);
-    Chasm_Carrier cc = current_call_package_->channel("lambda")->first_carrier();
+    Chasm_Carrier& cc = current_call_package_->channel("lambda")->first_carrier_ref();
     current_call_package_->channel("qlambda")->coalesce_to_query(cc);
    }
    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
@@ -187,6 +184,9 @@ void Chasm_Runtime_Bridge::ql_key_empty()
 
 void Chasm_Runtime_Bridge::new_qlambda()
 {
+ if(current_ql_vector_)
+   delete current_ql_vector_;
+
  current_ql_vector_ = new QVector<QPair<QString, QVector<Chasm_Carrier>>>;
 }
 

@@ -101,6 +101,8 @@ public:
  ACCESSORS(trisym ,key)
  ACCESSORS(n8 ,raw_value)
 
+ void dispose();
+
  void set_fcode(u4 val)
  {
   key_.set_fcode(val);

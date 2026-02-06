@@ -35,13 +35,16 @@ void Chasm_Channel::coalesce_to_query(Chasm_Carrier& cc)
  for(auto pr : qslref)
  {
   qvptr->push_back({pr.first, {}});
-  for(const Chasm_Carrier& qcc : pr.second)
+  for(Chasm_Carrier& qcc : pr.second)
   {
-   QStringList& qsl = qcc.value_as<QStringList>();
-   qDebug() << qsl;
+   QStringList qsl = qcc.value_as<QStringList>();
+   qcc.dispose();
+   QVariant qv(qsl);
+   qvptr->last().second.push_back(qv);
   }
-
  }
+
+ cc.take_value(&qvptr);
 }
 
 void Chasm_Channel::pasn8vector(QVector<n8>& result, u1 size)
@@ -57,13 +60,14 @@ void Chasm_Channel::add_carriers(std::deque<Chasm_Carrier>& ccs)
    carriers_.push_back(cc);
 }
 
+Chasm_Carrier& Chasm_Channel::first_carrier_ref()
+{
+ return carriers_.first();
+}
 
 Chasm_Carrier Chasm_Channel::first_carrier()
 {
- //static Chasm_Carrier fallback;
  if(carriers_.isEmpty())
    return {};
-//  return fallback;
-
  return carriers_.first();
 }

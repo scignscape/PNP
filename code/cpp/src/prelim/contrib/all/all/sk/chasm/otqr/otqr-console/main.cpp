@@ -32,9 +32,15 @@ USING_OTNS(Chasm_TR)
 
 void find(void* arg)
 {
- QString* t = (QString*) arg;
- qDebug() << "t = " << arg;
- qDebug() << "arg = " << *t;
+ typedef QVector<QPair<QString, QVector<QVariant>>> w_qvariant;
+
+ w_qvariant* ptr = (w_qvariant*) arg;
+
+ for(auto pr : *ptr)
+ {
+  QString key = pr.first;
+  qDebug() << "key = " << key;
+ }
 }
 
 
