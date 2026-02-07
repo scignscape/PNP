@@ -171,6 +171,7 @@ private:
 
  void ql_tokens_init(QString last_instruction = {});
 
+ u2 string_lines_count_;
 
 public:
 
@@ -184,6 +185,9 @@ public:
  void parse_line_number(QString text);
 
  void init();
+
+ void track_string_line(QString line);
+ void string_lines_to_follow();
 
  void read_line(QString fn, QString arg);
  void read_line(QString fn);

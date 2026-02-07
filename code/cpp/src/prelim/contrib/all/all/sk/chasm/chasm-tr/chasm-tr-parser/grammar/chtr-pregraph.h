@@ -53,6 +53,7 @@ public:
   bool infix_mode:1;
   bool active_statement:1;
   bool active_expression:1;
+  bool tracking_string_lines:1;
 
 //  bool discard_acc:1;
 //  bool split_acc:1;
@@ -109,6 +110,7 @@ private:
  u4 last_line_number_written_;
  u4 current_line_number_;
 
+ u4 string_lines_start_;
 
 public:
 
@@ -118,9 +120,13 @@ public:
 
  ACCESSORS(ChTR_Grammar* ,grammar)
 
+
+
  void check_resolve_statement();
- void reenter_statement_level();
+
+ void reenter_statement_level(QPair<int, int> pair);
  void temp_reenter_statement_level();
+ void check_string_lines(u4 current_pos);
 
  void enter_expression();
 
@@ -139,7 +145,7 @@ public:
 
  void check_enter_infix_mode();
 
- void non_anchored_call(QString pre, QString proc_name);
+ void non_anchored_call(QString pre, QString proc_name, QPair<s4, s4> pre_pos);
 
  void query_lambda_token(QString token, QString post = {});
 

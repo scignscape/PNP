@@ -13,6 +13,7 @@
 
 #include "relae-node-ptr.h"
 
+#include <QPair>
 
 struct RZ_Match_Data_Base;
 
@@ -58,6 +59,8 @@ public:
  {
 
  }
+
+ QPair<int, int> position_pair();
 
  void set_eval_text(tString s)
  {

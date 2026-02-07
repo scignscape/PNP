@@ -26,6 +26,8 @@
 #include "chasm-tr/chtr-channel-package.h"
 #include "chasm-tr/chtr-code-statement.h"
 
+#include "chtr-parser.h"
+
 #include "relae-graph/relae-caon-ptr.h"
 #include "relae-graph/relae-node-ptr.h"
 
@@ -52,6 +54,7 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
    ,current_line_number_(1)
    ,expression_nesting_count_(0)
    ,infix_count_(0)
+   ,string_lines_start_(0)
 {
  acc << "\n"; cut();
  acc << ".source-file $ " << d->local_path(); cut();
@@ -96,8 +99,9 @@ void ChTR_Pregraph::leave_expression()
 
 }
 
-void ChTR_Pregraph::reenter_statement_level()
+void ChTR_Pregraph::reenter_statement_level(QPair<int, int> pair)
 {
+ check_string_lines(pair.first);
  temp_reenter_statement_level();
  grammar_->activate_context("statement-level-context");
 }
@@ -142,6 +146,8 @@ void ChTR_Pregraph::check_resolve_statement()
  {
   leave_expression();
  }
+
+ check_string_lines(parser_.current_position());
 
  if(flags.active_statement)
  {
@@ -287,7 +293,28 @@ void ChTR_Pregraph::check_enter_infix_mode()
  }
 }
 
-void ChTR_Pregraph::non_anchored_call(QString pre, QString proc_name)
+void ChTR_Pregraph::check_string_lines(u4 current_pos)
+{
+ if(flags.tracking_string_lines)
+ {
+  QString text = parser_.raw_text().mid(string_lines_start_, current_pos - string_lines_start_);
+
+  QStringList lines = text.split("\n");
+
+  for(QString line : lines)
+  {
+   if(line.simplified().isEmpty())
+     continue;
+   acc << ".track-string-line $ " << line; cut();
+  }
+
+  acc_lines_.push_back("\n");
+
+ }
+
+}
+
+void ChTR_Pregraph::non_anchored_call(QString pre, QString proc_name, QPair<s4, s4> pre_pos)
 {
  check_write_line_number();
 
@@ -297,6 +324,9 @@ void ChTR_Pregraph::non_anchored_call(QString pre, QString proc_name)
  {
   parse_context_.flags.active_query_lambda = true;
   proc_name_instruction = ".query-proc-name";
+  acc << ".string-lines-to-follow"; cut();
+  string_lines_start_ = pre_pos.first;
+  flags.tracking_string_lines = true;
  }
  else
  {

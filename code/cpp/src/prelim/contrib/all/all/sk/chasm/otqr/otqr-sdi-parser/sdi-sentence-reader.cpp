@@ -89,11 +89,18 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
   tsl::ordered_map<QString, QVector<QVariantList>>& other_data)
 {
  QString pre = "|  ";
- u2 width = 80;
+ u2 report_width = 80;
+
+ if(str_data.contains(":report-width"))
+ {
+  report_width = str_data[":report-width"].value(0, {{"0"}}).first().toUInt();
+ }
 
  QVector<QStringList> text = str_data[":text"];
  QVector<QStringList> in = str_data[":in"];
  QVector<QStringList> save = str_data[":save"];
+
+ QVector<QStringList> orig = str_data[":_orig"];
 
  QStringList file_paths;
 
@@ -152,6 +159,13 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
   QFile* qf = new QFile(fp);
   qf->open(QIODevice::WriteOnly);
   QTextStream* qts = new QTextStream(qf);
+
+  for(QString s: orig.first())
+  {
+   (*qts) << "\n" << s;
+  }
+  (*qts) << "\n===\n\n";
+
   qtss.push_back(qts);
   files.push_back(qf);
  }
@@ -168,9 +182,14 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
   for(QTextStream* qts : qtss)
   {
    QString lines = s->sentence_text();
-   align_columns(lines, pre, width);
+   align_columns(lines, pre, report_width);
    (*qts) << "\n\n# " << s->id() << id_space << " = " << it.value().join("; ") << " -> \n" << lines;
   }
+ }
+
+ for(QTextStream* qts : qtss)
+ {
+  (*qts) << "\n\n";
  }
 
  for(QFile* qf : files)

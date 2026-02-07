@@ -23,7 +23,7 @@ Chasm_Channel::Chasm_Channel(QString name)
 
 }
 
-void Chasm_Channel::coalesce_to_query(Chasm_Carrier& cc)
+QVector<QPair<QString, QVector<QVariant>>>* Chasm_Channel::coalesce_to_query(Chasm_Carrier& cc)
 {
  typedef QVector<QPair<QString, QVector<QVariant>>> w_qvariant;
  typedef QVector<QPair<QString, QVector<Chasm_Carrier>>> w_qsl;
@@ -45,6 +45,8 @@ void Chasm_Channel::coalesce_to_query(Chasm_Carrier& cc)
  }
 
  cc.take_value(&qvptr);
+
+ return qvptr;
 }
 
 void Chasm_Channel::pasn8vector(QVector<n8>& result, u1 size)

@@ -64,6 +64,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_line_number_(0)
    ,current_channel_state_(Channel_States::N_A)
    ,current_expression_state_(Expression_States::N_A)
+   ,string_lines_count_(0)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -314,6 +315,24 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
  }
 }
 
+void ChTR_Graph_Build::string_lines_to_follow()
+{
+ gen << "string-lines-to-follow"; cut();
+ string_lines_count_ = 0;
+}
+
+void ChTR_Graph_Build::track_string_line(QString line)
+{
+ ++string_lines_count_;
+
+ if(string_lines_count_ == 1)
+ {
+  gen.blank();
+ }
+
+ gen << "track-string-line $ " << line; cut();
+}
+
 void ChTR_Graph_Build::symbol_token(QString token)
 {
  switch(current_channel_state_)
@@ -541,6 +560,8 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".ql-keyword-token", &ChTR_Graph_Build::ql_keyword_token },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
+   { ".track-string-line", &ChTR_Graph_Build::track_string_line },
+
  }};
 
  auto it = static_map.find(fn);
@@ -565,6 +586,8 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".resolve-statement", &ChTR_Graph_Build::resolve_statement },
    { ".expression-to-expression", &ChTR_Graph_Build::expression_to_expression },
    { ".expression-to-statement", &ChTR_Graph_Build::expression_to_statement },
+
+   { ".string-lines-to-follow", &ChTR_Graph_Build::string_lines_to_follow },
 
 
  }};

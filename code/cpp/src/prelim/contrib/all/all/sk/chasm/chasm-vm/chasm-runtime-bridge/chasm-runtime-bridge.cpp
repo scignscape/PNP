@@ -108,7 +108,10 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
    if(proc_name.contains("@>"))
    {
     Chasm_Carrier& cc = current_call_package_->channel("lambda")->first_carrier_ref();
-    current_call_package_->channel("qlambda")->coalesce_to_query(cc);
+    QVector<QPair<QString, QVector<QVariant>>>* vptr =
+      current_call_package_->channel("qlambda")->coalesce_to_query(cc);
+
+    vptr->append({":_orig", {QVariant(string_lines_acc_)}});
    }
    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
   }
@@ -167,6 +170,16 @@ void Chasm_Runtime_Bridge::append_ql_token(QString token)
  Chasm_Carrier cc = pr.second.last();
  QStringList& qsl = cc.value_as<QStringList>();
  qsl.push_back(token);
+}
+
+void Chasm_Runtime_Bridge::track_string_line(QString line)
+{
+ string_lines_acc_.push_back(line);
+}
+
+void Chasm_Runtime_Bridge::string_lines_to_follow()
+{
+ string_lines_acc_.clear();
 }
 
 

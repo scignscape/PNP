@@ -110,6 +110,12 @@ void* Relae_Parser<GALAXY>::reset_cancel()
 }
 
 template<typename GALAXY>
+QPair<int, int> Relae_Parser<GALAXY>::position_pair()
+{
+ return{current_position() - match_text().size(), current_position()};
+}
+
+template<typename GALAXY>
 tString Relae_Parser<GALAXY>::matched(int capture_number)
 {
  if(match_)

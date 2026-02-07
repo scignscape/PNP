@@ -147,6 +147,8 @@ class Chasm_Runtime_Bridge
 
  QVector<QPair<QString, QVector<Chasm_Carrier>>>* current_ql_vector_;
 
+ QStringList string_lines_acc_;
+
 public:
 
  ACCESSORS(Chasm_Procedure_Table* ,proctable)
@@ -157,6 +159,9 @@ public:
  static s4 truncate_s(s4 value, u1 byte_span);
 
  Chasm_Carrier last_carrier();
+
+ void track_string_line(QString line);
+ void string_lines_to_follow();
 
  void resolve_pins();
  void load_value_literal(QString token);

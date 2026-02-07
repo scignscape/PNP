@@ -16,6 +16,7 @@
 #include "chtr-parser.h"
 
 #include "relae-graph/relae-parser.templates.h"
+#include "relae-graph/relae-parser.h"
 
 #include <QDebug>
 
@@ -72,7 +73,7 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
    ", (?<symbol> \\S+) (?<tween> \\s+) (?<tx> [^,;*&)\\]] \\S*)"
    ,[&]
  {
-  pregraph.reenter_statement_level();
+  pregraph.reenter_statement_level(p.position_pair());
 
   QString sym = p.matched("symbol");
   QString tween = p.matched("tween");
@@ -101,7 +102,8 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
    "(?<all>(?:, (?<symbol> \\S+) (?<tween> \\s+) ){2,} ) (?<tx> [^,;*&)\\]] \\S*)"
    ,[&]
  {
-  pregraph.reenter_statement_level();
+  pregraph.reenter_statement_level(p.position_pair());
+
   QString tx = p.matched("tx");
 
   QString all = p.matched("all");
@@ -125,7 +127,7 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
    "\\\\ (?<symbol> \\S+) (?<tween> \\s+) (?<token> \\S+)"
    ,[&]
  {
-  pregraph.reenter_statement_level();
+  pregraph.reenter_statement_level(p.position_pair());
 
   QString sym = p.matched("symbol");
   QString tween = p.matched("tween");
@@ -148,11 +150,12 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
    "(?<pre> [\\)>]) \\s* (?<proc-name> \\S+)"
    ,[&]
  {
-  pregraph.reenter_statement_level();
+  pregraph.reenter_statement_level(p.position_pair());
 
   QString pre = p.matched("pre");
   QString proc = p.matched("proc-name");
-  pregraph.non_anchored_call(pre, proc);
+
+  pregraph.non_anchored_call(pre, proc, p.position_pair());
  });
 
  add_rule(run_call_context,

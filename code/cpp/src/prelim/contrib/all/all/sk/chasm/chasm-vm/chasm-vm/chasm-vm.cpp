@@ -177,6 +177,7 @@ void Chasm_VM::read_line(QString inst)
   { "gen-voidp-carrier", &Chasm_Runtime_Bridge::gen_voidp_carrier },
   { "reset-carrier-deque", &Chasm_Runtime_Bridge::reset_carrier_deque },
 
+  { "string-lines-to-follow", &Chasm_Runtime_Bridge::string_lines_to_follow },
 
   { "push_carrier_deque", &Chasm_Runtime_Bridge::push_carrier_deque },
   { "gen_carrier", &Chasm_Runtime_Bridge::gen_carrier},
@@ -221,6 +222,8 @@ void Chasm_VM::read_line(QString inst, QString arg)
 //  { "load-ql-expected", &Chasm_Runtime_Bridge::load_ql_token_expected },
   { "load-ql-key", &Chasm_Runtime_Bridge::load_ql_key },
   { "append-ql-token", &Chasm_Runtime_Bridge::append_ql_token },
+
+  { "track-string-line", &Chasm_Runtime_Bridge::track_string_line },
 
   { "add_new_channel", &Chasm_Runtime_Bridge::add_new_channel },
   { "gen_carrier_tvr", &Chasm_Runtime_Bridge::gen_carrier_tvr },
