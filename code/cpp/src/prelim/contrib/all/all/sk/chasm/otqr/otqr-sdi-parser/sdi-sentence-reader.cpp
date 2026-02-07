@@ -24,6 +24,16 @@ SDI_Sentence_Reader::SDI_Sentence_Reader()
 
 }
 
+void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringList>>& str_data,
+  tsl::ordered_map<QString, QVector<QVariantList>>& other_data)
+{
+ QVector<QStringList> text = str_data[":text"];
+ QVector<QStringList> in = str_data[":in"];
+
+ QString texts = text.first().first();
+ QString ins = in.first().first();
+}
+
 void SDI_Sentence_Reader::parse_blank_line()
 {
 

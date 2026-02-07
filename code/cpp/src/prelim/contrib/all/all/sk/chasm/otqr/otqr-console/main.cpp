@@ -25,9 +25,14 @@ USING_KANS(TextIO)
 
 #include "otqr-sdi-parser/otqr-sdi-parser.h"
 
+#include "tsl/ordered_map.h"
+
+
 USING_OTNS(SDI)
 USING_OTNS(Chasm_TR)
 
+
+static SDI_Sentence_Reader* sdi;
 
 
 void find(void* arg)
@@ -36,11 +41,42 @@ void find(void* arg)
 
  w_qvariant* ptr = (w_qvariant*) arg;
 
+ if(ptr->first().first.isEmpty())
+ {
+  ptr->first().first = ":text";
+ }
+
+ tsl::ordered_map<QString, QVector<QVariantList>> vmap;
+ tsl::ordered_map<QString, QVector<QStringList>> smap;
+
+ auto vmap_to_smap = [&smap](const QPair<QString, QVector<QVariant>>& pr)
+ {
+  smap[pr.first].resize(pr.second.size());
+
+  std::transform(pr.second.begin(), pr.second.end(), smap[pr.first].begin(), [](QVariant qv)
+  {
+   return qv.toStringList();
+  });
+ };
+
  for(auto pr : *ptr)
  {
-  QString key = pr.first;
-  qDebug() << "key = " << key;
+  vmap_to_smap(pr);
  }
+
+ sdi->handle_find(smap, vmap);
+
+
+// vmap_to_smap(pr);
+
+
+ // = pr.second.to;
+
+// for(auto pr : *ptr)
+// {
+//  QString key = pr.first;
+//  qDebug() << "key = " << key;
+// }
 }
 
 
@@ -86,6 +122,7 @@ int main(int argc, char *argv[])
 
  osp.parse();
 
+ sdi = osp.reader();
 
  ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/otqr/t1.ot");
 

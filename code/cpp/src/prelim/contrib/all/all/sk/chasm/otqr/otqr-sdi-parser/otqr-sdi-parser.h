@@ -32,6 +32,11 @@ public:
  void parse();
  void process_line(QString line);
 
+ SDI_Sentence_Reader* reader()
+ {
+  return &reader_;
+ }
+
 };
 
 

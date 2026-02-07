@@ -24,6 +24,8 @@
 #include "sentences/sdi-sentence.h"
 
 
+#include "tsl/ordered_map.h"
+
 OTNS_(SDI)
 
 
@@ -55,6 +57,9 @@ class SDI_Sentence_Reader
 public:
 
  SDI_Sentence_Reader();
+
+ void handle_find(tsl::ordered_map<QString, QVector<QStringList>>& str_data,
+   tsl::ordered_map<QString, QVector<QVariantList>>& other_data);
 
  void init_sentence(QString data);
 
