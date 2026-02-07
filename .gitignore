@@ -78,7 +78,7 @@ cpp/qmake-console/targets/*
 *.zip
 !/dev/documents/gen/src-copy.zip
 !/preferred/preferred-zip.zip
-!/./dev.zip
+!/dev.zip
 
 
 *.gz
