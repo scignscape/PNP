@@ -24,9 +24,73 @@ SDI_Sentence_Reader::SDI_Sentence_Reader()
 
 }
 
+
+void align_columns(QString& lines, QString pre, u2 width)
+{
+ pre.prepend("\n");
+
+ QString result;
+
+ u4 old_pos = 0;
+ s4 pos = pre.size();
+ u2 count = 0;
+
+ auto append_last = [&]()
+ {
+  if(count == 0)
+    result += pre.mid(1) + lines.mid(old_pos);
+  else
+    result += pre + lines.mid(old_pos);
+ };
+
+ auto append = [&]()
+ {
+  if(count == 0)
+    result += pre.mid(1) + lines.mid(old_pos, pos - 1 - old_pos);
+  else
+    result += pre + lines.mid(old_pos, pos - 1 - old_pos);
+ };
+
+ for(;; ++count)
+ {
+  pos += width;
+  if(pos >= lines.size())
+  {
+   append_last();
+   break;
+  }
+
+  while(!lines[pos].isSpace())
+  {
+   if(pos + 1 == lines.size())
+   {
+    append_last();
+    break;
+   }
+   ++pos;
+  }
+
+  while(lines[pos].isSpace())
+  {
+   if(pos + 1 == lines.size())
+   {
+    append_last();
+    break;
+   }
+   ++pos;
+  }
+  append();
+  old_pos = pos;
+ }
+ lines = result;
+}
+
 void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringList>>& str_data,
   tsl::ordered_map<QString, QVector<QVariantList>>& other_data)
 {
+ QString pre = "|  ";
+ u2 width = 80;
+
  QVector<QStringList> text = str_data[":text"];
  QVector<QStringList> in = str_data[":in"];
  QVector<QStringList> save = str_data[":save"];
@@ -104,8 +168,7 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
   for(QTextStream* qts : qtss)
   {
    QString lines = s->sentence_text();
-   lines.prepend("|  ");
-   lines.replace("\n", "\n|  ");
+   align_columns(lines, pre, width);
    (*qts) << "\n\n# " << s->id() << id_space << " = " << it.value().join("; ") << " -> \n" << lines;
   }
  }
@@ -113,6 +176,7 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
  for(QFile* qf : files)
  {
   qf->close();
+  qDebug() << "Saved: " << qf->fileName();
   delete qf;
  }
  for(QTextStream* qts : qtss)
