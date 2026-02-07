@@ -82,7 +82,7 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
 
  add_rule(flags_all_(parse_context ,active_query_lambda), run_call_context,
    "query-lambda-token-expecting-another",
-   "(?<token> \\S+) .spaces. (?<post> ;+)"
+   "(?<token> [^\\s;]+) (?<post> ;+) .spaces.? "
    ,[&]
  {
   pregraph.query_lambda_token(p.matched("token"), p.matched("post"));

@@ -76,7 +76,7 @@ class ChTR_Graph_Build
 
 public:
 
- flags_(1)
+ flags_(2)
   bool discard_acc:1;
   bool split_acc:1;
   bool array_field:1;
@@ -84,6 +84,7 @@ public:
   bool replace_acc:1;
   bool wildcard_acc:1;
   bool define_replacement:1;
+  bool query_lambda_token_expected_another;
   //bool expecting_field:1;
  _flags
 
@@ -216,6 +217,7 @@ public:
 
  void symbol_token(QString token);
  void query_lambda_token(QString token);
+ void query_lambda_token_expecting_another(QString token);
 
  void ql_keyword_token(QString token);
 

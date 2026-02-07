@@ -29,9 +29,11 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
 {
  QVector<QStringList> text = str_data[":text"];
  QVector<QStringList> in = str_data[":in"];
+ QVector<QStringList> save = str_data[":save"];
 
  QString texts = text.first().first();
  QString ins = in.first().first();
+ QString saves = save.first().first();
 }
 
 void SDI_Sentence_Reader::parse_blank_line()

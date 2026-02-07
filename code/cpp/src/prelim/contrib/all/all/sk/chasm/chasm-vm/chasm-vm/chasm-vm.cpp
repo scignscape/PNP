@@ -218,6 +218,7 @@ void Chasm_VM::read_line(QString inst, QString arg)
   { "resolve-handoffs", &Chasm_Runtime_Bridge::resolve_handoffs },
 
   { "load-ql-token", &Chasm_Runtime_Bridge::load_ql_token },
+//  { "load-ql-expected", &Chasm_Runtime_Bridge::load_ql_token_expected },
   { "load-ql-key", &Chasm_Runtime_Bridge::load_ql_key },
   { "append-ql-token", &Chasm_Runtime_Bridge::append_ql_token },
 

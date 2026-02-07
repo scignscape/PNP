@@ -286,6 +286,12 @@ void ChTR_Graph_Build::ql_keyword_token(QString token)
 
 }
 
+void ChTR_Graph_Build::query_lambda_token_expecting_another(QString token)
+{
+ query_lambda_token(token);
+ flags.query_lambda_token_expected_another = true;
+}
+
 void ChTR_Graph_Build::query_lambda_token(QString token)
 {
  switch(current_channel_state_)
@@ -296,7 +302,14 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
    // //  fall through
  case Channel_States::Explicit_QLambda:
   {
-   gen << "load-ql-token $ " << token; cut();
+   if(flags.query_lambda_token_expected_another)
+   {
+    gen << "append-ql-token $ " << token;
+    flags.query_lambda_token_expected_another = false;
+   }
+   else
+     gen << "load-ql-token $ " << token;
+   cut();
   }
  }
 }
@@ -524,6 +537,7 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
 
    { ".query-proc-name", &ChTR_Graph_Build::query_proc_name },
    { ".query-lambda-token", &ChTR_Graph_Build::query_lambda_token },
+   { ".query-lambda-token-expecting-another", &ChTR_Graph_Build::query_lambda_token_expecting_another },
    { ".ql-keyword-token", &ChTR_Graph_Build::ql_keyword_token },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
