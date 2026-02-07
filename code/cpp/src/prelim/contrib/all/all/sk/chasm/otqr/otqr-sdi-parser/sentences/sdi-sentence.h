@@ -39,6 +39,8 @@ public:
  ACCESSORS(QString ,sentence_text)
  ACCESSORS(u4 ,id)
 
+ u2 search_for(QString search_text);
+
  void read_sentence_text(QStringList read_dispatch);
  void read_sentence_gaps(QStringList read_dispatch);
 

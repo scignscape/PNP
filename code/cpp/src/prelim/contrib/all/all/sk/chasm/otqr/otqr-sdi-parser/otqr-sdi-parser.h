@@ -27,16 +27,12 @@ class OTQR_SDI_Parser
 
 public:
 
+ ACCESSORS__RGET(SDI_Sentence_Reader ,reader)
+
  OTQR_SDI_Parser(QString file_path);
 
  void parse();
  void process_line(QString line);
-
- SDI_Sentence_Reader* reader()
- {
-  return &reader_;
- }
-
 };
 
 

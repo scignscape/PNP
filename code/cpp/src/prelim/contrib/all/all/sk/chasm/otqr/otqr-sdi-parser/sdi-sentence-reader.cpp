@@ -31,9 +31,52 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
  QVector<QStringList> in = str_data[":in"];
  QVector<QStringList> save = str_data[":save"];
 
- QString texts = text.first().first();
+ QStringList file_paths;
+
+ if(!save.isEmpty())
+ {
+  QFileInfo qfi(file_path_);
+  QString folder = qfi.canonicalPath();
+  QString fn = qfi.completeBaseName();
+
+  if(save.size() > 1)
+  {
+   if(save.first().first() == "to")
+     save.takeFirst();
+  }
+  for(QString s : save.first())
+  {
+   QString path;
+   if(s.contains("%"))
+   {
+    path = folder + "/" + s.replace("%", fn);
+    file_paths.push_back(path);
+   }
+   else
+     file_paths.push_back(s);
+  }
+ }
+
  QString ins = in.first().first();
- QString saves = save.first().first();
+
+ if(ins != "$Sentences")
+ {
+  qDebug() << "Search area not recognized: " << ins;
+  return;
+ }
+
+ QMap<SDI_Sentence*, QStringList> finds;
+
+ for(QStringList search_texts: text)
+ {
+  QString search_text = search_texts.join(" ");
+  for(SDI_Sentence& s : sdi_sentences_)
+  {
+   u2 count = s.search_for(search_text);
+   if(count)
+     finds[&s].push_back(search_text);
+  }
+ }
 }
 
 void SDI_Sentence_Reader::parse_blank_line()

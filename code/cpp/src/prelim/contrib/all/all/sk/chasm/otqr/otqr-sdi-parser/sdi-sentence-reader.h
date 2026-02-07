@@ -35,6 +35,8 @@ class SDI_Sentence_Reader
 {
  QVector<SDI_Sentence> sdi_sentences_;
 
+ QString file_path_;
+
  SDI_Sentence* current_sentence_;
 
  QString pipe_acc_;
@@ -57,6 +59,8 @@ class SDI_Sentence_Reader
 public:
 
  SDI_Sentence_Reader();
+
+ ACCESSORS(QString ,file_path)
 
  void handle_find(tsl::ordered_map<QString, QVector<QStringList>>& str_data,
    tsl::ordered_map<QString, QVector<QVariantList>>& other_data);

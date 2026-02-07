@@ -15,7 +15,6 @@ USING_OTNS(SDI)
 OTQR_SDI_Parser::OTQR_SDI_Parser(QString file_path)
   : file_path_(file_path)
 {
-
 }
 
 void OTQR_SDI_Parser::process_line(QString line)
@@ -37,5 +36,7 @@ void OTQR_SDI_Parser::parse()
   QString line = instream.readLine();
   process_line(line);
  }
+
+ reader_.set_file_path(file_path_);
 }
 

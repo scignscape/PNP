@@ -23,6 +23,11 @@ SDI_Sentence::SDI_Sentence(u4 id)
 {
 }
 
+u2 SDI_Sentence::search_for(QString search_text)
+{
+ return sentence_text_.simplified().count(search_text, Qt::CaseInsensitive);
+}
+
 
 void SDI_Sentence::read_sentence_range(QStringList read_dispatch, QVector<s4> numbers)
 {

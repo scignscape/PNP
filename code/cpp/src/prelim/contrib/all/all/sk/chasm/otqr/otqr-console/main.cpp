@@ -66,17 +66,6 @@ void find(void* arg)
 
  sdi->handle_find(smap, vmap);
 
-
-// vmap_to_smap(pr);
-
-
- // = pr.second.to;
-
-// for(auto pr : *ptr)
-// {
-//  QString key = pr.first;
-//  qDebug() << "key = " << key;
-// }
 }
 
 
@@ -117,12 +106,10 @@ void run_chvm(Chasm_VM* vm, QString chvm_path)
 
 int main(int argc, char *argv[])
 {
-
  OTQR_SDI_Parser osp(ROOT_FOLDER "/../dev/chtr/sdi/sentences.sdi");
-
  osp.parse();
 
- sdi = osp.reader();
+ sdi = &osp.reader();
 
  ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/otqr/t1.ot");
 
