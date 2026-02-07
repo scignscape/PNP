@@ -5,7 +5,6 @@
 #     (See accompanying file LICENSE_1_0.txt or copy at
 #           http://www.boost.org/LICENSE_1_0.txt)
 
-!/dev.zip
 
 **/testgitignore
 
@@ -79,6 +78,8 @@ cpp/qmake-console/targets/*
 *.zip
 !/dev/documents/gen/src-copy.zip
 !/preferred/preferred-zip.zip
+!./dev.zip
+
 
 *.gz
 *.aux
