@@ -77,6 +77,50 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
      finds[&s].push_back(search_text);
   }
  }
+
+ QVector<QFile*> files;
+// files.resize(file_paths.size());
+
+ QVector<QTextStream*> qtss;
+
+ for(QString fp : file_paths)
+ {
+  QFile* qf = new QFile(fp);
+  qf->open(QIODevice::WriteOnly);
+  QTextStream* qts = new QTextStream(qf);
+  qtss.push_back(qts);
+  files.push_back(qf);
+ }
+
+ QMapIterator<SDI_Sentence*, QStringList> it(finds);
+ while(it.hasNext())
+ {
+  it.next();
+  SDI_Sentence* s = it.key();
+  QString id_space = sdi_sentences_.size() > 999? (s->id() > 100? " ": s->id() > 10? "  " : "   ")
+    :  sdi_sentences_.size() > 99? (s->id() > 100? "": s->id() > 10? " " : "  ")
+    :  (s->id() > 10? "" : " ");
+
+  for(QTextStream* qts : qtss)
+  {
+   QString lines = s->sentence_text();
+   lines.prepend("|  ");
+   lines.replace("\n", "\n|  ");
+   (*qts) << "\n\n# " << s->id() << id_space << " = " << it.value().join("; ") << " -> \n" << lines;
+  }
+ }
+
+ for(QFile* qf : files)
+ {
+  qf->close();
+  delete qf;
+ }
+ for(QTextStream* qts : qtss)
+ {
+  delete qts;
+ }
+
+
 }
 
 void SDI_Sentence_Reader::parse_blank_line()
