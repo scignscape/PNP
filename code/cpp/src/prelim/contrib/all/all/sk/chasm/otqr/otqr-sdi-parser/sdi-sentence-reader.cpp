@@ -25,9 +25,11 @@ SDI_Sentence_Reader::SDI_Sentence_Reader()
 }
 
 
-void align_columns(QString& lines, QString pre, u2 width)
+void align_columns(QString& lines, QString pre, u2 width, u4 sentence_id)
 {
  pre.prepend("\n");
+
+ lines = lines.trimmed();
 
  QString result;
 
@@ -65,7 +67,7 @@ void align_columns(QString& lines, QString pre, u2 width)
    if(pos + 1 == lines.size())
    {
     append_last();
-    break;
+    goto break_outer;
    }
    ++pos;
   }
@@ -75,13 +77,14 @@ void align_columns(QString& lines, QString pre, u2 width)
    if(pos + 1 == lines.size())
    {
     append_last();
-    break;
+    goto break_outer;
    }
    ++pos;
   }
   append();
   old_pos = pos;
  }
+break_outer:
  lines = result;
 }
 
@@ -182,7 +185,7 @@ void SDI_Sentence_Reader::handle_find(tsl::ordered_map<QString, QVector<QStringL
   for(QTextStream* qts : qtss)
   {
    QString lines = s->sentence_text();
-   align_columns(lines, pre, report_width);
+   align_columns(lines, pre, report_width, s->id());
    (*qts) << "\n\n# " << s->id() << id_space << " = " << it.value().join("; ") << " -> \n" << lines;
   }
  }
