@@ -5,17 +5,6 @@
 #           http://www.boost.org/LICENSE_1_0.txt)
 
 
-TEMPLATE = subdirs
+PROJECT_GROUP = otqr
 
-
-SUBDIRS += \
-  ../chasm-lib-33 \
-  ../chasm-lib-43 \
-  ../chasm-lib-X1 \
-  ../chasm-lib-X2 \
-  ../chasm-lib \
-  ../chasm-lib-console \
-
-
-CONFIG += ordered
-
+include(../build-proset.pri)

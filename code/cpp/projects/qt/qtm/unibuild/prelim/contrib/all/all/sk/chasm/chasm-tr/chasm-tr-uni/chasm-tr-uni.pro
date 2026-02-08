@@ -13,3 +13,6 @@ SUBDIRS += \
   ../chasm-tr-parser \
   ../chasm-tr-console \
 
+
+CONFIG += ordered
+

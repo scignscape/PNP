@@ -14,4 +14,9 @@ SUBDIRS += \
   ../chasm-vm \
   ../crb-console \
   ../chasm-vm-console \
- 
+  ../../otqr/otqr-sdi-parser \
+  ../../otqr/otqr-console \
+
+
+CONFIG += ordered
+
