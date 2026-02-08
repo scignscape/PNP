@@ -174,7 +174,8 @@ void Chasm_Runtime_Bridge::append_ql_token(QString token)
 
 void Chasm_Runtime_Bridge::track_string_line(QString line)
 {
- string_lines_acc_.push_back(line.mid(4));
+ // //  3-digit number to start indicates how many spaces up front
+ string_lines_acc_.push_back(line.mid(5));
 }
 
 void Chasm_Runtime_Bridge::string_lines_to_follow()

@@ -308,8 +308,8 @@ void ChTR_Pregraph::check_string_lines(u4 current_pos)
    if(!m.hasMatch())
      continue;
 
-   u4 pos = m.capturedStart();
-   QString posstr = QString::number(pos).rightJustified(3, QLatin1Char('0')) + " ";
+   s4 pos = m.capturedStart();
+   QString posstr = "%1  "_qt.arg(pos, 3, 10, QLatin1Char('0'));
    acc << ".track-string-line $ " << posstr << line; cut();
   }
 
