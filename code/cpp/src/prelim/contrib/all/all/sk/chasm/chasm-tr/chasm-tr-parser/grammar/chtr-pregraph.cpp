@@ -303,9 +303,20 @@ void ChTR_Pregraph::check_string_lines(u4 current_pos)
 
   for(QString line : lines)
   {
-   if(line.simplified().isEmpty())
+   QRegularExpressionMatch m = QRegularExpression("\\S").match(line);
+
+   if(!m.hasMatch())
      continue;
-   acc << ".track-string-line $ " << line; cut();
+
+   u2 pos = m.capturedStart();
+
+   QString posstr = QString::number(pos);
+   if(pos < 10)
+     posstr.prepend("00");
+   else if(pos < 100)
+     posstr.prepend("0");
+
+   acc << ".track-string-line $ " << posstr << " " << line; cut();
   }
 
   acc_lines_.push_back("\n");

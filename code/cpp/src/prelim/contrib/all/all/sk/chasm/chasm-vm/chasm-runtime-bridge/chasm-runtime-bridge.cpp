@@ -174,7 +174,7 @@ void Chasm_Runtime_Bridge::append_ql_token(QString token)
 
 void Chasm_Runtime_Bridge::track_string_line(QString line)
 {
- string_lines_acc_.push_back(line);
+ string_lines_acc_.push_back(line.mid(4));
 }
 
 void Chasm_Runtime_Bridge::string_lines_to_follow()
