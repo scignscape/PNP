@@ -86,9 +86,9 @@ these are at `SK/chasm/chasm-lib/chasm-lib-uni/chasm-lib-uni.pro`,
 `SK/chasm/chasm-vm/chasm-vm-uni/chasm-vm-uni.pro`
 
 
-## OTQR
+### OTQR
 
-In the future I hope to complete a genuine full-text query language, which I naming 
+In the future I hope to complete a genuine full-text query language, which I am naming 
 as "`OTQR`", or "Object-Text Query for Research Objects".  I envision this language 
 having some similarities to XQFT (XQUERY Full Text), DSL (Dimensions Search Language), 
 and OpenSearch Query DSL (Domain-Specific Language).  However, the use-cases 
