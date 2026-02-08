@@ -59,6 +59,9 @@ the projects can be loaded and compiled in this order:
  - chasm/chasm-vm/chasm-vm
  - chasm/chasm-vm/crb-console
  - chasm/chasm-vm/chasm-vm-console
+ - chasm/otqr/otqr-sdi-parser
+ - chasm/otqr/otqr-console
+
 
 Here, the projects whose name ends with "-console" are compiled 
 as command-line programs that can be run from Qt Creator.  The 
@@ -81,5 +84,66 @@ together.  With `SK` being `ROOT/code/cpp/projects/qt/qtm/unibuild/prelim/contri
 these are at `SK/chasm/chasm-lib/chasm-lib-uni/chasm-lib-uni.pro`, 
 `SK/chasm/chasm-tr/chasm-tr-uni/chasm-tr-uni.pro`, and 
 `SK/chasm/chasm-vm/chasm-vm-uni/chasm-vm-uni.pro`
+
+
+## OTQR
+
+In the future I hope to complete a genuine full-text query language, which I naming 
+as "`OTQR`", or "Object-Text Query for Research Objects".  I envision this language 
+having some similarities to XQFT (XQUERY Full Text), DSL (Dimensions Search Language), 
+and OpenSearch Query DSL (Domain-Specific Language).  However, the use-cases 
+would be somewhat different.  While potentially useful for web services for 
+reverse-index (vector database) queries, `OTQR` is focused on detailed 
+searches against individual documents -- or at least, relatively small 
+collections wherein it is feasible to examine text directly, without the 
+simplifying steps of stemming and reverse-indexing (which tends to 
+lose potentially important contextual detail).  Here `OTQR` could be 
+embedded in `PDF` viewers, Executable Research Objects, or available as a 
+standalone tool for authors and editors.
+
+This current repository has just a basic demo of `OTQR` features and 
+implementation.  The `Qt` project `otqr-console` shows a program that 
+evaluates one query, returning a list of matching sentences 
+(the request specifies file paths to save the list, in lieu of 
+printing to the console or constructing a collection of 
+objects).  The demo shows how sentence-level representation can 
+be useful.  The general query format has search parameters 
+(e.g., `:save` and `:in` in this case) indicated by lisp-style 
+keywords, and the overall query structure is encoded via 
+associating each such parameter to a vector of `QString` lists 
+(supplemented by `QVariant` lists for arguments that are 
+are non-string-like).  The class `SDI\_Sentence\_Reader` implements 
+the actual search over its collection of sentence objects.  For a 
+real query system, of course, this search functionality could 
+be significantly expanded.
+
+In addition to demonstrating `OTQR` as a kind of query-language prototype, 
+this code also suggests some features of `ChasmVM` that, I believes, 
+supports its extensibility and embeddability.  Specifically, `OTQR` 
+is designed as a layer on top of `ChasmVM`; `OTQR` functions as a 
+scripting language that compiles to `ChasmVM` code.  With sufficient 
+development, this could incorporate general scripting facilities 
+into search code, such as lexically-scoped variables and user-defined procedures 
+(both available for inside actual queries).  Query statements are then just 
+one form of script statement with a special syntax (here, starting 
+with a '`>`' character).  The actual implementation shows 
+extensibility features of a `ChasmVM` system.  For one thing, the parser 
+is context-sensitive, and statements initially matching the query 
+syntax cause the parser to enter a distinct state.  The `VM` generator 
+also recognizes a separate channel for tokens parsed within these statements, 
+ultimately passed in to a query-handler as a generic input channel, but with a 
+distinct set of preparatory operations.  Specific instructions are added both 
+to the initial post-parse "`bytecode`" and the later generated `VM` code. 
+
+Similar combinations of special parser states, new instructions, and 
+special channels could be used to implement different kinds of add-on layers 
+extending `OTQR` either from a scripting or query perspective.
+ 
+
+
+
+
+
+
 
 
