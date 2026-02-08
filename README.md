@@ -87,6 +87,7 @@ these are at `SK/chasm/chasm-lib/chasm-lib-uni/chasm-lib-uni.pro`,
 
 
 ### OTQR
+---
 
 In the future I hope to complete a genuine full-text query language, which I am naming 
 as "`OTQR`", or "Object-Text Query for Research Objects".  I envision this language 
