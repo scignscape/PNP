@@ -142,6 +142,21 @@ special channels could be used to implement different kinds of add-on layers
 extending `OTQR` either from a scripting or query perspective.
  
 
+---
+### GTagML
+
+For the sake of transparency, I am including the code that produced the 
+sentence-object (`.sdi`) files from which the `C++` objects relevant to 
+this demo were generated.  This code in particular is "work in progress" 
+(everything is, but I haven't made any effort to organize the latter 
+or form some kind of demonstration thereof).  But I still believe 
+it is appropriate to share that code on the premise that any 
+code which has some functional role in Research Objects or analogous 
+materials should be made available for examination by intested parties.
+
+There are two `GTagML` projects on the `prelim` branch.  I may also 
+publish some additional code on this branch as it becomes relevant 
+to the components discussed here. 
 
 
 
