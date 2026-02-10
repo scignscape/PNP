@@ -11,7 +11,6 @@
 **/_unzip
 
 
-!/slides.zip
 
 **/-build_/*
 !**/-build_/NOTES
@@ -81,7 +80,7 @@ cpp/qmake-console/targets/*
 !/dev/documents/gen/src-copy.zip
 !/preferred/preferred-zip.zip
 !/dev.zip
-
+!/slides.zip
 
 *.gz
 *.aux
