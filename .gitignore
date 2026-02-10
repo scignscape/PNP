@@ -11,6 +11,8 @@
 **/_unzip
 
 
+!/slides.zip
+
 **/-build_/*
 !**/-build_/NOTES
 
