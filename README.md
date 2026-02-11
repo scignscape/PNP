@@ -1,7 +1,7 @@
 
 # ScignPNP: Science Grid Nodes — Publishing for Nonprofits
 
-If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "`presentations`" branch (and its `README` file).  Other "work in process" will be deposited in the "`prelim`" branch.
+If you are visiting this repository to examine code I presented at the NISO/JATS conference of 2026, please consult the "`presentations`" branch (and its `README` file).  The technical paper is [here](https://scignscape.github.io/PNP/documents/A-perspective-from-compiler-theory.pdf) and slides from that presentation are [here](https://scignscape.github.io/PNP/documents/JATS-CON-2026-slides.pdf) Other "work in process" will be deposited in the "`prelim`" branch.
 
 What follows is an informal, thematic overview.  A summary of the included source code is further down this 
 page (or [skip ahead](#technical-overview-raised)).  
