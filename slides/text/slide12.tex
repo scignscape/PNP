@@ -1,0 +1,34 @@
+
+\section{Limitations of CORD-19}\fbeg{}\begin{frame}{\ft{Limitations of CORD-19}}
+
+\begin{sftxt}[.87\textwidth]
+
+According to AI2, roughly 30\% of CORD-19's full-text documents were 
+shared in structured formats such as JATS-XML, but the majority of 
+publications were only available as PDF files.  AI2 therefore 
+had to extract text from those PDFs in order to perform conversion 
+to S2ORC JSON.  This is an intrinsically error-prone process 
+due to anomalies within internal PDF text representation, 
+such as hyphenation, ligatures, spurious space characters 
+in some font styles, headers/footers and marginal content that 
+needs to be isolated from the main text, etc.  Furthermore, 
+technical content such as chemical formulae or linguistics 
+annotations can be difficult to read properly without 
+working off of structured markup, such as XML.  Tramscription 
+errors limited the extent to which inter-document connections 
+and conceptual links can be properly recognized.  Also, 
+S2ORC only models documents at the paragraph level --- not 
+individual sentences --- which can limit the application of 
+NLP-related text mining techniques.  \textcolor{white}{AI2 recognized these 
+limitations and even printed a \q{call to action} encouraging 
+publishers to develop more rigorous text encoding and metadata standards.}
+
+\vspace{-2em}AI2 recognized these 
+limitations and even printed a \q{call to action} encouraging 
+publishers to develop more rigorous text encoding and metadata standards.
+   
+
+\end{ftxt}
+
+\end{frame}
+

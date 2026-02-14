@@ -1,0 +1,69 @@
+
+\section{Interface Design}\fbeg{}\begin{frame}{\ft{Interface Design Principles for the Research Object Context}}
+
+
+\vspace{-.5em}	
+
+%\MyDiamond{}
+{\Large\fontfamily{uhv}\selectfont
+%\begin{center}
+\hspace*{2pt}\begin{minipage}{.96\textwidth}
+\vspace{4pt}
+
+%\definecolor{blback}{RGB}{0,100,100}	
+%\definecolor{blfront}{RGB}{0,100,50}
+
+%\fcolorbox{lqboutercolor}{lqbinnercolor}{\begin{minipage}{\textwidth}%
+		
+\begin{lightquadblockc}{0,0.1,0.1}{\parbox{21cm}{\centering \vspace{10pt}What are some design patterns that should be encouraged?\vspace{3pt}}}
+\begin{center}\begin{minipage}{1.03\textwidth}
+{\LARGE \setlength{\leftmargini}{30pt}\begin{enumerate}
+\dmitem \textbf{Unify Pass-by-Reference Initialization and Pointer Return} \hspace{.5em} Called procedures 
+agnostic as to the source of initialized memory buffers/objects (whether 
+pre-initialized reference arguments, delegating ownership of heap-allocated memory, or Return Value Optimization) 
+
+{\vsp}
+
+\dmitem \textbf{Programmer Control of Variable Lifetimes}  \hspace{.5em} Lifetimes 
+can be associated with different lexical scopes of other variables'
+
+{\vsp}
+
+\dmitem \textbf{\q{Overload by Contract}}  \hspace{.5em}  Programmers supply 
+different versions of a procedure depending on whether contract-tests 
+are known at compile time to have been evaluated 
+
+{\vsp}
+
+\dmitem \textbf{Easy Foreign Function Interface}  \hspace{.5em} Calling 
+native-compiled procedures should be possible with simple registration fuctions
+
+{\vsp}
+
+\dmitem \textbf{Self-Documenting}  \hspace{.5em} Given $y = f(x)$, 
+is $y$ being initialized or re-initialized?  Does $f$ have side-effects? 
+Was $y$ default constructed?  
+%Is $x$ passed by reference or by value?Const
+
+{\vsp}
+
+\dmitem We 
+can guarantee $const$.  Can we \textsl{guarantee} to modify 
+as with an lvalue? 
+ 
+
+
+
+\end{enumerate}
+}\end{minipage}
+\end{center}
+\end{lightquadblockc}
+\end{minipage}
+
+%}
+%\end{minipage}
+%\end{center}
+}
+
+\end{frame}
+

@@ -1,0 +1,39 @@
+\beamer@sectionintoc {1}{\raisebox {7pt}{Foundations}}{1}{1}{1}
+\beamer@sectionintoc {2}{\raisebox {7pt}{Replication Crisis}}{2}{1}{2}
+\beamer@sectionintoc {3}{\raisebox {7pt}{Transparency}}{3}{1}{3}
+\beamer@sectionintoc {4}{\raisebox {7pt}{MIBBI}}{4}{1}{4}
+\beamer@sectionintoc {5}{\raisebox {7pt}{FAIR}}{5}{1}{5}
+\beamer@sectionintoc {6}{\raisebox {7pt}{Data Sets}}{6}{1}{6}
+\beamer@sectionintoc {7}{\raisebox {7pt}{Executable Research Objects}}{7}{2}{7}
+\beamer@sectionintoc {8}{\raisebox {7pt}{Publications within Research Objects}}{8}{2}{8}
+\beamer@sectionintoc {9}{\raisebox {7pt}{Cross-References}}{9}{2}{9}
+\beamer@sectionintoc {10}{\raisebox {7pt}{Text Mining}}{10}{2}{10}
+\beamer@sectionintoc {11}{\raisebox {7pt}{CORD-19}}{11}{2}{11}
+\beamer@sectionintoc {12}{\raisebox {7pt}{Limitations of CORD-19}}{12}{2}{12}
+\beamer@sectionintoc {13}{\raisebox {7pt}{Text Encoding}}{13}{2}{13}
+\beamer@sectionintoc {14}{\raisebox {7pt}{Sentence Objects}}{14}{3}{14}
+\beamer@sectionintoc {15}{\raisebox {7pt}{... and Query Results}}{15}{3}{15}
+\beamer@sectionintoc {16}{\raisebox {7pt}{Text Elements}}{16}{3}{16}
+\beamer@sectionintoc {17}{\raisebox {7pt}{Para Ids}}{17}{3}{17}
+\beamer@sectionintoc {18}{\raisebox {7pt}{Subdivisions}}{18}{3}{18}
+\beamer@sectionintoc {19}{\raisebox {7pt}{Index Locators}}{19}{3}{19}
+\beamer@sectionintoc {20}{\raisebox {7pt}{Index GUI}}{20}{3}{20}
+\beamer@sectionintoc {21}{\raisebox {7pt}{Single Index Entry Window}}{21}{3}{21}
+\beamer@sectionintoc {22}{\raisebox {7pt}{Meta-Indexes}}{22}{3}{22}
+\beamer@sectionintoc {23}{\raisebox {7pt}{Reverse Indexes}}{23}{3}{23}
+\beamer@sectionintoc {24}{\raisebox {7pt}{Sentences and Annotations}}{24}{3}{24}
+\beamer@sectionintoc {25}{\raisebox {7pt}{Data Objects}}{25}{3}{25}
+\beamer@sectionintoc {26}{\raisebox {7pt}{More re Cross-References}}{26}{3}{26}
+\beamer@sectionintoc {27}{\raisebox {7pt}{GUI Indexing}}{27}{3}{27}
+\beamer@sectionintoc {28}{\raisebox {7pt}{Text/Data Integration}}{28}{3}{28}
+\beamer@sectionintoc {29}{\raisebox {7pt}{Scripts}}{29}{4}{29}
+\beamer@sectionintoc {30}{\raisebox {7pt}{Stacks}}{30}{4}{30}
+\beamer@sectionintoc {31}{\raisebox {7pt}{Parsing}}{31}{4}{31}
+\beamer@sectionintoc {32}{\raisebox {7pt}{Context-Sensitive Grammars}}{32}{4}{32}
+\beamer@sectionintoc {33}{\raisebox {7pt}{Channels}}{33}{4}{33}
+\beamer@sectionintoc {34}{\raisebox {7pt}{Building Channels}}{34}{4}{34}
+\beamer@sectionintoc {35}{\raisebox {7pt}{Hidden Channels}}{35}{4}{35}
+\beamer@sectionintoc {36}{\raisebox {7pt}{Interface Design}}{36}{4}{36}
+\beamer@sectionintoc {37}{\raisebox {7pt}{DOA Model}}{37}{5}{37}
+\beamer@sectionintoc {38}{\raisebox {7pt}{Translational Science}}{38}{5}{38}
+\beamer@sectionintoc {39}{\raisebox {7pt}{Science/Humanities Integration}}{39}{5}{39}
