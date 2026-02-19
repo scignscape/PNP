@@ -1091,7 +1091,7 @@ void GTagML_Graph_Build::pseudo_paragraph()
 }
 
 
-void GTagML_Graph_Build::enter_subparagraph(QString text)
+void GTagML_Graph_Build::enter_subparagraph(QString text, QString sup)
 {
  reset_primary();
 
@@ -1107,7 +1107,11 @@ void GTagML_Graph_Build::enter_subparagraph(QString text)
 
  else if(text == "desc")
  {
-  latex_stream_ << "\n\n\\begin{docDescription}\n";
+  if(sup.isEmpty())
+    latex_stream_ << "\n\n\\begin{docDescription}\n";
+  else
+    latex_stream_ << "\n\n\\begin{docDescription}[leftmargin=" << sup << "]\n";
+
 //  xml_writer_.writeStartElement("exs-group");
   parse_context_.flags.read_desc_label = true;
   parse_context_.flags.ignore_blank_lines = true;
@@ -1125,7 +1129,11 @@ void GTagML_Graph_Build::enter_subparagraph(QString text)
 
  else if(text == "enumn")
  {
-  latex_stream_ << "\n\n\\begin{docEnumerate}[1)]\n";
+  if(sup.isEmpty())
+    latex_stream_ << "\n\n\\begin{docEnumerate}[1)]\n";
+  else
+    latex_stream_ << "\n\n\\begin{docEnumerate}[\\hspace{" << sup << "}1)]\n";
+
   xml_writer_.writeStartElement("enumn");
   parse_context_.flags.read_numbered_items = true;
   parse_context_.flags.ignore_blank_lines = true;
@@ -1396,7 +1404,8 @@ void GTagML_Graph_Build::enums_item(u2 number, QString text, QString follow)
 
  if(follow == ")")
   //? latex_stream_ << "\n\\enumsItem{}[)] ";
-   latex_stream_ << "\n\\item[" << text << ")] ";
+  //? latex_stream_ << "\n\\item[" << text << ")] ";
+   latex_stream_ << "\n\\item{}";
 
  else
    latex_stream_ << "\n\\enumsItem{} ";

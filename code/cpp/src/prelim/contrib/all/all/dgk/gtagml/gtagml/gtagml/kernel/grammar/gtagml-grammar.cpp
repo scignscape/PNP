@@ -270,7 +270,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Graph_Build&
 
 
  add_rule( gtagml_context, "footnote-marker",
-   " \\\\ (?<number> \\d+) (?= \\s) "
+   " \\\\ (?<number> \\d+) (?= [\\s)%]) "
    ,[&]
  {
   graph_build.footnote_marker(p.matched("number"));
@@ -414,10 +414,10 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Graph_Build&
  });
 
  add_rule( gtagml_context, "subparagraph",
-   " .blank-lines.  %\\/ \\s* (?<text> \\S+) \\s+"
+   " .blank-lines.  %\\/ \\s* (?<text> \\S+) (?:\\s* = (?<sup>\\S+))? \\s+"
    ,[&]
  {
-  graph_build.enter_subparagraph(p.matched("text"));
+  graph_build.enter_subparagraph(p.matched("text"), p.matched("sup"));
  });
 
  add_rule( gtagml_context, "enter-auto-paragraph-mode",
