@@ -174,13 +174,6 @@ void run_testqss(Chasm_Runtime* csr)
  ccp->add_carriers({cc1,cc2,cc3});
  csr->evaluate(ccp, 300120_cfc, &testqss);
  qDebug() << "a3 = " << a3;
-
- // ccp->add_new_channel("retv");
- // Chasm_Carrier cc0 = csr->gen_carrier<u1>(csr->Retvalue._u1);
- // ccp->add_carrier(cc0);
- // csr->evaluate(ccp, 71341, (minimal_fn_s0_re1_type) &testqs1, &cc0);
- // u1 result = cc0.value<u1>();
- // qDebug() << "r = " << result;
 }
 
 
@@ -189,7 +182,7 @@ u1 testqs1(QString arg1, float arg2, u1 arg3)
  qDebug() << "arg1 = " << arg1;
  qDebug() << "arg2 = " << arg2;
  qDebug() << "arg3 = " << arg3;
- u1 result = arg1.size() + ( (u1)arg2 % 10) + (arg3 % 10);
+ u1 result = arg1.size() + ((u1)arg2 % 10) + (arg3 % 10);
  return result;
 }
 

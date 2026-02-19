@@ -105,6 +105,7 @@ build-*
 !build-proset.pri
 !build-group.pri
 !build-kernel.pri
+!build-area.pri
 !build-root.pri
 !build-root-both.pri
 !build-all.pro
