@@ -110,6 +110,7 @@ build-*
 !build-root-both.pri
 !build-all.pro
 !build-all
+!build-area.pri
 !build-quick.pro
 !build-quick
 !build-most.pro
