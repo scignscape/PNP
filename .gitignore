@@ -79,7 +79,7 @@ cpp/qmake-console/targets/*
 !/dev/documents/gen/src-copy.zip
 !/preferred/preferred-zip.zip
 !/dev.zip
-!/documents/slides.zip
+!/documents/etc/slides.zip
 
 
 *.gz
