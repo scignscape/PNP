@@ -45,6 +45,14 @@ u4 add(u4 arg1, u4 arg2)
  return arg1 + arg2;
 }
 
+u4 mult(u4 arg1, u4 arg2)
+{
+ qDebug() << "arg1 = " << arg1;
+ qDebug() << "arg2 = " << arg2;
+ qDebug() << "arg1 * arg2 = " << arg1 * arg2;
+ return arg1 * arg2;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -57,12 +65,15 @@ int main(int argc, char *argv[])
  cpt.register_s0(prn, @1001);
  cpt.register_s0(prn2, @20044);
 
- cpt.register_procedure_s0("+",
-   (_minimal_fn_s0_type) &add, "@20444");
+ cpt.register_s0(add, @20444);
+ cpt.register_s0(mult, @20444);
+
+// cpt.register_procedure_s0("+",
+//   (_minimal_fn_s0_type) &add, "@20444");
 
  Chasm_VM csvm(&crb);
 
- csvm.load_program(DEMO_CVM_FOLDER "/t1/t1.cr.chvm");
+ csvm.load_program(DEMO_CVM_FOLDER "/t1/t3.cr.chvm");
  csvm.run_current_source_proc_name();
 
  return 0;
