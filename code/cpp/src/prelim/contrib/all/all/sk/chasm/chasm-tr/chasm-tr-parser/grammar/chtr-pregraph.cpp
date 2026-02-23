@@ -55,6 +55,7 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
    ,expression_nesting_count_(0)
    ,infix_count_(0)
    ,string_lines_start_(0)
+//?   ,current_expression_depth_(0)
 {
  acc << "\n"; cut();
  acc << ".source-file $ " << d->local_path(); cut();
@@ -66,9 +67,25 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
 // acc << contents;
 //}
 
+void ChTR_Pregraph::enter_expression_via_paren()
+{
+ enter_expression();
+ flags.expecting_expression_proc_name = true;
+}
+
+void ChTR_Pregraph::leave_expression_via_paren()
+{
+ leave_expression();
+ flags.expecting_expression_proc_name = false;
+}
+
+
+
 void ChTR_Pregraph::enter_expression()
 {
  flags.active_expression = true;
+ parse_context_.flags.active_expression = true;
+
  ++expression_nesting_count_;
  acc << ".enter-expression"; cut();
 
@@ -86,6 +103,8 @@ void ChTR_Pregraph::leave_expression()
  if(expression_nesting_count_ == 0)
  {
   flags.active_expression = false;
+  parse_context_.flags.active_expression = false;
+
   acc << ".expression-to-statement"; cut();
  }
  else
@@ -205,6 +224,12 @@ void ChTR_Pregraph::symbol_token(QString token)
    auto ix = infix_line_indices_.pop();
    acc_lines_[ix.first].insert(ix.second, token);
   }
+ }
+ else if(flags.expecting_expression_proc_name)
+ {
+  flags.expecting_expression_proc_name = false;
+  acc << ".expression-nesting-depth $ " << expression_nesting_count_; cut();
+  acc << ".expression-proc-name $ " << token; cut();
  }
  else
  {

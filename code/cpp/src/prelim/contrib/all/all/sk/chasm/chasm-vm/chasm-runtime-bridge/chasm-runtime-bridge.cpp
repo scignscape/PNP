@@ -42,6 +42,8 @@ Chasm_Runtime_Bridge::Chasm_Runtime_Bridge(Chasm_Runtime* csr)
      max_interned_symbol_(0),
      current_ql_vector_(nullptr)
 {
+ current_carrier_deque_target_ = "lambda";
+
  const QVector<Chasm_Type_Object*>& pto = *csr_->pretype_type_objects();
 
  type_object_ref_ = pto[0];
@@ -118,6 +120,7 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   else
   {
    Chasm_Carrier rcar;
+   rcar.set_hint("retv:" + proc_name);
    rcar.set_type_flag(pr.first.first.return_code);
    csr_->evaluate(current_call_package_, pr.first, pr.second.s0r1, &rcar);
    current_call_package_->add_carrier("retv", rcar);
@@ -229,15 +232,34 @@ void Chasm_Runtime_Bridge::pull_call_package()
  while(it.hasNext())
  {
   it.next();
-  Chasm_Channel* ch = current_call_package_->check_channel(it.key());
 
-  for(const Chasm_Carrier& cc : it.value())
+  QString name = it.key();
+
+  Chasm_Channel* ch = current_call_package_->check_channel(name);
+
+  if(name == current_carrier_deque_target_)
   {
-   ch->add_carrier(cc);
+   current_call_package_->set_build_channel(ch);
+
+   for(const Chasm_Carrier& cc : it.value())
+   {
+    current_carrier_deque_->push_back(cc);
+   }
+  }
+  else
+  {
+   for(const Chasm_Carrier& cc : it.value())
+   {
+    ch->add_carrier(cc);
+   }
   }
 
  }
 
+ // //  any cleanup?
+ //it.value().clear();
+
+ held_handoff_carriers_.clear();
 }
 
 
@@ -292,7 +314,22 @@ void Chasm_Runtime_Bridge::source_file_index(QString value)
 
 void Chasm_Runtime_Bridge::reset_carrier_deque()
 {
- current_carrier_deque_->clear();
+ if(carrier_stacks_.isEmpty())
+   current_carrier_deque_->clear();
+
+ else
+ {
+  // //  need to handle carriers too
+  delete current_carrier_deque_;
+
+  current_carrier_deque_ = carrier_stacks_.pop();
+ }
+
+}
+
+void Chasm_Runtime_Bridge::add_carriers_statement_context()
+{
+ current_call_package_->add_carriers(*current_carrier_deque_);
 }
 
 void Chasm_Runtime_Bridge::add_carriers()
@@ -461,6 +498,8 @@ void Chasm_Runtime_Bridge::gen_carrier()
 void Chasm_Runtime_Bridge::gen_carrier(QString symbol, Chasm_Type_Object* cto)
 {
  Chasm_Carrier cc = csr_->gen_carrier_by_type_object(cto);
+
+ cc.set_hint(symbol);
 
 // cc.set_fcode(current_source_file_index_);
 // cc.set_lcode(current_statement_line_number_);

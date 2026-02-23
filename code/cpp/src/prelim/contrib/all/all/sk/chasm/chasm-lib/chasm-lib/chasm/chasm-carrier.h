@@ -94,12 +94,16 @@ class Chasm_Carrier
  trisym key_;
  n8 raw_value_;
 
+ QString hint_;
+
 public:
 
  Chasm_Carrier();
 
  ACCESSORS(trisym ,key)
  ACCESSORS(n8 ,raw_value)
+
+ ACCESSORS(QString ,hint)
 
  void dispose();
 

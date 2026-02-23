@@ -151,6 +151,7 @@ void Chasm_VM::read_line(QString inst)
   { "new-call-package", &Chasm_Runtime_Bridge::new_call_package },
   { "push-carrier-deque", &Chasm_Runtime_Bridge::push_carrier_deque },
   { "add-carriers", &Chasm_Runtime_Bridge::add_carriers },
+  { "add-carriers-statement-context", &Chasm_Runtime_Bridge::add_carriers_statement_context },
   { "run-proc-eval", &Chasm_Runtime_Bridge::run_proc_eval },
   { "resolve-pins", &Chasm_Runtime_Bridge::resolve_pins },
 

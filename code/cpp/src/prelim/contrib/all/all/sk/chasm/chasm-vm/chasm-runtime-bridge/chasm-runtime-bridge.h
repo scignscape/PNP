@@ -75,6 +75,8 @@ class Chasm_Runtime_Bridge
 
  std::deque<Chasm_Carrier>* current_carrier_deque_;
 
+ QString current_carrier_deque_target_;
+
  n8 current_loaded_raw_value_;
 
  CSM_Ghost_Scope* current_ghost_scope_;
@@ -253,6 +255,8 @@ public:
  void reset_type_object();
 
  void add_carriers();
+ void add_carriers_statement_context();
+
  void reset_carrier_deque();
 
  void run_eval(QString proc_name);

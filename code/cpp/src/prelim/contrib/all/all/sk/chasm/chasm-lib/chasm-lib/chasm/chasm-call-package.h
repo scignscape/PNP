@@ -43,6 +43,17 @@ public:
 
  ACCESSORS__RGET(MACRO_PASTE(QMap<QString, Chasm_Channel*>) ,channels)
 
+ void set_build_channel(Chasm_Channel* ch)
+ {
+  if(channels_.values().contains(ch))
+    current_build_channel_ = ch;
+
+  else
+  {
+   throw("Invalid build channel");
+  }
+ }
+
  void add_new_channel(QString name);
 
  void add_string_carrier(QString text);

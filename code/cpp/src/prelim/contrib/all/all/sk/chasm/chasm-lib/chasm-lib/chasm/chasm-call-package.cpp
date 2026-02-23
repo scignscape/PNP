@@ -85,6 +85,7 @@ void Chasm_Call_Package::add_string_carrier(QString text)
  QString* str = new QString(text);
  cc.set_raw_value( (n8) str);
  cc.set_type_flag(3);
+ cc.set_hint("str:" + text);
  add_carrier(cc);
 }
 

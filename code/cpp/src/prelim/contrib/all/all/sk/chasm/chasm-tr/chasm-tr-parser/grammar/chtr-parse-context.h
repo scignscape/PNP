@@ -30,6 +30,7 @@ public:
   flag_(3, open_channel_body)
   flag_(4, awaiting_statement_body)
   flag_(5, active_query_lambda)
+  flag_(6, active_expression)
  _flags_
 
  ChTR_Parse_Context();

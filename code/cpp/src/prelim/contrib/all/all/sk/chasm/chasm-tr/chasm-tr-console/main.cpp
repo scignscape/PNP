@@ -18,10 +18,9 @@ USING_KANS(TextIO)
 USING_OTNS(Chasm_TR)
 
 
-int main(int argc, char *argv[])
+void run_tr(QString file_path)
 {
-
- ChTR_Document chrd(ROOT_FOLDER "/../dev/chtr/t1/t2.cr");
+ ChTR_Document chrd(file_path);
 
  chrd.parse();
 
@@ -32,6 +31,11 @@ int main(int argc, char *argv[])
  QString chvm_path = chrd.save_chvm("..chvm");
 
  qDebug() << "You can now run " << chvm_path;
+}
 
+
+int main(int argc, char *argv[])
+{
+ run_tr(ROOT_FOLDER "/../dev/chtr/t1/t3.cr");
  return 0;
 }

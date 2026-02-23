@@ -21,6 +21,8 @@ INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
 INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
 INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
 
+INCLUDEPATH += $$SRC_PROSET_DIR/chasm-tr
+INCLUDEPATH += $$SRC_PROSET_DIR/chasm-tr/chasm-tr
 
 INCLUDEPATH += $$SRC_PROSET_DIR/chasm-lib
 
@@ -41,6 +43,7 @@ SOURCES += \
   $$SRC_DIR/main.cpp \
 
 
+LIBS += -L$$TARGETSDIR -lchasm-tr  -lchasm-tr-parser
 
 LIBS += -L$$TARGETSDIR -lchasm-lib \
   -lchasm-vm -lchasm-runtime-bridge -lchasm-procedure-table \

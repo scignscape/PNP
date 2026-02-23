@@ -137,13 +137,28 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
 
  add_rule(source_context,
    "check-enter-infix-mode",
-   //"(?<\\s)>>(?=\\s)"
-   ">>"
+   "\\s >> (?=\\s)"
+//   ">>"
    ,[&]
  {
   pregraph.check_enter_infix_mode();
  });
 
+ add_rule(source_context,
+   "enter-expression",
+   "\\("
+   ,[&]
+ {
+  pregraph.enter_expression_via_paren();
+ });
+
+ add_rule(flags_all_(parse_context ,active_expression), source_context,
+   "leave-expression",
+   "\\)"
+   ,[&]
+ {
+  pregraph.leave_expression_via_paren();
+ });
 
  add_rule(source_context,
    "non-anchored-call",
@@ -158,9 +173,11 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
   pregraph.non_anchored_call(pre, proc, p.position_pair());
  });
 
+
+
  add_rule(run_call_context,
    "symbol-token",
-   "(?<symbol-token> \\S+)"
+   "(?<symbol-token> [^\\s),;]+)"
    ,[&]
  {
   QString symbol = p.matched("symbol-token");

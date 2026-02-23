@@ -65,6 +65,8 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_channel_state_(Channel_States::N_A)
    ,current_expression_state_(Expression_States::N_A)
    ,string_lines_count_(0)
+   ,current_nesting_depth_(0)
+
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -235,6 +237,18 @@ void ChTR_Graph_Build::scoped_symbol_pin(QString symbol)
    << "single-init-pin $ " << symbol; cut();
 }
 
+
+void ChTR_Graph_Build::expression_proc_name(QString token)
+{
+ proc_name(token);
+}
+
+
+void ChTR_Graph_Build::expression_depth(QString token)
+{
+ current_nesting_depth_ = token.toUInt();
+}
+
 void ChTR_Graph_Build::proc_name(QString token)
 {
  gen
@@ -286,6 +300,7 @@ void ChTR_Graph_Build::ql_keyword_token(QString token)
  }
 
 }
+
 
 void ChTR_Graph_Build::query_lambda_token_expecting_another(QString token)
 {
@@ -501,7 +516,7 @@ void ChTR_Graph_Build::resolve_statement()
   else
    gen
      .blank()
-     .dissolve({"run-proc-eval"});
+     .dissolve({"add-carriers-statement-context", "run-proc-eval"});
   gen
     .blank()
     .dissolve({"reset-carrier-deque", "clear-current-ghost-scope"})
@@ -553,6 +568,9 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".pin-value-literal", &ChTR_Graph_Build::pin_value_literal },
    { ".proc-name", &ChTR_Graph_Build::proc_name },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
+
+   { ".expression-proc-name", &ChTR_Graph_Build::expression_proc_name },
+   { ".expression-depth", &ChTR_Graph_Build::expression_depth },
 
    { ".query-proc-name", &ChTR_Graph_Build::query_proc_name },
    { ".query-lambda-token", &ChTR_Graph_Build::query_lambda_token },

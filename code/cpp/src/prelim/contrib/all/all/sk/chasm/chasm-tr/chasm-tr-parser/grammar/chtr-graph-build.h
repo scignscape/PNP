@@ -173,6 +173,8 @@ private:
 
  u2 string_lines_count_;
 
+ u2 current_nesting_depth_;
+
 public:
 
  ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g);
@@ -212,6 +214,8 @@ public:
  void enter_expression();
  void enter_statement();
 
+ void expression_proc_name(QString token);
+ void expression_depth(QString token);
 
  void scoped_symbol_decl(QString symbol);
  void type_expression_token(QString token);

@@ -48,12 +48,13 @@ class ChTR_Pregraph
 
 public:
 
- flags_(1)
+ flags_(2)
   bool active_run_call:1;
   bool infix_mode:1;
   bool active_statement:1;
   bool active_expression:1;
   bool tracking_string_lines:1;
+  bool expecting_expression_proc_name:1;
 
 //  bool discard_acc:1;
 //  bool split_acc:1;
@@ -112,6 +113,8 @@ private:
 
  u4 string_lines_start_;
 
+//? u1 current_expression_depth_;
+
 public:
 
  ChTR_Pregraph(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g, ChTR_Parse_Context& pc);
@@ -132,6 +135,9 @@ public:
 
  void leave_expression();
 
+
+ void enter_expression_via_paren();
+ void leave_expression_via_paren();
 
  void check_lines(QString text);
 
