@@ -49,6 +49,15 @@ u4 add(u4 arg1, u4 arg2)
  return arg1 + arg2;
 }
 
+u4 add3(u4 arg1, u4 arg2, u4 arg3)
+{
+ qDebug() << "arg1 = " << arg1;
+ qDebug() << "arg2 = " << arg2;
+ qDebug() << "arg2 = " << arg3;
+ qDebug() << "arg1 + arg2 + arg3 = " << arg1 + arg2 + arg3;
+ return arg1 + arg2 + arg3;
+}
+
 u4 mult(u4 arg1, u4 arg2)
 {
  qDebug() << "arg1 = " << arg1;
@@ -73,8 +82,24 @@ void run_tr(QString file_path)
  qDebug() << "You can now run " << chvm_path;
 }
 
+#include "chasm-runtime-bridge/runner/chasm-runner.h"
 
 int main(int argc, char *argv[])
+{
+ Chasm_Runtime csr;
+
+ Chasm_Type_Object* cto = csr.type_system().get_type_object_by_name("u2");
+
+ Chasm_Runner runner;
+
+ Chasm_Value_Holder cvh1(cto, 15);
+ Chasm_Value_Holder cvh2(cto, 35);
+
+ runner.run_core_proc("add2", cvh1, cvh2);
+
+}
+
+int main1(int argc, char *argv[])
 {
  Chasm_Runtime csr;
  Chasm_Runtime_Bridge crb(&csr);
@@ -87,6 +112,7 @@ int main(int argc, char *argv[])
 
  cpt.register_s0(add, @20444);
  cpt.register_s0(mult, @20444);
+ cpt.register_s0(add3, @304444);
 
  cpt.register_procedure_s0("+",
    (_minimal_fn_s0_type) &add, "@20444");

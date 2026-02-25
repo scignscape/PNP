@@ -21,8 +21,11 @@ INCLUDEPATH += $$SRC_PROSET_DIR/chasm-lib
 
 #INCLUDEPATH += $$NTXH_SRC_GROUP_DIR
 #INCLUDEPATH += $$NTXH_SRC_GROUP_DIR/ntxh
-#INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
-#INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
+
+INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
+INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
+
+
 #INCLUDEPATH += $$HTXN_SRC_GROUP_DIR
 #INCLUDEPATH += $$SRC_GROUP_DIR/gtagml
 
@@ -47,6 +50,14 @@ DEFINES += USE_OTNS
 
 HEADERS += \
   $$SRC_DIR/chasm-runtime-bridge.h \
+  $$SRC_DIR/runner/chasm-runner.h \
+  $$SRC_DIR/runner/chasm-value-holder.h \
+  $$SRC_DIR/runner/chasm-result-holder.h \
+  $$SRC_DIR/runner/chasm-run-router.h \
+  $$SRC_DIR/runner/chasm-run-router--cast-needed-templates.h \
+  $$SRC_DIR/runner/fns/chasm-runner--add2.h \
+  $$SRC_DIR/runner/graph-run/asg-proc-declarations.h \
+  $$SRC_DIR/runner/graph-run/asg-proc-families.h \
   $$SRC_DIR/csm-ghost-scope.h \
   $$SRC_DIR/chasm-runtime-eval.h \
   $$SRC_DIR/chvm-lexical-scope.h \
@@ -55,6 +66,11 @@ HEADERS += \
 
 SOURCES += \
   $$SRC_DIR/chasm-runtime-bridge.cpp \
+  $$SRC_DIR/runner/chasm-runner.cpp \
+  $$SRC_DIR/runner/chasm-value-holder.cpp \
+  $$SRC_DIR/runner/chasm-result-holder.cpp \
+  $$SRC_DIR/runner/chasm-run-router.cpp \
+  $$SRC_DIR/runner/fns/chasm-runner--add2.cpp \
   $$SRC_DIR/csm-ghost-scope.cpp \
   $$SRC_DIR/chasm-runtime-eval.cpp \
   $$SRC_DIR/chvm-lexical-scope.cpp \
