@@ -7,6 +7,9 @@
 
 #include "chasm-runner.h"
 
+#include "chasm-result-holder.h"
+
+#include "chasm-runner.templates.h"
 
 USING_OTNS(Chasm_TR)
 
@@ -21,6 +24,8 @@ USING_KANS(TextIO)
 #include <QUrl>
 
 #include <QPoint>
+
+
 
 Chasm_Runner::Chasm_Runner()
 {
@@ -41,16 +46,24 @@ Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc
 
 void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
 {
+ //Chasm_Run_Router::Cast_Schedule::Runner
+
  Chasm_Run_Router::Known_Procedure_Codes kpc = get_proc_code(proc_name);
 
- switch(kpc)
- {
+ Chasm_Result_Holder rh;
 
- case Chasm_Run_Router::Known_Procedure_Codes::Add2:
-  Chasm_Runner::add2::init(lhs, rhs);
-  break;
+ run<ASG_Proc_Family::ASG_Graph_Call_VV>(rh, kpc, lhs, rhs);
 
- default: break;
- }
+
+
+// switch(kpc)
+// {
+
+// case Chasm_Run_Router::Known_Procedure_Codes::Add2:
+//  Chasm_Runner::add2::init(lhs, rhs);
+//  break;
+
+// default: break;
+// }
 }
 

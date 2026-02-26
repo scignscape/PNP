@@ -67,8 +67,12 @@ public:
  ACCESSORS(Built_In_Status ,built_in_status)
  ACCESSORS(u1 ,byte_span)
 
- u1 get_pretype_code();
+ u1 get_pretype_code() const;
 
+ static u1 merge_pretype_codes(const Chasm_Type_Object& lhs, const Chasm_Type_Object& rhs)
+ {
+  return lhs.get_pretype_code() * 10 + rhs.get_pretype_code();
+ }
 
  Chasm_Typed_Value_Representation with_rep(QString rep)
  {

@@ -29,6 +29,8 @@
 
 #include "relae-graph/relae-caon-ptr.h"
 
+#include "graph-run/asg-proc-families.h"
+
 
 OTNS_(Chasm_TR)
 
@@ -36,6 +38,10 @@ OTNS_(Chasm_TR)
 class Chasm_Runtime;
 
 class Chasm_Runtime_Bridge;
+
+template<ASG_Proc_Family PFam>
+struct ASG_Proc_Family_;
+
 
 class Chasm_Run_Router
 {
@@ -45,26 +51,30 @@ public:
   N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4
  };
 
- enum class Known_Procedure_Families {
-  N_A = 0, Double_VV, Single_V, Double_T, Single_T
- };
+// enum class ASG_Proc_Family {
+//  N_A = 0, Double_VV, Single_V, Double_T, Single_T
+// };
 
- enum class Known_Type_Families {
-  N_A = 0, Internal, Class
- };
 
 private:
 
- template<Known_Procedure_Families Fam>
- struct Known_Procedure_Family_;
 
- #define CHASM_FUNCTION_CODES_( Family_Name ) \
+ #define ASG_PROC_CODES_( Family_Name ) \
  template<> \
- struct Known_Procedure_Family_<Family_Name> \
+ struct ASG_Proc_Family_<ASG_Proc_Family::Family_Name> \
  { enum Code {
 
- #define _CHASM_FUNCTION_CODES };};
+ #define _ASG_PROC_CODES };};
 
+// #define CHASM_FUNCTION_CODES_( Family_Name ) \
+// template<> \
+// struct Proc_Family_<Family_Name> \
+// { enum Code {
+
+// #define _CHASM_FUNCTION_CODES };};
+
+// CHASM_FUNCTION_CODES_(ASG_Graph_Call_VV)
+// _CHASM_FUNCTION_CODES
 
 
  struct No_Cast_Needed
@@ -138,33 +148,34 @@ private:
   typedef RHS_Type Type;
  };
 
+public:
 
  template<
-  Known_Procedure_Families CORE_FUNCTION_Family,
+  ASG_Proc_Family PROC_Family,
   Known_Procedure_Codes CORE_FUNCTION_Code,
-  Known_Type_Families TYPE_FAMILY_Enum,
+  ASG_Type_Family TYPE_FAMILY_Enum,
   typename LHS_Type = Cast_Needed, typename RHS_Type = Cast_Needed,
   typename RETURN_Type = Cast_Null_Marker>
  struct Cast_Schedule
  {
-  static const Known_Procedure_Families Core_Function_Family = CORE_FUNCTION_Family;
+  static const ASG_Proc_Family Proc_Family = PROC_Family;
   static const Known_Procedure_Codes Core_Function_Code = CORE_FUNCTION_Code;
-  static const Known_Type_Families Type_Family = TYPE_FAMILY_Enum;
+  static const ASG_Type_Family Type_Family = TYPE_FAMILY_Enum;
 
-  typedef Cast_Schedule<Core_Function_Family,
+  typedef Cast_Schedule<Proc_Family,
    Core_Function_Code, Type_Family, LHS_Type, RHS_Type, RETURN_Type> This_Cast_Schedule_type;
 
-  typedef Known_Procedure_Family_<Core_Function_Family> Core_Function_Family_Type;
+  typedef ASG_Proc_Family_<Proc_Family> Proc_Family_Type;
 
   typedef LHS_Type LHS_type;
   typedef RHS_Type RHS_type;
 
-  template<typename POSITION_MARKER_Type, typename NEW_RUN_Type, Known_Type_Families Fam>
+  template<typename POSITION_MARKER_Type, typename NEW_RUN_Type, ASG_Type_Family TFam>
   struct Next_Schedule_Point
   {
   };
 
-  template<typename NEW_RUN_Type, Known_Type_Families Fam>
+  template<typename NEW_RUN_Type, ASG_Type_Family TFam>
   struct Find_Next_Schedule_Point
   {
    typedef Next_Schedule_Point
@@ -200,32 +211,32 @@ private:
       // but here get return type instead
       typename Get_Return_Type<LHS_Type, RHS_Type>::Type
      >::Type
-    >::Type, Fam
+    >::Type, TFam
    > Type;
   };
 
-  template<typename NEW_RUN_Type, Known_Type_Families Fam>
-  struct Next_Schedule_Point<LHS_Cast_Marker, NEW_RUN_Type, Fam>
+  template<typename NEW_RUN_Type, ASG_Type_Family TFam>
+  struct Next_Schedule_Point<LHS_Cast_Marker, NEW_RUN_Type, TFam>
   {
-   typedef Cast_Schedule<Core_Function_Family,
-    Core_Function_Code, Fam, NEW_RUN_Type, RHS_Type> Type;
+   typedef Cast_Schedule<Proc_Family,
+    Core_Function_Code, TFam, NEW_RUN_Type, RHS_Type> Type;
   };
 
-  template<typename NEW_RUN_Type, Known_Type_Families Fam>
-  struct Next_Schedule_Point<RHS_Cast_Marker, NEW_RUN_Type, Fam>
+  template<typename NEW_RUN_Type, ASG_Type_Family TFam>
+  struct Next_Schedule_Point<RHS_Cast_Marker, NEW_RUN_Type, TFam>
   {
-   typedef Cast_Schedule<Core_Function_Family,
-    Core_Function_Code, Fam, LHS_Type, NEW_RUN_Type> Type;
+   typedef Cast_Schedule<Proc_Family,
+    Core_Function_Code, TFam, LHS_Type, NEW_RUN_Type> Type;
   };
 
-  template<typename RET_Type, Known_Type_Families Fam>
-  struct Next_Schedule_Point<RET_Marker, RET_Type, Fam>
+  template<typename RET_Type, ASG_Type_Family TFam>
+  struct Next_Schedule_Point<RET_Marker, RET_Type, TFam>
   {
-   typedef Cast_Schedule<Core_Function_Family,
-    Core_Function_Code, Fam, LHS_Type, RHS_Type, RET_Type> Type;
+   typedef Cast_Schedule<Proc_Family,
+    Core_Function_Code, TFam, LHS_Type, RHS_Type, RET_Type> Type;
   };
 
-  template<typename CAST_SCHED_Type, typename RUNNER_INFO_Type, Known_Type_Families Fam,
+  template<typename CAST_SCHED_Type, typename RUNNER_INFO_Type, ASG_Type_Family TFam,
    bool FUNCTION_FAMILY_SET = true> //RZ_Get_Family_Code<RUNNER_INFO_Type>::Value != RZ_Function_Family_Not_Set >
   struct Runner
   {
@@ -234,22 +245,54 @@ private:
 #define RZ_TEMP_CASE(n) case n: \
  ASG_Proc_Run<Family_Code, n, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
 
-  template<typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, Known_Type_Families Fam>
-  struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, Fam, true>
+  template<typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, ASG_Type_Family TFam>
+  struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, TFam, true>
   {
 //   static const RZ_ASG_Function_Family Family_Code =
 //    RZ_Get_Family_Code<ARITY_FAMILY_Type>::Value ;
-   static const Known_Type_Families Type_Family = Fam;
+
+   static const ASG_Type_Family Type_Family = TFam;
+
+//   void test()
+//   {
+//    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+//    qDebug() << "cfc = " << (int) cfc;
+//   }
+
+//   template<typename T1, typename T2>
+//   static void test_run(Chasm_Result_Holder& rh, caon_ptr<T1> t1, caon_ptr<T2> t2)
+//   {
+//    CAON_PTR_DEBUG(T1 ,t1)
+//    CAON_PTR_DEBUG(T2 ,t2)
+
+//    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+//    qDebug() << "cfc = " << (int) cfc;
+//   }
+
+//   template<typename T1, typename T2>
+//   static void do_run_test(Chasm_Result_Holder& rh, caon_ptr<T1> t1, caon_ptr<T2> t2)
+//   {
+//    CAON_PTR_DEBUG(T1 ,t1)
+//    CAON_PTR_DEBUG(T2 ,t2)
+
+//    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+//    qDebug() << "cfc = " << (int) cfc;
+//   }
 
    template<typename T1, typename T2>
    static void run(Chasm_Result_Holder& rh, caon_ptr<T1> t1, caon_ptr<T2> t2)
    {
     auto cfc = CAST_SCHED_Type::Core_Function_Code;
 
-    switch(CAST_SCHED_Type::Core_Function_Code)
+    switch((int) CAST_SCHED_Type::Core_Function_Code)
     {
     case 1:
-     ASG_Proc_Run<Family_Code, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
+//     ASG_Proc_Run<Family_Code, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
+     ASG_Proc_Run<ASG_Graph_Call_VV, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
+//     ASG_Proc_Run<ASG_Graph_Call_VV, 1, Type_Family>::test(rh); break;
+
+
+
 //     RZ_TEMP_CASES__FUNCTION_CODE
     }
    }
@@ -270,14 +313,14 @@ private:
  #define RZ_TEMP_CASE(n) case n: \
   RZ_ASG_Function_Run<Family_Code, n, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
 
-  template<typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, RZ_Type_Families::Enum Fam>
-  struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, Fam, true>
+  template<typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, RZ_Type_Families::Enum TFam>
+  struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, TFam, true>
   {
    static const RZ_ASG_Function_Family Family_Code =
     RZ_Get_Family_Code<ARITY_FAMILY_Type>::Value ;
-   static const RZ_Type_Families::Enum Type_Family = Fam;
+   static const RZ_Type_Families::Enum Type_Family = TFam;
    template<typename T1, typename T2>
-   static void run(RZ_ASG_Result_Holder& rh, caon_ptr<T1> t1, caon_ptr<T2> t2)
+   static void run(RZ_Chasm_Result_Holder& rh, caon_ptr<T1> t1, caon_ptr<T2> t2)
    {
     auto cfc = CAST_SCHED_Type::Core_Function_Code;
 
@@ -293,12 +336,12 @@ private:
  #define RZ_TEMP_CASE(n) case n: \
   RZ_ASG_Function_Run<Family_Code, n, Type_Family>::run(rh, token, vh); break;
 
-  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum Fam>
-  struct Runner<CAST_SCHED_Type, RHS_Value_Marker, Fam>
+  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum TFam>
+  struct Runner<CAST_SCHED_Type, RHS_Value_Marker, TFam>
   {
-   static const RZ_ASG_Function_Family Family_Code = CORE_FUNCTION_Family;
-   static const RZ_Type_Families::Enum Type_Family = Fam;
-   static void run(RZ_ASG_Result_Holder& rh, RZ_ASG_Token& token, RZ_ASG_Value_Holder& vh)
+   static const RZ_ASG_Function_Family Family_Code = PROC_Family;
+   static const RZ_Type_Families::Enum Type_Family = TFam;
+   static void run(RZ_Chasm_Result_Holder& rh, RZ_ASG_Token& token, RZ_Chasm_Value_Holder& vh)
    {
     switch(CORE_FUNCTION_Code)
     {
@@ -310,7 +353,7 @@ private:
  #define RZ_TEMP_CASE(n) case n: \
   RZ_ASG_Function_Run<Family_Code, n, Type_Family>::run(rh, v1, v2); break;
 
-   static void run(RZ_ASG_Result_Holder& rh, RZ_ASG_Value_Holder& v1, RZ_ASG_Value_Holder& v2)
+   static void run(RZ_Chasm_Result_Holder& rh, RZ_Chasm_Value_Holder& v1, RZ_Chasm_Value_Holder& v2)
    {
     switch(CORE_FUNCTION_Code)
     {
@@ -322,17 +365,17 @@ private:
   };
 
 
-  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum Fam>
-  struct Runner<CAST_SCHED_Type, Raw_Token_Marker, Fam>
+  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum TFam>
+  struct Runner<CAST_SCHED_Type, Raw_Token_Marker, TFam>
   {
-   static const RZ_ASG_Function_Family Family_Code = CORE_FUNCTION_Family;
-   static const RZ_Type_Families::Enum Type_Family = Fam;
+   static const RZ_ASG_Function_Family Family_Code = PROC_Family;
+   static const RZ_Type_Families::Enum Type_Family = TFam;
 
  #define RZ_TEMP_CASE(n) case n: \
       RZ_ASG_Function_Run<Family_Code, n, Type_Family> \
        ::run(rh, start_token, pass_node); break;
 
-   static void run(RZ_ASG_Result_Holder& rh,
+   static void run(RZ_Chasm_Result_Holder& rh,
     RZ_ASG_Token& start_token, caon_ptr<tNode> pass_node)
    {
     switch(CORE_FUNCTION_Code)
@@ -346,7 +389,7 @@ private:
       RZ_ASG_Function_Run<Family_Code, n, Type_Family> \
        ::run(rh, start_token); break;
 
-   static void run(RZ_ASG_Result_Holder& rh, RZ_ASG_Token& start_token)
+   static void run(RZ_Chasm_Result_Holder& rh, RZ_ASG_Token& start_token)
    {
     switch(CORE_FUNCTION_Code)
     {
@@ -361,8 +404,8 @@ private:
  #define RZ_TEMP_CASE(n) case n: \
   Next_Runner<n, RZ_Run_Type<n>::Type_Family>::Type::run(rh, v1->template pRetrieve<RZ_Run_Type<n>::Type>(), v2 ); break;
 
-  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum Fam>
-  struct Runner<CAST_SCHED_Type, LHS_Cast_Marker, Fam>
+  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum TFam>
+  struct Runner<CAST_SCHED_Type, LHS_Cast_Marker, TFam>
   {
    template<int Code, RZ_Type_Families::Enum Fam1>
    struct Next_Runner
@@ -374,13 +417,13 @@ private:
       typename If_Then_Else
       <
        Is_Cast_Needed<RHS_Type>::Value, RHS_Cast_Marker,
-       Core_Function_Family_Type
+       Proc_Family_Type
       >::Type, Fam1
      > Type;
    };
 
    template<typename T1, typename T2>
-   static void run(RZ_ASG_Result_Holder& rh, caon_ptr<T1> v1, caon_ptr<T2> v2)
+   static void run(RZ_Chasm_Result_Holder& rh, caon_ptr<T1> v1, caon_ptr<T2> v2)
    {
 //    switch(v1->typecode())
 //    {
@@ -395,22 +438,22 @@ private:
  #define RZ_TEMP_CASE(n) case n: \
    Next_Runner<n, RZ_Run_Type<n>::Type_Family>::Type::run(rh, v1, \
     v2->template pRetrieve<RZ_Run_Type<n>::Type>() ); break;
-  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum Fam>
-  struct Runner<CAST_SCHED_Type, RHS_Cast_Marker, Fam>
+  template<typename CAST_SCHED_Type, RZ_Type_Families::Enum TFam>
+  struct Runner<CAST_SCHED_Type, RHS_Cast_Marker, TFam>
   {
    template<int Code, RZ_Type_Families::Enum Fam1>
    struct Next_Runner
    {
     typedef typename Next_Schedule_Point<RHS_Cast_Marker, typename RZ_Run_Type<Code>::Type,
-     RZ_Type_Families::merge(Fam, Fam1) >::Type::
-     template Runner<This_Cast_Schedule_type, Core_Function_Family_Type,
-      RZ_Type_Families::merge(Fam, Fam1)
+     RZ_Type_Families::merge(TFam, Fam1) >::Type::
+     template Runner<This_Cast_Schedule_type, Proc_Family_Type,
+      RZ_Type_Families::merge(TFam, Fam1)
 
       > Type;
    };
 
    template<typename T1, typename T2>
-   static void run(RZ_ASG_Result_Holder& rh, caon_ptr<T1> v1, caon_ptr<T2> v2)
+   static void run(RZ_Chasm_Result_Holder& rh, caon_ptr<T1> v1, caon_ptr<T2> v2)
    {
 //    CAON_PTR_DEBUG(T2 ,v2)
 

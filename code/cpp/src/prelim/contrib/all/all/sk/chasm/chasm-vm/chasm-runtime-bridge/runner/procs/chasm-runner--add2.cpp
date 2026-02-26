@@ -5,11 +5,13 @@
 //           http://www.boost.org/LICENSE_1_0.txt)
 
 
-#include "../chasm-runner.h"
+#include "chasm-runner--procs2.h"
 
-USING_OTNS(Chasm_TR)
+OTNS_(Chasm_TR)
 
-void Chasm_Runner::add2::init(Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
+void add2(Chasm_Result_Holder& rh, u1 type_codes, n8 lhs, n8 rhs)
 {
 
 }
+
+_OTNS(Chasm_TR)

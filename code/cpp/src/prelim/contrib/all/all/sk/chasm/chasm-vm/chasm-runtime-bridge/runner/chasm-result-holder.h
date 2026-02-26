@@ -40,7 +40,7 @@ class Chasm_Result_Holder
 
 public:
 
- Chasm_Result_Holder(Chasm_Type_Object* type_object, n8 value);
+ Chasm_Result_Holder(Chasm_Type_Object* type_object = nullptr, n8 value = 0);
 
 };
 

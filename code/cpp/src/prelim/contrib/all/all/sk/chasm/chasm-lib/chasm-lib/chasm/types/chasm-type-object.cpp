@@ -21,7 +21,7 @@ Chasm_Type_Object::Chasm_Type_Object(QString name, Built_In_Status st,
 
 }
 
-u1 Chasm_Type_Object::get_pretype_code()
+u1 Chasm_Type_Object::get_pretype_code() const
 {
  // // only covers pretypes for now ...
  return codes_with_position_[0];

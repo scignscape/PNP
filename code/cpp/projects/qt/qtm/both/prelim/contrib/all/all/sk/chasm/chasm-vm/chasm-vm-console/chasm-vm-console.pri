@@ -33,7 +33,8 @@ DEFINES += DEMO_CVM_FOLDER=\\\"$$ROOT_DIR/../dev/chtr\\\"
 CONFIG += no_keywords
 
 DEFINES += USE_OTNS
-DEFINES += USE_OTNS
+
+DEFINES += CAON_DEBUG
 
 
 HEADERS += \

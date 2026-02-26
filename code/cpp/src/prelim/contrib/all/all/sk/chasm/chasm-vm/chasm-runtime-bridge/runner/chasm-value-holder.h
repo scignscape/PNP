@@ -40,6 +40,10 @@ class Chasm_Value_Holder
 
 public:
 
+
+ ACCESSORS(Chasm_Type_Object* ,type_object)
+ ACCESSORS(n8 ,value)
+
  Chasm_Value_Holder(Chasm_Type_Object* type_object, n8 value);
 
 };

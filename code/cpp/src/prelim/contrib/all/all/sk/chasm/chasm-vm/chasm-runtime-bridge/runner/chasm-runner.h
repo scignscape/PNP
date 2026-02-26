@@ -34,16 +34,11 @@ class Chasm_Runtime;
 
 class Chasm_Runtime_Bridge;
 
+class Chasm_Value_Holder;
+class Chasm_Result_Holder;
+
 class Chasm_Runner
 {
- struct add2
- {
-  template<typename LHS_Type, typename RHS_Type, typename RETURN_Type>
-  static RETURN_Type proceed(LHS_Type lhs, RHS_Type rhs);
-
-  static void init(Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs);
- };
-
 
  enum class Known_Procedure_Codes {
   N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4
@@ -59,6 +54,11 @@ class Chasm_Runner
  Chasm_Run_Router::Known_Procedure_Codes get_proc_code(QString proc);
 
  void init();
+
+ template<ASG_Proc_Family>
+ static void run(Chasm_Result_Holder& rh, Chasm_Run_Router::Known_Procedure_Codes proc_code,
+  Chasm_Value_Holder& v1, Chasm_Value_Holder& v2);
+
 
 public:
 
