@@ -108,7 +108,7 @@ private:
  ChTR_Parser& parser_;
  ChTR_Graph& graph_;
 
- ChTR_Relae_Frame& Sf;
+ ChTR_Relae_Frame& If;
  const ChTR_Relae_Query& Qy;
 
  ChTR_Node_Factory& node_factory_;
@@ -168,6 +168,9 @@ private:
 
 
  caon_ptr<ChTR_Node> current_parse_node_;
+ caon_ptr<ChTR_Node> held_operand_node_;
+ caon_ptr<ChTR_Node> leftmost_infix_operator_node_;
+ caon_ptr<ChTR_Node> current_infix_operator_node_;
 
  void ql_tokens_init(QString last_instruction = {});
 
@@ -214,8 +217,13 @@ public:
  void enter_expression();
  void enter_statement();
 
+ void enter_infix_mode();
+
  void expression_proc_name(QString token);
  void expression_depth(QString token);
+
+ void symbol_token_operand_node(QString symbol);
+ void infix_proc_name_node(QString token);
 
  void scoped_symbol_decl(QString symbol);
  void type_expression_token(QString token);

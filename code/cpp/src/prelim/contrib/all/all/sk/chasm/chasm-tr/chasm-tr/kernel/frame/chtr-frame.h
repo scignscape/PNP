@@ -19,11 +19,13 @@ OTNS_(Chasm_TR)
 
 class ChTR_Relae_Frame : public node_frame<ChTR_Dominion>
 {
- ChTR_Relae_Frame();
- // SY_Dominion::Connectors N_A;
- public:
+ QString label_;
 
- static ChTR_Relae_Frame& instance();
+ ChTR_Relae_Frame(QString label = {});
+
+public:
+
+ static ChTR_Relae_Frame& instance(QString label);
 
 };
 

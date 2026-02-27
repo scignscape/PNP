@@ -63,6 +63,21 @@ ASG_GCALL_IMPLEMENT
 
 };
 
+
+ASG_GCALL_IMPLEMENT
+<ASG_GCALL_VV(Div2, Internal)>
+{
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, Chasm_Value_Holder& v1,
+  Chasm_Value_Holder& v2)
+ {
+  u1 type_codes = Chasm_Type_Object::merge_pretype_codes(*v1.type_object(), *v2.type_object());
+  div2(rh, type_codes, v1.value(), v2.value());
+ }
+
+};
+
+
 //RZ_GCALL_IMPLEMENT
 //<RZ_GCALL_VV(Init_or_Assign, Internal)>
 //{

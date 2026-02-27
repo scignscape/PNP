@@ -113,6 +113,15 @@ private:
 
  u4 string_lines_start_;
 
+ u4 current_acc_lines_insertion_point_;
+
+ enum class Infix_Status {
+   N_A, Seen_Nothing, Seen_Left_Operand, Seen_Operator, Seen_Potential_Right_Operand,
+   Start_Nested_Expression, After_Nested_Expression
+ };
+
+ Infix_Status current_infix_status_;
+
 //? u1 current_expression_depth_;
 
 public:
@@ -158,6 +167,7 @@ public:
  void anchor_or_pin(QString symbol, QString tween, QString token);
 
  void symbol_token(QString token);
+ void symbol_token_infix_mode(QString token);
 
  QString pregraph_code();
 

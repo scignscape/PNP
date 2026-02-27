@@ -55,6 +55,8 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
    ,expression_nesting_count_(0)
    ,infix_count_(0)
    ,string_lines_start_(0)
+   ,current_acc_lines_insertion_point_(0)
+   ,current_infix_status_(Infix_Status::N_A)
 //?   ,current_expression_depth_(0)
 {
  acc << "\n"; cut();
@@ -210,20 +212,43 @@ void ChTR_Pregraph::query_lambda_token(QString token, QString post)
  cut();
 }
 
+void ChTR_Pregraph::symbol_token_infix_mode(QString token)
+{
+ switch(current_infix_status_)
+ {
+ case Infix_Status::Seen_Nothing:
+  acc << ".n/symbol-token-operand $ " << token; cut();
+  current_infix_status_ = Infix_Status::Seen_Left_Operand;
+  break;
+ case Infix_Status::Seen_Potential_Right_Operand:
+ case Infix_Status::Seen_Left_Operand:
+  acc << ".n/infix-proc-name $ " << token; cut();
+  current_infix_status_ = Infix_Status::Seen_Operator;
+  break;
+ case Infix_Status::Seen_Operator:
+  acc << ".n/symbol-token-operand $ " << token; cut();
+  current_infix_status_ = Infix_Status::Seen_Potential_Right_Operand;
+  break;
+
+ default: break;
+ }
+}
+
 void ChTR_Pregraph::symbol_token(QString token)
 {
  if(flags.infix_mode)
  {
-  ++infix_count_;
-  if(infix_count_ % 2)
-  {
-   acc << ".symbol-token $ " << token; cut();
-  }
-  else
-  {
-   auto ix = infix_line_indices_.pop();
-   acc_lines_[ix.first].insert(ix.second, token);
-  }
+  symbol_token_infix_mode(token);
+//  ++infix_count_;
+//  if(infix_count_ % 2)
+//  {
+//   acc << ".symbol-token $ " << token; cut();
+//  }
+//  else
+//  {
+//   auto ix = infix_line_indices_.pop();
+//   acc_lines_[ix.first].insert(ix.second, token);
+//  }
  }
  else if(flags.expecting_expression_proc_name)
  {
@@ -308,13 +333,17 @@ void ChTR_Pregraph::check_enter_infix_mode()
   flags.infix_mode = true;
   acc << ".enter-infix-mode"; cut();
 
-  enter_expression();
+  current_acc_lines_insertion_point_ = acc_lines_.size();
 
-  acc << ".proc-name $ ";
-  u4 acc_size = acc_.size();
-  cut();
+  current_infix_status_ = Infix_Status::Seen_Nothing;
 
-  infix_line_indices_.push({acc_lines_.size() - 1, acc_size});
+//  enter_expression();
+
+//  acc << ".proc-name $ ";
+//  u4 acc_size = acc_.size();
+//  cut();
+
+//  infix_line_indices_.push({acc_lines_.size() - 1, acc_size});
  }
 }
 

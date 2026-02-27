@@ -16,17 +16,26 @@
 
 USING_OTNS(Chasm_TR)
 
-ChTR_Relae_Frame::ChTR_Relae_Frame()
- : node_frame<ChTR_Dominion>()
+ChTR_Relae_Frame::ChTR_Relae_Frame(QString label)
+ : node_frame<ChTR_Dominion>(), label_(label)
 {
 
 
 }
 
-ChTR_Relae_Frame& ChTR_Relae_Frame::instance()
+ChTR_Relae_Frame& ChTR_Relae_Frame::instance(QString label)
 {
- static ChTR_Relae_Frame* the_instance = nullptr;
- if(!the_instance)
-  the_instance = new ChTR_Relae_Frame;
- return *the_instance;
+// static ChTR_Relae_Frame* the_instance = nullptr;
+// if(!the_instance)
+//  the_instance = new ChTR_Relae_Frame;
+// return *the_instance;
+
+ static QMap<QString, ChTR_Relae_Frame*> instances;
+
+ auto it = instances.find(label);
+
+ if(it == instances.end())
+   it = instances.insert(label, new ChTR_Relae_Frame(label));
+
+ return **it;
 }

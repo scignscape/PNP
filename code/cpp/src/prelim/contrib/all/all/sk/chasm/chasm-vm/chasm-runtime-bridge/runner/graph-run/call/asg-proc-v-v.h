@@ -5,6 +5,8 @@
 
 ASG_PROC_DECLARE(+, Add2, 2, Preempt)
 
+ASG_PROC_DECLARE(/, Div2, 2, Preempt)
+
 //RZ_ASG_FUNCTION_DECLARE(=, Set_Equal, 2, Preempt)
 
 //RZ_ASG_FUNCTION_DECLARE(==, Set_Equal_Via_Type, 2, Preempt)

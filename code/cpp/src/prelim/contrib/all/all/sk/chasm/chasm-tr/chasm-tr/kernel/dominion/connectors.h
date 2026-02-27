@@ -11,3 +11,9 @@ DOMINION_CONNECTOR(Root_Sequence, "root-sequence")
 
 
 DOMINION_CONNECTOR(Symbol_to_Type_Object, "symbol-to-type-object")
+
+DOMINION_CONNECTOR(Infix_Left_Operand, "infix-left-operand")
+DOMINION_CONNECTOR(Infix_Right_Operand, "infix-right-operand")
+
+DOMINION_CONNECTOR(Infix_From_Left_Operand, "infix-from-left-operand")
+DOMINION_CONNECTOR(Infix_From_Right_Operand, "infix-from-right-operand")

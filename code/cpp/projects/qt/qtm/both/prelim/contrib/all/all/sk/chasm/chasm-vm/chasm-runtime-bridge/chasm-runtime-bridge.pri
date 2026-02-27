@@ -74,6 +74,7 @@ SOURCES += \
   $$SRC_DIR/runner/chasm-result-holder.cpp \
   $$SRC_DIR/runner/chasm-run-router.cpp \
   $$SRC_DIR/runner/procs/chasm-runner--add2.cpp \
+  $$SRC_DIR/runner/procs/chasm-runner--div2.cpp \
   $$SRC_DIR/csm-ghost-scope.cpp \
   $$SRC_DIR/chasm-runtime-eval.cpp \
   $$SRC_DIR/chvm-lexical-scope.cpp \

@@ -50,7 +50,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,document_(d)
    ,graph_(g)
    ,parser_(p)
-   ,Sf(ChTR_Relae_Frame::instance())
+   ,If(ChTR_Relae_Frame::instance("If"))
    ,Qy(ChTR_Relae_Query::instance())
    ,node_factory_(ChTR_Node_Factory::instance())
    ,source_file_index_(0)
@@ -66,7 +66,10 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_expression_state_(Expression_States::N_A)
    ,string_lines_count_(0)
    ,current_nesting_depth_(0)
-
+   ,current_parse_node_(nullptr)
+   ,held_operand_node_(nullptr)
+   ,leftmost_infix_operator_node_(nullptr)
+   ,leftmost_infix_operator_node_(nullptr)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -525,6 +528,53 @@ void ChTR_Graph_Build::resolve_statement()
 
 }
 
+
+void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
+{
+ ChTR_Source_Token* stoken = new ChTR_Source_Token(symbol);
+ caon_ptr<ChTR_Node> node = node_factory_.make_new_node(stoken);
+
+ if(current_infix_operator_node_)
+ {
+  current_infix_operator_node_ << If/Qy.Infix_Right_Operand >> node;
+  node << If/Qy.Infix_From_Right_Operand >> node;
+  current_infix_operator_node_ = nullptr;
+ }
+
+ else if(held_operand_node_)
+ {
+  //?
+ }
+ else
+ {
+  held_operand_node_ = node;
+ }
+
+}
+
+void ChTR_Graph_Build::infix_proc_name_node(QString token)
+{
+ ChTR_Source_Token* stoken = new ChTR_Source_Token(token);
+ caon_ptr<ChTR_Node> node = node_factory_.make_new_node(stoken);
+
+ if(leftmost_infix_operator_node_)
+ {
+
+ }
+ else
+ {
+  leftmost_infix_operator_node_ = node;
+ }
+ node << If/Qy.Infix_Left_Operand >> held_operand_node_;
+ held_operand_node_ << If/Qy.Infix_From_Left_Operand >> node;
+ current_infix_operator_node_ = node;
+}
+
+void ChTR_Graph_Build::enter_infix_mode()
+{
+
+}
+
 void ChTR_Graph_Build::enter_expression()
 {
  gen
@@ -569,6 +619,9 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".proc-name", &ChTR_Graph_Build::proc_name },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
+   { ".n/infix-proc-name", &ChTR_Graph_Build::infix_proc_name_node },
+   { ".n/symbol-token-operand", &ChTR_Graph_Build::symbol_token_operand_node },
+
    { ".expression-proc-name", &ChTR_Graph_Build::expression_proc_name },
    { ".expression-depth", &ChTR_Graph_Build::expression_depth },
 
@@ -606,6 +659,8 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".expression-to-statement", &ChTR_Graph_Build::expression_to_statement },
 
    { ".string-lines-to-follow", &ChTR_Graph_Build::string_lines_to_follow },
+
+   { ".enter-infix-mode", &ChTR_Graph_Build::enter_infix_mode },
 
 
  }};
