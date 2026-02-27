@@ -232,13 +232,13 @@ Chasm_Carrier Chasm_Runtime::gen_carrier<void*>(void* pv)
 Chasm_Carrier Chasm_Runtime::gen_carrier_by_type_object(Chasm_Type_Object* cto)
 {
  u1 ptc = cto->get_pretype_code();
- return gen_carrier(ptc);
+ return gen_carrier(ptc).set_type_object(cto);
 }
 
 Chasm_Carrier Chasm_Runtime::gen_carrier_by_type_object(Chasm_Type_Object* cto, void* pv)
 {
  u1 ptc = cto->get_pretype_code();
- return gen_carrier(ptc).take_value(pv);
+ return gen_carrier(ptc).take_value(pv).set_type_object(cto);
 }
 
 

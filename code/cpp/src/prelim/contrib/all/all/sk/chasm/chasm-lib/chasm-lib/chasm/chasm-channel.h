@@ -63,6 +63,8 @@ public:
  Chasm_Carrier first_carrier();
  Chasm_Carrier& first_carrier_ref();
 
+ Chasm_Carrier& carrier_ref(u2 index);
+
  void pasn8vector(QVector<n8>& result, u1 size);
 
  n8 pasn8(s4 index)

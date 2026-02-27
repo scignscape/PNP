@@ -27,3 +27,23 @@ u1 Chasm_Type_Object::get_pretype_code() const
  return codes_with_position_[0];
 }
 
+u1 Chasm_Type_Object::get_pretype_code_signed() const
+{
+ return signed_map(get_pretype_code());
+}
+
+u1 Chasm_Type_Object::signed_map(u1 val)
+{
+ static u1 results [10] { 0, 10, 11, 3, 12, 5, 6, 7, 13, 9 };
+ return results[val];
+}
+
+bool Chasm_Type_Object::_signed_unmap(u1& val)
+{
+ if((val < 10) || (val > 13))
+   return false;
+
+ val = 1 << (val - 10);
+ return true;
+}
+

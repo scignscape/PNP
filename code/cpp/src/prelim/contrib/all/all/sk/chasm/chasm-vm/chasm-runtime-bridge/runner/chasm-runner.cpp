@@ -27,7 +27,8 @@ USING_KANS(TextIO)
 
 
 
-Chasm_Runner::Chasm_Runner()
+Chasm_Runner::Chasm_Runner(Chasm_Type_System* type_system)
+  :  type_system_(type_system)
 {
  init();
 }
@@ -35,22 +36,25 @@ Chasm_Runner::Chasm_Runner()
 void Chasm_Runner::init()
 {
  known_procedures_ << "add2" << "mult2" << "div2" << "ratio2";
+ known_procedure_map_["+"] = "add2";
+ known_procedure_map_["*"] = "mult2";
+ known_procedure_map_["%/"] = "div2";
+ known_procedure_map_["//"] = "ratio2";
 }
 
 Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc)
 {
+ proc = known_procedure_map_.value(proc, proc);
  s2 result = known_procedures_.indexOf(proc);
  return (Chasm_Run_Router::Known_Procedure_Codes) (result + 1);
 }
 
 
-void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
+void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
 {
  //Chasm_Run_Router::Cast_Schedule::Runner
 
  Chasm_Run_Router::Known_Procedure_Codes kpc = get_proc_code(proc_name);
-
- Chasm_Result_Holder rh;
 
  run<ASG_Proc_Family::ASG_Graph_Call_VV>(rh, kpc, lhs, rhs);
 

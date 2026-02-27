@@ -24,6 +24,8 @@
 
 OTNS_(Chasm_TR)
 
+class Chasm_Type_Object;
+
 struct trisym
 {
  n8 code;
@@ -94,6 +96,8 @@ class Chasm_Carrier
  trisym key_;
  n8 raw_value_;
 
+ Chasm_Type_Object* type_object_;
+
  QString hint_;
 
 public:
@@ -104,8 +108,15 @@ public:
  ACCESSORS(n8 ,raw_value)
 
  ACCESSORS(QString ,hint)
+ ACCESSORS__GET(Chasm_Type_Object* ,type_object)
 
  void dispose();
+
+ Chasm_Carrier& set_type_object(Chasm_Type_Object* type_object)
+ {
+  type_object_ = type_object;
+  return *this;
+ }
 
  void set_fcode(u4 val)
  {

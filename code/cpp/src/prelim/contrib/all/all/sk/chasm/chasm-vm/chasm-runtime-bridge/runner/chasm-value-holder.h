@@ -44,7 +44,7 @@ public:
  ACCESSORS(Chasm_Type_Object* ,type_object)
  ACCESSORS(n8 ,value)
 
- Chasm_Value_Holder(Chasm_Type_Object* type_object, n8 value);
+ Chasm_Value_Holder(Chasm_Type_Object* type_object = nullptr, n8 value = 0);
 
 };
 

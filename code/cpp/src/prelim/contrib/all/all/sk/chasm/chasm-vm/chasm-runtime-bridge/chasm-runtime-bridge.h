@@ -35,6 +35,8 @@
 
 #include "chasm-procedure-table/chasm-procedure-table.h"
 
+#include "runner/chasm-runner.h"
+
 
 OTNS_(Chasm_TR)
 
@@ -150,6 +152,8 @@ class Chasm_Runtime_Bridge
  QVector<QPair<QString, QVector<Chasm_Carrier>>>* current_ql_vector_;
 
  QStringList string_lines_acc_;
+
+ Chasm_Runner runner_;
 
 public:
 

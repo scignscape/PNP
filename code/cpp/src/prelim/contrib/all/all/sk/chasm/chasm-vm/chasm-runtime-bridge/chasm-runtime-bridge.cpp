@@ -40,7 +40,8 @@ Chasm_Runtime_Bridge::Chasm_Runtime_Bridge(Chasm_Runtime* csr)
      current_lexical_scope_(nullptr),
      proctable_(nullptr),
      max_interned_symbol_(0),
-     current_ql_vector_(nullptr)
+     current_ql_vector_(nullptr),
+     runner_(&csr->type_system())
 {
  current_carrier_deque_target_ = "lambda";
 
@@ -101,7 +102,25 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
  }
  auto it = proctable_->registered_procedures().find(proc_name);
  if(it == proctable_->registered_procedures().end())
-   return;
+ {
+  Chasm_Run_Router::Known_Procedure_Codes kpc = runner_.get_proc_code(proc_name);
+  if(kpc == Chasm_Run_Router::Known_Procedure_Codes::N_A)
+    return; // error ...
+  Chasm_Value_Holder lhs, rhs;
+  Chasm_Carrier& cc1 = current_call_package_->channel("lambda")->carrier_ref(0);
+  Chasm_Carrier& cc2 = current_call_package_->channel("lambda")->carrier_ref(1);
+
+  lhs.set_value(cc1.raw_value());
+  rhs.set_value(cc2.raw_value());
+
+  lhs.set_type_object(cc1.type_object());
+  rhs.set_type_object(cc2.type_object());
+
+  Chasm_Result_Holder rh(&csr_->type_system());
+
+  runner_.run_core_proc(proc_name, rh, lhs, rhs);
+
+ }
  const QPair<CFC_Pair, _minimal_fn_type>& pr = *it;
  if(pr.first.first.convention == 0)
  {
@@ -119,6 +138,7 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   }
   else
   {
+   // //  normal run through channel package
    Chasm_Carrier rcar;
    rcar.set_hint("retv:" + proc_name);
    rcar.set_type_flag(pr.first.first.return_code);

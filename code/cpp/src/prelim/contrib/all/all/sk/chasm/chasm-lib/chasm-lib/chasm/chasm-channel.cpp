@@ -67,6 +67,11 @@ Chasm_Carrier& Chasm_Channel::first_carrier_ref()
  return carriers_.first();
 }
 
+Chasm_Carrier& Chasm_Channel::carrier_ref(u2 index)
+{
+ return carriers_[index];
+}
+
 Chasm_Carrier Chasm_Channel::first_carrier()
 {
  if(carriers_.isEmpty())

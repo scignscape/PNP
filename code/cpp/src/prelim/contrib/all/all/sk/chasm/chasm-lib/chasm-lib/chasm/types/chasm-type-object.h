@@ -41,6 +41,9 @@ public:
   QVariant_like = 64,
   QStringList_like = 128,
 
+  declared_signed = 256,
+  infer_signed = s_like | declared_signed,
+
   associate_via_ptr = 8192,
   associate_via_ref = 16384,
  };
@@ -68,10 +71,41 @@ public:
  ACCESSORS(u1 ,byte_span)
 
  u1 get_pretype_code() const;
+ u1 get_pretype_code_signed() const;
+
+ static u1 signed_map(u1 val);
+ static bool _signed_unmap(u1& val);
+
+ template<typename VAL_Type>
+ static u1 signed_unmap(VAL_Type& val, u1 count = 2)
+ {
+  u1 result = 0;
+  u1 new_val = 0;
+  u1 mask = 1;
+  VAL_Type dec = 1;
+  while(count > 0)
+  {
+   u1 v = val & 0x0F;
+   bool b = _signed_unmap(v);
+   new_val += v * dec;
+   if(b)
+     result |= mask;
+   mask *= 2;
+   dec *= 10;
+   --count;
+  }
+  return result;
+ }
+
+
+ bool is_signed()
+ {
+  return ((s2) built_in_status_ & (s2) Built_In_Status::infer_signed);
+ }
 
  static u1 merge_pretype_codes(const Chasm_Type_Object& lhs, const Chasm_Type_Object& rhs)
  {
-  return lhs.get_pretype_code() * 10 + rhs.get_pretype_code();
+  return lhs.get_pretype_code() * 16 + rhs.get_pretype_code();
  }
 
  Chasm_Typed_Value_Representation with_rep(QString rep)

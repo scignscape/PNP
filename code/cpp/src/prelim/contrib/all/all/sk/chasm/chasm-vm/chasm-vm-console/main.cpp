@@ -84,13 +84,13 @@ void run_tr(QString file_path)
 
 #include "chasm-runtime-bridge/runner/chasm-runner.h"
 
-int main(int argc, char *argv[])
+int main1(int argc, char *argv[])
 {
  Chasm_Runtime csr;
 
  Chasm_Type_Object* cto = csr.type_system().get_type_object_by_name("u2");
 
- Chasm_Runner runner;
+ Chasm_Runner runner(&csr.type_system());
 
  Chasm_Value_Holder cvh1(cto, 15);
  Chasm_Value_Holder cvh2(cto, 35);
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
 }
 
-int main1(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
  Chasm_Runtime csr;
  Chasm_Runtime_Bridge crb(&csr);
@@ -114,8 +114,8 @@ int main1(int argc, char *argv[])
  cpt.register_s0(mult, @20444);
  cpt.register_s0(add3, @304444);
 
- cpt.register_procedure_s0("+",
-   (_minimal_fn_s0_type) &add, "@20444");
+// cpt.register_procedure_s0("+",
+//   (_minimal_fn_s0_type) &add, "@20444");
 
  QString script_path = DEMO_CVM_FOLDER "/t1/t3.cr";
 

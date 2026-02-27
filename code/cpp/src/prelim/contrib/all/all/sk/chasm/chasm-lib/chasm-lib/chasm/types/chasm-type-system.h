@@ -29,6 +29,9 @@ class Chasm_Type_System
 
  QVector<Chasm_Type_Object*>* pretype_type_objects_;
 
+ QVector<Chasm_Type_Object*> preset_stype_objects_;
+ QVector<Chasm_Type_Object*> preset_utype_objects_;
+
 public:
 
  Chasm_Type_System();
@@ -40,6 +43,15 @@ public:
    u2 pos1code, u2 pos2code, u2 pos3code, u2 pos4code);
 
  Chasm_Type_Object* get_type_object_by_name(QString name);
+
+ Chasm_Type_Object* the_u1_type();
+ Chasm_Type_Object* the_s1_type();
+ Chasm_Type_Object* the_u2_type();
+ Chasm_Type_Object* the_s2_type();
+ Chasm_Type_Object* the_u4_type();
+ Chasm_Type_Object* the_s4_type();
+ Chasm_Type_Object* the_u8_type();
+ Chasm_Type_Object* the_s8_type();
 
 };
 

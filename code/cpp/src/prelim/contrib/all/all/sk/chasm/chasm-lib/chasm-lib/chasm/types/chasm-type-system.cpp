@@ -65,7 +65,54 @@ Chasm_Type_System::Chasm_Type_System()
 
  register_type_object("QStringList&",
     (s2) Chasm_Type_Object::Built_In_Status::QStringList_like, 0, 0, 0, 0, -1);
+
+ preset_utype_objects_ << (*pretype_type_objects_)[1] << (*pretype_type_objects_)[2]
+   << (*pretype_type_objects_)[4] << (*pretype_type_objects_)[8];
+
+ preset_stype_objects_ << (*pretype_type_objects_)[1] << (*pretype_type_objects_)[2]
+   << (*pretype_type_objects_)[4] << (*pretype_type_objects_)[8]; // hack ...
 }
+
+Chasm_Type_Object* Chasm_Type_System::the_u1_type()
+{
+ return preset_utype_objects_[0];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_s1_type()
+{
+ return preset_stype_objects_[0];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_u2_type()
+{
+ return preset_utype_objects_[1];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_s2_type()
+{
+ return preset_stype_objects_[1];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_u4_type()
+{
+ return preset_utype_objects_[2];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_s4_type()
+{
+ return preset_stype_objects_[2];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_u8_type()
+{
+ return preset_utype_objects_[3];
+}
+
+Chasm_Type_Object* Chasm_Type_System::the_s8_type()
+{
+ return preset_stype_objects_[3];
+}
+
 
 Chasm_Type_Object* Chasm_Type_System::get_type_object_by_name(QString name)
 {

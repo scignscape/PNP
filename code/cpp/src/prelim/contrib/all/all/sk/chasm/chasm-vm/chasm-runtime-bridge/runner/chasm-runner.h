@@ -36,6 +36,8 @@ class Chasm_Runtime_Bridge;
 
 class Chasm_Value_Holder;
 class Chasm_Result_Holder;
+class Chasm_Type_System;
+
 
 class Chasm_Runner
 {
@@ -48,10 +50,11 @@ class Chasm_Runner
   N_A = 0, Double_VV, Single_V, Double_T, Single_T
  };
 
+ Chasm_Type_System* type_system_;
 
  QStringList known_procedures_;
+ QMap<QString, QString> known_procedure_map_;
 
- Chasm_Run_Router::Known_Procedure_Codes get_proc_code(QString proc);
 
  void init();
 
@@ -62,10 +65,11 @@ class Chasm_Runner
 
 public:
 
- Chasm_Runner();
+ Chasm_Runner(Chasm_Type_System* type_system);
 
+ Chasm_Run_Router::Known_Procedure_Codes get_proc_code(QString proc);
 
- void run_core_proc(QString proc_name, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs);
+ void run_core_proc(QString proc_name, Chasm_Result_Holder& rh, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs);
 
 
 };

@@ -19,7 +19,7 @@ USING_OTNS(Chasm_TR)
 
 
 Chasm_Carrier::Chasm_Carrier()
-  :  key_(), raw_value_(0)
+  :  key_(), raw_value_(0), type_object_(0)
 {
 
 }
