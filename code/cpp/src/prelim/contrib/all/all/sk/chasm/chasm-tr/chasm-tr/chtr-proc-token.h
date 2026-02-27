@@ -6,8 +6,8 @@
 
 
 
-#ifndef CHTR_SOURCE_TOKEN__H
-#define CHTR_SOURCE_TOKEN__H
+#ifndef CHTR_PROC_TOKEN__H
+#define CHTR_PROC_TOKEN__H
 
 
 #include "accessors.h"
@@ -26,16 +26,18 @@
 OTNS_(Chasm_TR)
 
 
-class ChTR_Source_Token
+class ChTR_Proc_Token
 {
  QString text_;
+ u2 infix_rank_;
 
 public:
 
 
- ChTR_Source_Token(QString text = {});
+ ChTR_Proc_Token(QString text = {}, u2 infix_rank = 0);
 
  ACCESSORS(QString ,text)
+ ACCESSORS(u2 ,infix_rank)
 
 
 };
@@ -43,7 +45,7 @@ public:
 _OTNS(Chasm_TR)
 
 
-#endif // CHTR_SOURCE_TOKEN__H
+#endif // CHTR_PROC_TOKEN__H
 
 
 

@@ -19,6 +19,7 @@ OTNS_(Chasm_TR)
 class ChTR_Node;
 
 class ChTR_Source_Token;
+class ChTR_Proc_Token;
 class ChTR_Type_Object;
 
 
@@ -54,6 +55,7 @@ public:
 
 
  caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Source_Token> token) const;
+ caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Proc_Token> token) const;
  caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Type_Object> cto) const;
 
 // caon_ptr<ChTR_Node> make_new_node(caon_ptr<RZ_Block_Level_Type_Declaration> blt) const;

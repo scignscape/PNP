@@ -6,8 +6,8 @@
 
 
 
-#ifndef CHTR_SOURCE_TOKEN__H
-#define CHTR_SOURCE_TOKEN__H
+#ifndef CHTR_EXPRESSION_ENTRY__H
+#define CHTR_EXPRESSION_ENTRY__H
 
 
 #include "accessors.h"
@@ -19,23 +19,26 @@
 #include <QFile>
 #include <QVector>
 
-//?#include "tsl/ordered_map.h"
-
 #include "global-types.h"
+
+#include "relae-graph/relae-caon-ptr.h"
 
 OTNS_(Chasm_TR)
 
+class ChTR_Node;
 
-class ChTR_Source_Token
+class ChTR_Expression_Entry
 {
- QString text_;
+ caon_ptr<ChTR_Node> proc_node_;
+ u2 infix_rank_;
 
 public:
 
 
- ChTR_Source_Token(QString text = {});
+ ChTR_Expression_Entry();
 
- ACCESSORS(QString ,text)
+ ACCESSORS(caon_ptr<ChTR_Node> ,proc_node)
+ ACCESSORS(u2 ,infix_rank)
 
 
 };
@@ -43,7 +46,7 @@ public:
 _OTNS(Chasm_TR)
 
 
-#endif // CHTR_SOURCE_TOKEN__H
+#endif // CHTR_EXPRESSION_ENTRY__H
 
 
 

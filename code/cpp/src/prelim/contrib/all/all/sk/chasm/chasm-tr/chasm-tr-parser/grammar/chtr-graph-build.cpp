@@ -29,6 +29,7 @@
 #include "chtr-node-factory.h"
 
 #include "chasm-tr/chtr-source-token.h"
+#include "chasm-tr/chtr-proc-token.h"
 
 #include "relae-graph/relae-caon-ptr.h"
 #include "relae-graph/relae-node-ptr.h"
@@ -50,7 +51,8 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,document_(d)
    ,graph_(g)
    ,parser_(p)
-   ,If(ChTR_Relae_Frame::instance("If"))
+   ,If(ChTR_Relae_Frame::instance("infix-frame"))
+   ,Sf(ChTR_Relae_Frame::instance("semantic-frame"))
    ,Qy(ChTR_Relae_Query::instance())
    ,node_factory_(ChTR_Node_Factory::instance())
    ,source_file_index_(0)
@@ -67,13 +69,18 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,string_lines_count_(0)
    ,current_nesting_depth_(0)
    ,current_parse_node_(nullptr)
-   ,held_operand_node_(nullptr)
+   ,current_left_operand_node_(nullptr)
+   ,current_right_operand_node_(nullptr)
    ,leftmost_infix_operator_node_(nullptr)
-   ,leftmost_infix_operator_node_(nullptr)
+   ,current_infix_operator_node_(nullptr)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
  current_source_file_ = new ChTR_Source_File;
+
+ infix_ranks_["+"] = 1;
+ infix_ranks_["//"] = 2;
+
  // acc << "\n"; cut();
 
 }
@@ -554,7 +561,7 @@ void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
 
 void ChTR_Graph_Build::infix_proc_name_node(QString token)
 {
- ChTR_Source_Token* stoken = new ChTR_Source_Token(token);
+ ChTR_Proc_Token* stoken = new ChTR_Proc_Token(token, infix_ranks_[token]);
  caon_ptr<ChTR_Node> node = node_factory_.make_new_node(stoken);
 
  if(leftmost_infix_operator_node_)

@@ -41,6 +41,9 @@ DOMINION_TYPE(code_statement, ChTR_Code_Statement, Code_Statement)
 DOMINION_TYPE(type_object, ChTR_Type_Object, Type_Object)
 
 DOMINION_TYPE(source_token, ChTR_Source_Token, Source_Token)
+DOMINION_TYPE(proc_token, ChTR_Proc_Token, Proc_Token)
+DOMINION_TYPE(expression_entry, ChTR_Expression_Entry, Expression_Entry)
+
 DOMINION_TYPE(lexical_symbol, ChTR_Lexical_Symbol, Lexical_Symbol)
 
 

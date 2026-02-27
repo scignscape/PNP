@@ -36,6 +36,8 @@ HEADERS += \
   $$SRC_DIR/chtr-channel-object.h \
   $$SRC_DIR/chtr-channel-package.h \
   $$SRC_DIR/chtr-source-token.h \
+  $$SRC_DIR/chtr-proc-token.h \
+  $$SRC_DIR/chtr-expression-entry.h \
   $$SRC_DIR/chtr-carrier.h \
   $$SRC_DIR/chtr-code-statement.h \
   $$SRC_DIR/chvm/chvm-code-generator.h \
@@ -51,6 +53,8 @@ SOURCES += \
   $$SRC_DIR/chtr-channel-object.cpp \
   $$SRC_DIR/chtr-channel-package.cpp \
   $$SRC_DIR/chtr-source-token.cpp \
+  $$SRC_DIR/chtr-proc-token.cpp \
+  $$SRC_DIR/chtr-expression-entry.cpp \
   $$SRC_DIR/chtr-carrier.cpp \
   $$SRC_DIR/chtr-code-statement.cpp \
   $$SRC_DIR/types/chtr-type-object.cpp \

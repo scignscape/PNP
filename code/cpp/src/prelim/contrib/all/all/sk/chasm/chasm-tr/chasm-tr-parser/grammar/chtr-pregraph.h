@@ -89,8 +89,8 @@ private:
 
  ChTR_Grammar* grammar_;
 
- ChTR_Relae_Frame& fr_;
- const ChTR_Relae_Query& qy_;
+// ChTR_Relae_Frame& fr_;
+// const ChTR_Relae_Query& qy_;
 
  QStringList acc_lines_;
 
