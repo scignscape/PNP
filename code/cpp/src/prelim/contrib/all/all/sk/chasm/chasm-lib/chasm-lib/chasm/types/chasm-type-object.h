@@ -94,6 +94,7 @@ public:
    dec *= 10;
    --count;
   }
+  val = new_val;
   return result;
  }
 

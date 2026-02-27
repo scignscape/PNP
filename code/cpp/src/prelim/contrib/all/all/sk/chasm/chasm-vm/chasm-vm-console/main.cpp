@@ -95,7 +95,7 @@ int main1(int argc, char *argv[])
  Chasm_Value_Holder cvh1(cto, 15);
  Chasm_Value_Holder cvh2(cto, 35);
 
- runner.run_core_proc("add2", cvh1, cvh2);
+// runner.run_core_proc("add2", cvh1, cvh2);
 
 }
 

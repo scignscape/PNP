@@ -120,36 +120,46 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
 
   runner_.run_core_proc(proc_name, rh, lhs, rhs);
 
+  Chasm_Carrier rcar;
+  rcar.set_hint("retv:" + proc_name);
+  rcar.set_type_flag(rh.type_object()->get_pretype_code());
+  rcar.set_type_object(rh.type_object());
+  rcar.set_value(rh.value());
+  current_call_package_->add_carrier("retv", rcar);
+  qDebug() << rcar.raw_value();
  }
- const QPair<CFC_Pair, _minimal_fn_type>& pr = *it;
- if(pr.first.first.convention == 0)
+ else
  {
-  if(pr.first.first.return_code == 0)
+  const QPair<CFC_Pair, _minimal_fn_type>& pr = *it;
+  if(pr.first.first.convention == 0)
   {
-   if(proc_name.contains("@>"))
+   if(pr.first.first.return_code == 0)
    {
-    Chasm_Carrier& cc = current_call_package_->channel("lambda")->first_carrier_ref();
-    QVector<QPair<QString, QVector<QVariant>>>* vptr =
-      current_call_package_->channel("qlambda")->coalesce_to_query(cc);
+    if(proc_name.contains("@>"))
+    {
+     Chasm_Carrier& cc = current_call_package_->channel("lambda")->first_carrier_ref();
+     QVector<QPair<QString, QVector<QVariant>>>* vptr =
+       current_call_package_->channel("qlambda")->coalesce_to_query(cc);
 
-    vptr->append({":_orig", {QVariant(string_lines_acc_)}});
+     vptr->append({":_orig", {QVariant(string_lines_acc_)}});
+    }
+    csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
    }
-   csr_->evaluate(current_call_package_, pr.first, pr.second.s0);
+   else
+   {
+    // //  normal run through channel package
+    Chasm_Carrier rcar;
+    rcar.set_hint("retv:" + proc_name);
+    rcar.set_type_flag(pr.first.first.return_code);
+    csr_->evaluate(current_call_package_, pr.first, pr.second.s0r1, &rcar);
+    current_call_package_->add_carrier("retv", rcar);
+    qDebug() << rcar.raw_value();
+   }
   }
-  else
+  else if(pr.first.first.convention == 1)
   {
-   // //  normal run through channel package
-   Chasm_Carrier rcar;
-   rcar.set_hint("retv:" + proc_name);
-   rcar.set_type_flag(pr.first.first.return_code);
-   csr_->evaluate(current_call_package_, pr.first, pr.second.s0r1, &rcar);
-   current_call_package_->add_carrier("retv", rcar);
-   qDebug() << rcar.raw_value();
+   csr_->evaluate(current_call_package_, pr.first, pr.second.s1);
   }
- }
- else if(pr.first.first.convention == 1)
- {
-  csr_->evaluate(current_call_package_, pr.first, pr.second.s1);
  }
 }
 
