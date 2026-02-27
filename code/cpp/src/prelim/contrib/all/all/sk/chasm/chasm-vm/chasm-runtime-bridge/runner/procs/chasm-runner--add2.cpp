@@ -37,6 +37,10 @@ void add2(Chasm_Result_Holder& rh, u1 type_codes, n8 lhs, n8 rhs)
  case 21:
  case 22: rh.type_uors2(signed_mask).set_value((u2) add_4()); break;
 
+ case 12:
+ case 21:
+ case 22: rh.type_uors2(signed_mask).set_value((u2) add_4()); break;
+
  default: break;
 
 
