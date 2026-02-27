@@ -171,7 +171,7 @@ private:
  caon_ptr<ChTR_Node> current_parse_node_;
  caon_ptr<ChTR_Node> current_left_operand_node_;
  caon_ptr<ChTR_Node> current_right_operand_node_;
- caon_ptr<ChTR_Node> leftmost_infix_operator_node_;
+ caon_ptr<ChTR_Node> topmost_infix_operator_node_;
  caon_ptr<ChTR_Node> current_infix_operator_node_;
 
  QMap<QString, u2> infix_ranks_;

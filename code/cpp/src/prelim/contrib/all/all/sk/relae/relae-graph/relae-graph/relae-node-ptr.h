@@ -354,6 +354,11 @@ public:
   targets_[fr].insert(caon_ptr<Connectors_type>(&connector), target);
  }
 
+ void detach(Frame_type* fr, const Connectors_type& connector, Node_Caon_type target)
+ {
+  targets_[fr].remove(caon_ptr<Connectors_type>(&connector), target);
+ }
+
  void connect(Frame_type* fr, const Connectors_type& connector, Connection_Caon_type connection, Node_Caon_type target)
  {
   annotated_targets_[fr].insert(caon_ptr<Connectors_type>(&connector), {connection, target});

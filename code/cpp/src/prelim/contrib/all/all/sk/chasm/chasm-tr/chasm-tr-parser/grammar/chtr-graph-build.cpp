@@ -45,6 +45,12 @@ USING_KANS(TextIO)
 
 USING_OTNS(Chasm_TR)
 
+#define in_If If,
+#define in_Sf Sf,
+
+#define from_If &If,
+#define from_Sf &Sf,
+
 
 ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g)
  : Flags(0)
@@ -71,7 +77,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_parse_node_(nullptr)
    ,current_left_operand_node_(nullptr)
    ,current_right_operand_node_(nullptr)
-   ,leftmost_infix_operator_node_(nullptr)
+   ,topmost_infix_operator_node_(nullptr)
    ,current_infix_operator_node_(nullptr)
 {
  current_lexical_scope_ = &file_lexical_scope_;
@@ -544,37 +550,53 @@ void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
  if(current_infix_operator_node_)
  {
   current_infix_operator_node_ << If/Qy.Infix_Right_Operand >> node;
-  node << If/Qy.Infix_From_Right_Operand >> node;
-  current_infix_operator_node_ = nullptr;
+  node << If/Qy.Infix_From_Right_Operand >> current_infix_operator_node_;
+  current_right_operand_node_ = node;
  }
 
- else if(held_operand_node_)
- {
-  //?
- }
- else
- {
-  held_operand_node_ = node;
- }
+// else if(held_operand_node_)
+// {
+//  //?
+// }
+// else
+// {
+//  held_operand_node_ = node;
+// }
 
 }
 
 void ChTR_Graph_Build::infix_proc_name_node(QString token)
 {
- ChTR_Proc_Token* stoken = new ChTR_Proc_Token(token, infix_ranks_[token]);
- caon_ptr<ChTR_Node> node = node_factory_.make_new_node(stoken);
+ ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(token, infix_ranks_[token]);
+ caon_ptr<ChTR_Node> node = node_factory_.make_new_node(ptoken);
 
- if(leftmost_infix_operator_node_)
+ if(current_right_operand_node_)
  {
+  if(caon_ptr<ChTR_Source_Token> stoken = current_right_operand_node_->source_token())
+  {
+   caon_ptr<ChTR_Node> proc_node = Qy.Infix_From_Right_Operand(in_If current_right_operand_node_);
+   if(caon_ptr<ChTR_Proc_Token> oper = proc_node->proc_token())
+   {
+    if(ptoken->infix_rank() > oper->infix_rank())
+    {
+     // //   the new operator claims the operand
+     proc_node->detach(from_If Qy.Infix_Right_Operand, current_right_operand_node_);
 
+    }
+   }
+  }
+  else if(caon_ptr<ChTR_Expression_Entry> expr = current_right_operand_node_->expression_entry())
+  {
+
+  }
  }
  else
  {
-  leftmost_infix_operator_node_ = node;
+  node << If/Qy.Infix_Left_Operand >> current_left_operand_node_;
+  current_left_operand_node_ << If/Qy.Infix_From_Left_Operand >> node;
+  current_infix_operator_node_ = node;
+  topmost_infix_operator_node_ = node;
  }
- node << If/Qy.Infix_Left_Operand >> held_operand_node_;
- held_operand_node_ << If/Qy.Infix_From_Left_Operand >> node;
- current_infix_operator_node_ = node;
 }
 
 void ChTR_Graph_Build::enter_infix_mode()
