@@ -22,6 +22,10 @@
 
 #include "codegen/chtr-chvm-generator.h"
 
+#include "chasm-tr/runner/chasm-runner.h"
+
+#include "chasm-lib/chasm/types/chasm-type-system.h"
+
 #include <QStack>
 
 
@@ -131,6 +135,8 @@ private:
  ChTR_Node* current_statement_level_node_;
 
  ChTR_Type_System type_system_;
+ Chasm_Type_System chasm_type_system_;
+
 
  u4 current_line_number_;
 
@@ -181,6 +187,8 @@ private:
  u2 string_lines_count_;
 
  u2 current_nesting_depth_;
+
+ Chasm_Runner runner_;
 
 public:
 

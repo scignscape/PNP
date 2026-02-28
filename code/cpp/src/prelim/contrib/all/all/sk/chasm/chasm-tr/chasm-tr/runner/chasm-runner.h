@@ -38,6 +38,8 @@ class Chasm_Value_Holder;
 class Chasm_Result_Holder;
 class Chasm_Type_System;
 
+class ChTR_Node;
+
 
 class Chasm_Runner
 {
@@ -65,12 +67,16 @@ class Chasm_Runner
 
 public:
 
- Chasm_Runner(Chasm_Type_System* type_system);
+ Chasm_Runner(Chasm_Type_System* type_system = nullptr);
+
+ ACCESSORS(Chasm_Type_System* ,type_system)
 
  Chasm_Run_Router::Known_Procedure_Codes get_proc_code(QString proc);
 
  void run_core_proc(QString proc_name, Chasm_Result_Holder& rh, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs);
 
+ void run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
+   caon_ptr<ChTR_Node> lhs, caon_ptr<ChTR_Node> rhs);
 
 };
 

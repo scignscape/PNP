@@ -38,8 +38,8 @@ void Chasm_Runner::init()
  known_procedures_ << "add2" << "mult2" << "div2" << "ratio2";
  known_procedure_map_["+"] = "add2";
  known_procedure_map_["*"] = "mult2";
- known_procedure_map_["%/"] = "div2";
- known_procedure_map_["//"] = "ratio2";
+ known_procedure_map_["//"] = "div2";
+ known_procedure_map_["/"] = "ratio2";
 }
 
 Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc)
@@ -49,6 +49,12 @@ Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc
  return (Chasm_Run_Router::Known_Procedure_Codes) (result + 1);
 }
 
+
+void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
+  caon_ptr<ChTR_Node> lhs, caon_ptr<ChTR_Node> rhs)
+{
+
+}
 
 void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
 {

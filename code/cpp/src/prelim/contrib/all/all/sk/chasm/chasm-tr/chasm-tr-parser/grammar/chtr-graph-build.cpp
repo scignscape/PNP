@@ -84,6 +84,8 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
 
  current_source_file_ = new ChTR_Source_File;
 
+ runner_.set_type_system(&chasm_type_system_);
+
  infix_ranks_["+"] = 1;
  infix_ranks_["//"] = 2;
 
@@ -542,7 +544,9 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
   CAON_DEBUG_NOOP
  }
 
- CAON_DEBUG_NOOP
+ Chasm_Result_Holder left_rh(&chasm_type_system_);
+
+ runner_.run_core_proc("write-operand-lhs", left_rh, operator_node, loperand_node);
 
 }
 
