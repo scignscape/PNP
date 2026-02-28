@@ -517,8 +517,56 @@ void ChTR_Graph_Build::expression_to_expression()
    .dissolve({"pop-proc-name", "pull-call-package"});
 }
 
+
+void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
+{
+ CAON_PTR_DEBUG(ChTR_Node ,operator_node)
+ operator_node->debug_connections();
+
+
+ caon_ptr<ChTR_Node> loperand_node = Qy.Infix_Left_Operand(in_If operator_node);
+ caon_ptr<ChTR_Node> roperand_node = Qy.Infix_Right_Operand(in_If operator_node);
+
+ CAON_PTR_DEBUG(ChTR_Node ,loperand_node)
+ CAON_PTR_DEBUG(ChTR_Node ,roperand_node)
+
+ if(caon_ptr<ChTR_Source_Token> ltoken = loperand_node->source_token())
+ {
+  CAON_PTR_DEBUG(ChTR_Source_Token ,ltoken)
+  CAON_DEBUG_NOOP
+ }
+
+ if(caon_ptr<ChTR_Source_Token> rtoken = roperand_node->source_token())
+ {
+  CAON_PTR_DEBUG(ChTR_Source_Token ,rtoken)
+  CAON_DEBUG_NOOP
+ }
+
+ CAON_DEBUG_NOOP
+
+}
+
+void ChTR_Graph_Build::check_resolve_infix_tree()
+{
+ if(!topmost_infix_operator_node_)
+   return;
+
+ CAON_PTR_DEBUG(ChTR_Node ,topmost_infix_operator_node_)
+
+ caon_ptr<ChTR_Proc_Token> proc_token = topmost_infix_operator_node_->proc_token();
+
+ CAON_PTR_DEBUG(ChTR_Proc_Token ,proc_token)
+
+ write_infix_expression(topmost_infix_operator_node_);
+
+
+
+}
+
 void ChTR_Graph_Build::resolve_statement()
 {
+ check_resolve_infix_tree();
+
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_Lambda:
@@ -547,11 +595,17 @@ void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
  ChTR_Source_Token* stoken = new ChTR_Source_Token(symbol);
  caon_ptr<ChTR_Node> node = node_factory_.make_new_node(stoken);
 
+ node->set_hint("st:" + symbol);
+
  if(current_infix_operator_node_)
  {
   current_infix_operator_node_ << If/Qy.Infix_Right_Operand >> node;
   node << If/Qy.Infix_From_Right_Operand >> current_infix_operator_node_;
   current_right_operand_node_ = node;
+ }
+ else
+ {
+  current_left_operand_node_ = node;
  }
 
 // else if(held_operand_node_)
@@ -570,17 +624,37 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
  ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(token, infix_ranks_[token]);
  caon_ptr<ChTR_Node> node = node_factory_.make_new_node(ptoken);
 
+ node->set_hint("pt:" + token);
+
+
  if(current_right_operand_node_)
  {
   if(caon_ptr<ChTR_Source_Token> stoken = current_right_operand_node_->source_token())
   {
+   CAON_PTR_DEBUG(ChTR_Source_Token ,stoken)
    caon_ptr<ChTR_Node> proc_node = Qy.Infix_From_Right_Operand(in_If current_right_operand_node_);
+   CAON_PTR_DEBUG(ChTR_Node ,proc_node)
    if(caon_ptr<ChTR_Proc_Token> oper = proc_node->proc_token())
    {
+    CAON_PTR_DEBUG(ChTR_Proc_Token ,oper)
     if(ptoken->infix_rank() > oper->infix_rank())
     {
+     proc_node->debug_connections();
+
      // //   the new operator claims the operand
      proc_node->detach(from_If Qy.Infix_Right_Operand, current_right_operand_node_);
+     proc_node->debug_connections();
+
+     current_right_operand_node_->detach(from_If Qy.Infix_From_Right_Operand, proc_node);
+     proc_node << If/Qy.Infix_Right_Operand >> node;
+     proc_node->debug_connections();
+
+
+     node << If/Qy.Infix_From_Right_Operand >> proc_node;
+     node << If/Qy.Infix_Left_Operand >> current_right_operand_node_;
+     current_right_operand_node_ << If/Qy.Infix_Left_Operand >> node;
+     current_left_operand_node_ = current_right_operand_node_;
+     current_right_operand_node_ = node;
 
     }
    }
@@ -594,9 +668,10 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
  {
   node << If/Qy.Infix_Left_Operand >> current_left_operand_node_;
   current_left_operand_node_ << If/Qy.Infix_From_Left_Operand >> node;
-  current_infix_operator_node_ = node;
   topmost_infix_operator_node_ = node;
  }
+ current_infix_operator_node_ = node;
+
 }
 
 void ChTR_Graph_Build::enter_infix_mode()

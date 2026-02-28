@@ -221,6 +221,10 @@ public:
  void enter_expression();
  void enter_statement();
 
+ void check_resolve_infix_tree();
+ void write_infix_expression(caon_ptr<ChTR_Node> operator_node);
+
+
  void enter_infix_mode();
 
  void expression_proc_name(QString token);

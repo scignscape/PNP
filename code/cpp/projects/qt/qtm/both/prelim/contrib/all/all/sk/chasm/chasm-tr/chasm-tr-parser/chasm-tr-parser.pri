@@ -31,6 +31,8 @@ CONFIG += no_keywords
 DEFINES += USE_KANS
 DEFINES += USE_OTNS
 
+DEFINES += CAON_DEBUG
+
 
 
 HEADERS += \

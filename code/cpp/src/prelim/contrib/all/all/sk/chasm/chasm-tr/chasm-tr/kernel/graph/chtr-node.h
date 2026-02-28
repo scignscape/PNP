@@ -30,6 +30,8 @@ class ChTR_Channel_Object;
 
 class ChTR_Node : public node_ptr<ChTR_Dominion>
 {
+ QString hint_;
+
 public:
  #define DOMINION_TYPE DOMINION_NODE_CONSTRUCTOR
 //? #define DOMINION_HIDE_NO_NAMESPACE
@@ -41,6 +43,9 @@ public:
 // #undef DOMINION_HIDE_NO_NAMESPACE
  #undef DOMINION_INNER_NAMESPACE
 
+ ACCESSORS(QString ,hint)
+
+ void debug_connections() const;
 };
 
 _OTNS(Chasm_TR)
