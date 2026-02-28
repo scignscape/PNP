@@ -23,7 +23,6 @@ INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
 
 
 INCLUDEPATH += $$SRC_GROUP_DIR/chasm-tr
-message($$SRC_GROUP_DIR/chasm-tr)
 
 
 CONFIG += no_keywords

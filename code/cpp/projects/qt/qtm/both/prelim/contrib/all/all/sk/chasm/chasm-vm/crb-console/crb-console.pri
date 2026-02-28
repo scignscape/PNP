@@ -40,6 +40,9 @@ INCLUDEPATH += $$ROOT_DIR
 INCLUDEPATH += $$RELAE_GRAPH_SRC_GROUP_DIR
 INCLUDEPATH += $$PHAON_GRAPH_SRC_GROUP_DIR
 
+# INCLUDEPATH += $$CHASM_TR_SRC_GROUP_DIR
+INCLUDEPATH += $$SRC_PROSET_DIR/chasm-tr
+
 
 HEADERS += \
 
@@ -50,7 +53,7 @@ SOURCES += \
 
 
 
-LIBS += -L$$TARGETSDIR -lchasm-runtime-bridge -lchasm-vm  -lchasm-procedure-table \
+LIBS += -L$$TARGETSDIR -lchasm-runtime-bridge  -lchasm-tr -lchasm-vm  -lchasm-procedure-table \
   -lchasm-lib -lchasm-lib-X1 -lchasm-lib-X2 \
   -lchasm-lib-33 -lchasm-lib-43
 

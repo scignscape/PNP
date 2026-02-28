@@ -35,7 +35,7 @@
 
 #include "chasm-procedure-table/chasm-procedure-table.h"
 
-#include "runner/chasm-runner.h"
+#include "chasm-tr/runner/chasm-runner.h"
 
 
 OTNS_(Chasm_TR)

@@ -41,7 +41,7 @@ SOURCES += \
   $$SRC_DIR/main.cpp \
 
 
-LIBS += -L$$TARGETSDIR -lchasm-tr  -lchasm-tr-parser
+LIBS += -L$$TARGETSDIR -lchasm-tr  -lchasm-lib -lchasm-tr-parser
 
 
 #  these are not needed if the demo for this project only concerns emitting chvm

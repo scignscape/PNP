@@ -82,7 +82,7 @@ void run_tr(QString file_path)
  qDebug() << "You can now run " << chvm_path;
 }
 
-#include "chasm-runtime-bridge/runner/chasm-runner.h"
+#include "chasm-tr/runner/chasm-runner.h"
 
 int main1(int argc, char *argv[])
 {
