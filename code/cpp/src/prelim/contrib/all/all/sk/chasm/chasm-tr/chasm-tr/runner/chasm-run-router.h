@@ -44,6 +44,18 @@ class Chasm_Runtime_Bridge;
 template<ASG_Proc_Family PFam>
 struct ASG_Proc_Family_;
 
+struct ASG_Type_Not_Set
+{
+};
+
+template<int Code>
+struct ASG_Run_Type
+{
+ typedef ASG_Type_Not_Set Type;
+ static const ASG_Type_Family Type_Family = ASG_Type_Family::Internal;
+
+};
+
 
 class Chasm_Run_Router
 {
@@ -120,6 +132,14 @@ public:
  };
 
  struct Raw_Token_Marker
+ {
+ };
+
+ struct Arity_1
+ {
+ };
+
+ struct Arity_2
  {
  };
 
@@ -223,6 +243,20 @@ public:
    > Type;
   };
 
+  template<typename NEW_RUN_Type>
+  struct Swap_LHS
+  {
+   typedef Cast_Schedule<Proc_Family,
+    Core_Function_Code, Type_Family, NEW_RUN_Type, RHS_Type> Type;
+  };
+
+  template<typename NEW_RUN_Type>
+  struct Swap_RHS
+  {
+   typedef Cast_Schedule<Proc_Family,
+    Core_Function_Code, Type_Family, LHS_Type, NEW_RUN_Type> Type;
+  };
+
   template<typename NEW_RUN_Type, ASG_Type_Family TFam>
   struct Next_Schedule_Point<LHS_Cast_Marker, NEW_RUN_Type, TFam>
   {
@@ -257,6 +291,25 @@ public:
   struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, TFam, true>
   {
    static const ASG_Type_Family Type_Family = TFam;
+
+   static void ttest(Chasm_Result_Holder& rh)
+   {
+
+   }
+
+
+   template<typename ARG1_Type, typename ARG2_Type>
+   static void run(Chasm_Result_Holder& rh, ARG1_Type& arg1, ARG2_Type& arg2)
+   {
+    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+
+    switch((int) CAST_SCHED_Type::Core_Function_Code)
+    {
+    case 5:
+     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template
+       run<ARG1_Type, ARG2_Type>(rh, arg1, arg2); break;
+    }
+   }
 
    static void run(Chasm_Result_Holder& rh, Chasm_Value_Holder& v1, Chasm_Value_Holder& v2)
    {
@@ -343,6 +396,51 @@ public:
 
 #undef RZ_TEMP_CASE
 
+  template<typename CAST_SCHED_Type, ASG_Type_Family TFam>
+  struct Runner<CAST_SCHED_Type, RHS_Cast_Marker, TFam>
+  {
+   template<int Code, ASG_Type_Family TFam1>
+   struct Next_Runner
+   {
+    typedef typename Next_Schedule_Point<RHS_Cast_Marker, typename ASG_Run_Type<Code>::Type,
+     ASG_Type_Family::Internal>::Type::  //ASG_Type_Families::merge(Fam, Fam1) >::Type::
+     template Runner<This_Cast_Schedule_type, Proc_Family_Type,
+      ASG_Type_Family::Internal //RZ_Type_Families::merge(Fam, Fam1)
+     > Type;
+   };
+
+
+//   static void ttest(Chasm_Result_Holder& rh,
+//     typename CAST_SCHED_Type::LHS_type& arg1, )
+//   {
+
+//   }
+
+//   template<typename ARG1_Type>
+   static void run(Chasm_Result_Holder& rh, typename CAST_SCHED_Type::LHS_type& arg1, ChTR_Node& n2)
+   {
+    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+
+    switch(n2.type_code())
+    {
+    case ChTR_Dominion::Type_Codes::Source_Token:
+     typedef typename CAST_SCHED_Type::Swap_RHS<ChTR_Source_Token>::Type NEW_CAST_SCHED_Type;
+     Runner<NEW_CAST_SCHED_Type, Arity_2, TFam>::run(rh, arg1, *n2.source_token());
+
+
+//     Next_Runner<(int)ChTR_Dominion::Type_Codes::Source_Token, ASG_Type_Family::Internal>::Type // TFam>::Type
+//       ::run(rh, arg1, n2.source_token());
+
+
+     //       , RHS_Cast_Marker,
+
+     break;
+    }
+
+   }
+
+
+  };
 
   template<typename CAST_SCHED_Type, ASG_Type_Family TFam>
   struct Runner<CAST_SCHED_Type, LHS_Cast_Marker, TFam>
@@ -350,24 +448,58 @@ public:
    template<int Code, ASG_Type_Family TFam1>
    struct Next_Runner
    {
-//    typedef typename Next_Schedule_Point<LHS_Cast_Marker, typename RZ_Run_Type<Code>::Type, Fam1>::Type::
-//     template Runner
-//     <
-//      This_Cast_Schedule_type,
-//      typename If_Then_Else
-//      <
-//       Is_Cast_Needed<RHS_Type>::Value, RHS_Cast_Marker,
-//       Core_Function_Family_Type
-//      >::Type, Fam1
-//     > Type;
+    typedef typename Next_Schedule_Point<LHS_Cast_Marker, typename ASG_Run_Type<Code>::Type, TFam1>::Type::
+     template Runner
+     <
+      This_Cast_Schedule_type,
+      typename If_Then_Else
+      <
+       Is_Cast_Needed<RHS_Type>::Value, RHS_Cast_Marker,
+       Proc_Family_Type
+      >::Type, TFam1
+     > Type;
    };
 
    static void run(Chasm_Result_Holder& rh, ChTR_Node& n1, ChTR_Node& n2)
    {
     auto cfc = CAST_SCHED_Type::Core_Function_Code;
 
+    switch(n1.type_code())
+    {
+    case ChTR_Dominion::Type_Codes::Source_Token:
+      break;
+//     Next_Runner<(int)ChTR_Dominion::Type_Codes::Source_Token, ASG_Type_Family::Internal>::Type // TFam>::Type
+//       ::ttest(rh);   //run(rh, n1.source_token(), n2);
+
+    case ChTR_Dominion::Type_Codes::Proc_Token:
+     typedef typename CAST_SCHED_Type::Swap_LHS<ChTR_Proc_Token>::Type NEW_CAST_SCHED_Type;
+     Runner<NEW_CAST_SCHED_Type, RHS_Cast_Marker, TFam>::run(rh, *n1.proc_token(), n2);
+//     Runner<CAST_SCHED_Type, RHS_Cast_Marker, TFam>::ttest(rh);
+
+//     Next_Runner<(int)ChTR_Dominion::Type_Codes::Proc_Token, ASG_Type_Family::Internal>::Type // TFam>::Type
+//       ::ttest(rh);   //run(rh, n1.source_token(), n2);
+
+
+//     Cast_Schedule<Proc_Family,
+//        Core_Function_Code, TFam, ChTR_Source_Token, NEW_RUN_Type>
+       break;
+
+
+//       , RHS_Cast_Marker,
+
+     break;
+    }
+
    }
   };
+
+
+
+//  template<typename LHS_type>
+//  static void run(Chasm_Result_Holder& rh, LHS_type lhs, ChTR_Node& n2)
+//  {
+
+//  }
 
 
  };
