@@ -14,6 +14,7 @@
 #include "relae-graph/relae-caon-ptr.h"
 
 #include "graph-run/call/asg-call-v-v.h"
+#include "graph-run/call/asg-call-c-c.h"
 
 
 USING_OTNS(Chasm_TR)

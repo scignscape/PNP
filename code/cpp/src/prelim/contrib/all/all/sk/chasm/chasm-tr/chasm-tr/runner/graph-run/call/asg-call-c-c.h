@@ -16,7 +16,7 @@
 
 #include "../../chasm-value-holder.h"
 
-#include "../../procs/chasm-runner--procs2.h"
+//#include "../../procs/chasm-runner--procs2.h"
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
@@ -51,11 +51,11 @@ _ASG_PROC_CODES
 #define ASG_GCALL_IMPLEMENT template<> struct ASG_Proc_Run
 
 ASG_GCALL_IMPLEMENT
-<ASG_GCALL_VV(Write_Operand_LHS, Internal)>
+<ASG_GCALL_CC(Write_Operand_LHS, Internal)>
 {
  template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
-  ChTR_Symbol_Token& symbol)
+  ChTR_Source_Token& symbol)
  {
 
  }

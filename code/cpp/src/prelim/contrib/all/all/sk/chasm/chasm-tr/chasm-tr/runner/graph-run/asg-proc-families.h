@@ -33,6 +33,9 @@ enum class ASG_Type_Family {
 #define ASG_GCALL_VV(name, fam) ASG_Graph_Call_VV, \
  ASG_Proc_Family_<ASG_Graph_Call_VV>::name, ASG_Type_Family::fam
 
+#define ASG_GCALL_CC(name, fam) ASG_Graph_Call_CC, \
+ ASG_Proc_Family_<ASG_Graph_Call_CC>::name, ASG_Type_Family::fam
+
 
 template<ASG_Proc_Family apf, u2 i, ASG_Type_Family TFam>
 struct ASG_Proc_Run

@@ -292,12 +292,6 @@ public:
   {
    static const ASG_Type_Family Type_Family = TFam;
 
-   static void ttest(Chasm_Result_Holder& rh)
-   {
-
-   }
-
-
    template<typename ARG1_Type, typename ARG2_Type>
    static void run(Chasm_Result_Holder& rh, ARG1_Type& arg1, ARG2_Type& arg2)
    {
@@ -472,9 +466,14 @@ public:
 //       ::ttest(rh);   //run(rh, n1.source_token(), n2);
 
     case ChTR_Dominion::Type_Codes::Proc_Token:
+
+//     typedef typename Next_Runner<(int)ChTR_Dominion::Type_Codes::Source_Token, ASG_Type_Family::Internal>::Type NEW_CAST_SCHED_Type;
+//     NEW_CAST_SCHED_Type::run(rh, *n1.proc_token(), n2);
+
      typedef typename CAST_SCHED_Type::Swap_LHS<ChTR_Proc_Token>::Type NEW_CAST_SCHED_Type;
      Runner<NEW_CAST_SCHED_Type, RHS_Cast_Marker, TFam>::run(rh, *n1.proc_token(), n2);
-//     Runner<CAST_SCHED_Type, RHS_Cast_Marker, TFam>::ttest(rh);
+
+     //     Runner<CAST_SCHED_Type, RHS_Cast_Marker, TFam>::ttest(rh);
 
 //     Next_Runner<(int)ChTR_Dominion::Type_Codes::Proc_Token, ASG_Type_Family::Internal>::Type // TFam>::Type
 //       ::ttest(rh);   //run(rh, n1.source_token(), n2);
