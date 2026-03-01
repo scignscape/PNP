@@ -45,7 +45,8 @@ class Chasm_Runner
 {
 
  enum class Known_Procedure_Codes {
-  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4
+  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4,
+  Write_Operand_LHS = 5, Write_Operand_RHS = 6
  };
 
  enum class Known_Procedure_Families {
@@ -63,6 +64,10 @@ class Chasm_Runner
  template<ASG_Proc_Family>
  static void run(Chasm_Result_Holder& rh, Chasm_Run_Router::Known_Procedure_Codes proc_code,
   Chasm_Value_Holder& v1, Chasm_Value_Holder& v2);
+
+ template<ASG_Proc_Family>
+ static void run(Chasm_Result_Holder& rh, Chasm_Run_Router::Known_Procedure_Codes proc_code,
+   caon_ptr<ChTR_Node> n1, caon_ptr<ChTR_Node> n2);
 
 
 public:

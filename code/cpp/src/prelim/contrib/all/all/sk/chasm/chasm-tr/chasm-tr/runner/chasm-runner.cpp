@@ -36,10 +36,14 @@ Chasm_Runner::Chasm_Runner(Chasm_Type_System* type_system)
 void Chasm_Runner::init()
 {
  known_procedures_ << "add2" << "mult2" << "div2" << "ratio2";
+
  known_procedure_map_["+"] = "add2";
  known_procedure_map_["*"] = "mult2";
  known_procedure_map_["//"] = "div2";
  known_procedure_map_["/"] = "ratio2";
+
+ known_procedure_map_["write-operand-lhs"] = "write_operand_lhs";
+
 }
 
 Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc)
@@ -53,6 +57,10 @@ Chasm_Run_Router::Known_Procedure_Codes Chasm_Runner::get_proc_code(QString proc
 void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
   caon_ptr<ChTR_Node> lhs, caon_ptr<ChTR_Node> rhs)
 {
+
+ Chasm_Run_Router::Known_Procedure_Codes kpc = get_proc_code(proc_name);
+
+ run<ASG_Proc_Family::ASG_Graph_Call_CC>(rh, kpc, lhs, rhs);
 
 }
 

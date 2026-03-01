@@ -60,6 +60,8 @@ HEADERS += \
   $$SRC_DIR/runner/graph-run/asg-proc-families.h \
   $$SRC_DIR/runner/graph-run/call/asg-call-v-v.h \
   $$SRC_DIR/runner/graph-run/call/asg-proc-v-v.h \
+  $$SRC_DIR/runner/graph-run/call/asg-call-c-c.h \
+  $$SRC_DIR/runner/graph-run/call/asg-proc-c-c.h \
 
 
 

@@ -31,6 +31,8 @@
 
 #include "graph-run/asg-proc-families.h"
 
+#include "kernel/graph/chtr-node.h"
+
 
 OTNS_(Chasm_TR)
 
@@ -48,7 +50,8 @@ class Chasm_Run_Router
 public:
 
  enum class Known_Procedure_Codes {
-  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4
+  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4,
+  Write_Operand_LHS = 5, Write_Operand_RHS = 6
  };
 
 // enum class ASG_Proc_Family {
@@ -77,10 +80,6 @@ private:
 // _CHASM_FUNCTION_CODES
 
 
- struct No_Cast_Needed
- {
- };
-
  struct Cast_Needed
  {
  };
@@ -88,6 +87,13 @@ private:
  struct Cast_Copy
  {
  };
+
+public:
+
+ struct No_Cast_Needed
+ {
+ };
+
 
  struct LHS_Cast_Marker
  {
@@ -116,6 +122,8 @@ private:
  struct Raw_Token_Marker
  {
  };
+
+private:
 
  template<typename T>
  struct Is_Cast_Needed
@@ -248,6 +256,38 @@ public:
   template<typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, ASG_Type_Family TFam>
   struct Runner<CAST_SCHED_Type, ARITY_FAMILY_Type, TFam, true>
   {
+   static const ASG_Type_Family Type_Family = TFam;
+
+   static void run(Chasm_Result_Holder& rh, Chasm_Value_Holder& v1, Chasm_Value_Holder& v2)
+   {
+    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+
+    switch((int) CAST_SCHED_Type::Core_Function_Code)
+    {
+    case 1:
+//     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template run<T1, T2>(rh, v1, v1); break;
+     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template
+       run<Chasm_Value_Holder, Chasm_Value_Holder>(rh, v1, v1); break;
+    }
+   }
+
+//   static void run(Chasm_Result_Holder& rh, ChTR_Node& n1, ChTR_Node& n2)
+//   {
+//    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+
+//    switch((int) CAST_SCHED_Type::Core_Function_Code)
+//    {
+//    case 5:
+////?     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template run<T1, T2>(rh, n1, n1); break;
+//     ASG_Proc_Run<PROC_Family, 5, Type_Family>::run(rh, n1, n1); break;
+//    }
+//   }
+
+
+#ifdef HIDE
+//   static const RZ_ASG_Function_Family Family_Code = Proc_Family;
+//   static const RZ_Type_Families::Enum Type_Family = TFam;
+
 //   static const RZ_ASG_Function_Family Family_Code =
 //    RZ_Get_Family_Code<ARITY_FAMILY_Type>::Value ;
 
@@ -288,7 +328,8 @@ public:
     {
     case 1:
 //     ASG_Proc_Run<Family_Code, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
-     ASG_Proc_Run<ASG_Graph_Call_VV, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
+//     ASG_Proc_Run<ASG_Graph_Call_VV, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
+     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template run<T1, T2>(rh, *t1, *t2); break;
 //     ASG_Proc_Run<ASG_Graph_Call_VV, 1, Type_Family>::test(rh); break;
 
 
@@ -296,11 +337,51 @@ public:
 //     RZ_TEMP_CASES__FUNCTION_CODE
     }
    }
+
+#endif
   };
 
 #undef RZ_TEMP_CASE
+
+
+  template<typename CAST_SCHED_Type, ASG_Type_Family TFam>
+  struct Runner<CAST_SCHED_Type, LHS_Cast_Marker, TFam>
+  {
+   template<int Code, ASG_Type_Family TFam1>
+   struct Next_Runner
+   {
+//    typedef typename Next_Schedule_Point<LHS_Cast_Marker, typename RZ_Run_Type<Code>::Type, Fam1>::Type::
+//     template Runner
+//     <
+//      This_Cast_Schedule_type,
+//      typename If_Then_Else
+//      <
+//       Is_Cast_Needed<RHS_Type>::Value, RHS_Cast_Marker,
+//       Core_Function_Family_Type
+//      >::Type, Fam1
+//     > Type;
+   };
+
+   static void run(Chasm_Result_Holder& rh, ChTR_Node& n1, ChTR_Node& n2)
+   {
+    auto cfc = CAST_SCHED_Type::Core_Function_Code;
+
+   }
+  };
+
+
  };
 
+// template<Known_Procedure_Codes KPC>//typename CAST_SCHED_Type, typename ARITY_FAMILY_Type, ASG_Type_Family TFam>
+// void Chasm_Run_Router::Cast_Schedule<
+//   ASG_Graph_Call_CC,
+//   KPC,
+//   ASG_Type_Family::Internal, Cast_Needed, Cast_Needed, Cast_Null_Marker>
+//   ::run(Chasm_Result_Holder& rh, ChTR_Node& n1, ChTR_Node& n2)
+//  {
+
+//  }
+// };
 
 #ifdef HIDE
 
