@@ -16,8 +16,6 @@
 
 #include "global-types.h"
 
-#include "grammar/chtr-parse-context.h"
-
 #include "kernel/graph/chtr-graph.h"
 
 #include "types/chtr-type-system.h"

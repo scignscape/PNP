@@ -60,9 +60,26 @@ void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
 
  Chasm_Run_Router::Known_Procedure_Codes kpc = get_proc_code(proc_name);
 
- run<ASG_Proc_Family::ASG_Graph_Call_CC>(rh, kpc, lhs, rhs);
+ if(kpc == Chasm_Run_Router::Known_Procedure_Codes::Write_Statement)
+   run<ASG_Proc_Family::ASG_Graph_Call_NC>(rh, kpc, lhs, rhs);
+
+ else
+   run<ASG_Proc_Family::ASG_Graph_Call_CC>(rh, kpc, lhs, rhs);
 
 }
+
+
+
+//void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
+//  ChTR_Node& lhs, caon_ptr<ChTR_Node> rhs)
+//{
+
+// Chasm_Run_Router::Known_Procedure_Codes kpc = get_proc_code(proc_name);
+
+// run<ASG_Proc_Family::ASG_Graph_Call_NC>(rh, kpc, lhs, rhs);
+
+//}
+
 
 void Chasm_Runner::run_core_proc(QString proc_name, Chasm_Result_Holder& rh, Chasm_Value_Holder& lhs, Chasm_Value_Holder& rhs)
 {

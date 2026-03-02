@@ -387,9 +387,13 @@ void ChTR_Pregraph::non_anchored_call(QString pre, QString proc_name, QPair<s4, 
   string_lines_start_ = pre_pos.first;
   flags.tracking_string_lines = true;
  }
- else
+ else if(flags.active_expression)
  {
   proc_name_instruction = ".proc-name";
+ }
+ else
+ {
+  proc_name_instruction = ".statement-proc-name";
  }
 
  proc_names_.push_back(proc_name);

@@ -25,7 +25,7 @@ USING_KANS(TextIO)
 #include <QPoint>
 
 Chasm_Result_Holder::Chasm_Result_Holder(Chasm_Type_System* type_system, Chasm_Type_Object* type_object, n8 value)
-  :  type_system_(type_system), type_object_(type_object), value_(value)
+  :  statement_writer_(nullptr), type_system_(type_system), type_object_(type_object), value_(value)
 {
 
 }

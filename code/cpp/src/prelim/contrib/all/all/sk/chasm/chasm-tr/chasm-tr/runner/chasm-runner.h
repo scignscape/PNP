@@ -44,10 +44,10 @@ class ChTR_Node;
 class Chasm_Runner
 {
 
- enum class Known_Procedure_Codes {
-  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4,
-  Write_Operand_LHS = 5, Write_Operand_RHS = 6
- };
+// enum class Known_Procedure_Codes {
+//  N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4,
+//  Write_Operand_LHS = 5, Write_Operand_RHS = 6, Write_Statement = 7
+// };
 
  enum class Known_Procedure_Families {
   N_A = 0, Double_VV, Single_V, Double_T, Single_T
@@ -82,6 +82,9 @@ public:
 
  void run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
    caon_ptr<ChTR_Node> lhs, caon_ptr<ChTR_Node> rhs);
+
+ void run_core_proc(QString proc_name, Chasm_Result_Holder& rh,
+   ChTR_Node& lhs, caon_ptr<ChTR_Node> rhs);
 
 };
 

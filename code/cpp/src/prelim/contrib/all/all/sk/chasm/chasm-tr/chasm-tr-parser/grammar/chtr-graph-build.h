@@ -23,6 +23,7 @@
 #include "codegen/chtr-chvm-generator.h"
 
 #include "chasm-tr/runner/chasm-runner.h"
+#include "chasm-tr/chtr-lexical-scope.h"
 
 #include "chasm-lib/chasm/types/chasm-type-system.h"
 
@@ -51,28 +52,7 @@ class ChTR_Channel_Package;
 class ChTR_Channel_Object;
 class ChTR_Code_Statement;
 
-class ChTR_Lexical_Scope
-{
- QMap<QString, ChTR_Type_Object*> known_symbols_;
-
-public:
-
- ChTR_Lexical_Scope() {}
-
- void add_symbol(QString token, ChTR_Type_Object* cto)
- {
-  known_symbols_[token] = cto;
- }
-
- QString get_symbol_name(QString token)
- {
-  if(known_symbols_.contains(token))
-    return token;
-
-  return {};
- }
-};
-
+class ChTR_Lexical_Scope;
 
 
 class ChTR_Graph_Build
@@ -99,8 +79,11 @@ private:
 
  //QString
 
+ ChTR_CHVM_Generator base_gen_;
+ ChTR_CHVM_Generator* alt_gen_;
 
- ChTR_CHVM_Generator gen;
+
+ ChTR_CHVM_Generator& gen();
 
 // void acc(QString text);
 
@@ -190,6 +173,11 @@ private:
 
  Chasm_Runner runner_;
 
+ QStack<QPair<caon_ptr<ChTR_Node>, caon_ptr<ChTR_Node>>> statement_node_stack_;
+
+ caon_ptr<ChTR_Node> current_statement_proc_node_;
+ caon_ptr<ChTR_Node> current_statement_body_node_;
+
 public:
 
  ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g);
@@ -246,6 +234,8 @@ public:
  void scoped_symbol_pin(QString symbol);
  void proc_name(QString token);
  void query_proc_name(QString token);
+
+ void statement_proc_name(QString token);
 
  void symbol_token(QString token);
  void query_lambda_token(QString token);

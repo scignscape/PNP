@@ -26,6 +26,8 @@
 
 #include "chasm-tr/types/chtr-type-object.h"
 
+#include "chasm-tr/chtr-statement-body.h"
+
 #include "chtr-node-factory.h"
 
 #include "chasm-tr/chtr-source-token.h"
@@ -64,6 +66,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,source_file_index_(0)
    ,held_line_number_(0)
    ,current_context_code_(0)
+   ,alt_gen_(nullptr)
    ,current_source_type_(nullptr)
    ,current_channel_package_(nullptr)
    ,current_channel_object_(nullptr)
@@ -79,6 +82,8 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_right_operand_node_(nullptr)
    ,topmost_infix_operator_node_(nullptr)
    ,current_infix_operator_node_(nullptr)
+   ,current_statement_proc_node_(nullptr)
+   ,current_statement_body_node_(nullptr)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -93,11 +98,19 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
 
 }
 
+ChTR_CHVM_Generator& ChTR_Graph_Build::gen()
+{
+ if(alt_gen_)
+   return *alt_gen_;
+
+ return base_gen_;
+}
+
 
 QString ChTR_Graph_Build::chvm_code()
 {
  QString result;
- gen.chvm_code(result);
+ gen().chvm_code(result);
  return result;
 }
 
@@ -109,7 +122,7 @@ void ChTR_Graph_Build::parse_line_number(QString text)
 
 void ChTR_Graph_Build::cut()
 {
- gen.cut();
+ gen().cut();
 }
 
 void ChTR_Graph_Build::read_graph_build_program(QString lines)
@@ -180,18 +193,18 @@ void ChTR_Graph_Build::source_file(QString file_path)
 {
  ++source_file_index_;
 
- gen
+ gen()
    .blank()
    << "@sf " << file_path; cut();
- gen
+ gen()
    .blank()
    << "init-source-file-lexical-scope"; cut();
 
- gen
+ gen()
    .blank()
    << "source-file-index $ " << source_file_index_; cut();
 
- gen.blank();
+ gen().blank();
 }
 
 
@@ -223,20 +236,20 @@ void ChTR_Graph_Build::type_expression_token(QString token)
 
    current_lexical_scope_->add_symbol(text, cto);
 
-   gen
+   gen()
      .blank()
      .preamble_comment("statement-level declaration");
    //preamble()
 
-//   gen_.blank();
+//   gen()_.blank();
 
    if(cto->flags.built_in)
-     gen << "load-type-" << cto->name();
+     gen() << "load-type-" << cto->name();
    else
-     gen << "load-type-object $ " << token;
+     gen() << "load-type-object $ " << token;
    cut();
 
-   gen << "declare-lexical-typed-symbol $ " << text; cut();
+   gen() << "declare-lexical-typed-symbol $ " << text; cut();
 
    current_parse_node_ << Sf/Qy.Symbol_to_Type_Object >> type_node;
 
@@ -249,7 +262,7 @@ void ChTR_Graph_Build::type_expression_token(QString token)
 
 void ChTR_Graph_Build::scoped_symbol_pin(QString symbol)
 {
- gen
+ gen()
    .blank()
    .preamble_comment("statement-level pin")
    << "single-init-pin $ " << symbol; cut();
@@ -267,40 +280,55 @@ void ChTR_Graph_Build::expression_depth(QString token)
  current_nesting_depth_ = token.toUInt();
 }
 
+
+void ChTR_Graph_Build::statement_proc_name(QString token)
+{
+ ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(token);
+
+ if(current_statement_proc_node_)
+   statement_node_stack_.push({current_statement_proc_node_, current_statement_body_node_});
+
+ current_statement_proc_node_ = node_factory_.make_new_node(ptoken);
+ current_statement_proc_node_->set_hint("spt:" + token);
+
+ current_statement_body_node_ = nullptr;
+}
+
+
 void ChTR_Graph_Build::proc_name(QString token)
 {
- gen
+ gen()
    .dissolve({"add-new-channel $ proc"})
    << "load-proc-name $ " << token;
 
  cut();
- gen.blank();
+ gen().blank();
 
  current_channel_state_ = Channel_States::Implicit_Lambda;
 }
 
 void ChTR_Graph_Build::query_proc_name(QString token)
 {
- gen
+ gen()
    .dissolve({"new-qlambda", "add-new-channel $ proc"})
    << "load-proc-name $ " << token;
 
  cut();
- gen.blank();
+ gen().blank();
 
  current_channel_state_ = Channel_States::Implicit_QLambda;
 }
 
 void ChTR_Graph_Build::ql_tokens_init(QString last_instruction)
 {
- QStringList qsl = {"add-new-channel $ lambda", "gen-voidp-carrier",
+ QStringList qsl = {"add-new-channel $ lambda", "gen()-voidp-carrier",
    "add-carriers", "reset-carrier-deque",
    "add-new-channel $ qlambda", "insert-ql-vector-ptr"};
 
  if(!last_instruction.isEmpty())
    qsl.push_back(last_instruction);
 
- gen.dissolve(qsl.toVector()).blank();
+ gen().dissolve(qsl.toVector()).blank();
 }
 
 void ChTR_Graph_Build::ql_keyword_token(QString token)
@@ -313,7 +341,7 @@ void ChTR_Graph_Build::ql_keyword_token(QString token)
    // //  fall through
  case Channel_States::Explicit_QLambda:
   {
-   gen << "load-ql-key $ " << token; cut();
+   gen() << "load-ql-key $ " << token; cut();
   }
  }
 
@@ -338,11 +366,11 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
   {
    if(flags.query_lambda_token_expected_another)
    {
-    gen << "append-ql-token $ " << token;
+    gen() << "append-ql-token $ " << token;
     flags.query_lambda_token_expected_another = false;
    }
    else
-     gen << "load-ql-token $ " << token;
+     gen() << "load-ql-token $ " << token;
    cut();
   }
  }
@@ -350,7 +378,7 @@ void ChTR_Graph_Build::query_lambda_token(QString token)
 
 void ChTR_Graph_Build::string_lines_to_follow()
 {
- gen << "string-lines-to-follow"; cut();
+ gen() << "string-lines-to-follow"; cut();
  string_lines_count_ = 0;
 }
 
@@ -360,95 +388,81 @@ void ChTR_Graph_Build::track_string_line(QString line)
 
  if(string_lines_count_ == 1)
  {
-  gen.blank();
+  gen().blank();
  }
 
- gen << "track-string-line $ " << line; cut();
+ gen() << "track-string-line $ " << line; cut();
 }
+
+
 
 void ChTR_Graph_Build::symbol_token(QString token)
 {
+ ChTR_Statement_Body* csb;
+
+ if(current_statement_body_node_)
+ {
+  // //  now we know the statement body is more than just one token
+  if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
+  {
+   csb = new ChTR_Statement_Body;
+   csb->write_symbol_token(*cst, *current_lexical_scope_);
+   // //   mark retired for cst, current_statement_body_node_
+   current_statement_body_node_ = node_factory_.make_new_node(csb);
+   //ChTR_Statement_Body::write_symbol_token(*st, *current_lexical_scope_, gen());
+  }
+
+  else if(caon_ptr<ChTR_Statement_Body> ccsb = current_statement_body_node_->statement_body())
+  {
+   csb = ccsb.raw_pointer();
+  }
+
+  else
+  {
+   // //  error?
+   csb = nullptr;
+  }
+ }
+ else
+ {
+  caon_ptr<ChTR_Source_Token> cst = new ChTR_Source_Token(token);
+  current_statement_body_node_ = node_factory_.make_new_node(cst);
+ }
+
+// switch(current_channel_state_)
+// {
+// case Channel_States::Implicit_Lambda:
+//   gen().dissolve({"add-new-channel $ lambda"}).blank();
+//   current_channel_state_ = Channel_States::Explicit_Lambda;
+//   // //  fall through
+// case Channel_States::Explicit_Lambda:
+//  {
+//   ChTR_Statement_Body::write_symbol_token()
+//  }
+
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_Lambda:
-   gen.dissolve({"add-new-channel $ lambda"}).blank();
+//   gen().dissolve({"add-new-channel $ lambda"}).blank();
    current_channel_state_ = Channel_States::Explicit_Lambda;
+  break;
    // //  fall through
  case Channel_States::Explicit_Lambda:
-  {
-   QString symbol_name = current_lexical_scope_->get_symbol_name(token);
+  break;
 
-   if(symbol_name.isEmpty())
-   {
-    bool negative = false;
-    bool positive = false;
-    bool fp = false;
-    if(token[0] == '-')
-    {
-     negative = true;
-     token = token.mid(1);
-    }
-    if(token[0] == '+')
-    {
-     positive = true;
-     token = token.mid(1);
-    }
-    if(token[0] == '.')
-    {
-     fp = true;
-     token = token.mid(1);
-    }
-
-    if(token[0].isDigit())
-    {
-     QString base;
-     QString signed_or_not;
-     QString generic_or_literal;
-     QString int_or_float;
-     if(token[0] == '0')
-     {
-      if(token.size() == 1)
-      {
-       generic_or_literal = "generic";
-      }
-      else if(token[1].isDigit())
-        base = "_0";
-      else
-        base = token.mid(0, 2).prepend("_");
-     }
-
-     if(negative)
-       signed_or_not = "signed-negative";
-     else if(positive)
-       signed_or_not = "signed-positive";
-     else
-       signed_or_not = "unsigned";
-
-     if(generic_or_literal.isEmpty())
-       generic_or_literal = "literal";
-     if(fp)
-       int_or_float = "float";
-     else
-       int_or_float = "int";
-     gen << "load-" << signed_or_not << "-" << generic_or_literal
-         << "-" << int_or_float << " $ " << token; cut();
-    }
-    return;
-   }
-
-   gen << "load-carrier-symbol-lxs $ " << symbol_name; cut();
-  }
+ default:
+  break;
  }
 
 }
 
 void ChTR_Graph_Build::pin_value_literal(QString token)
 {
- gen
+ gen()
    .blank()
    << "load-value-literal $ " << token;
    cut();
- gen << "resolve-pins"; cut();
+ gen() << "resolve-pins"; cut();
 }
 
 void ChTR_Graph_Build::check_resolve_statement()
@@ -458,7 +472,7 @@ void ChTR_Graph_Build::check_resolve_statement()
 // case Channel_States::Implicit_Lambda:
 // case Channel_States::Explicit_Lambda:
 
-//  gen
+//  gen()
 //    .blank()
 //    .dissolve({"add-carriers", "run-proc-eval"})
 //    .blank()
@@ -471,12 +485,12 @@ void ChTR_Graph_Build::check_resolve_statement()
 void ChTR_Graph_Build::source_file_end()
 {
  check_resolve_statement();
- gen.blank().dissolve({"@sfe"});
+ gen().blank().dissolve({"@sfe"});
 }
 
 void ChTR_Graph_Build::write_handoff_rtl()
 {
- gen.blank().dissolve({"resolve-handoffs $ retv lambda"});
+ gen().blank().dissolve({"resolve-handoffs $ retv lambda"});
 }
 
 void ChTR_Graph_Build::write_handoff_rts()
@@ -491,7 +505,7 @@ void ChTR_Graph_Build::resolve_expression()
  case Channel_States::Implicit_Lambda:
  case Channel_States::Explicit_Lambda:
 
-  gen
+  gen()
     .blank()
     .dissolve({"add-carriers", "run-proc-eval"})
     .blank()
@@ -505,7 +519,7 @@ void ChTR_Graph_Build::expression_to_statement()
 {
  current_expression_state_ = Expression_States::Expression_Return;
 
- gen
+ gen()
    .blank()
    .dissolve({"pop-proc-name", "pull-call-package"});
 //   .blank()
@@ -514,7 +528,7 @@ void ChTR_Graph_Build::expression_to_statement()
 
 void ChTR_Graph_Build::expression_to_expression()
 {
- gen
+ gen()
    .blank()
    .dissolve({"pop-proc-name", "pull-call-package"});
 }
@@ -571,6 +585,10 @@ void ChTR_Graph_Build::resolve_statement()
 {
  check_resolve_infix_tree();
 
+ Chasm_Result_Holder rh(&chasm_type_system_);
+
+ runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
+
  switch(current_channel_state_)
  {
  case Channel_States::Implicit_Lambda:
@@ -578,14 +596,14 @@ void ChTR_Graph_Build::resolve_statement()
  case Channel_States::Implicit_QLambda:  // //   anything different with these?
  case Channel_States::Explicit_QLambda:   //     ...
   if(current_expression_state_ != Expression_States::Expression_Return)
-   gen
+   gen()
      .blank()
      .dissolve({"add-carriers", "run-proc-eval"});
   else
-   gen
+   gen()
      .blank()
      .dissolve({"add-carriers-statement-context", "run-proc-eval"});
-  gen
+  gen()
     .blank()
     .dissolve({"reset-carrier-deque", "clear-current-ghost-scope"})
     .blank();
@@ -685,28 +703,28 @@ void ChTR_Graph_Build::enter_infix_mode()
 
 void ChTR_Graph_Build::enter_expression()
 {
- gen
+ gen()
    .blank()
    .preamble_comment("expression")
    << "statement-line-number $ " << current_line_number_; cut();
 
 // .dissolve({"init-new-ghost-scope", "push-carrier-deque"})
 
- gen
+ gen()
   .dissolve({"push-carrier-deque"})
   .blank()
-  .dissolve({"new-call-package", "gen-return-channels"})
+  .dissolve({"new-call-package", "gen()-return-channels"})
   .blank();
 }
 
 void ChTR_Graph_Build::enter_statement()
 {
- gen
+ gen()
    .blank()
    .preamble_comment("statement")
    << "statement-line-number $ " << current_line_number_; cut();
 
- gen
+ gen()
   .dissolve({"init-new-ghost-scope", "push-carrier-deque"})
   .blank()
   .dissolve({"new-call-package"})
@@ -725,6 +743,7 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".scoped-symbol-pin", &ChTR_Graph_Build::scoped_symbol_pin },
    { ".pin-value-literal", &ChTR_Graph_Build::pin_value_literal },
    { ".proc-name", &ChTR_Graph_Build::proc_name },
+   { ".statement-proc-name", &ChTR_Graph_Build::proc_name },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
    { ".n/infix-proc-name", &ChTR_Graph_Build::infix_proc_name_node },

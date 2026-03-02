@@ -63,7 +63,8 @@ public:
 
  enum class Known_Procedure_Codes {
   N_A = 0, Add2 = 1, Mult2 = 2, Div2 = 3, Ratio2 = 4,
-  Write_Operand_LHS = 5, Write_Operand_RHS = 6
+  Write_Operand_LHS = 5, Write_Operand_RHS = 6,
+  Write_Statement = 7
  };
 
 // enum class ASG_Proc_Family {

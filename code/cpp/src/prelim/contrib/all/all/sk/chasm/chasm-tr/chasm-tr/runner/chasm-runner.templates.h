@@ -15,6 +15,7 @@
 
 #include "graph-run/call/asg-call-v-v.h"
 #include "graph-run/call/asg-call-c-c.h"
+#include "graph-run/call/asg-call-n-c.h"
 
 
 USING_OTNS(Chasm_TR)
@@ -61,5 +62,34 @@ void Chasm_Runner::run<ASG_Proc_Family::ASG_Graph_Call_CC>(Chasm_Result_Holder& 
 
 
 }
+
+
+template<>
+void Chasm_Runner::run<ASG_Proc_Family::ASG_Graph_Call_NC>(Chasm_Result_Holder& rh,
+  Chasm_Run_Router::Known_Procedure_Codes proc_code,
+  caon_ptr<ChTR_Node> n1, caon_ptr<ChTR_Node> n2)
+{
+ typedef Chasm_Run_Router::Cast_Schedule<ASG_Proc_Family::ASG_Graph_Call_NC,
+   Chasm_Run_Router::Known_Procedure_Codes::Write_Statement,
+   ASG_Type_Family::Internal, caon_ptr<ChTR_Node>> Cast_Shedule_type;
+
+// Cast_Shedule_type::Runner<Cast_Shedule_type, int, ASG_Type_Family::Internal> x;
+// x.test();
+
+ Cast_Shedule_type::Runner<Cast_Shedule_type, Chasm_Run_Router::RHS_Cast_Marker, ASG_Type_Family::Internal>::run(rh,
+   n1, *n2);
+
+//  Chasm_Run_Router::Cast_Schedule<
+//    ASG_Graph_Call_CC,
+//    Known_Procedure_Codes::,
+//    ASG_Type_Family::Internal,
+//    Chasm_Run_Router::Cast_Needed, Chasm_Run_Router::Cast_Needed>::
+//    Runner<Chasm_Run_Router::Cast_Null_Marker, Chasm_Run_Router::LHS_Cast_Marker,
+//     ASG_Type_Family::Internal>::run(rh,
+//     n1, n1);
+
+
+}
+
 
 

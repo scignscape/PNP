@@ -4,8 +4,8 @@
 //     (See accompanying file LICENSE_1_0.txt or copy at
 //           http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef ASG_CALL_C_C__H
-#define ASG_CALL_C_C__H
+#ifndef ASG_CALL_N_C__H
+#define ASG_CALL_N_C__H
 
 #include "otns.h"
 
@@ -41,9 +41,9 @@ OTNS_(Chasm_TR)
 
 #define ASG_PROC_DECLARE(str, name, arity, status) name,
 
-ASG_PROC_CODES_(ASG_Graph_Call_CC)
+ASG_PROC_CODES_(ASG_Graph_Call_NC)
  null = 0,
- #include "asg-proc-c-c.h"
+ #include "asg-proc-n-c.h"
 
 _ASG_PROC_CODES
 
@@ -53,15 +53,15 @@ _ASG_PROC_CODES
 #define ASG_GCALL_IMPLEMENT template<> struct ASG_Proc_Run
 
 ASG_GCALL_IMPLEMENT
-<ASG_GCALL_CC(Write_Operand_LHS, Internal)>
+<ASG_GCALL_NC(Write_Statement, Internal)>
 {
  template<typename T1, typename T2>
- static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
-  ChTR_Source_Token& symbol)
+ static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+  ChTR_Source_Token& cst)
  {
   ChTR_Statement_Writer& csw = *rh.statement_writer();
 
-  csw.gen().blank();
+  //csw.gen().blank();
 
  }
 
