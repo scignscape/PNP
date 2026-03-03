@@ -406,7 +406,9 @@ void ChTR_Graph_Build::symbol_token(QString token)
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
    csb = new ChTR_Statement_Body;
-   csb->write_symbol_token(*cst, *current_lexical_scope_);
+
+   // //  which gen?
+   ChTR_Statement_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
    // //   mark retired for cst, current_statement_body_node_
    current_statement_body_node_ = node_factory_.make_new_node(csb);
    //ChTR_Statement_Body::write_symbol_token(*st, *current_lexical_scope_, gen());
@@ -586,6 +588,7 @@ void ChTR_Graph_Build::resolve_statement()
  check_resolve_infix_tree();
 
  Chasm_Result_Holder rh(&chasm_type_system_);
+ rh.statement_writer()->set_lexical_scope(current_lexical_scope_);
 
 
 // ChTR_Statement_Body* csb = new ChTR_Statement_Body;

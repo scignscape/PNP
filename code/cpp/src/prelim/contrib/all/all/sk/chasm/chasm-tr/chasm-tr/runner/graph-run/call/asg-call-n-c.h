@@ -22,6 +22,11 @@
 
 #include "writers/chtr-statement-writer.h"
 
+#include "chtr-proc-token.h"
+
+#include "chtr-statement-body.h"
+#include "chtr-source-token.h"
+
 //class Chasm_Result_Holder;
 
 //USING_OTNS(Chasm_TR)
@@ -71,6 +76,24 @@ ASG_GCALL_IMPLEMENT
  {
   ChTR_Statement_Writer& csw = *rh.statement_writer();
 
+  if(caon_ptr<ChTR_Proc_Token> pt = n->proc_token())
+  {
+   CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
+   ChTR_Statement_Writer& csw = *rh.statement_writer();
+
+   QString text = pt->text();
+
+   csw.gen()
+     .dissolve({"add-new-channel $ proc"})
+     << "load-proc-name $ " << text;
+
+   csw.gen().cut().blank();
+
+   csw.write_symbol_token(cst.text());
+
+  }
+
+
   //csw.gen().blank();
 
  }
@@ -85,6 +108,14 @@ ASG_GCALL_IMPLEMENT
   {
    CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
    ChTR_Statement_Writer& csw = *rh.statement_writer();
+
+   QString text = pt->text();
+
+   csw.gen()
+     .dissolve({"add-new-channel $ proc"})
+     << "load-proc-name $ " << text;
+
+   csw.gen().cut().blank();
 
 
   }

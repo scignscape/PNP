@@ -43,17 +43,6 @@ public:
 
  ACCESSORS__RGET(ChTR_CHVM_Generator ,gen)
 
- static void write_symbol_token(ChTR_Source_Token& cst,
-   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
-
- static void write_symbol_token(QString token,
-   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
-
- void write_symbol_token(ChTR_Source_Token& cst,
-   ChTR_Lexical_Scope& cls);
-
- void write_symbol_token(QString token,
-   ChTR_Lexical_Scope& cls);
 
 // ACCESSORS(QString ,anchor)
 // ACCESSORS(ChTR_Channel_Package* ,channel_package)
