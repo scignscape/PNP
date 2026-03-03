@@ -46,27 +46,27 @@ public:
 
  ACCESSORS(ChTR_Lexical_Scope* ,lexical_scope)
 
- static void write_symbol_token(ChTR_Source_Token& cst,
-   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
+// static void write_symbol_token(ChTR_Source_Token& cst,
+//   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
 
- static void write_symbol_token(QString token,
-   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
+// static void write_symbol_token(QString token,
+//   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
 
- void write_symbol_token(ChTR_Source_Token& cst,
-   ChTR_Lexical_Scope& cls);
+// void write_symbol_token(ChTR_Source_Token& cst,
+//   ChTR_Lexical_Scope& cls);
 
- void write_symbol_token(QString token,
-   ChTR_Lexical_Scope& cls);
+// void write_symbol_token(QString token,
+//   ChTR_Lexical_Scope& cls);
 
- void write_symbol_token(ChTR_Source_Token& cst)
- {
-  write_symbol_token(cst, *lexical_scope_);
- }
+// void write_symbol_token(ChTR_Source_Token& cst)
+// {
+//  write_symbol_token(cst, *lexical_scope_);
+// }
 
- void write_symbol_token(QString token)
- {
-  write_symbol_token(token, *lexical_scope_);
- }
+// void write_symbol_token(QString token)
+// {
+//  write_symbol_token(token, *lexical_scope_);
+// }
 
 
 // ACCESSORS(QString ,anchor)

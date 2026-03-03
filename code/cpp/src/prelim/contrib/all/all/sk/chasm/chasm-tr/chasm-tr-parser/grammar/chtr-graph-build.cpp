@@ -33,6 +33,8 @@
 #include "chasm-tr/chtr-source-token.h"
 #include "chasm-tr/chtr-proc-token.h"
 
+#include "chasm-tr/writers/chvm-logger-writer.h"
+
 #include "relae-graph/relae-caon-ptr.h"
 #include "relae-graph/relae-node-ptr.h"
 
@@ -408,7 +410,7 @@ void ChTR_Graph_Build::symbol_token(QString token)
    csb = new ChTR_Statement_Body;
 
    // //  which gen?
-   ChTR_Statement_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
+   ChVM_Logger_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
    // //   mark retired for cst, current_statement_body_node_
    current_statement_body_node_ = node_factory_.make_new_node(csb);
    //ChTR_Statement_Body::write_symbol_token(*st, *current_lexical_scope_, gen());
@@ -560,7 +562,8 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
   CAON_DEBUG_NOOP
  }
 
- Chasm_Result_Holder left_rh(&chasm_type_system_);
+ ChVM_Logger_Writer clw(&chasm_type_system_);
+ Chasm_Result_Holder left_rh(&clw);
 
  runner_.run_core_proc("write-operand-lhs", left_rh, operator_node, loperand_node);
 
@@ -587,8 +590,10 @@ void ChTR_Graph_Build::resolve_statement()
 {
  check_resolve_infix_tree();
 
- Chasm_Result_Holder rh(&chasm_type_system_);
- rh.statement_writer()->set_lexical_scope(current_lexical_scope_);
+ ChVM_Logger_Writer clw(&chasm_type_system_);
+ clw.set_lexical_scope(current_lexical_scope_);
+
+ Chasm_Result_Holder rh(&clw);
 
 
 // ChTR_Statement_Body* csb = new ChTR_Statement_Body;

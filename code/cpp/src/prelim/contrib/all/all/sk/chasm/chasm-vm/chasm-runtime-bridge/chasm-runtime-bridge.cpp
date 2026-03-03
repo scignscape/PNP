@@ -19,6 +19,8 @@
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
+#include "writers/chvm-logger-writer.h"
+
 #include "csm-ghost-scope.h"
 
 #include <QString>
@@ -116,7 +118,8 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   lhs.set_type_object(cc1.type_object());
   rhs.set_type_object(cc2.type_object());
 
-  Chasm_Result_Holder rh(&csr_->type_system());
+  ChVM_Logger_Writer clw(&csr_->type_system());
+  Chasm_Result_Holder rh(&clw);
 
   runner_.run_core_proc(proc_name, rh, lhs, rhs);
 

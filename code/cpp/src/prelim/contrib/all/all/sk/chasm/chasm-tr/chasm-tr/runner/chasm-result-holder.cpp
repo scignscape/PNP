@@ -24,57 +24,65 @@ USING_KANS(TextIO)
 
 #include <QPoint>
 
-Chasm_Result_Holder::Chasm_Result_Holder(Chasm_Type_System* type_system, Chasm_Type_Object* type_object, n8 value)
-  :  statement_writer_(nullptr), type_system_(type_system), type_object_(type_object), value_(value)
+#include "writers/chvm-logger-writer.h"
+
+
+Chasm_Result_Holder::Chasm_Result_Holder(ChVM_Logger_Writer* lw, Chasm_Type_Object* type_object, n8 value)
+  :  lwriter_(lw), type_object_(type_object), value_(value)
 {
 
+}
+
+Chasm_Type_System* Chasm_Result_Holder::type_system()
+{
+ return lwriter_->type_system();
 }
 
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_u1()
 {
- set_type_object(type_system_->the_u1_type());
+ set_type_object(type_system()->the_u1_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_s1()
 {
- set_type_object(type_system_->the_s1_type());
+ set_type_object(type_system()->the_s1_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_u2()
 {
- set_type_object(type_system_->the_u2_type());
+ set_type_object(type_system()->the_u2_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_s2()
 {
- set_type_object(type_system_->the_s2_type());
+ set_type_object(type_system()->the_s2_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_u4()
 {
- set_type_object(type_system_->the_u4_type());
+ set_type_object(type_system()->the_u4_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_s4()
 {
- set_type_object(type_system_->the_s4_type());
+ set_type_object(type_system()->the_s4_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_u8()
 {
- set_type_object(type_system_->the_u8_type());
+ set_type_object(type_system()->the_u8_type());
  return *this;
 }
 
 Chasm_Result_Holder& Chasm_Result_Holder::type_s8()
 {
- set_type_object(type_system_->the_s8_type());
+ set_type_object(type_system()->the_s8_type());
  return *this;
 }

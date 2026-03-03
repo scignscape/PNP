@@ -24,7 +24,7 @@
 #include "global-types.h"
 #include "otns.h"
 
-#include "writers/chtr-statement-writer.h"
+//#include "writers/chtr-statement-writer.h"
 
 
 OTNS_(Chasm_TR)
@@ -35,11 +35,12 @@ class Chasm_Type_System;
 
 class Chasm_Runtime_Bridge;
 
+class ChVM_Logger_Writer;
+
 class Chasm_Result_Holder
 {
- ChTR_Statement_Writer* statement_writer_;
+ ChVM_Logger_Writer* lwriter_;
 
- Chasm_Type_System* type_system_;
  Chasm_Type_Object* type_object_;
 
  n8 value_;
@@ -52,13 +53,14 @@ public:
 //   // n = signed and negative; u = unsigned
 // };
 
- ACCESSORS(ChTR_Statement_Writer* ,statement_writer)
- ACCESSORS__GET(Chasm_Type_System* ,type_system)
+ ACCESSORS(ChVM_Logger_Writer* ,lwriter)
  ACCESSORS(Chasm_Type_Object* ,type_object)
  ACCESSORS(n8 ,value)
 
+ Chasm_Type_System* type_system();
 
- Chasm_Result_Holder(Chasm_Type_System* type_system, Chasm_Type_Object* type_object = nullptr, n8 value = 0);
+
+ Chasm_Result_Holder(ChVM_Logger_Writer* lw, Chasm_Type_Object* type_object = nullptr, n8 value = 0);
 
  Chasm_Result_Holder& type_u1();
  Chasm_Result_Holder& type_s1();

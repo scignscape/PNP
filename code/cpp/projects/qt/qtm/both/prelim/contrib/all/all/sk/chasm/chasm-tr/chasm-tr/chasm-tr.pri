@@ -68,9 +68,9 @@ HEADERS += \
   $$SRC_DIR/runner/graph-run/call/asg-call-n-c.h \
   $$SRC_DIR/runner/graph-run/call/asg-proc-n-c.h \
   $$SRC_DIR/writers/chtr-statement-writer.h \
+  $$SRC_DIR/writers/chvm-logger-writer.h \
   $$SRC_DIR/codegen/chtr-chvm-generator.h \
   $$SRC_DIR/codegen/chtr-chvm-line.h \
-
 
 
 SOURCES += \
@@ -99,6 +99,7 @@ SOURCES += \
   $$SRC_DIR/runner/procs/chasm-runner--add2.cpp \
   $$SRC_DIR/runner/procs/chasm-runner--div2.cpp \
   $$SRC_DIR/writers/chtr-statement-writer.cpp \
+  $$SRC_DIR/writers/chvm-logger-writer.cpp \
   $$SRC_DIR/codegen/chtr-chvm-generator.cpp \
   $$SRC_DIR/codegen/chtr-chvm-line.cpp \
 

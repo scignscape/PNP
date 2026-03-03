@@ -20,7 +20,7 @@
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
-#include "writers/chtr-statement-writer.h"
+#include "writers/chvm-logger-writer.h"
 
 //class Chasm_Result_Holder;
 
@@ -59,9 +59,9 @@ ASG_GCALL_IMPLEMENT
  static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
   ChTR_Source_Token& symbol)
  {
-  ChTR_Statement_Writer& csw = *rh.statement_writer();
+  ChVM_Logger_Writer& clw = *rh.lwriter();
 
-  csw.gen().blank();
+  clw.gen().blank();
 
  }
 

@@ -20,7 +20,7 @@
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
-#include "writers/chtr-statement-writer.h"
+#include "writers/chvm-logger-writer.h"
 
 #include "chtr-proc-token.h"
 
@@ -74,22 +74,23 @@ ASG_GCALL_IMPLEMENT
  static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
   ChTR_Source_Token& cst)
  {
-  ChTR_Statement_Writer& csw = *rh.statement_writer();
+//  ChVM_Logger_Writer& clw = *rh.lwriter();
+
 
   if(caon_ptr<ChTR_Proc_Token> pt = n->proc_token())
   {
    CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
-   ChTR_Statement_Writer& csw = *rh.statement_writer();
+   ChVM_Logger_Writer& clw = *rh.lwriter();
 
    QString text = pt->text();
 
-   csw.gen()
+   clw.gen()
      .dissolve({"add-new-channel $ proc"})
      << "load-proc-name $ " << text;
 
-   csw.gen().cut().blank();
+   clw.gen().cut().blank();
 
-   csw.write_symbol_token(cst.text());
+   clw.write_symbol_token(cst.text());
 
   }
 
@@ -107,15 +108,16 @@ ASG_GCALL_IMPLEMENT
   if(caon_ptr<ChTR_Proc_Token> pt = n->proc_token())
   {
    CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
-   ChTR_Statement_Writer& csw = *rh.statement_writer();
+   ChVM_Logger_Writer& clw = *rh.lwriter();
+
 
    QString text = pt->text();
 
-   csw.gen()
+   clw.gen()
      .dissolve({"add-new-channel $ proc"})
      << "load-proc-name $ " << text;
 
-   csw.gen().cut().blank();
+   clw.gen().cut().blank();
 
 
   }
