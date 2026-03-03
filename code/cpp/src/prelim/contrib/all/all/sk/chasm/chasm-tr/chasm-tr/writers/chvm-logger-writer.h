@@ -42,7 +42,7 @@ class ChVM_Logger_Writer
 public:
 
 
- ChVM_Logger_Writer(Chasm_Type_System* type_system = nullptr);
+ ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_System* type_system = nullptr);
 
  ACCESSORS__RGET(ChTR_CHVM_Generator ,gen)
 

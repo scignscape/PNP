@@ -562,7 +562,7 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
   CAON_DEBUG_NOOP
  }
 
- ChVM_Logger_Writer clw(&chasm_type_system_);
+ ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
  Chasm_Result_Holder left_rh(&clw);
 
  runner_.run_core_proc("write-operand-lhs", left_rh, operator_node, loperand_node);
@@ -590,7 +590,7 @@ void ChTR_Graph_Build::resolve_statement()
 {
  check_resolve_infix_tree();
 
- ChVM_Logger_Writer clw(&chasm_type_system_);
+ ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
 
  Chasm_Result_Holder rh(&clw);

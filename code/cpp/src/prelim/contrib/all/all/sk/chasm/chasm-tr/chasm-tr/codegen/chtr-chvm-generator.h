@@ -69,6 +69,8 @@ public:
 
  ChTR_CHVM_Generator();
 
+ ChTR_CHVM_Generator(QString current_subroutine_name);
+
  ACCESSORS(QMap<QString, QVector<ChTR_CHVM_Line*>> ,acc_lines)
 
  void chvm_code(QString& result);

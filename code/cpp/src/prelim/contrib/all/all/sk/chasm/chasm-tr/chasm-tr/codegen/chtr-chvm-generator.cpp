@@ -20,6 +20,14 @@
 USING_OTNS(Chasm_TR)
 
 
+
+
+ChTR_CHVM_Generator::ChTR_CHVM_Generator(QString current_subroutine_name)
+  :  acc_stream_(&acc_), current_subroutine_name_(current_subroutine_name)
+{
+
+}
+
 ChTR_CHVM_Generator::ChTR_CHVM_Generator()
   :  acc_stream_(&acc_)
 {

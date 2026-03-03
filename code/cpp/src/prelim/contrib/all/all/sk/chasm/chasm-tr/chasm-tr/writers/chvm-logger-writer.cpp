@@ -17,8 +17,8 @@
 USING_OTNS(Chasm_TR)
 
 
-ChVM_Logger_Writer::ChVM_Logger_Writer(Chasm_Type_System* type_system)
-  :  lexical_scope_(nullptr), type_system_(type_system)
+ChVM_Logger_Writer::ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_System* type_system)
+  :  lexical_scope_(nullptr), gen_(gen_subroutine_name), type_system_(type_system)
 //  :  channel_package_(nullptr)
 {
 
