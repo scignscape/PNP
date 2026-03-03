@@ -65,6 +65,13 @@ ASG_GCALL_IMPLEMENT
 
  }
 
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, T1& t1,
+  T2& t2)
+ {
+
+ }
 };
 
 

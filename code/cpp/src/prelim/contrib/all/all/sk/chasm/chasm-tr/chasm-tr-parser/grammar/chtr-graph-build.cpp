@@ -587,7 +587,12 @@ void ChTR_Graph_Build::resolve_statement()
 
  Chasm_Result_Holder rh(&chasm_type_system_);
 
+
+// ChTR_Statement_Body* csb = new ChTR_Statement_Body;
+// caon_ptr<ChTR_Node> n = node_factory_.make_new_node(csb);
+
  runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
+ //?runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, n);
 
  switch(current_channel_state_)
  {
@@ -743,7 +748,7 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".scoped-symbol-pin", &ChTR_Graph_Build::scoped_symbol_pin },
    { ".pin-value-literal", &ChTR_Graph_Build::pin_value_literal },
    { ".proc-name", &ChTR_Graph_Build::proc_name },
-   { ".statement-proc-name", &ChTR_Graph_Build::proc_name },
+   { ".statement-proc-name", &ChTR_Graph_Build::statement_proc_name },
    { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
    { ".n/infix-proc-name", &ChTR_Graph_Build::infix_proc_name_node },

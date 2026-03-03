@@ -55,11 +55,41 @@ _ASG_PROC_CODES
 ASG_GCALL_IMPLEMENT
 <ASG_GCALL_NC(Write_Statement, Internal)>
 {
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+   T2& t2)
+ {
+
+
+ }
+
+
  template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
   ChTR_Source_Token& cst)
  {
   ChTR_Statement_Writer& csw = *rh.statement_writer();
+
+  //csw.gen().blank();
+
+ }
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+  ChTR_Statement_Body& csb)
+ {
+  CAON_PTR_DEBUG(ChTR_Node ,n)
+
+  if(caon_ptr<ChTR_Proc_Token> pt = n->proc_token())
+  {
+   CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
+   ChTR_Statement_Writer& csw = *rh.statement_writer();
+
+
+  }
+
+
 
   //csw.gen().blank();
 

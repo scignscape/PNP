@@ -35,14 +35,17 @@ Chasm_Runner::Chasm_Runner(Chasm_Type_System* type_system)
 
 void Chasm_Runner::init()
 {
- known_procedures_ << "add2" << "mult2" << "div2" << "ratio2";
+ known_procedures_ << "add2" << "mult2" << "div2" << "ratio2"
+   << "write-operand-lhs" << "write-operand-rhs" << "write-statement";
 
  known_procedure_map_["+"] = "add2";
  known_procedure_map_["*"] = "mult2";
  known_procedure_map_["//"] = "div2";
  known_procedure_map_["/"] = "ratio2";
 
- known_procedure_map_["write-operand-lhs"] = "write_operand_lhs";
+// known_procedure_map_["write-operand-lhs"] = "write_operand_lhs";
+// known_procedure_map_["write-operand-rhs"] = "write_operand_rhs";
+// known_procedure_map_["write-statement"] = "write_operand_rhs";
 
 }
 
