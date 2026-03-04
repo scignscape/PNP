@@ -12,9 +12,16 @@
 USING_OTNS(Chasm_TR)
 
 
-ChTR_CHVM_Line::ChTR_CHVM_Line(u4 line_id, QString text)
+ChTR_CHVM_Line::ChTR_CHVM_Line(s4 line_id, QString text)
   : line_id_(line_id), text_(text)
 {
+}
+
+ChTR_CHVM_Line* ChTR_CHVM_Line::clone(s4 id_offset)
+{
+ ChTR_CHVM_Line* result = new ChTR_CHVM_Line(line_id_ + id_offset, text_);
+ result->preambles_ = preambles_;
+ return result;
 }
 
 void ChTR_CHVM_Line::pre(QStringList p)

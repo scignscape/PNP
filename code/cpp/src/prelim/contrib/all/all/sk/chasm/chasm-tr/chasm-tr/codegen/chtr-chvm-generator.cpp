@@ -62,6 +62,21 @@ void ChTR_CHVM_Generator::check_register_current_subroutine_name()
  }
 }
 
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(ChTR_CHVM_Generator& new_lines)
+{
+ auto& lines = acc_lines_[current_subroutine_name_];
+ u4 base_id = lines.size();
+
+ for(ChTR_CHVM_Line* line : new_lines.acc_lines_[new_lines.current_subroutine_name_])
+ {
+  ChTR_CHVM_Line* cl = line->clone(base_id);
+  lines.push_back(cl);
+ }
+ return *this;
+}
+
+
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::dissolve(QVector<QString> new_lines)
 {
  for (QString line : new_lines)

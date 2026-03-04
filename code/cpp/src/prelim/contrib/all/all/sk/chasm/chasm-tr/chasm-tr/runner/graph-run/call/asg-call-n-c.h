@@ -61,13 +61,13 @@ ASG_GCALL_IMPLEMENT
 <ASG_GCALL_NC(Write_Statement, Internal)>
 {
 
- template<typename T1, typename T2>
- static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
-   T2& t2)
- {
+// template<typename T1, typename T2>
+// static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+//   T2& t2)
+// {
 
 
- }
+// }
 
 
  template<typename T1, typename T2>

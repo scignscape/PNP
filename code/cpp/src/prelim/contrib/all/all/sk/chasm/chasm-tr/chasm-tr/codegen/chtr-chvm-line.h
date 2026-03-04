@@ -16,7 +16,9 @@ OTNS_(Chasm_TR)
 
 class ChTR_CHVM_Line
 {
- u4 line_id_;
+ friend class ChTR_CHVM_Generator;
+
+ s4 line_id_;
 
  QStringList preambles_;
 
@@ -24,7 +26,9 @@ class ChTR_CHVM_Line
 
 public:
 
- ChTR_CHVM_Line(u4 line_id, QString text);
+ ChTR_CHVM_Line(s4 line_id, QString text);
+
+ ChTR_CHVM_Line* clone(s4 id_offset);
 
  void pre(QStringList p);
  void pre_blank();

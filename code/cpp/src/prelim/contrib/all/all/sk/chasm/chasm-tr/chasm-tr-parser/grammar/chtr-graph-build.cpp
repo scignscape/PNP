@@ -294,6 +294,8 @@ void ChTR_Graph_Build::statement_proc_name(QString token)
  current_statement_proc_node_->set_hint("spt:" + token);
 
  current_statement_body_node_ = nullptr;
+
+ current_channel_state_ = Channel_States::Implicit_Lambda;
 }
 
 
@@ -601,6 +603,8 @@ void ChTR_Graph_Build::resolve_statement()
 
  runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
  //?runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, n);
+
+ base_gen_.absorb(clw.gen());
 
  switch(current_channel_state_)
  {

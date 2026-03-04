@@ -95,6 +95,8 @@ public:
 
  ChTR_CHVM_Generator& dissolve(QVector<QString> new_lines);
 
+ ChTR_CHVM_Generator& absorb(ChTR_CHVM_Generator& new_lines);
+
  template<typename TEXT_Type>
  friend ChTR_CHVM_Generator& operator << (ChTR_CHVM_Generator& lhs, TEXT_Type rhs)
  {
