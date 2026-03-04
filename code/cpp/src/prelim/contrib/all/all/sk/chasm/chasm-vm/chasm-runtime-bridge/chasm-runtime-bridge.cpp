@@ -118,7 +118,7 @@ void Chasm_Runtime_Bridge::run_eval(QString proc_name)
   lhs.set_type_object(cc1.type_object());
   rhs.set_type_object(cc2.type_object());
 
-  ChVM_Logger_Writer clw(&csr_->type_system());
+  ChVM_Logger_Writer clw("--rh--", &csr_->type_system());
   Chasm_Result_Holder rh(&clw);
 
   runner_.run_core_proc(proc_name, rh, lhs, rhs);

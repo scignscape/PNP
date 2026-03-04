@@ -90,6 +90,9 @@ ASG_GCALL_IMPLEMENT
 
    clw.gen().cut().blank();
 
+   clw.gen()
+     .dissolve({"add-new-channel $ lambda"}).cut();
+
    clw.write_symbol_token(cst.text());
 
   }
