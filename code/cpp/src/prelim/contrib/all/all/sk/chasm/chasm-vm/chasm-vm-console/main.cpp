@@ -114,8 +114,8 @@ int main(int argc, char *argv[])
  cpt.register_s0(mult, @20444);
  cpt.register_s0(add3, @304444);
 
-// cpt.register_procedure_s0("+",
-//   (_minimal_fn_s0_type) &add, "@20444");
+ cpt.register_procedure_s0("#+",
+   (_minimal_fn_s0_type) &add, "@20444");
 
  QString script_path = DEMO_CVM_FOLDER "/t1/t3.cr";
 

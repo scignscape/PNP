@@ -22,6 +22,7 @@ class ChTR_Source_Token;
 class ChTR_Proc_Token;
 class ChTR_Type_Object;
 class ChTR_Statement_Body;
+class ChTR_Expression_Object;
 
 
 class ChTR_Node_Factory
@@ -59,6 +60,7 @@ public:
  caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Proc_Token> token) const;
  caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Type_Object> cto) const;
  caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Statement_Body> csb) const;
+ caon_ptr<ChTR_Node> make_new_node(caon_ptr<ChTR_Expression_Object> ceo) const;
 
 
 

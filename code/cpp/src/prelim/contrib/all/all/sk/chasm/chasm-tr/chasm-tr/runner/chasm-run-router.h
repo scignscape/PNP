@@ -434,6 +434,11 @@ public:
      Runner<NEW_CAST_SCHED_Type_statement_body, Arity_2, TFam>::run(rh, arg1, *n2.statement_body());
      break;
 
+    case ChTR_Dominion::Type_Codes::Expression_Object:
+     typedef typename CAST_SCHED_Type::Swap_RHS<ChTR_Expression_Object>::Type NEW_CAST_SCHED_Type_expression_object;
+     Runner<NEW_CAST_SCHED_Type_expression_object, Arity_2, TFam>::run(rh, arg1, *n2.expression_object());
+     break;
+
 //     Runner<NEW_CAST_SCHED_Type_statement_body, Arity_2, TFam>::run(rh, arg1, *n2.source_token());
 
 

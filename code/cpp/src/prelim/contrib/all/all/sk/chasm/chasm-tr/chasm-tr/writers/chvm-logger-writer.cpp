@@ -26,6 +26,13 @@ ChVM_Logger_Writer::ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_S
 
 
 
+ChVM_Logger_Writer& ChVM_Logger_Writer::merge(ChTR_CHVM_Generator& new_lines)
+{
+ gen_.absorb(new_lines);
+ return *this;
+}
+
+
 void ChVM_Logger_Writer::write_symbol_token(ChTR_Source_Token& cst,
   ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen)
 {

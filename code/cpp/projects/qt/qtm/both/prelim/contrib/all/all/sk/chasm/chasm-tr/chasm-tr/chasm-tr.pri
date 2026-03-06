@@ -46,6 +46,7 @@ HEADERS += \
   $$SRC_DIR/chtr-code-statement.h \
   $$SRC_DIR/chtr-lexical-scope.h \
   $$SRC_DIR/chtr-statement-body.h \
+  $$SRC_DIR/chtr-expression-object.h \
   $$SRC_DIR/chvm/chvm-code-generator.h \
   $$SRC_DIR/chvm/chvm-code-block.h \
   $$SRC_DIR/chvm/chvm-code-statement.h \
@@ -83,6 +84,7 @@ SOURCES += \
   $$SRC_DIR/chtr-code-statement.cpp \
   $$SRC_DIR/chtr-lexical-scope.cpp \
   $$SRC_DIR/chtr-statement-body.cpp \
+  $$SRC_DIR/chtr-expression-object.cpp \
   $$SRC_DIR/types/chtr-type-object.cpp \
   $$SRC_DIR/types/chtr-type-system.cpp \
   $$SRC_DIR/chvm/chvm-code-generator.cpp \

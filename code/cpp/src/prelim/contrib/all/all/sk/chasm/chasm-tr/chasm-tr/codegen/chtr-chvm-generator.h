@@ -49,6 +49,13 @@ class ChTR_CHVM_Line;
 
 class ChTR_CHVM_Generator
 {
+ u2 id_;
+
+ static u2 get_next_id()
+ {
+  static u2 result = 0;
+  return ++result;
+ }
 
  QString acc_;
 
@@ -72,6 +79,8 @@ public:
  ChTR_CHVM_Generator(QString current_subroutine_name);
 
  ACCESSORS(QMap<QString, QVector<ChTR_CHVM_Line*>> ,acc_lines)
+
+ ACCESSORS__GET(u2 ,id)
 
  void chvm_code(QString& result);
 

@@ -20,6 +20,8 @@
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
+#include "chtr-expression-object.h"
+
 #include "writers/chvm-logger-writer.h"
 
 #include "chtr-proc-token.h"
@@ -130,6 +132,37 @@ ASG_GCALL_IMPLEMENT
   //csw.gen().blank();
 
  }
+
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+  ChTR_Expression_Object& ceo)
+ {
+  CAON_PTR_DEBUG(ChTR_Node ,n)
+
+  if(caon_ptr<ChTR_Proc_Token> pt = n->proc_token())
+  {
+   CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
+   ChVM_Logger_Writer& clw = *rh.lwriter();
+
+
+   QString text = pt->text();
+
+   clw.gen()
+     .dissolve({"add-new-channel $ proc"})
+     << "load-proc-name $ " << text;
+
+   clw.gen().cut().blank();
+
+   clw.gen().absorb(ceo.gen());
+  }
+
+
+
+  //csw.gen().blank();
+
+ }
+
 
 };
 

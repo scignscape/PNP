@@ -44,6 +44,7 @@ DOMINION_TYPE(source_token, ChTR_Source_Token, Source_Token)
 DOMINION_TYPE(proc_token, ChTR_Proc_Token, Proc_Token)
 DOMINION_TYPE(expression_entry, ChTR_Expression_Entry, Expression_Entry)
 DOMINION_TYPE(statement_body, ChTR_Statement_Body, Statement_Body)
+DOMINION_TYPE(expression_object, ChTR_Expression_Object, Expression_Object)
 
 
 

@@ -6,8 +6,8 @@
 
 
 
-#ifndef CHTR_STATEMENT_BODY__H
-#define CHTR_STATEMENT_BODY__H
+#ifndef CHTR_EXPRESSION_OBJECT__H
+#define CHTR_EXPRESSION_OBJECT__H
 
 
 #include "accessors.h"
@@ -32,16 +32,26 @@ class ChTR_Source_Token;
 class ChTR_Lexical_Scope;
 
 
-class ChTR_Statement_Body
+class ChTR_Expression_Object
 {
+ u2 id_;
+
  ChTR_CHVM_Generator gen_;
+
+ static u2 get_next_id()
+ {
+  static u2 result = 0;
+  return ++result;
+ }
 
 public:
 
 
- ChTR_Statement_Body();
+ ChTR_Expression_Object();
 
  ACCESSORS__RGET(ChTR_CHVM_Generator ,gen)
+
+ ACCESSORS__GET(u2 ,id)
 
 
 // ACCESSORS(QString ,anchor)
@@ -53,7 +63,7 @@ public:
 _OTNS(Chasm_TR)
 
 
-#endif // CHTR_STATEMENT_BODY__H
+#endif // CHTR_EXPRESSION_OBJECT__H
 
 
 

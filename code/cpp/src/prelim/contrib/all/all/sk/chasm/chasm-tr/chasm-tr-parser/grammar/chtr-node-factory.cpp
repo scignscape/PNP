@@ -43,3 +43,10 @@ caon_ptr<ChTR_Node> ChTR_Node_Factory::make_new_node(caon_ptr<ChTR_Type_Object> 
  RELAE_SET_NODE_LABEL(result, cto->name());
  return result;
 }
+
+caon_ptr<ChTR_Node> ChTR_Node_Factory::make_new_node(caon_ptr<ChTR_Expression_Object> ceo) const
+{
+ caon_ptr<ChTR_Node> result = new ChTR_Node(ceo);
+ RELAE_SET_NODE_LABEL(result, "expr:%1"_qt.arg(ceo->id()));
+ return result;
+}

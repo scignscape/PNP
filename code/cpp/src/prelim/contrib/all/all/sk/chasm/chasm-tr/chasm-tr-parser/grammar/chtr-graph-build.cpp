@@ -24,6 +24,8 @@
 #include "chasm-tr/chtr-channel-package.h"
 #include "chasm-tr/chtr-code-statement.h"
 
+#include "chasm-tr/chtr-expression-object.h"
+
 #include "chasm-tr/types/chtr-type-object.h"
 
 #include "chasm-tr/chtr-statement-body.h"
@@ -423,6 +425,20 @@ void ChTR_Graph_Build::symbol_token(QString token)
    csb = ccsb.raw_pointer();
   }
 
+  else if(caon_ptr<ChTR_Expression_Object> ceo = current_statement_body_node_->expression_object())
+  {
+   if(gen().id() != ceo->gen().id())
+   {
+    throw "Unexpected gen mismatch";
+   }
+
+   if(current_channel_state_ == Channel_States::Implicit_Lambda)
+   {
+    gen().dissolve({"add-new-channel $ lambda"}).blank();
+   }
+   ChVM_Logger_Writer::write_symbol_token(token, *current_lexical_scope_, gen());
+  }
+
   else
   {
    // //  error?
@@ -604,6 +620,8 @@ void ChTR_Graph_Build::resolve_statement()
  runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
  //?runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, n);
 
+ alt_gen_ = nullptr;
+
  base_gen_.absorb(clw.gen());
 
  switch(current_channel_state_)
@@ -720,6 +738,29 @@ void ChTR_Graph_Build::enter_infix_mode()
 
 void ChTR_Graph_Build::enter_expression()
 {
+ ChTR_Statement_Body* csb;
+
+ if(current_statement_body_node_)
+ {
+  // //  now we know the statement body is more than just one token
+  if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
+  {
+   csb = new ChTR_Statement_Body;
+   alt_gen_ = &csb->gen();
+
+   // //  which gen?
+   ChVM_Logger_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
+   // //   mark retired for cst, current_statement_body_node_
+   current_statement_body_node_ = node_factory_.make_new_node(csb);
+  }
+ }
+ else
+ {
+  ChTR_Expression_Object* ceo = new ChTR_Expression_Object;
+  alt_gen_ = &ceo->gen();
+  current_statement_body_node_ = node_factory_.make_new_node(ceo);
+ }
+
  gen()
    .blank()
    .preamble_comment("expression")
@@ -730,7 +771,7 @@ void ChTR_Graph_Build::enter_expression()
  gen()
   .dissolve({"push-carrier-deque"})
   .blank()
-  .dissolve({"new-call-package", "gen()-return-channels"})
+  .dissolve({"new-call-package", "gen-return-channels"})
   .blank();
 }
 
@@ -745,7 +786,7 @@ void ChTR_Graph_Build::enter_statement()
   .dissolve({"init-new-ghost-scope", "push-carrier-deque"})
   .blank()
   .dissolve({"new-call-package"})
-  .blank(); //?cut();
+  .blank();
 
 }
 
@@ -773,7 +814,7 @@ void ChTR_Graph_Build::read_line(QString fn, QString arg)
    { ".query-lambda-token", &ChTR_Graph_Build::query_lambda_token },
    { ".query-lambda-token-expecting-another", &ChTR_Graph_Build::query_lambda_token_expecting_another },
    { ".ql-keyword-token", &ChTR_Graph_Build::ql_keyword_token },
-   { ".symbol-token", &ChTR_Graph_Build::symbol_token },
+//   { ".symbol-token", &ChTR_Graph_Build::symbol_token },
 
    { ".track-string-line", &ChTR_Graph_Build::track_string_line },
 

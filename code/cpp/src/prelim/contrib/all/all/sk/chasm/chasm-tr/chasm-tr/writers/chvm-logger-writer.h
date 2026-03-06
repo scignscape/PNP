@@ -55,6 +55,8 @@ public:
  static void write_symbol_token(QString token,
    ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);
 
+ ChVM_Logger_Writer& merge(ChTR_CHVM_Generator& new_lines);
+
  void write_symbol_token(ChTR_Source_Token& cst,
    ChTR_Lexical_Scope& cls);
 
