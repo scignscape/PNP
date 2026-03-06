@@ -57,6 +57,11 @@ public:
 
  ChVM_Logger_Writer& merge(ChTR_CHVM_Generator& new_lines);
 
+ ChVM_Logger_Writer& merge(ChVM_Logger_Writer& new_lines)
+ {
+  return merge(new_lines.gen());
+ }
+
  void write_symbol_token(ChTR_Source_Token& cst,
    ChTR_Lexical_Scope& cls);
 

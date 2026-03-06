@@ -98,6 +98,13 @@ private:
    N_A, Implicit_Return_to_Lambda, Return_to_Lambda, Return_to_Sigma
  };
 
+ enum class Expression_Infix_Codes {
+   N_A, No_Infix, Primary_Infix, Secondary_Infix
+ };
+
+ QStack<Expression_Infix_Codes> expression_infix_codes_;
+
+
  QStack<Carrier_Handoff_States> current_handoff_states_;
  Carrier_Handoff_States declared_handoff_state_;
 
@@ -140,7 +147,7 @@ public:
  void temp_reenter_statement_level();
  void check_string_lines(u4 current_pos);
 
- void enter_expression();
+ void enter_expression(Expression_Infix_Codes infix_code);
 
  void leave_expression();
 

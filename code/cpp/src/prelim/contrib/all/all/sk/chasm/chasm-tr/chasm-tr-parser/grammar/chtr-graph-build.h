@@ -222,6 +222,7 @@ public:
 
 
  void enter_infix_mode();
+ void leave_infix_mode();
 
  void expression_proc_name(QString token);
  void expression_depth(QString token);

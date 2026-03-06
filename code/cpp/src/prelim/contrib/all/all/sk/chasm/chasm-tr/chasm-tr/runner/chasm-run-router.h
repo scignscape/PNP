@@ -298,10 +298,16 @@ public:
    {
     auto cfc = CAST_SCHED_Type::Core_Function_Code;
 
+    // //  5 -> 1, 6 -> 2, 1 -> 7
+
     switch((int) CAST_SCHED_Type::Core_Function_Code)
     {
     case 5:
      ASG_Proc_Run<PROC_Family, 1, Type_Family>::template
+       run<ARG1_Type, ARG2_Type>(rh, arg1, arg2); break;
+
+    case 6:
+     ASG_Proc_Run<PROC_Family, 2, Type_Family>::template
        run<ARG1_Type, ARG2_Type>(rh, arg1, arg2); break;
 
     case 7:

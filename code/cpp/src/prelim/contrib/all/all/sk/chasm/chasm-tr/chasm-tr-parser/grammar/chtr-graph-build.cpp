@@ -327,7 +327,7 @@ void ChTR_Graph_Build::query_proc_name(QString token)
 
 void ChTR_Graph_Build::ql_tokens_init(QString last_instruction)
 {
- QStringList qsl = {"add-new-channel $ lambda", "gen()-voidp-carrier",
+ QStringList qsl = {"add-new-channel $ lambda", "gen-voidp-carrier",
    "add-carriers", "reset-carrier-deque",
    "add-new-channel $ qlambda", "insert-ql-vector-ptr"};
 
@@ -581,11 +581,23 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
  }
 
  ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
+ clw.set_lexical_scope(current_lexical_scope_);
  Chasm_Result_Holder left_rh(&clw);
 
  runner_.run_core_proc("write-operand-lhs", left_rh, operator_node, loperand_node);
+ runner_.run_core_proc("write-operand-rhs", left_rh, operator_node, roperand_node);
 
+// Chasm_Result_Holder right_rh(&clw);
+// runner_.run_core_proc("write-operand-rhs", right_rh, operator_node, roperand_node);
+
+// clw.merge(*left_rh.lwriter());
+
+ //?alt_gen_ = nullptr;
+
+ gen().absorb(clw.gen());
 }
+
+
 
 void ChTR_Graph_Build::check_resolve_infix_tree()
 {
@@ -606,7 +618,7 @@ void ChTR_Graph_Build::check_resolve_infix_tree()
 
 void ChTR_Graph_Build::resolve_statement()
 {
- check_resolve_infix_tree();
+ //check_resolve_infix_tree();
 
  ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
@@ -733,7 +745,13 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
 
 void ChTR_Graph_Build::enter_infix_mode()
 {
+ //enter_expression();
+}
 
+void ChTR_Graph_Build::leave_infix_mode()
+{
+ check_resolve_infix_tree();
+ //enter_expression();
 }
 
 void ChTR_Graph_Build::enter_expression()
@@ -846,6 +864,7 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".string-lines-to-follow", &ChTR_Graph_Build::string_lines_to_follow },
 
    { ".enter-infix-mode", &ChTR_Graph_Build::enter_infix_mode },
+   { ".leave-infix-mode", &ChTR_Graph_Build::leave_infix_mode },
 
 
  }};

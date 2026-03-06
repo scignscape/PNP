@@ -20,6 +20,9 @@
 
 #include "chasm-lib/chasm/types/chasm-type-object.h"
 
+#include "chtr-proc-token.h"
+#include "chtr-source-token.h"
+
 #include "writers/chvm-logger-writer.h"
 
 //class Chasm_Result_Holder;
@@ -52,17 +55,32 @@ _ASG_PROC_CODES
 
 #define ASG_GCALL_IMPLEMENT template<> struct ASG_Proc_Run
 
-ASG_GCALL_IMPLEMENT
-<ASG_GCALL_CC(Write_Operand_LHS, Internal)>
+//ASG_GCALL_IMPLEMENT
+
+//struct ASG_Proc_Run<ASG_GCALL_CC(Write_Operand_LHS, Internal)>
+
+//#define ASG_GCALL_CC(name, fam) ASG_Graph_Call_CC, \
+// ASG_Proc_Family_<ASG_Graph_Call_CC>::name, ASG_Type_Family::fam
+
+//ASG_GCALL_CC(Write_Operand_LHS, Internal)>
+
+template<>
+struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Write_Operand_LHS, ASG_Type_Family::Internal>
 {
  template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
-  ChTR_Source_Token& symbol)
+  ChTR_Source_Token& cst)
  {
   ChVM_Logger_Writer& clw = *rh.lwriter();
 
   clw.gen().blank();
 
+  clw.gen()
+    .dissolve({"add-new-channel $ proc"})
+    << "load-proc-name $ " << proc.text();
+
+  clw.gen().cut().dissolve({"add-new-channel $ lambda"}).blank();
+  clw.write_symbol_token(cst);
  }
 
 
@@ -74,6 +92,28 @@ ASG_GCALL_IMPLEMENT
  }
 };
 
+
+//ASG_GCALL_IMPLEMENT
+//<ASG_GCALL_CC(Write_Operand_RHS, Internal)>
+
+template<>
+struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Write_Operand_RHS, ASG_Type_Family::Internal>
+{
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
+  ChTR_Source_Token& cst)
+ {
+  ChVM_Logger_Writer& clw = *rh.lwriter();
+  clw.write_symbol_token(cst);
+ }
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, T1& t1,
+  T2& t2)
+ {
+
+ }
+};
 
 //ASG_GCALL_IMPLEMENT
 //<ASG_GCALL_VV(Div2, Internal)>

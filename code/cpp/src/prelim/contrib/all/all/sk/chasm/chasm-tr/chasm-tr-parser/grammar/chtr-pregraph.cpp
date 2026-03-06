@@ -71,8 +71,15 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
 
 void ChTR_Pregraph::enter_expression_via_paren()
 {
- enter_expression();
- flags.expecting_expression_proc_name = true;
+ if(flags.infix_mode)
+ {
+  enter_expression(Expression_Infix_Codes::Secondary_Infix);
+ }
+ else
+ {
+  enter_expression(Expression_Infix_Codes::No_Infix);
+  flags.expecting_expression_proc_name = true;
+ }
 }
 
 void ChTR_Pregraph::leave_expression_via_paren()
@@ -83,10 +90,12 @@ void ChTR_Pregraph::leave_expression_via_paren()
 
 
 
-void ChTR_Pregraph::enter_expression()
+void ChTR_Pregraph::enter_expression(Expression_Infix_Codes infix_code)
 {
  flags.active_expression = true;
  parse_context_.flags.active_expression = true;
+
+ expression_infix_codes_.push(infix_code);
 
  ++expression_nesting_count_;
  acc << ".enter-expression"; cut();
@@ -96,6 +105,13 @@ void ChTR_Pregraph::enter_expression()
 
 void ChTR_Pregraph::leave_expression()
 {
+ Expression_Infix_Codes eic = expression_infix_codes_.pop();
+
+ if(eic == Expression_Infix_Codes::Primary_Infix)
+ {
+  acc << ".leave-infix-mode"; cut();
+ }
+
  acc << ".resolve-expression"; cut();
  check_write_handoff();
 //? flags.active_expression = false;
@@ -332,6 +348,11 @@ void ChTR_Pregraph::check_enter_infix_mode()
  {
   flags.infix_mode = true;
   acc << ".enter-infix-mode"; cut();
+
+  enter_expression(Expression_Infix_Codes::Primary_Infix);
+
+//  acc << ".enter-expression"; cut();
+//  acc << ".expression-nesting-depth $ " << expression_nesting_count_; cut();
 
   current_acc_lines_insertion_point_ = acc_lines_.size();
 
