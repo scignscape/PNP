@@ -327,6 +327,11 @@ public:
 //     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template run<T1, T2>(rh, v1, v1); break;
      ASG_Proc_Run<PROC_Family, 1, Type_Family>::template
        run<Chasm_Value_Holder, Chasm_Value_Holder>(rh, v1, v2); break;
+
+    case 3:
+//     ASG_Proc_Run<PROC_Family, 1, Type_Family>::template run<T1, T2>(rh, v1, v1); break;
+     ASG_Proc_Run<PROC_Family, 2, Type_Family>::template
+       run<Chasm_Value_Holder, Chasm_Value_Holder>(rh, v1, v2); break;
     }
    }
 
