@@ -433,6 +433,13 @@ void ChTR_Graph_Build::symbol_token(QString token)
   else if(caon_ptr<ChTR_Statement_Body> ccsb = current_statement_body_node_->statement_body())
   {
    csb = ccsb.raw_pointer();
+
+   if(current_channel_state_ == Channel_States::Implicit_Lambda)
+   {
+    gen().dissolve({"add-new-channel $ lambda"}).blank();
+    current_channel_state_ = Channel_States::Explicit_Lambda;
+   }
+   ChVM_Logger_Writer::write_symbol_token(token, *current_lexical_scope_, gen());
   }
 
   else if(caon_ptr<ChTR_Expression_Object> ceo = current_statement_body_node_->expression_object())
@@ -445,6 +452,7 @@ void ChTR_Graph_Build::symbol_token(QString token)
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
    {
     gen().dissolve({"add-new-channel $ lambda"}).blank();
+    current_channel_state_ = Channel_States::Explicit_Lambda;
    }
    ChVM_Logger_Writer::write_symbol_token(token, *current_lexical_scope_, gen());
   }
@@ -776,6 +784,13 @@ void ChTR_Graph_Build::enter_expression()
   {
    csb = new ChTR_Statement_Body;
    alt_gen_ = &csb->gen();
+
+   if(current_channel_state_ == Channel_States::Implicit_Lambda)
+   {
+    gen().dissolve({"add-new-channel $ lambda"}).blank();
+
+    current_channel_state_ = Channel_States::Explicit_Lambda;
+   }
 
    // //  which gen?
    ChVM_Logger_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
