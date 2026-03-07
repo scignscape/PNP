@@ -687,7 +687,12 @@ void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
 
  if(current_infix_operator_node_)
  {
+  CAON_PTR_DEBUG(ChTR_Node ,current_infix_operator_node_)
+
   current_infix_operator_node_ << If/Qy.Infix_Right_Operand >> node;
+
+  current_infix_operator_node_->debug_connections();
+
   node << If/Qy.Infix_From_Right_Operand >> current_infix_operator_node_;
   current_right_operand_node_ = node;
  }
@@ -743,6 +748,8 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
      current_right_operand_node_ << If/Qy.Infix_Left_Operand >> node;
      current_left_operand_node_ = current_right_operand_node_;
      current_right_operand_node_ = node;
+
+     node->debug_connections();
 
     }
    }

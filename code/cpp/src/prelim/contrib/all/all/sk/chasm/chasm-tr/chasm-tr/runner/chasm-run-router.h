@@ -439,6 +439,11 @@ public:
      Runner<NEW_CAST_SCHED_Type_source_token, Arity_2, TFam>::run(rh, arg1, *n2.source_token());
      break;
 
+    case ChTR_Dominion::Type_Codes::Proc_Token:
+     typedef typename CAST_SCHED_Type::Swap_RHS<ChTR_Proc_Token>::Type NEW_CAST_SCHED_Type_proc_token;
+     Runner<NEW_CAST_SCHED_Type_proc_token, Arity_2, TFam>::run(rh, arg1, *n2.proc_token());
+     break;
+
 //?
     case ChTR_Dominion::Type_Codes::Statement_Body:
      typedef typename CAST_SCHED_Type::Swap_RHS<ChTR_Statement_Body>::Type NEW_CAST_SCHED_Type_statement_body;

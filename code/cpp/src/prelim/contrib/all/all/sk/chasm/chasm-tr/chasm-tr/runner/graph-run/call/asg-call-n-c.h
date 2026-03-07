@@ -106,6 +106,13 @@ ASG_GCALL_IMPLEMENT
 
  template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
+  T2& t2)
+ {
+
+ }
+
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, caon_ptr<ChTR_Node> n,
   ChTR_Statement_Body& csb)
  {
   CAON_PTR_DEBUG(ChTR_Node ,n)

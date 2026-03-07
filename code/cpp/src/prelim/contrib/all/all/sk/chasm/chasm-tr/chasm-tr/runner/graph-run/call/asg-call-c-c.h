@@ -108,6 +108,15 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
  }
 
  template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
+  ChTR_Proc_Token& rhs)
+ {
+  ChVM_Logger_Writer& clw = *rh.lwriter();
+
+  //clw.write_symbol_token(cst);
+ }
+
+ template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, T1& t1,
   T2& t2)
  {
