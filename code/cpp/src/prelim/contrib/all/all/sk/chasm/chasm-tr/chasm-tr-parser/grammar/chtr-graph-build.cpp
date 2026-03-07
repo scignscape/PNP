@@ -412,10 +412,20 @@ void ChTR_Graph_Build::symbol_token(QString token)
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
    csb = new ChTR_Statement_Body;
+   alt_gen_ = &csb->gen();
+
+   if(current_channel_state_ == Channel_States::Implicit_Lambda)
+   {
+    gen().dissolve({"add-new-channel $ lambda"}).blank();
+
+    current_channel_state_ = Channel_States::Explicit_Lambda;
+   }
 
    // //  which gen?
    ChVM_Logger_Writer::write_symbol_token(*cst, *current_lexical_scope_, gen());
+   ChVM_Logger_Writer::write_symbol_token(token, *current_lexical_scope_, gen());
    // //   mark retired for cst, current_statement_body_node_
+
    current_statement_body_node_ = node_factory_.make_new_node(csb);
    //ChTR_Statement_Body::write_symbol_token(*st, *current_lexical_scope_, gen());
   }
@@ -449,6 +459,7 @@ void ChTR_Graph_Build::symbol_token(QString token)
  {
   caon_ptr<ChTR_Source_Token> cst = new ChTR_Source_Token(token);
   current_statement_body_node_ = node_factory_.make_new_node(cst);
+
  }
 
 // switch(current_channel_state_)
@@ -462,19 +473,19 @@ void ChTR_Graph_Build::symbol_token(QString token)
 //   ChTR_Statement_Body::write_symbol_token()
 //  }
 
- switch(current_channel_state_)
- {
- case Channel_States::Implicit_Lambda:
-//   gen().dissolve({"add-new-channel $ lambda"}).blank();
-   current_channel_state_ = Channel_States::Explicit_Lambda;
-  break;
-   // //  fall through
- case Channel_States::Explicit_Lambda:
-  break;
+// switch(current_channel_state_)
+// {
+// case Channel_States::Implicit_Lambda:
+////   gen().dissolve({"add-new-channel $ lambda"}).blank();
+//   current_channel_state_ = Channel_States::Explicit_Lambda;
+//  break;
+//   // //  fall through
+// case Channel_States::Explicit_Lambda:
+//  break;
 
- default:
-  break;
- }
+// default:
+//  break;
+// }
 
 }
 

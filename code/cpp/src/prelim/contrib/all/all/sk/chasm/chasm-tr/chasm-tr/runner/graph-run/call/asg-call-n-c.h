@@ -124,7 +124,7 @@ ASG_GCALL_IMPLEMENT
 
    clw.gen().cut().blank();
 
-
+   clw.merge(csb.gen());
   }
 
 
