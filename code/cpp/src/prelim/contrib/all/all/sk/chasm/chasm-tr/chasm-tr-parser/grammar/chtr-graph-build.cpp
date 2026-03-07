@@ -575,7 +575,7 @@ void ChTR_Graph_Build::expression_to_expression()
 }
 
 
-void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
+void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw)
 {
  CAON_PTR_DEBUG(ChTR_Node ,operator_node)
  operator_node->debug_connections();
@@ -599,12 +599,28 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
   CAON_DEBUG_NOOP
  }
 
+ Chasm_Result_Holder rh(&clw);
+ runner_.run_core_proc("write-operand-lhs", rh, operator_node, loperand_node);
+ runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
+
+ if(caon_ptr<ChTR_Node> next_node = rh.value_as_node())
+ {
+  CAON_PTR_DEBUG(ChTR_Node ,next_node)
+
+  write_infix_expression(next_node, clw);
+ }
+
+}
+
+
+void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
+{
  ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
- Chasm_Result_Holder left_rh(&clw);
 
- runner_.run_core_proc("write-operand-lhs", left_rh, operator_node, loperand_node);
- runner_.run_core_proc("write-operand-rhs", left_rh, operator_node, roperand_node);
+ write_infix_expression(operator_node, clw);
+// clw.set_runner(&runner_);
+
 
 // Chasm_Result_Holder right_rh(&clw);
 // runner_.run_core_proc("write-operand-rhs", right_rh, operator_node, roperand_node);

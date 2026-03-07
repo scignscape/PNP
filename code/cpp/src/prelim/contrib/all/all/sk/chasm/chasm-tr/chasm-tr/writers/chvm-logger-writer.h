@@ -32,12 +32,16 @@ class ChTR_Channel_Package;
 class ChTR_Lexical_Scope;
 class Chasm_Type_System;
 
+class Chasm_Runner;
+
 class ChVM_Logger_Writer
 {
  ChTR_CHVM_Generator gen_;
 
  Chasm_Type_System* type_system_;
  ChTR_Lexical_Scope* lexical_scope_;
+
+// Chasm_Runner* runner_;
 
 public:
 
@@ -48,6 +52,8 @@ public:
 
  ACCESSORS(ChTR_Lexical_Scope* ,lexical_scope)
  ACCESSORS(Chasm_Type_System* ,type_system)
+// ACCESSORS(Chasm_Runner* ,runner)
+
 
  static void write_symbol_token(ChTR_Source_Token& cst,
    ChTR_Lexical_Scope& cls, ChTR_CHVM_Generator& gen);

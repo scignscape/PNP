@@ -23,13 +23,18 @@
 
 #include "global-types.h"
 
+#include "relae-graph/relae-caon-ptr.h"
+
 OTNS_(Chasm_TR)
 
+class ChTR_Node;
 
 class ChTR_Proc_Token
 {
  QString text_;
  u2 infix_rank_;
+
+ caon_ptr<ChTR_Node> operator_node_;
 
 public:
 
@@ -38,6 +43,7 @@ public:
 
  ACCESSORS(QString ,text)
  ACCESSORS(u2 ,infix_rank)
+ ACCESSORS(caon_ptr<ChTR_Node> ,operator_node)
 
 
 };

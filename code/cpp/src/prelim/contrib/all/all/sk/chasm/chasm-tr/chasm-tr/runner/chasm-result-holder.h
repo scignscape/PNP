@@ -17,6 +17,8 @@
 
 #include "chasm-lib/chasm/chasm-carrier.h"
 
+#include "relae-graph/relae-caon-ptr.h"
+
 
 #include "accessors.h"
 #include "flags.h"
@@ -34,6 +36,7 @@ class Chasm_Type_Object;
 class Chasm_Type_System;
 
 class Chasm_Runtime_Bridge;
+class ChTR_Node;
 
 class ChVM_Logger_Writer;
 
@@ -56,6 +59,11 @@ public:
  ACCESSORS(ChVM_Logger_Writer* ,lwriter)
  ACCESSORS(Chasm_Type_Object* ,type_object)
  ACCESSORS(n8 ,value)
+
+ caon_ptr<ChTR_Node> value_as_node()
+ {
+  return value_;
+ }
 
  Chasm_Type_System* type_system();
 

@@ -178,6 +178,9 @@ private:
  caon_ptr<ChTR_Node> current_statement_proc_node_;
  caon_ptr<ChTR_Node> current_statement_body_node_;
 
+ void write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw);
+
+
 public:
 
  ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph& g);

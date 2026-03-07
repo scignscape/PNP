@@ -8,6 +8,8 @@
 
 #include "kernel/graph/chtr-node.h"
 
+#include "chtr-proc-token.h"
+
 USING_OTNS(Chasm_TR)
 
 ChTR_Node_Factory::ChTR_Node_Factory()
@@ -34,6 +36,7 @@ caon_ptr<ChTR_Node> ChTR_Node_Factory::make_new_node(caon_ptr<ChTR_Proc_Token> t
 {
  caon_ptr<ChTR_Node> result = new ChTR_Node(token);
  RELAE_SET_NODE_LABEL(result, token->string_summary());
+ token->set_operator_node(result);
  return result;
 }
 

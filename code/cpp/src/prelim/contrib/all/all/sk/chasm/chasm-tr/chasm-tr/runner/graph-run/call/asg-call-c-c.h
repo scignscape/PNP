@@ -113,6 +113,10 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
  {
   ChVM_Logger_Writer& clw = *rh.lwriter();
 
+  caon_ptr<ChTR_Node> next_node = rhs.operator_node();
+
+  rh.set_value(next_node.raw_direct_value());
+
   //clw.write_symbol_token(cst);
  }
 
