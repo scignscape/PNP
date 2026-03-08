@@ -47,6 +47,15 @@ class ChTR_Code_Statement;
 
 class ChTR_CHVM_Line;
 
+class ChTR_CHVM_Generator;
+
+struct ChTR_CHVM_Generator_Triple
+{
+ ChTR_CHVM_Generator* gen;
+ QString outer_insertion_code;
+ QString inner_insertion_code;
+};
+
 class ChTR_CHVM_Generator
 {
 public:
@@ -93,7 +102,27 @@ public:
  ChTR_CHVM_Generator(Lines_Map* acc_lines = nullptr);
 
  ACCESSORS(QString ,active_insertion_code)
+ ACCESSORS(QString ,current_insertion_code)
 
+ QString get_active_insertion_code()
+ {
+  if(active_insertion_code_.isEmpty())
+    return current_insertion_code_;
+
+  return active_insertion_code_;
+ }
+
+ ChTR_CHVM_Generator& from_note(QString ins);
+
+ void ins_target(QString ins)
+ {
+  active_insertion_code_ = ins;
+ }
+
+ void ins_untarget()
+ {
+  active_insertion_code_.clear();
+ }
  //ChTR_CHVM_Generator(QString current_subroutine_name, Lines_Map* acc_lines);
 
  void push_insertion_code(QString code)
@@ -162,11 +191,10 @@ public:
 
  ChTR_CHVM_Generator& dissolve(QVector<QString> new_lines);
 
- ChTR_CHVM_Generator& absorb(ChTR_CHVM_Generator& new_lines);
-
+ ChTR_CHVM_Generator& absorb(Line_Vector& new_lines, QString sub, QString ins);
  ChTR_CHVM_Generator& absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines);
 
-
+ ChTR_CHVM_Generator& absorb(QString insertion_code);
 
  template<typename TEXT_Type>
  friend ChTR_CHVM_Generator& operator << (ChTR_CHVM_Generator& lhs, TEXT_Type rhs)

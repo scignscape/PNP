@@ -36,7 +36,7 @@ class ChTR_Expression_Object
 {
  u2 id_;
 
- ChTR_CHVM_Generator* gen_;
+ ChTR_CHVM_Generator_Triple gtrip_;
 
  static u2 get_next_id()
  {
@@ -47,11 +47,21 @@ class ChTR_Expression_Object
 public:
 
 
- ChTR_Expression_Object(ChTR_CHVM_Generator* gen);
+ ChTR_Expression_Object(ChTR_CHVM_Generator_Triple gtrip);
+
+ QString ins_outer()
+ {
+  return gtrip_.outer_insertion_code;
+ }
+
+ QString ins_inner()
+ {
+  return gtrip_.inner_insertion_code;
+ }
 
  ChTR_CHVM_Generator& gen()
  {
-  return *gen_;
+  return *gtrip_.gen;
  }
 
  ACCESSORS__GET(u2 ,id)

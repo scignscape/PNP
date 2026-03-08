@@ -19,6 +19,7 @@ class ChTR_CHVM_Line
  friend class ChTR_CHVM_Generator;
 
  s4 line_id_;
+ s4 move_offset_;
 
  QStringList preambles_;
 
@@ -28,7 +29,7 @@ public:
 
  ChTR_CHVM_Line(s4 line_id, QString text);
 
- ChTR_CHVM_Line* clone(s4 id_offset);
+ ChTR_CHVM_Line* clone(s4 offset);
 
  void pre(QStringList p);
  void pre_blank();

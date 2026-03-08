@@ -679,9 +679,8 @@ void ChTR_Graph_Build::resolve_statement()
  runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
  //?runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, n);
 
- alt_gen_ = nullptr;
-
- base_gen_.absorb(clw.gen());
+// alt_gen_ = nullptr;
+// base_gen_.absorb(clw.gen());
 
  switch(current_channel_state_)
  {
@@ -843,7 +842,11 @@ void ChTR_Graph_Build::enter_expression()
  }
  else
  {
-  ChTR_Expression_Object* ceo = new ChTR_Expression_Object(&gen());
+  QString ins = make_insertion_code(gen().size());
+
+  ChTR_Expression_Object* ceo = new ChTR_Expression_Object({&gen(), gen().current_insertion_code(), ins});
+  gen().push_insertion_code(ins);
+
   //?alt_gen_ = &ceo->gen();
   current_statement_body_node_ = node_factory_.make_new_node(ceo);
  }

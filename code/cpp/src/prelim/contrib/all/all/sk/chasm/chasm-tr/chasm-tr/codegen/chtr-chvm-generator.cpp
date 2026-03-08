@@ -69,7 +69,43 @@ void ChTR_CHVM_Generator::check_register_current_subroutine_name()
  }
 }
 
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::from_note(QString ins)
+{
+ dissolve({"@from %1"_qt.arg(ins)});
+ return *this;
+}
 
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code)
+{
+ Line_Vector& new_lines = acc_lines()[current_subroutine_name_][insertion_code];
+
+ absorb(new_lines, current_subroutine_name_, get_active_insertion_code());
+}
+
+
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(Line_Vector& new_lines, QString sub, QString ins)
+{
+ auto& lines = acc_lines()[sub][ins];
+// u4 base_id = lines.size();
+
+ s4 pos = offsets_.value({sub, ins}, 1);
+
+ u4 base_id = 0;
+
+ for(ChTR_CHVM_Line* line : new_lines)
+ {
+  ChTR_CHVM_Line* cl = line->clone(++base_id);
+  lines.insert(pos - 1, cl);
+  ++pos;
+ }
+
+ offsets_[{sub, ins}] = pos;
+
+
+ return *this;
+}
 
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines)
 {
@@ -82,20 +118,6 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code, ChTR_CH
 // {
 //  ChTR_CHVM_Line* cl = line->clone(base_id);
 //  lines.insert(insertion_point++, cl);
-// }
- return *this;
-}
-
-
-ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(ChTR_CHVM_Generator& new_lines)
-{
-// auto& lines = acc_lines()[current_subroutine_name_];
-// u4 base_id = lines.size();
-
-// for(ChTR_CHVM_Line* line : new_lines.acc_lines()[new_lines.current_subroutine_name_])
-// {
-//  ChTR_CHVM_Line* cl = line->clone(base_id);
-//  lines.push_back(cl);
 // }
  return *this;
 }
@@ -125,12 +147,7 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::blank()
 
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(bool sharp)
 {
- if(active_insertion_code_.isEmpty())
-   return cut(current_subroutine_name_, current_insertion_code_, sharp);
-
- cut(current_subroutine_name_, active_insertion_code_, sharp);
- active_insertion_code_.clear();
- return *this;
+ return cut(current_subroutine_name_, get_active_insertion_code(), sharp);
 }
 
 

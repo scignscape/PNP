@@ -17,8 +17,8 @@
 USING_OTNS(Chasm_TR)
 
 
-ChTR_Expression_Object::ChTR_Expression_Object(ChTR_CHVM_Generator* gen)
-  :  gen_(gen)
+ChTR_Expression_Object::ChTR_Expression_Object(ChTR_CHVM_Generator_Triple gtrip)
+  :  gtrip_(gtrip)
 //  :  gen_("--eo--")
 //  :  channel_package_(nullptr)
 {

@@ -13,13 +13,14 @@ USING_OTNS(Chasm_TR)
 
 
 ChTR_CHVM_Line::ChTR_CHVM_Line(s4 line_id, QString text)
-  : line_id_(line_id), text_(text)
+  : line_id_(line_id), move_offset_(0), text_(text)
 {
 }
 
-ChTR_CHVM_Line* ChTR_CHVM_Line::clone(s4 id_offset)
+ChTR_CHVM_Line* ChTR_CHVM_Line::clone(s4 offset)
 {
- ChTR_CHVM_Line* result = new ChTR_CHVM_Line(line_id_ + id_offset, text_);
+ ChTR_CHVM_Line* result = new ChTR_CHVM_Line(line_id_, text_);
+ result->move_offset_ = offset;
  result->preambles_ = preambles_;
  return result;
 }
