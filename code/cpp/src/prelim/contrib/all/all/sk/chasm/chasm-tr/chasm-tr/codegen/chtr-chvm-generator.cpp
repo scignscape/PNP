@@ -65,6 +65,23 @@ void ChTR_CHVM_Generator::check_register_current_subroutine_name()
 }
 
 
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines)
+{
+ auto& lines = acc_lines_[current_subroutine_name_];
+ u4 base_id = lines.size();
+
+ s4 insertion_point = 0;
+
+ for(ChTR_CHVM_Line* line : new_lines.acc_lines_[new_lines.current_subroutine_name_])
+ {
+  ChTR_CHVM_Line* cl = line->clone(base_id);
+  lines.insert(insertion_point++, cl);
+ }
+ return *this;
+}
+
+
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(ChTR_CHVM_Generator& new_lines)
 {
  auto& lines = acc_lines_[current_subroutine_name_];
@@ -95,14 +112,23 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::blank()
  return *this;
 }
 
-ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut()
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut_to_front()
+{
+ return cut(0);
+}
+
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(s4 pos, bool sharp)
 {
 //?acc << " ;.";
- statement_line();
+
+ if(!sharp)
+   statement_line();
 
  auto& acc_lines = acc_lines_[current_subroutine_name_];
 
- u4 ln = acc_lines.size() + 1;
+ u4 ln = pos == -1? acc_lines.size() + 1 : pos;
 
  ChTR_CHVM_Line* ccl = new ChTR_CHVM_Line(ln, acc_);
 
@@ -114,7 +140,14 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut()
 
  acc_.clear();
 
- acc_lines.push_back(ccl);
+ if(pos == -1)
+   acc_lines.push_back(ccl);
+
+ else if(pos == 0)
+   acc_lines.push_front(ccl);
+
+ else
+   acc_lines.insert(pos, ccl);
 
  return *this;
 }

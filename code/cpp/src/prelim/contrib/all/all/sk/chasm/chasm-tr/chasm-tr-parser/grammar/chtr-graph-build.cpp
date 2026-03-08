@@ -88,6 +88,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_infix_operator_node_(nullptr)
    ,current_statement_proc_node_(nullptr)
    ,current_statement_body_node_(nullptr)
+   ,insertion_index_(0)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -122,6 +123,11 @@ QString ChTR_Graph_Build::chvm_code()
 void ChTR_Graph_Build::parse_line_number(QString text)
 {
  current_line_number_ = text.mid(1).trimmed().toUInt();
+}
+
+void ChTR_Graph_Build::sharp_cut()
+{
+ gen().sharp_cut();
 }
 
 void ChTR_Graph_Build::cut()
@@ -629,7 +635,12 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
 
  //?alt_gen_ = nullptr;
 
- gen().absorb(clw.gen());
+ QString ic = insertion_codes_.pop();
+
+ clw.gen() << "lines-inserted-at $ " << ic;
+ clw.gen().cut_to_front();
+
+ gen().absorb(ic, clw.gen());
 }
 
 
@@ -787,6 +798,14 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
 
 void ChTR_Graph_Build::enter_infix_mode()
 {
+ s4 sz = gen().size();
+
+ QString code = make_insertion_code(sz);
+
+ gen() << code; sharp_cut();
+
+ insertion_codes_.push(code);
+
  //enter_expression();
 }
 

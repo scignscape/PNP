@@ -82,6 +82,11 @@ public:
 
  ACCESSORS__GET(u2 ,id)
 
+ s4 size()
+ {
+  return acc_lines_[current_subroutine_name_].size();
+ }
+
  void chvm_code(QString& result);
 
  ChTR_CHVM_Generator& preamble(QString p)
@@ -99,12 +104,24 @@ public:
  void statement_line(QString* ln);
  QString statement_line(QString ln);
 
- ChTR_CHVM_Generator& cut();
+ ChTR_CHVM_Generator& cut_to_front();
+
+ ChTR_CHVM_Generator& cut(s4 pos = -1, bool sharp = false);
+
+ ChTR_CHVM_Generator& sharp_cut(s4 pos = -1)
+ {
+  return cut(pos, true);
+ }
+
  ChTR_CHVM_Generator& blank();
 
  ChTR_CHVM_Generator& dissolve(QVector<QString> new_lines);
 
  ChTR_CHVM_Generator& absorb(ChTR_CHVM_Generator& new_lines);
+
+ ChTR_CHVM_Generator& absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines);
+
+
 
  template<typename TEXT_Type>
  friend ChTR_CHVM_Generator& operator << (ChTR_CHVM_Generator& lhs, TEXT_Type rhs)

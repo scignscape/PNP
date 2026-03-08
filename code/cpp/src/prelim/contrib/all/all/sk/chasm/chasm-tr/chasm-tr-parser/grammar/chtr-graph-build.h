@@ -128,6 +128,7 @@ private:
  u4 source_file_index_;
 
  void cut();
+ void sharp_cut();
 
 // QTextStream acc;
 
@@ -177,6 +178,16 @@ private:
 
  caon_ptr<ChTR_Node> current_statement_proc_node_;
  caon_ptr<ChTR_Node> current_statement_body_node_;
+
+ QStack<QString> insertion_codes_;
+
+ u2 insertion_index_;
+
+ QString make_insertion_code(u2 pos)
+ {
+  ++insertion_index_;
+  return "@>>%1:%2<<@"_qt.arg(insertion_index_).arg(pos);
+ }
 
  void write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw);
 
