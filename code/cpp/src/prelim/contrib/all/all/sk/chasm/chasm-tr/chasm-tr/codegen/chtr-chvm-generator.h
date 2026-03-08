@@ -131,9 +131,11 @@ public:
   current_insertion_code_ = code;
  }
 
- QString pop_insertion_code()
+ QString pop_insertion_code(QString code)
  {
-  current_insertion_code_ = insertion_codes_.pop();
+  current_insertion_code_ = code;
+  if(code != insertion_codes_.pop())
+    qDebug() << "Unexpected insertion code: " << code;
   return current_insertion_code_;
  }
 
@@ -195,6 +197,17 @@ public:
  ChTR_CHVM_Generator& absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines);
 
  ChTR_CHVM_Generator& absorb(QString insertion_code);
+
+ template<typename ...ARGS>
+ ChTR_CHVM_Generator& absorb_from(QString note, ARGS... args)
+ {
+  return from_note(note).absorb(args...);
+ }
+
+ ChTR_CHVM_Generator& absorb_from(QString note)
+ {
+  absorb_from(note, note);
+ }
 
  template<typename TEXT_Type>
  friend ChTR_CHVM_Generator& operator << (ChTR_CHVM_Generator& lhs, TEXT_Type rhs)
