@@ -32,16 +32,15 @@ class ChTR_Source_Token;
 class ChTR_Lexical_Scope;
 
 
-class ChTR_Statement_Body
+class ChTR_Statement_Body :  public ChTR_CHVM_Generator_Triple_Holder
 {
- ChTR_CHVM_Generator* gen_;
 
 public:
 
 
- ChTR_Statement_Body(ChTR_CHVM_Generator* gen);
+ ChTR_Statement_Body(ChTR_CHVM_Generator_Triple gtrip);
 
- ACCESSORS__GET(ChTR_CHVM_Generator* ,gen)
+// ACCESSORS__GET(ChTR_CHVM_Generator* ,gen)
 
 
 // ACCESSORS(QString ,anchor)

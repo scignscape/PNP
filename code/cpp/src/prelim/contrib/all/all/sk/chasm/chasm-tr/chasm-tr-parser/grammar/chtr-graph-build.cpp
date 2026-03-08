@@ -407,6 +407,20 @@ void ChTR_Graph_Build::track_string_line(QString line)
 }
 
 
+ChTR_CHVM_Generator_Triple ChTR_Graph_Build::make_insertion_triple()
+{
+ QString ins = make_insertion_code(gen().size());
+ QString outer = gen().current_insertion_code();
+ gen().dissolve({"@ins %1 (%2)"_qt.arg(ins)});
+
+ return {&gen(), outer, ins};
+}
+
+
+ChTR_CHVM_Generator_Triple ChTR_Graph_Build::passive_insertion_triple()
+{
+ return {&gen(), gen().current_insertion_code(), gen().current_insertion_code()};
+}
 
 void ChTR_Graph_Build::symbol_token(QString token)
 {
@@ -417,7 +431,10 @@ void ChTR_Graph_Build::symbol_token(QString token)
   // //  now we know the statement body is more than just one token
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
-   csb = new ChTR_Statement_Body(&gen());
+   ChTR_CHVM_Generator_Triple gtrip = make_insertion_triple();
+   csb = new ChTR_Statement_Body(gtrip);
+   gen().push_insertion_code(gtrip.inner_insertion_code);
+
    //alt_gen_ = &csb->gen();
 
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
@@ -621,7 +638,8 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
 
 void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
 {
- ChVM_Logger_Writer clw(&gen(), &chasm_type_system_);
+ ChVM_Logger_Writer clw(passive_insertion_triple(), &chasm_type_system_);
+
  clw.set_lexical_scope(current_lexical_scope_);
 
  write_infix_expression(operator_node, clw);
@@ -635,12 +653,12 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
 
  //?alt_gen_ = nullptr;
 
- QString ic = insertion_codes_.pop();
+// QString ic = insertion_codes_.pop();
 
- clw.gen() << "lines-inserted-at $ " << ic;
+//? clw.gen() << "lines-inserted-at $ " << ic;
  //?clw.gen().cut_to_front();
 
- gen().absorb(ic, clw.gen());
+// gen().absorb(ic, clw.gen());
 }
 
 
@@ -664,10 +682,8 @@ void ChTR_Graph_Build::check_resolve_infix_tree()
 
 void ChTR_Graph_Build::resolve_statement()
 {
- //check_resolve_infix_tree();
+ ChVM_Logger_Writer clw(make_insertion_triple(), &chasm_type_system_);
 
- ChVM_Logger_Writer clw(&gen(), //"--rh--",
-                        &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
 
  Chasm_Result_Holder rh(&clw);
@@ -798,13 +814,11 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
 
 void ChTR_Graph_Build::enter_infix_mode()
 {
- s4 sz = gen().size();
+// s4 sz = gen().size();
+// QString code = make_insertion_code(sz);
+// gen() << code; sharp_cut();
 
- QString code = make_insertion_code(sz);
-
- gen() << code; sharp_cut();
-
- insertion_codes_.push(code);
+// insertion_codes_.push(code);
 
  //enter_expression();
 }
@@ -824,7 +838,9 @@ void ChTR_Graph_Build::enter_expression()
   // //  now we know the statement body is more than just one token
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
-   csb = new ChTR_Statement_Body(&gen());
+   ChTR_CHVM_Generator_Triple gtrip = make_insertion_triple();
+   csb = new ChTR_Statement_Body(gtrip);
+   gen().push_insertion_code(gtrip.inner_insertion_code);
    //?alt_gen_ = &csb->gen();
 
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
@@ -842,10 +858,9 @@ void ChTR_Graph_Build::enter_expression()
  }
  else
  {
-  QString ins = make_insertion_code(gen().size());
-
-  ChTR_Expression_Object* ceo = new ChTR_Expression_Object({&gen(), gen().current_insertion_code(), ins});
-  gen().push_insertion_code(ins);
+  ChTR_CHVM_Generator_Triple gtrip = make_insertion_triple();
+  ChTR_Expression_Object* ceo = new ChTR_Expression_Object(gtrip);
+  gen().push_insertion_code(gtrip.inner_insertion_code);
 
   //?alt_gen_ = &ceo->gen();
   current_statement_body_node_ = node_factory_.make_new_node(ceo);

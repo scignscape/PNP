@@ -17,8 +17,8 @@
 USING_OTNS(Chasm_TR)
 
 
-ChTR_Statement_Body::ChTR_Statement_Body(ChTR_CHVM_Generator* gen)
-  : gen_(gen) //"--sb--"
+ChTR_Statement_Body::ChTR_Statement_Body(ChTR_CHVM_Generator_Triple gtrip)
+  : ChTR_CHVM_Generator_Triple_Holder(gtrip) //"--sb--"
 //  :  channel_package_(nullptr)
 {
 

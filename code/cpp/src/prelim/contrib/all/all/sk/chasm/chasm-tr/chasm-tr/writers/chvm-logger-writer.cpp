@@ -21,14 +21,13 @@ ChVM_Logger_Writer::ChVM_Logger_Writer(Chasm_Type_System* type_system)
  :
    lexical_scope_(nullptr), type_system_(type_system)
 {
- gen_ = new ChTR_CHVM_Generator;
+ gtrip_.gen = new ChTR_CHVM_Generator;
 }
 
 
-ChVM_Logger_Writer::ChVM_Logger_Writer(//?QString ins_code,
-                                       ChTR_CHVM_Generator* gen, Chasm_Type_System* type_system)
-  : //? ins_code_(ins_code),
-    lexical_scope_(nullptr), gen_(gen), type_system_(type_system)
+ChVM_Logger_Writer::ChVM_Logger_Writer(ChTR_CHVM_Generator_Triple gtrip, Chasm_Type_System* type_system)
+  : ChTR_CHVM_Generator_Triple_Holder(gtrip),
+    lexical_scope_(nullptr), type_system_(type_system)
 //  :  channel_package_(nullptr)
 {
 

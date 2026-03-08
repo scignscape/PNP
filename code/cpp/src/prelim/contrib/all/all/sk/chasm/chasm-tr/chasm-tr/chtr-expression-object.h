@@ -32,11 +32,10 @@ class ChTR_Source_Token;
 class ChTR_Lexical_Scope;
 
 
-class ChTR_Expression_Object
+class ChTR_Expression_Object : public ChTR_CHVM_Generator_Triple_Holder
 {
  u2 id_;
 
- ChTR_CHVM_Generator_Triple gtrip_;
 
  static u2 get_next_id()
  {
@@ -49,15 +48,7 @@ public:
 
  ChTR_Expression_Object(ChTR_CHVM_Generator_Triple gtrip);
 
- QString ins_outer()
- {
-  return gtrip_.outer_insertion_code;
- }
 
- QString ins_inner()
- {
-  return gtrip_.inner_insertion_code;
- }
 
  ChTR_CHVM_Generator& gen()
  {

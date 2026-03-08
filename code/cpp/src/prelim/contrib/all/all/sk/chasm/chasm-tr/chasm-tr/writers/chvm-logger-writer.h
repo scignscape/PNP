@@ -34,9 +34,8 @@ class Chasm_Type_System;
 
 class Chasm_Runner;
 
-class ChVM_Logger_Writer
+class ChVM_Logger_Writer : public ChTR_CHVM_Generator_Triple_Holder
 {
- ChTR_CHVM_Generator* gen_;
  QString ins_code_;
 
  Chasm_Type_System* type_system_;
@@ -48,16 +47,17 @@ public:
 
 
 // ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_System* type_system = nullptr);
- ChVM_Logger_Writer(//?QString ins_code,
-                    ChTR_CHVM_Generator* gen, Chasm_Type_System* type_system = nullptr);
 
  ChVM_Logger_Writer(Chasm_Type_System* type_system = nullptr);
+ ChVM_Logger_Writer(ChTR_CHVM_Generator_Triple gtrip, Chasm_Type_System* type_system = nullptr);
 
- ChTR_CHVM_Generator& gen()
- {
-//  gen_->set_active_insertion_code(ins_code_);
-  return *gen_;
- }
+//? ChVM_Logger_Writer(Chasm_Type_System* type_system = nullptr);
+
+// ChTR_CHVM_Generator& gen()
+// {
+////  gen_->set_active_insertion_code(ins_code_);
+//  return *gen_;
+// }
 
  ACCESSORS(ChTR_Lexical_Scope* ,lexical_scope)
  ACCESSORS(Chasm_Type_System* ,type_system)

@@ -189,6 +189,9 @@ private:
   return "@>>%1:%2<<@"_qt.arg(insertion_index_).arg(pos);
  }
 
+ ChTR_CHVM_Generator_Triple make_insertion_triple();
+ ChTR_CHVM_Generator_Triple passive_insertion_triple();
+
  void write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw);
 
 

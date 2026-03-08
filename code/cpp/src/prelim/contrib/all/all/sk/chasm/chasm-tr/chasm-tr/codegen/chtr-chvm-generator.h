@@ -56,6 +56,41 @@ struct ChTR_CHVM_Generator_Triple
  QString inner_insertion_code;
 };
 
+class ChTR_CHVM_Generator_Triple_Holder
+{
+protected:
+ ChTR_CHVM_Generator_Triple gtrip_;
+
+public:
+
+ ChTR_CHVM_Generator_Triple_Holder(ChTR_CHVM_Generator_Triple gtrip)
+   :  gtrip_(gtrip)
+ {
+
+ }
+
+ ChTR_CHVM_Generator_Triple_Holder()
+   :  gtrip_({nullptr})
+ {
+
+ }
+
+ ChTR_CHVM_Generator& gen()
+ {
+  return *gtrip_.gen;
+ }
+
+ QString ins_outer()
+ {
+  return gtrip_.outer_insertion_code;
+ }
+
+ QString ins_inner()
+ {
+  return gtrip_.inner_insertion_code;
+ }
+};
+
 class ChTR_CHVM_Generator
 {
 public:
