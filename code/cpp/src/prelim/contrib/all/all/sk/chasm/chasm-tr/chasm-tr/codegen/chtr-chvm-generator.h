@@ -49,6 +49,14 @@ class ChTR_CHVM_Line;
 
 class ChTR_CHVM_Generator
 {
+public:
+ typedef QVector<ChTR_CHVM_Line*> Line_Vector;
+ typedef QMap<QString, Line_Vector> Line_Vector_Map;
+ typedef QMap<QString, Line_Vector_Map> Lines_Map;
+ typedef QPair<QString, QString> Insertion_Pair;
+
+private:
+
  u2 id_;
 
  static u2 get_next_id()
@@ -64,27 +72,54 @@ class ChTR_CHVM_Generator
  QStringList held_preambles_;
 
  QString current_subroutine_name_;
+ QString current_insertion_code_;
+
+ QStack<QString> insertion_codes_;
 
  QStringList known_subroutine_names_;
 
+ QString active_insertion_code_;
 
- QMap<QString, QVector<ChTR_CHVM_Line*>> acc_lines_;
+ QMap<Insertion_Pair, s4> offsets_;
+
+ Lines_Map* acc_lines_;
+
+ u4 cumulative_line_count_;
 
  void check_register_current_subroutine_name();
 
 public:
 
- ChTR_CHVM_Generator();
+ ChTR_CHVM_Generator(Lines_Map* acc_lines = nullptr);
 
- ChTR_CHVM_Generator(QString current_subroutine_name);
+ ACCESSORS(QString ,active_insertion_code)
 
- ACCESSORS(QMap<QString, QVector<ChTR_CHVM_Line*>> ,acc_lines)
+ //ChTR_CHVM_Generator(QString current_subroutine_name, Lines_Map* acc_lines);
+
+ void push_insertion_code(QString code)
+ {
+  insertion_codes_.push(current_insertion_code_);
+  current_insertion_code_ = code;
+ }
+
+ QString pop_insertion_code()
+ {
+  current_insertion_code_ = insertion_codes_.pop();
+  return current_insertion_code_;
+ }
+
+ static QString Default_insertion_code;
+
+ Lines_Map& acc_lines()
+ {
+  return *acc_lines_;
+ }
 
  ACCESSORS__GET(u2 ,id)
 
  s4 size()
  {
-  return acc_lines_[current_subroutine_name_].size();
+  return acc_lines()[current_subroutine_name_][current_insertion_code_].size();
  }
 
  void chvm_code(QString& result);
@@ -104,13 +139,23 @@ public:
  void statement_line(QString* ln);
  QString statement_line(QString ln);
 
- ChTR_CHVM_Generator& cut_to_front();
+// ChTR_CHVM_Generator& cut_to_front();
 
- ChTR_CHVM_Generator& cut(s4 pos = -1, bool sharp = false);
+ ChTR_CHVM_Generator& cut(bool sharp = false);
 
- ChTR_CHVM_Generator& sharp_cut(s4 pos = -1)
+ ChTR_CHVM_Generator& sharp_cut()
  {
-  return cut(pos, true);
+  return cut(true);
+ }
+
+// ChTR_CHVM_Generator& cut(s4 pos, bool sharp = false);
+
+ ChTR_CHVM_Generator& cut(QString sub, QString ins, s4 pos, bool sharp = false);
+ ChTR_CHVM_Generator& cut(QString sub, QString ins, bool sharp = false);
+
+ ChTR_CHVM_Generator& sharp_cut(QString sub, QString ins)
+ {
+  return cut(sub, ins, true);
  }
 
  ChTR_CHVM_Generator& blank();

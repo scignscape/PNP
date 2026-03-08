@@ -417,8 +417,8 @@ void ChTR_Graph_Build::symbol_token(QString token)
   // //  now we know the statement body is more than just one token
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
-   csb = new ChTR_Statement_Body;
-   alt_gen_ = &csb->gen();
+   csb = new ChTR_Statement_Body(&gen());
+   //alt_gen_ = &csb->gen();
 
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
    {
@@ -621,7 +621,7 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
 
 void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
 {
- ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
+ ChVM_Logger_Writer clw(&gen(), &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
 
  write_infix_expression(operator_node, clw);
@@ -638,7 +638,7 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node)
  QString ic = insertion_codes_.pop();
 
  clw.gen() << "lines-inserted-at $ " << ic;
- clw.gen().cut_to_front();
+ //?clw.gen().cut_to_front();
 
  gen().absorb(ic, clw.gen());
 }
@@ -666,7 +666,8 @@ void ChTR_Graph_Build::resolve_statement()
 {
  //check_resolve_infix_tree();
 
- ChVM_Logger_Writer clw("--rh--", &chasm_type_system_);
+ ChVM_Logger_Writer clw(&gen(), //"--rh--",
+                        &chasm_type_system_);
  clw.set_lexical_scope(current_lexical_scope_);
 
  Chasm_Result_Holder rh(&clw);
@@ -824,8 +825,8 @@ void ChTR_Graph_Build::enter_expression()
   // //  now we know the statement body is more than just one token
   if(caon_ptr<ChTR_Source_Token> cst = current_statement_body_node_->source_token())
   {
-   csb = new ChTR_Statement_Body;
-   alt_gen_ = &csb->gen();
+   csb = new ChTR_Statement_Body(&gen());
+   //?alt_gen_ = &csb->gen();
 
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
    {
@@ -842,8 +843,8 @@ void ChTR_Graph_Build::enter_expression()
  }
  else
  {
-  ChTR_Expression_Object* ceo = new ChTR_Expression_Object;
-  alt_gen_ = &ceo->gen();
+  ChTR_Expression_Object* ceo = new ChTR_Expression_Object(&gen());
+  //?alt_gen_ = &ceo->gen();
   current_statement_body_node_ = node_factory_.make_new_node(ceo);
  }
 

@@ -17,8 +17,9 @@
 USING_OTNS(Chasm_TR)
 
 
-ChTR_Expression_Object::ChTR_Expression_Object()
-  :  gen_("--eo--")
+ChTR_Expression_Object::ChTR_Expression_Object(ChTR_CHVM_Generator* gen)
+  :  gen_(gen)
+//  :  gen_("--eo--")
 //  :  channel_package_(nullptr)
 {
  id_ = get_next_id();

@@ -34,14 +34,14 @@ class ChTR_Lexical_Scope;
 
 class ChTR_Statement_Body
 {
- ChTR_CHVM_Generator gen_;
+ ChTR_CHVM_Generator* gen_;
 
 public:
 
 
- ChTR_Statement_Body();
+ ChTR_Statement_Body(ChTR_CHVM_Generator* gen);
 
- ACCESSORS__RGET(ChTR_CHVM_Generator ,gen)
+ ACCESSORS__GET(ChTR_CHVM_Generator* ,gen)
 
 
 // ACCESSORS(QString ,anchor)

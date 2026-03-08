@@ -36,7 +36,7 @@ class ChTR_Expression_Object
 {
  u2 id_;
 
- ChTR_CHVM_Generator gen_;
+ ChTR_CHVM_Generator* gen_;
 
  static u2 get_next_id()
  {
@@ -47,9 +47,12 @@ class ChTR_Expression_Object
 public:
 
 
- ChTR_Expression_Object();
+ ChTR_Expression_Object(ChTR_CHVM_Generator* gen);
 
- ACCESSORS__RGET(ChTR_CHVM_Generator ,gen)
+ ChTR_CHVM_Generator& gen()
+ {
+  return *gen_;
+ }
 
  ACCESSORS__GET(u2 ,id)
 

@@ -20,18 +20,23 @@
 USING_OTNS(Chasm_TR)
 
 
+QString ChTR_CHVM_Generator::Default_insertion_code = "@>><<@";
 
+//ChTR_CHVM_Generator::ChTR_CHVM_Generator(QString current_subroutine_name, Lines_Map* acc_lines)
+//  :  acc_stream_(&acc_), current_subroutine_name_(current_subroutine_name), acc_lines_(acc_lines)
+//{
+// id_ = get_next_id();
+//}
 
-ChTR_CHVM_Generator::ChTR_CHVM_Generator(QString current_subroutine_name)
-  :  acc_stream_(&acc_), current_subroutine_name_(current_subroutine_name)
+ChTR_CHVM_Generator::ChTR_CHVM_Generator(Lines_Map* acc_lines)
+  :  acc_stream_(&acc_), acc_lines_(acc_lines), cumulative_line_count_(0)
 {
- id_ = get_next_id();
-}
+ if(!acc_lines_)
+   acc_lines_ = new Lines_Map;
 
-ChTR_CHVM_Generator::ChTR_CHVM_Generator()
-  :  acc_stream_(&acc_)
-{
  id_ = get_next_id();
+
+ current_insertion_code_ = Default_insertion_code;
 
  current_subroutine_name_ = "--sf--";
  check_register_current_subroutine_name();
@@ -42,7 +47,7 @@ void ChTR_CHVM_Generator::chvm_code(QString& result)
  for(QString sn : known_subroutine_names_)
  {
   result += "\n\n";
-  for(auto ccl : acc_lines_[sn])
+  for(auto ccl : acc_lines()[sn][Default_insertion_code])
   {
    result += ccl->get_text() + "\n";
   }
@@ -51,7 +56,7 @@ void ChTR_CHVM_Generator::chvm_code(QString& result)
 
 void ChTR_CHVM_Generator::check_register_current_subroutine_name()
 {
- auto& lines = acc_lines_[current_subroutine_name_];
+ auto& lines = acc_lines()[current_subroutine_name_][current_insertion_code_];
 
  if(lines.isEmpty())
  {
@@ -68,30 +73,30 @@ void ChTR_CHVM_Generator::check_register_current_subroutine_name()
 
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines)
 {
- auto& lines = acc_lines_[current_subroutine_name_];
- u4 base_id = lines.size();
+// auto& lines = acc_lines()[current_subroutine_name_];
+// u4 base_id = lines.size();
 
- s4 insertion_point = 0;
+// s4 insertion_point = 0;
 
- for(ChTR_CHVM_Line* line : new_lines.acc_lines_[new_lines.current_subroutine_name_])
- {
-  ChTR_CHVM_Line* cl = line->clone(base_id);
-  lines.insert(insertion_point++, cl);
- }
+// for(ChTR_CHVM_Line* line : new_lines.acc_lines()[new_lines.current_subroutine_name_])
+// {
+//  ChTR_CHVM_Line* cl = line->clone(base_id);
+//  lines.insert(insertion_point++, cl);
+// }
  return *this;
 }
 
 
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(ChTR_CHVM_Generator& new_lines)
 {
- auto& lines = acc_lines_[current_subroutine_name_];
- u4 base_id = lines.size();
+// auto& lines = acc_lines()[current_subroutine_name_];
+// u4 base_id = lines.size();
 
- for(ChTR_CHVM_Line* line : new_lines.acc_lines_[new_lines.current_subroutine_name_])
- {
-  ChTR_CHVM_Line* cl = line->clone(base_id);
-  lines.push_back(cl);
- }
+// for(ChTR_CHVM_Line* line : new_lines.acc_lines()[new_lines.current_subroutine_name_])
+// {
+//  ChTR_CHVM_Line* cl = line->clone(base_id);
+//  lines.push_back(cl);
+// }
  return *this;
 }
 
@@ -113,24 +118,45 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::blank()
 }
 
 
-ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut_to_front()
+//ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut_to_front()
+//{
+// return cut(0);
+//}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(bool sharp)
 {
- return cut(0);
+ if(active_insertion_code_.isEmpty())
+   return cut(current_subroutine_name_, current_insertion_code_, sharp);
+
+ cut(current_subroutine_name_, active_insertion_code_, sharp);
+ active_insertion_code_.clear();
+ return *this;
 }
 
 
-ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(s4 pos, bool sharp)
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(QString sub, QString ins, bool sharp) //s4 pos, bool sharp)
+{
+ s4 pos = offsets_.value({sub, ins}, 1);
+ cut(sub, ins, pos, sharp);
+ offsets_[{sub, ins}] = pos + 1;
+ return *this;
+}
+
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(QString sub, QString ins, s4 pos, bool sharp) //s4 pos, bool sharp)
 {
 //?acc << " ;.";
 
  if(!sharp)
    statement_line();
 
- auto& acc_lines = acc_lines_[current_subroutine_name_];
+ auto& lines = acc_lines()[sub][ins];
 
- u4 ln = pos == -1? acc_lines.size() + 1 : pos;
+ ++cumulative_line_count_;
 
- ChTR_CHVM_Line* ccl = new ChTR_CHVM_Line(ln, acc_);
+ //u4 ln = pos == -1? acc_lines.size() + 1 : pos;
+
+ ChTR_CHVM_Line* ccl = new ChTR_CHVM_Line(cumulative_line_count_, acc_);
 
  if(!held_preambles_.isEmpty())
  {
@@ -140,14 +166,14 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::cut(s4 pos, bool sharp)
 
  acc_.clear();
 
- if(pos == -1)
-   acc_lines.push_back(ccl);
+// if(pos == -1)
+//   acc_lines.push_back(ccl);
 
- else if(pos == 0)
-   acc_lines.push_front(ccl);
+// else if(pos == 0)
+//   acc_lines.push_front(ccl);
+// else
 
- else
-   acc_lines.insert(pos, ccl);
+ lines.insert(pos - 1, ccl);
 
  return *this;
 }

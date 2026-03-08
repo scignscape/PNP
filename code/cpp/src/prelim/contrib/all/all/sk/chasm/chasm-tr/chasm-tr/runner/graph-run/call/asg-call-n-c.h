@@ -93,7 +93,7 @@ ASG_GCALL_IMPLEMENT
    clw.gen().cut().blank();
 
    clw.gen()
-     .dissolve({"add-new-channel $ lambda"}).cut();
+     .dissolve({"add-new-channel $ lambda"});
 
    clw.write_symbol_token(cst.text());
 
@@ -131,7 +131,7 @@ ASG_GCALL_IMPLEMENT
 
    clw.gen().cut().blank();
 
-   clw.merge(csb.gen());
+   //?clw.merge(csb.gen());
   }
 
 
@@ -161,7 +161,7 @@ ASG_GCALL_IMPLEMENT
 
    clw.gen().cut().blank();
 
-   clw.gen().absorb(ceo.gen());
+   //?clw.gen().absorb(ceo.gen());
   }
 
 

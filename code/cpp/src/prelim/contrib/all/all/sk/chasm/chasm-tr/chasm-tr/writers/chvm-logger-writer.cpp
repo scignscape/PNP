@@ -17,8 +17,18 @@
 USING_OTNS(Chasm_TR)
 
 
-ChVM_Logger_Writer::ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_System* type_system)
-  :  lexical_scope_(nullptr), gen_(gen_subroutine_name), type_system_(type_system)
+ChVM_Logger_Writer::ChVM_Logger_Writer(Chasm_Type_System* type_system)
+ :
+   lexical_scope_(nullptr), type_system_(type_system)
+{
+ gen_ = new ChTR_CHVM_Generator;
+}
+
+
+ChVM_Logger_Writer::ChVM_Logger_Writer(//?QString ins_code,
+                                       ChTR_CHVM_Generator* gen, Chasm_Type_System* type_system)
+  : //? ins_code_(ins_code),
+    lexical_scope_(nullptr), gen_(gen), type_system_(type_system)
 //  :  channel_package_(nullptr)
 {
 
@@ -28,7 +38,7 @@ ChVM_Logger_Writer::ChVM_Logger_Writer(QString gen_subroutine_name, Chasm_Type_S
 
 ChVM_Logger_Writer& ChVM_Logger_Writer::merge(ChTR_CHVM_Generator& new_lines)
 {
- gen_.absorb(new_lines);
+//? gen_.absorb(new_lines);
  return *this;
 }
 
@@ -53,7 +63,7 @@ void ChVM_Logger_Writer::write_symbol_token(ChTR_Source_Token& cst,
 void ChVM_Logger_Writer::write_symbol_token(QString token,
   ChTR_Lexical_Scope& cls)
 {
- write_symbol_token(token, cls, gen_);
+ write_symbol_token(token, cls, gen());
 }
 
 
