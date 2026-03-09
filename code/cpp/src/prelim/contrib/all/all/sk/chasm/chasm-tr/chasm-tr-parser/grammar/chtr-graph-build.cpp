@@ -614,13 +614,19 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
 
  Chasm_Result_Holder rh(&clw);
  runner_.run_core_proc("write-operand-lhs", rh, operator_node, loperand_node);
- runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
-
- if(caon_ptr<ChTR_Node> next_node = rh.value_as_node())
+ if(caon_ptr<ChTR_Node> next_node_left = rh.value_as_node())
  {
-  CAON_PTR_DEBUG(ChTR_Node ,next_node)
+  CAON_PTR_DEBUG(ChTR_Node ,next_node_left)
 
-  write_infix_expression(next_node, clw);
+  write_infix_expression(next_node_left, clw);
+ }
+
+ runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
+ if(caon_ptr<ChTR_Node> next_node_right = rh.value_as_node())
+ {
+  CAON_PTR_DEBUG(ChTR_Node ,next_node_right)
+
+  write_infix_expression(next_node_right, clw);
  }
 
 }
@@ -796,6 +802,13 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
      node->debug_connections();
 
     }
+    else
+    {
+     node << If/Qy.Infix_Left_Operand >> proc_node;
+     proc_node << If/Qy.Infix_From_Left_Operand >> node;
+     topmost_infix_operator_node_ = node;
+     current_right_operand_node_ = nullptr;
+    }
    }
   }
   else if(caon_ptr<ChTR_Expression_Entry> expr = current_right_operand_node_->expression_entry())
@@ -805,6 +818,8 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
  }
  else
  {
+  CAON_PTR_DEBUG(ChTR_Node ,current_left_operand_node_)
+
   node << If/Qy.Infix_Left_Operand >> current_left_operand_node_;
   current_left_operand_node_ << If/Qy.Infix_From_Left_Operand >> node;
   topmost_infix_operator_node_ = node;

@@ -86,6 +86,24 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
   clw.write_symbol_token(cst);
  }
 
+ template<typename T1, typename T2>
+ static void run(Chasm_Result_Holder& rh, ChTR_Proc_Token& proc,
+  ChTR_Proc_Token& lhs)
+ {
+  ChVM_Logger_Writer& clw = *rh.lwriter();
+
+  caon_ptr<ChTR_Node> next_node = lhs.operator_node();
+
+  lhs.set_infix_nesting_level(proc.infix_nesting_level() + 1);
+
+  clw.gen().blank()
+    .dissolve({"add-new-channel $ proc"})
+    << "load-proc-name $ " << proc.text();
+
+  clw.gen().cut().dissolve({"add-new-channel $ lambda"}).blank();
+
+  rh.set_value(next_node.raw_direct_value());
+ }
 
  template<typename T1, typename T2>
  static void run(Chasm_Result_Holder& rh, T1& t1,
