@@ -103,11 +103,13 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(Line_Vector& new_lines, QString
  for(ChTR_CHVM_Line* line : new_lines)
  {
   ChTR_CHVM_Line* cl = line->clone(++base_id);
+  delete line;
   lines.insert(pos - 1, cl);
   ++pos;
  }
 
  offsets_[{sub, ins}] = pos;
+ new_lines.clear();
 
 
  return *this;
