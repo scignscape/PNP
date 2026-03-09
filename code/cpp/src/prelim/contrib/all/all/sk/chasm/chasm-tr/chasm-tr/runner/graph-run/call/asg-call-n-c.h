@@ -122,6 +122,8 @@ ASG_GCALL_IMPLEMENT
    CAON_PTR_DEBUG(ChTR_Proc_Token ,pt)
    ChVM_Logger_Writer& clw = *rh.lwriter();
 
+//   clw.gen().ins_target(csb.ins_outer());
+   clw.gen().push_insertion_code(csb.ins_outer());
 
    QString text = pt->text();
 
@@ -130,6 +132,10 @@ ASG_GCALL_IMPLEMENT
      << "load-proc-name $ " << text;
 
    clw.gen().cut().blank();
+
+   clw.gen().absorb_from(csb.ins_inner());
+
+   //? clw.gen().ins_untarget();
 
    //?clw.merge(csb.gen());
   }
@@ -154,7 +160,9 @@ ASG_GCALL_IMPLEMENT
 
    QString text = pt->text();
 
+//?
    clw.gen().pop_insertion_code(ceo.ins_outer());
+   //clw.gen().ins_target(ceo.ins_outer());
 
    clw.gen()
      .dissolve({"add-new-channel $ proc"})
@@ -163,6 +171,8 @@ ASG_GCALL_IMPLEMENT
    clw.gen().cut().blank();
 
    clw.gen().absorb_from(ceo.ins_inner());
+
+   //clw.gen().ins_untarget();
 
    //?clw.gen().absorb(ceo.gen());
   }

@@ -148,6 +148,7 @@ public:
  }
 
  ChTR_CHVM_Generator& from_note(QString ins);
+ ChTR_CHVM_Generator& clip_note(QString ins);
 
  void ins_target(QString ins)
  {
@@ -236,7 +237,7 @@ public:
  template<typename ...ARGS>
  ChTR_CHVM_Generator& absorb_from(QString note, ARGS... args)
  {
-  return from_note(note).absorb(args...);
+  return from_note(note).absorb(args...).clip_note(note);
  }
 
  ChTR_CHVM_Generator& absorb_from(QString note)

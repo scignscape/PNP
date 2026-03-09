@@ -70,7 +70,6 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,source_file_index_(0)
    ,held_line_number_(0)
    ,current_context_code_(0)
-   ,alt_gen_(nullptr)
    ,current_source_type_(nullptr)
    ,current_channel_package_(nullptr)
    ,current_channel_object_(nullptr)
@@ -105,10 +104,10 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
 
 ChTR_CHVM_Generator& ChTR_Graph_Build::gen()
 {
- if(alt_gen_)
-   return *alt_gen_;
+// if(alt_gen_)
+//   return *alt_gen_;
 
- return base_gen_;
+ return gen_;
 }
 
 
@@ -411,7 +410,7 @@ ChTR_CHVM_Generator_Triple ChTR_Graph_Build::make_insertion_triple()
 {
  QString ins = make_insertion_code(gen().size());
  QString outer = gen().current_insertion_code();
- gen().dissolve({"@ins %1 (%2)"_qt.arg(ins)});
+ gen().dissolve({" *ins %1 (%2)"_qt.arg(ins).arg(outer)});
 
  return {&gen(), outer, ins};
 }
@@ -680,9 +679,18 @@ void ChTR_Graph_Build::check_resolve_infix_tree()
 
 }
 
+
+void ChTR_Graph_Build::reset_alt_gen()
+{
+// gen_.pop_insertion_code(alt_gen_->ins_outer());
+// alt_gen_ = nullptr;
+}
+
+
 void ChTR_Graph_Build::resolve_statement()
 {
- ChVM_Logger_Writer clw(make_insertion_triple(), &chasm_type_system_);
+ ChVM_Logger_Writer clw(passive_insertion_triple(), &chasm_type_system_);
+//? alt_gen_.push(&clw);
 
  clw.set_lexical_scope(current_lexical_scope_);
 
@@ -694,6 +702,8 @@ void ChTR_Graph_Build::resolve_statement()
 
  runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, current_statement_body_node_);
  //?runner_.run_core_proc("write-statement", rh, current_statement_proc_node_, n);
+
+//? reset_alt_gen();
 
 // alt_gen_ = nullptr;
 // base_gen_.absorb(clw.gen());
@@ -841,6 +851,7 @@ void ChTR_Graph_Build::enter_expression()
    ChTR_CHVM_Generator_Triple gtrip = make_insertion_triple();
    csb = new ChTR_Statement_Body(gtrip);
    gen().push_insertion_code(gtrip.inner_insertion_code);
+   alt_gen_.push(csb);
    //?alt_gen_ = &csb->gen();
 
    if(current_channel_state_ == Channel_States::Implicit_Lambda)
@@ -861,6 +872,7 @@ void ChTR_Graph_Build::enter_expression()
   ChTR_CHVM_Generator_Triple gtrip = make_insertion_triple();
   ChTR_Expression_Object* ceo = new ChTR_Expression_Object(gtrip);
   gen().push_insertion_code(gtrip.inner_insertion_code);
+  alt_gen_.push(ceo);
 
   //?alt_gen_ = &ceo->gen();
   current_statement_body_node_ = node_factory_.make_new_node(ceo);

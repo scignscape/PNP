@@ -79,8 +79,11 @@ private:
 
  //QString
 
- ChTR_CHVM_Generator base_gen_;
- ChTR_CHVM_Generator* alt_gen_;
+ ChTR_CHVM_Generator gen_;
+
+ QStack<ChTR_CHVM_Generator_Triple_Holder*> alt_gen_;
+
+ void reset_alt_gen();
 
 
  ChTR_CHVM_Generator& gen();

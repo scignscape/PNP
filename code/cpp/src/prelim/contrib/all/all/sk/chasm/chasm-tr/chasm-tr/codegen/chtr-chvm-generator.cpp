@@ -71,7 +71,13 @@ void ChTR_CHVM_Generator::check_register_current_subroutine_name()
 
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::from_note(QString ins)
 {
- dissolve({"@from %1"_qt.arg(ins)});
+ dissolve({" *from %1"_qt.arg(ins)});
+ return *this;
+}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::clip_note(QString ins)
+{
+ dissolve({" *clip %1"_qt.arg(ins)});
  return *this;
 }
 
@@ -80,7 +86,7 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code)
 {
  Line_Vector& new_lines = acc_lines()[current_subroutine_name_][insertion_code];
 
- absorb(new_lines, current_subroutine_name_, get_active_insertion_code());
+ return absorb(new_lines, current_subroutine_name_, get_active_insertion_code());
 }
 
 
