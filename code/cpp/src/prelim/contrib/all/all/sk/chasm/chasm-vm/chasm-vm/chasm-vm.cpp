@@ -108,6 +108,18 @@ void Chasm_VM::read_local_program(QString lines)
    pos = np + 3;
    continue;
   }
+  if(l.startsWith("@"))
+  {
+   // // anything?
+   pos = np + 3;
+   continue;
+  }
+  if(l.startsWith(" *"))
+  {
+   // // anything?
+   pos = np + 3;
+   continue;
+  }
 
   bool reread = false;
   int mp = l.indexOf(" $");
