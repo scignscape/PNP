@@ -13,8 +13,8 @@
 USING_OTNS(Chasm_TR)
 
 
-ChTR_Proc_Token::ChTR_Proc_Token(QString text, u2 infix_rank)
-  :  text_(text), infix_rank_(infix_rank), operator_node_(nullptr)
+ChTR_Proc_Token::ChTR_Proc_Token(u4 line_number, QString text, u2 infix_rank)
+  :  line_number_(line_number), text_(text), infix_rank_(infix_rank), operator_node_(nullptr), infix_nesting_level_(0)
 {
 
 }

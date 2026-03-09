@@ -147,8 +147,17 @@ public:
   return active_insertion_code_;
  }
 
+ ChTR_CHVM_Generator& resolve_expression();
+ ChTR_CHVM_Generator& expression_to_expression();
+ ChTR_CHVM_Generator& expression_to_statement();
+
  ChTR_CHVM_Generator& from_note(QString ins);
  ChTR_CHVM_Generator& clip_note(QString ins);
+
+ ChTR_CHVM_Generator& write_handoff_rtl();
+
+ ChTR_CHVM_Generator& enter_expression(u4 line_number);
+
 
  void ins_target(QString ins)
  {

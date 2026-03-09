@@ -33,18 +33,21 @@ class ChTR_Proc_Token
 {
  QString text_;
  u2 infix_rank_;
+ s2 infix_nesting_level_;
+ u4 line_number_;
 
  caon_ptr<ChTR_Node> operator_node_;
 
 public:
 
 
- ChTR_Proc_Token(QString text = {}, u2 infix_rank = 0);
+ ChTR_Proc_Token(u4 line_number, QString text = {}, u2 infix_rank = 0);
 
  ACCESSORS(QString ,text)
  ACCESSORS(u2 ,infix_rank)
  ACCESSORS(caon_ptr<ChTR_Node> ,operator_node)
-
+ ACCESSORS(s2 ,infix_nesting_level)
+ ACCESSORS(u4 ,line_number)
 
 };
 

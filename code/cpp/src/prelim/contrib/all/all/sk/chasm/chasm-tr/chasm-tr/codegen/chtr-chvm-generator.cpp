@@ -115,6 +115,45 @@ ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(Line_Vector& new_lines, QString
  return *this;
 }
 
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::write_handoff_rtl()
+{
+ return blank().dissolve({"resolve-handoffs $ retv lambda"});
+}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::enter_expression(u4 line_number)
+{
+ blank()
+ .preamble_comment("expression")
+ << "statement-line-number $ " << line_number; cut();
+
+ return dissolve({"push-carrier-deque"})
+   .blank()
+   .dissolve({"new-call-package", "gen-return-channels"})
+   .blank();
+}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::resolve_expression()
+{
+ return blank()
+   .dissolve({"add-carriers", "run-proc-eval"})
+   .blank()
+   .dissolve({"reset-carrier-deque", "clear-current-ghost-scope"})
+   .blank();
+}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::expression_to_expression()
+{
+ return blank()
+   .dissolve({"pop-proc-name", "pull-call-package"});
+}
+
+ChTR_CHVM_Generator& ChTR_CHVM_Generator::expression_to_statement()
+{
+ return blank()
+   .dissolve({"pop-proc-name", "pull-call-package"});
+}
+
+
 ChTR_CHVM_Generator& ChTR_CHVM_Generator::absorb(QString insertion_code, ChTR_CHVM_Generator& new_lines)
 {
 // auto& lines = acc_lines()[current_subroutine_name_];

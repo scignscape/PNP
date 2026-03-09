@@ -73,9 +73,12 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
  {
   ChVM_Logger_Writer& clw = *rh.lwriter();
 
-  clw.gen().blank();
+  if(proc.infix_nesting_level())
+     clw.gen().enter_expression(proc.line_number());
 
-  clw.gen()
+//  clw.gen().blank();
+
+  clw.gen().blank()
     .dissolve({"add-new-channel $ proc"})
     << "load-proc-name $ " << proc.text();
 
@@ -105,6 +108,10 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
  {
   ChVM_Logger_Writer& clw = *rh.lwriter();
   clw.write_symbol_token(cst);
+
+  if(proc.infix_nesting_level())
+     clw.gen().resolve_expression()
+       .write_handoff_rtl().expression_to_expression();
  }
 
  template<typename T1, typename T2>
@@ -114,6 +121,8 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
   ChVM_Logger_Writer& clw = *rh.lwriter();
 
   caon_ptr<ChTR_Node> next_node = rhs.operator_node();
+
+  rhs.set_infix_nesting_level(proc.infix_nesting_level() + 1);
 
   rh.set_value(next_node.raw_direct_value());
 

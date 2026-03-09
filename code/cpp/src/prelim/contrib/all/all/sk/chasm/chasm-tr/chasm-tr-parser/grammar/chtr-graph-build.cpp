@@ -292,7 +292,7 @@ void ChTR_Graph_Build::expression_depth(QString token)
 
 void ChTR_Graph_Build::statement_proc_name(QString token)
 {
- ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(token);
+ ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(current_line_number_, token);
 
  if(current_statement_proc_node_)
    statement_node_stack_.push({current_statement_proc_node_, current_statement_body_node_});
@@ -553,7 +553,7 @@ void ChTR_Graph_Build::source_file_end()
 
 void ChTR_Graph_Build::write_handoff_rtl()
 {
- gen().blank().dissolve({"resolve-handoffs $ retv lambda"});
+ gen().write_handoff_rtl();
 }
 
 void ChTR_Graph_Build::write_handoff_rts()
@@ -568,12 +568,7 @@ void ChTR_Graph_Build::resolve_expression()
  case Channel_States::Implicit_Lambda:
  case Channel_States::Explicit_Lambda:
 
-  gen()
-    .blank()
-    .dissolve({"add-carriers", "run-proc-eval"})
-    .blank()
-    .dissolve({"reset-carrier-deque", "clear-current-ghost-scope"})
-    .blank();
+  gen().resolve_expression();
  }
 
 }
@@ -582,18 +577,14 @@ void ChTR_Graph_Build::expression_to_statement()
 {
  current_expression_state_ = Expression_States::Expression_Return;
 
- gen()
-   .blank()
-   .dissolve({"pop-proc-name", "pull-call-package"});
+ gen().expression_to_statement();
 //   .blank()
 //   .dissolve("run-proc-eval");
 }
 
 void ChTR_Graph_Build::expression_to_expression()
 {
- gen()
-   .blank()
-   .dissolve({"pop-proc-name", "pull-call-package"});
+ gen().expression_to_expression();
 }
 
 
@@ -767,7 +758,7 @@ void ChTR_Graph_Build::symbol_token_operand_node(QString symbol)
 
 void ChTR_Graph_Build::infix_proc_name_node(QString token)
 {
- ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(token, infix_ranks_[token]);
+ ChTR_Proc_Token* ptoken = new ChTR_Proc_Token(current_line_number_, token, infix_ranks_[token]);
  caon_ptr<ChTR_Node> node = node_factory_.make_new_node(ptoken);
 
  node->set_hint("pt:" + token);
@@ -878,18 +869,7 @@ void ChTR_Graph_Build::enter_expression()
   current_statement_body_node_ = node_factory_.make_new_node(ceo);
  }
 
- gen()
-   .blank()
-   .preamble_comment("expression")
-   << "statement-line-number $ " << current_line_number_; cut();
-
-// .dissolve({"init-new-ghost-scope", "push-carrier-deque"})
-
- gen()
-  .dissolve({"push-carrier-deque"})
-  .blank()
-  .dissolve({"new-call-package", "gen-return-channels"})
-  .blank();
+ gen().enter_expression(current_line_number_);
 }
 
 void ChTR_Graph_Build::enter_statement()
