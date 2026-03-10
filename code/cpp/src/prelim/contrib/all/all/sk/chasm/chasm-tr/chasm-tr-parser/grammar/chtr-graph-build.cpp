@@ -551,12 +551,24 @@ void ChTR_Graph_Build::source_file_end()
  gen().blank().dissolve({"@sfe"});
 }
 
+
+void ChTR_Graph_Build::infix_write_handoff_rtl()
+{
+ gen().write_handoff_rtl();
+}
+
+
 void ChTR_Graph_Build::write_handoff_rtl()
 {
  gen().write_handoff_rtl();
 }
 
 void ChTR_Graph_Build::write_handoff_rts()
+{
+
+}
+
+void ChTR_Graph_Build::infix_resolve_expression()
 {
 
 }
@@ -587,6 +599,10 @@ void ChTR_Graph_Build::expression_to_expression()
  gen().expression_to_expression();
 }
 
+void ChTR_Graph_Build::infix_expression_to_expression()
+{
+ gen().expression_to_expression();
+}
 
 void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw)
 {
@@ -847,6 +863,12 @@ void ChTR_Graph_Build::leave_infix_mode()
  //enter_expression();
 }
 
+
+void ChTR_Graph_Build::infix_enter_expression()
+{
+
+}
+
 void ChTR_Graph_Build::enter_expression()
 {
  ChTR_Statement_Body* csb;
@@ -949,11 +971,15 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".source-file-end", &ChTR_Graph_Build::source_file_end },
 
    { ".write-handoff-rtl", &ChTR_Graph_Build::write_handoff_rtl },
+   { ".infix-write-handoff-rtl", &ChTR_Graph_Build::infix_write_handoff_rtl },
    { ".write-handoff-rts", &ChTR_Graph_Build::write_handoff_rts },
    { ".enter-expression", &ChTR_Graph_Build::enter_expression },
+   { ".infix-enter-expression", &ChTR_Graph_Build::infix_enter_expression },
    { ".enter-statement", &ChTR_Graph_Build::enter_statement },
    { ".resolve-expression", &ChTR_Graph_Build::resolve_expression },
+   { ".infix-resolve-expression", &ChTR_Graph_Build::infix_resolve_expression },
    { ".resolve-statement", &ChTR_Graph_Build::resolve_statement },
+   { ".infix-expression-to-expression", &ChTR_Graph_Build::infix_expression_to_expression },
    { ".expression-to-expression", &ChTR_Graph_Build::expression_to_expression },
    { ".expression-to-statement", &ChTR_Graph_Build::expression_to_statement },
 

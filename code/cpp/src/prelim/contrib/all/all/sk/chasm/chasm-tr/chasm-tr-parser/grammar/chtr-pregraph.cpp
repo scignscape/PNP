@@ -98,7 +98,15 @@ void ChTR_Pregraph::enter_expression(Expression_Infix_Codes infix_code)
  expression_infix_codes_.push(infix_code);
 
  ++expression_nesting_count_;
- acc << ".enter-expression"; cut();
+
+ if(infix_code == Expression_Infix_Codes::Secondary_Infix)
+ {
+  acc << ".infix-enter-expression"; cut();
+ }
+ else
+ {
+  acc << ".enter-expression"; cut();
+ }
 
  current_handoff_states_.push(Carrier_Handoff_States::Implicit_Return_to_Lambda);
 }
@@ -107,13 +115,22 @@ void ChTR_Pregraph::leave_expression()
 {
  Expression_Infix_Codes eic = expression_infix_codes_.pop();
 
- if(eic == Expression_Infix_Codes::Primary_Infix)
+ if(eic == Expression_Infix_Codes::Secondary_Infix)
+ {
+  acc << ".infix-resolve-expression"; cut();
+ }
+
+ else if(eic == Expression_Infix_Codes::Primary_Infix)
  {
   acc << ".leave-infix-mode"; cut();
  }
 
- acc << ".resolve-expression"; cut();
- check_write_handoff();
+ else
+ {
+  acc << ".resolve-expression"; cut();
+ }
+
+ check_write_handoff(eic);
 //? flags.active_expression = false;
 
 //? acc << ".leave-expression"; cut();
@@ -125,10 +142,13 @@ void ChTR_Pregraph::leave_expression()
 
   acc << ".expression-to-statement"; cut();
  }
+ else if(eic == Expression_Infix_Codes::Secondary_Infix)
+ {
+  acc << ".infix-expression-to-expression"; cut();
+ }
  else
  {
   acc << ".expression-to-expression"; cut();
-
 //  acc << ".resolve-expression"; cut();
 //   ;.
 //  pull-call-package ;.
@@ -154,7 +174,7 @@ void ChTR_Pregraph::temp_reenter_statement_level()
 }
 
 
-void ChTR_Pregraph::check_write_handoff()
+void ChTR_Pregraph::check_write_handoff(Expression_Infix_Codes eic)
 {
  if(current_handoff_states_.isEmpty())
    return;
@@ -163,7 +183,14 @@ void ChTR_Pregraph::check_write_handoff()
  {
  case Carrier_Handoff_States::Implicit_Return_to_Lambda:
  case Carrier_Handoff_States::Return_to_Lambda:
-  acc << ".write-handoff-rtl"; cut();
+  if(eic == Expression_Infix_Codes::Secondary_Infix)
+  {
+   acc << ".infix-write-handoff-rtl"; cut();
+  }
+  else
+  {
+   acc << ".write-handoff-rtl"; cut();
+  }
   break;
 
  case Carrier_Handoff_States::Return_to_Sigma:

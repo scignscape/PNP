@@ -157,7 +157,7 @@ public:
 
  void check_lines(QString text);
 
- void check_write_handoff();
+ void check_write_handoff(Expression_Infix_Codes eic);
 
  void check_write_line_number();
 

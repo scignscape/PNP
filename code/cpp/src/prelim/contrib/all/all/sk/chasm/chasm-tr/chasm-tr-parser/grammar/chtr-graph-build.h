@@ -227,14 +227,17 @@ public:
 
  void check_resolve_statement();
 
+ void infix_expression_to_expression();
  void expression_to_statement();
  void expression_to_expression();
-
  void write_handoff_rtl();
+ void infix_write_handoff_rtl();
  void write_handoff_rts();
+ void infix_resolve_expression();
  void resolve_expression();
  void resolve_statement();
  void enter_expression();
+ void infix_enter_expression();
  void enter_statement();
 
  void check_resolve_infix_tree();
