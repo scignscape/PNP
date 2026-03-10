@@ -127,9 +127,9 @@ struct ASG_Proc_Run<ASG_Graph_Call_CC, ASG_Proc_Family_<ASG_Graph_Call_CC>::Writ
   ChVM_Logger_Writer& clw = *rh.lwriter();
   clw.write_symbol_token(cst);
 
-  if(proc.infix_nesting_level())
-     clw.gen().resolve_expression()
-       .write_handoff_rtl().expression_to_expression();
+//  if(proc.infix_nesting_level())
+//     clw.gen().resolve_expression()
+//       .write_handoff_rtl().expression_to_expression();
  }
 
  template<typename T1, typename T2>

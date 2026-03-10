@@ -186,6 +186,8 @@ private:
 
  u2 insertion_index_;
 
+ s1 infix_left_glue_;
+
  QString make_insertion_code(u2 pos)
  {
   ++insertion_index_;

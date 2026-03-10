@@ -88,6 +88,7 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_statement_proc_node_(nullptr)
    ,current_statement_body_node_(nullptr)
    ,insertion_index_(0)
+   ,infix_left_glue_(0)
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -551,9 +552,25 @@ void ChTR_Graph_Build::source_file_end()
  gen().blank().dissolve({"@sfe"});
 }
 
+void ChTR_Graph_Build::infix_enter_expression()
+{
+ ++infix_left_glue_;
+}
+
+void ChTR_Graph_Build::infix_expression_to_expression()
+{
+// gen().expression_to_expression();
+ gen().expression_to_expression();
+}
+
+void ChTR_Graph_Build::infix_resolve_expression()
+{
+ resolve_expression();
+}
 
 void ChTR_Graph_Build::infix_write_handoff_rtl()
 {
+//
  gen().write_handoff_rtl();
 }
 
@@ -564,11 +581,6 @@ void ChTR_Graph_Build::write_handoff_rtl()
 }
 
 void ChTR_Graph_Build::write_handoff_rts()
-{
-
-}
-
-void ChTR_Graph_Build::infix_resolve_expression()
 {
 
 }
@@ -599,10 +611,6 @@ void ChTR_Graph_Build::expression_to_expression()
  gen().expression_to_expression();
 }
 
-void ChTR_Graph_Build::infix_expression_to_expression()
-{
- gen().expression_to_expression();
-}
 
 void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node, ChVM_Logger_Writer& clw)
 {
@@ -637,7 +645,7 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
   write_infix_expression(next_node_left, clw);
  }
 
- rh.set_value(0);
+// rh.set_value(0);
 
  runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
  if(caon_ptr<ChTR_Node> next_node_right = rh.value_as_node())
@@ -646,6 +654,23 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
 
   write_infix_expression(next_node_right, clw);
  }
+
+ if(caon_ptr<ChTR_Proc_Token> proc = operator_node->proc_token())
+ {
+  CAON_PTR_DEBUG(ChTR_Proc_Token ,proc)
+  if(proc->infix_nesting_level())
+    clw.gen().resolve_expression()
+      .write_handoff_rtl().expression_to_expression();
+  else
+    clw.gen().resolve_expression(); //.expression_to_expression();
+ }
+
+// if(proc.infix_nesting_level())
+//   clw.gen().resolve_expression()
+//     .write_handoff_rtl().expression_to_expression();
+
+// clw.gen().resolve_expression()
+//   .write_handoff_rtl().expression_to_expression();
 
 }
 
@@ -798,7 +823,7 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
    if(caon_ptr<ChTR_Proc_Token> oper = proc_node->proc_token())
    {
     CAON_PTR_DEBUG(ChTR_Proc_Token ,oper)
-    if(ptoken->infix_rank() > oper->infix_rank())
+    if( (infix_left_glue_ == 0) && (ptoken->infix_rank() > oper->infix_rank()) )
     {
      proc_node->debug_connections();
 
@@ -864,10 +889,6 @@ void ChTR_Graph_Build::leave_infix_mode()
 }
 
 
-void ChTR_Graph_Build::infix_enter_expression()
-{
-
-}
 
 void ChTR_Graph_Build::enter_expression()
 {
