@@ -621,6 +621,8 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
   write_infix_expression(next_node_left, clw);
  }
 
+ rh.set_value(0);
+
  runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
  if(caon_ptr<ChTR_Node> next_node_right = rh.value_as_node())
  {
