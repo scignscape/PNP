@@ -560,18 +560,18 @@ void ChTR_Graph_Build::infix_enter_expression()
 void ChTR_Graph_Build::infix_expression_to_expression()
 {
 // gen().expression_to_expression();
- gen().expression_to_expression();
+// gen().expression_to_expression();
 }
 
 void ChTR_Graph_Build::infix_resolve_expression()
 {
- resolve_expression();
+// resolve_expression();
 }
 
 void ChTR_Graph_Build::infix_write_handoff_rtl()
 {
 //
- gen().write_handoff_rtl();
+// gen().write_handoff_rtl();
 }
 
 
@@ -645,7 +645,7 @@ void ChTR_Graph_Build::write_infix_expression(caon_ptr<ChTR_Node> operator_node,
   write_infix_expression(next_node_left, clw);
  }
 
-// rh.set_value(0);
+ rh.set_value(0);
 
  runner_.run_core_proc("write-operand-rhs", rh, operator_node, roperand_node);
  if(caon_ptr<ChTR_Node> next_node_right = rh.value_as_node())
@@ -823,7 +823,7 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
    if(caon_ptr<ChTR_Proc_Token> oper = proc_node->proc_token())
    {
     CAON_PTR_DEBUG(ChTR_Proc_Token ,oper)
-    if( (infix_left_glue_ == 0) && (ptoken->infix_rank() > oper->infix_rank()) )
+    if( (infix_left_glue_ > 0) || (ptoken->infix_rank() > oper->infix_rank()) )
     {
      proc_node->debug_connections();
 
@@ -847,6 +847,8 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
     }
     else
     {
+     CAON_PTR_DEBUG(ChTR_Node ,node)
+
      node << If/Qy.Infix_Left_Operand >> proc_node;
      proc_node << If/Qy.Infix_From_Left_Operand >> node;
      topmost_infix_operator_node_ = node;
