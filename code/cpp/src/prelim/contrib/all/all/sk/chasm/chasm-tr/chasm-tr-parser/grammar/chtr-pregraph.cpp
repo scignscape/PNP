@@ -117,7 +117,7 @@ void ChTR_Pregraph::leave_expression()
 
  if(eic == Expression_Infix_Codes::Secondary_Infix)
  {
-  acc << ".infix-resolve-expression"; cut();
+  acc << ".infix-leave-expression"; cut();
  }
 
  else if(eic == Expression_Infix_Codes::Primary_Infix)
@@ -144,7 +144,7 @@ void ChTR_Pregraph::leave_expression()
  }
  else if(eic == Expression_Infix_Codes::Secondary_Infix)
  {
-  acc << ".infix-expression-to-expression"; cut();
+//?  acc << ".infix-expression-to-expression"; cut();
  }
  else
  {
@@ -185,7 +185,7 @@ void ChTR_Pregraph::check_write_handoff(Expression_Infix_Codes eic)
  case Carrier_Handoff_States::Return_to_Lambda:
   if(eic == Expression_Infix_Codes::Secondary_Infix)
   {
-   acc << ".infix-write-handoff-rtl"; cut();
+//?   acc << ".infix-write-handoff-rtl"; cut();
   }
   else
   {
@@ -216,7 +216,7 @@ void ChTR_Pregraph::check_resolve_statement()
  if(flags.active_statement)
  {
   acc << ".resolve-statement"; cut();
-
+  flags.active_statement = false;
  }
 
 }

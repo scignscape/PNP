@@ -559,13 +559,13 @@ void ChTR_Graph_Build::infix_enter_expression()
  ++infix_left_glue_;
 }
 
-void ChTR_Graph_Build::infix_expression_to_expression()
-{
-// gen().expression_to_expression();
-// gen().expression_to_expression();
-}
+//void ChTR_Graph_Build::infix_expression_to_expression()
+//{
+//// gen().expression_to_expression();
+//// gen().expression_to_expression();
+//}
 
-void ChTR_Graph_Build::infix_resolve_expression()
+void ChTR_Graph_Build::infix_leave_expression()
 {
  --infix_left_glue_;
  ++infix_right_glue_;
@@ -573,11 +573,11 @@ void ChTR_Graph_Build::infix_resolve_expression()
 // resolve_expression();
 }
 
-void ChTR_Graph_Build::infix_write_handoff_rtl()
-{
-//
-// gen().write_handoff_rtl();
-}
+//void ChTR_Graph_Build::infix_write_handoff_rtl()
+//{
+////
+//// gen().write_handoff_rtl();
+//}
 
 
 void ChTR_Graph_Build::write_handoff_rtl()
@@ -1011,15 +1011,15 @@ void ChTR_Graph_Build::read_line(QString fn)
    { ".source-file-end", &ChTR_Graph_Build::source_file_end },
 
    { ".write-handoff-rtl", &ChTR_Graph_Build::write_handoff_rtl },
-   { ".infix-write-handoff-rtl", &ChTR_Graph_Build::infix_write_handoff_rtl },
+   //?{ ".infix-write-handoff-rtl", &ChTR_Graph_Build::infix_write_handoff_rtl },
    { ".write-handoff-rts", &ChTR_Graph_Build::write_handoff_rts },
    { ".enter-expression", &ChTR_Graph_Build::enter_expression },
    { ".infix-enter-expression", &ChTR_Graph_Build::infix_enter_expression },
    { ".enter-statement", &ChTR_Graph_Build::enter_statement },
    { ".resolve-expression", &ChTR_Graph_Build::resolve_expression },
-   { ".infix-resolve-expression", &ChTR_Graph_Build::infix_resolve_expression },
+   { ".infix-leave-expression", &ChTR_Graph_Build::infix_leave_expression },
    { ".resolve-statement", &ChTR_Graph_Build::resolve_statement },
-   { ".infix-expression-to-expression", &ChTR_Graph_Build::infix_expression_to_expression },
+   //?{ ".infix-expression-to-expression", &ChTR_Graph_Build::infix_expression_to_expression },
    { ".expression-to-expression", &ChTR_Graph_Build::expression_to_expression },
    { ".expression-to-statement", &ChTR_Graph_Build::expression_to_statement },
 
