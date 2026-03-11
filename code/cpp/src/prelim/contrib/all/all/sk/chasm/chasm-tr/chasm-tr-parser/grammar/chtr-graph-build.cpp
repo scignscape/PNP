@@ -859,9 +859,15 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
     else
     {
      CAON_PTR_DEBUG(ChTR_Node ,node)
+     CAON_PTR_DEBUG(ChTR_Node ,topmost_infix_operator_node_)
 
-     node << If/Qy.Infix_Left_Operand >> proc_node;
-     proc_node << If/Qy.Infix_From_Left_Operand >> node;
+//     node << If/Qy.Infix_Left_Operand >> proc_node;
+//     proc_node << If/Qy.Infix_From_Left_Operand >> node;
+
+     node << If/Qy.Infix_Left_Operand >> topmost_infix_operator_node_;
+     topmost_infix_operator_node_ << If/Qy.Infix_From_Left_Operand >> node;
+
+
      topmost_infix_operator_node_ = node;
      current_right_operand_node_ = nullptr;
     }
