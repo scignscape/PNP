@@ -89,6 +89,8 @@ ChTR_Graph_Build::ChTR_Graph_Build(ChTR_Document* d, ChTR_Parser& p, ChTR_Graph&
    ,current_statement_body_node_(nullptr)
    ,insertion_index_(0)
    ,infix_left_glue_(0)
+   ,infix_right_glue_(0)
+
 {
  current_lexical_scope_ = &file_lexical_scope_;
 
@@ -565,6 +567,9 @@ void ChTR_Graph_Build::infix_expression_to_expression()
 
 void ChTR_Graph_Build::infix_resolve_expression()
 {
+ --infix_left_glue_;
+ ++infix_right_glue_;
+
 // resolve_expression();
 }
 
@@ -817,13 +822,19 @@ void ChTR_Graph_Build::infix_proc_name_node(QString token)
  {
   if(caon_ptr<ChTR_Source_Token> stoken = current_right_operand_node_->source_token())
   {
+
    CAON_PTR_DEBUG(ChTR_Source_Token ,stoken)
    caon_ptr<ChTR_Node> proc_node = Qy.Infix_From_Right_Operand(in_If current_right_operand_node_);
    CAON_PTR_DEBUG(ChTR_Node ,proc_node)
    if(caon_ptr<ChTR_Proc_Token> oper = proc_node->proc_token())
    {
+    bool left_glue = infix_left_glue_ > 0;
+    bool right_rank = ptoken->infix_rank() > oper->infix_rank();
+    bool right_glue = infix_right_glue_ > 0;
+
+
     CAON_PTR_DEBUG(ChTR_Proc_Token ,oper)
-    if( (infix_left_glue_ > 0) || (ptoken->infix_rank() > oper->infix_rank()) )
+    if( left_glue || (right_rank && !right_glue) )
     {
      proc_node->debug_connections();
 
