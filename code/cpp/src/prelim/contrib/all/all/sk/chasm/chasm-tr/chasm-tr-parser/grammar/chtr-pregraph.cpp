@@ -49,6 +49,7 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
 //   ,fr_(ChTR_Relae_Frame::instance())
 //   ,qy_(ChTR_Relae_Query::instance())
    ,acc(&acc_)
+   ,string_literal_acc_(&string_literal_)
    ,declared_handoff_state_(Carrier_Handoff_States::N_A)
    ,last_line_number_written_(0)
    ,current_line_number_(1)
@@ -64,10 +65,27 @@ ChTR_Pregraph::ChTR_Pregraph(ChTR_Document* d,
  acc << "\n"; cut();
 }
 
-//void ChTR_Pregraph::acc(QString contents)
-//{
-// acc << contents;
-//}
+void ChTR_Pregraph::string_literal_acc(QString contents)
+{
+ string_literal_acc_ << contents;
+}
+
+void ChTR_Pregraph::enter_string_literal()
+{
+ parse_context_.flags.active_string_literal = true;
+ flags.active_string_literal = true;
+}
+
+void ChTR_Pregraph::leave_string_literal()
+{
+ acc << ".string-literal $ " << string_literal_; cut();
+ string_literal_.clear();
+
+
+ parse_context_.flags.active_string_literal = false;
+ flags.active_string_literal = false;
+}
+
 
 void ChTR_Pregraph::enter_expression_via_paren()
 {
@@ -172,6 +190,7 @@ void ChTR_Pregraph::temp_reenter_statement_level()
   flags.active_run_call = false;
  }
 }
+
 
 
 void ChTR_Pregraph::check_write_handoff(Expression_Infix_Codes eic)

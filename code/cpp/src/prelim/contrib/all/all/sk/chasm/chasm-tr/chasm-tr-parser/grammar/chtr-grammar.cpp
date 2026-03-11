@@ -68,6 +68,32 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
 
  ChTR_Parse_Context& parse_context = graph_build.parse_context();
 
+
+ add_rule(flags_all_(parse_context ,active_string_literal), source_context,
+   "leave-string-literal",
+   " \" "
+   ,[&]
+ {
+  pregraph.leave_string_literal();
+ });
+
+ add_rule(flags_all_(parse_context ,active_string_literal), source_context,
+   "leave-string-literal",
+   " [^\"]+ "
+   ,[&]
+ {
+  pregraph.string_literal_acc(p.match_text());
+ });
+
+
+ add_rule(source_context,
+   "enter-string-literal",
+   " \" "
+   ,[&]
+ {
+  pregraph.enter_string_literal();
+ });
+
  add_rule(source_context,
    "carrier-declaration",
    ", (?<symbol> \\S+) (?<tween> \\s+) (?<tx> [^,;*&)\\]] \\S*)"
@@ -98,7 +124,7 @@ void ChTR_Grammar::init(ChTR_Parser& p, ChTR_Graph& g,
  });
 
  add_rule(source_context,
-   "carrier-declaration",
+   "structured-carrier-declaration",
    "(?<all>(?:, (?<symbol> \\S+) (?<tween> \\s+) ){2,} ) (?<tx> [^,;*&)\\]] \\S*)"
    ,[&]
  {

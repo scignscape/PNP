@@ -55,6 +55,7 @@ public:
   bool active_expression:1;
   bool tracking_string_lines:1;
   bool expecting_expression_proc_name:1;
+  bool active_string_literal:1;
 
 //  bool discard_acc:1;
 //  bool split_acc:1;
@@ -74,8 +75,10 @@ private:
  //QString
 
  QString acc_;
-
  QTextStream acc;
+
+ QString string_literal_;
+ QTextStream string_literal_acc_;
 
 // void acc(QString text);
 
@@ -151,6 +154,10 @@ public:
 
  void leave_expression();
 
+ void enter_string_literal();
+ void leave_string_literal();
+
+ void string_literal_acc(QString contents);
 
  void enter_expression_via_paren();
  void leave_expression_via_paren();

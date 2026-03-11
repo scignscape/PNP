@@ -31,6 +31,7 @@ public:
   flag_(4, awaiting_statement_body)
   flag_(5, active_query_lambda)
   flag_(6, active_expression)
+  flag_(7, active_string_literal)
  _flags_
 
  ChTR_Parse_Context();

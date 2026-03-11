@@ -32,8 +32,28 @@ void testqvar(QVariant arg1, r8 arg2, u2 arg3)
 
 void prn(u1 arg)
 {
- qDebug() << "arg = " << arg;
+// qDebug() << "arg = " << arg;
+
+ qDebug() << arg;
 }
+
+
+
+void prss(QStringList args)
+{
+ auto qD = qDebug();
+
+ for(QString arg : args)
+   qD << arg;
+}
+
+void prs(QString arg)
+{
+ prss({arg});
+}
+
+
+
 
 void prn2(u1 arg1, u1 arg2)
 {
@@ -101,6 +121,8 @@ int main1(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+// qDebug() << sizeof(QByteArray);
+
  Chasm_Runtime csr;
  Chasm_Runtime_Bridge crb(&csr);
  Chasm_Procedure_Table cpt(&csr);
@@ -109,6 +131,8 @@ int main(int argc, char *argv[])
  cpt.register_s0(testqvar, @300762);
  cpt.register_s0(prn, @1001);
  cpt.register_s0(prn2, @20044);
+
+ cpt.register_s0(prs, @1003);
 
  cpt.register_s0(add, @20444);
  cpt.register_s0(mult, @20444);
