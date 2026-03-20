@@ -307,7 +307,6 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
  url_patterns_layout_->addWidget(url_patterns_table_);
  url_patterns_frame_->setLayout(url_patterns_layout_);
 
- qtw_->addTab(url_patterns_frame_, "URL Patterns");
 
  url_patterns_table_->setColumnCount(6);
  url_patterns_table_->setRowCount(0);
@@ -353,6 +352,7 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
  demo_form_frame_ = new Demo_Form_Frame(this);
 
  qtw_->addTab(demo_form_frame_, "Form");
+ qtw_->addTab(url_patterns_frame_, "URL Patterns");
 
 
  main_layout_->addWidget(qtw_);

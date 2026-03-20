@@ -36,6 +36,11 @@ DEFINES += ROOT_FOLDER=\\\"$$ROOT_DIR\\\"
 DEFINES += DEFAULT_GTAGML_FOLDER=\\\"$$ROOT_DIR/dev/consoles/gtagml/gt\\\"
 DEFINES += DEFAULT_SDI_FOLDER=\\\"$$ROOT_DIR/dev/consoles/gtagml/sdi\\\"
 
+
+DEFINES += DEFAULT_HTML_FOLDER=\\\"$$ROOT_DIR/html\\\"
+
+
+
 DEFINES += CAON_DEBUG
 DEFINES += RELAE_LABEL_NODES
 

@@ -57,6 +57,7 @@ Demo_Form_Frame::Demo_Form_Frame(QWidget* parent) : QFrame(parent)
  cLE_questions_cutoff_date_ = new QLineEdit(this);
 
  cLBL_classification_ = new QLabel("Classification", this);
+ cLBL_classification_->setMinimumWidth(cLBL_classification_->width() + 3);
 
  cLBL_acquisition_plan_number_ = new QLabel("ACQUISITION PLAN NUMBER", this);
  cLBL_acquisition_plan_number_->setMinimumWidth(200);
