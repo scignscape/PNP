@@ -36,6 +36,9 @@
 
 #include "demo-form-frame.h"
 
+#include "MRichTextEditor/mrichtextedit.h"
+#include "MRichTextEditor/text-edit-frame.h"
+
 
 USING_KANS(RdSC)
 
@@ -352,8 +355,17 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
  demo_form_frame_ = new Demo_Form_Frame(this);
 
  qtw_->addTab(demo_form_frame_, "Form");
- qtw_->addTab(url_patterns_frame_, "URL Patterns");
 
+ text_edit_frame_ = new Text_Edit_Frame(this);
+
+//    dialog->setWindowTitle("Rich text editor");
+//    dialog->setMinimumWidth (400);
+//    dialog->setMinimumHeight(400);
+//    dialog->show();
+
+    qtw_->addTab(text_edit_frame_, "Editor");
+
+    qtw_->addTab(url_patterns_frame_, "URL Patterns");
 
  main_layout_->addWidget(qtw_);
 

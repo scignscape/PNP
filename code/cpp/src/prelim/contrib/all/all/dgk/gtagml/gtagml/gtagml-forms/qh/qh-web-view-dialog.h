@@ -31,7 +31,7 @@
 
 #include <QWebEngineUrlRequestInterceptor>
 
-
+class Text_Edit_Frame;
 class Demo_Form_Frame;
 
 KANS_(RdSC)
@@ -112,6 +112,7 @@ class QH_Web_View_Dialog : public QDialog
  QString initial_url_;
 
  Demo_Form_Frame* demo_form_frame_;
+ Text_Edit_Frame* text_edit_frame_;
 
 public:
 

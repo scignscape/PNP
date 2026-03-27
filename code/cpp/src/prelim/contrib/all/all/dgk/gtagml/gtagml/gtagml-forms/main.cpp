@@ -43,11 +43,28 @@ USING_KANS(RdSC)
 
 #include <QApplication>
 
+#include "MRichTextEditor/mrichtextedit.h"
 
+#include "demo-form-frame.h"
+
+#include "form-weaver.h"
 
 int main(int argc, char *argv[])
 {
+// Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_FOLDER);
+
+// Form_Weaver fw(DEFAULT_FIELDS_FOLDER);
+// fw.default_folders();
+
+// fw.gen_latex("ScignTorq.tex");
+
+// fw.weave_to_latex("1_2");
+
+// return 0;
+
  QApplication qapp(argc, argv);
+
+
 
 // QString url = "https://www.google.com/maps/d/u/0/viewer?mid=144OL4Q89OhRc2JInBCT-TMrvVjZ5zG4&ll=39.281772899999986%2C-76.6505279&z=16";
 // QH_Web_View_Dialog dlg("https://www.google.com/mymaps");

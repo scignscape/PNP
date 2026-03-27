@@ -124,6 +124,24 @@ inline QString color_label_style_sheet_orange_()
  return color_label_style_sheet_().arg(8).arg("normal").arg("#B52B1A");
 }
 
+inline QString light_back_forward_button_style_sheet_hover_()
+{
+ return R"(
+   QPushButton{font-size: %1pt;
+   font-weight: %2;
+   color: %3; }
+
+   QPushButton:hover{font-size: %1pt;
+    font-weight: %2;
+    color: white; background:rgb(90,10,5);}
+
+   QPushButton:disabled{font-size: %1pt;
+     font-weight: %2;
+     color: rgb(60,40,5); background:rgb(160,140,115);}
+
+        )";
+}
+
 inline QString light_back_forward_button_style_sheet_()
 {
  return R"(
@@ -172,6 +190,14 @@ inline QString light_back_forward_button_style_sheet_green_()
 {
  return light_back_forward_button_style_sheet_().arg(13).arg("normal").arg("#116f63");
 }
+
+inline QString light_back_forward_button_style_sheet_green_hover_()
+{
+ return light_back_forward_button_style_sheet_hover_().arg(13).arg("normal").arg("#116f63");
+}
+
+
+
 
 template<typename WIDGET1_Type, typename WIDGET2_Type>
 inline void share_tooltip(WIDGET1_Type* w1, WIDGET2_Type* w2)
@@ -423,6 +449,19 @@ inline void make_light_special_back_button(WIDGET_Type* w)
 }
 
 template<typename WIDGET_Type>
+inline void make_light_hover_back_button(WIDGET_Type* w)
+{
+ make_unicode_text(w, 0x21E0);
+// QString unicode = QString(QChar(0x21E0));
+// w->setText(unicode);
+ w->setStyleSheet(light_back_forward_button_style_sheet_green_hover_());
+ w->setMaximumWidth(19);
+ w->setMaximumHeight(15);
+}
+
+
+
+template<typename WIDGET_Type>
 inline void make_light_double_back_button(WIDGET_Type* w)
 {
  make_unicode_text(w, 0x219E);
@@ -467,6 +506,18 @@ inline void make_light_special_forward_button(WIDGET_Type* w)
  w->setMaximumWidth(19);
  w->setMaximumHeight(15);
 }
+
+template<typename WIDGET_Type>
+inline void make_light_hover_forward_button(WIDGET_Type* w)
+{
+ make_unicode_text(w, 0x21E2);
+// QString unicode = QString(QChar(0x21E2));
+// w->setText(unicode);
+ w->setStyleSheet(light_back_forward_button_style_sheet_green_hover_());
+ w->setMaximumWidth(19);
+ w->setMaximumHeight(15);
+}
+
 
 template<typename WIDGET_Type>
 inline void make_light_double_forward_button(WIDGET_Type* w)

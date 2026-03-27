@@ -155,3 +155,51 @@ Demo_Form_Frame::Demo_Form_Frame(QWidget* parent) : QFrame(parent)
 }
 
 
+void Demo_Form_Frame::create_fields_folder(QString path)
+{
+ QDir qd(path);
+
+ static QStringList subfolders {
+  "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
+  "2.1", "2.1.1", "2.1.2", "2.1.3", "2.2", "2.2.1", "2.2.2",
+  "3.1", "3.2", "3.3",
+  "4.1", "4.2", "4.3", "4.4",
+  "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7",
+    "5.8", "5.9", "5.10", "5.11", "5.12", "5.13",
+  "6.1", "6.2", "6.3", "6.4",
+    "6.4.1", "6.4.2", "6.4.3", "6.4.4", "6.4.5",
+    "6.4.6", "6.4.7", "6.4.8", "6.4.9",
+  "7.1", "7.2", "7.3", "7.4", "7.5", "7.6",
+  "8.1", "8.2", "8.3", "8.4", "8.5", "8.6",
+    "8.7", "8.8", "8.9", "8.10", "8.11",
+ };
+
+ qd.mkdir("gen");
+ qd.mkdir("src");
+
+ for(QString sf : subfolders)
+ {
+  QString sfo = sf;
+  sf.replace(".", "_");
+  qd.cd("gen");
+  qd.mkdir(sf);
+  qd.cd(sf);
+  {
+   QFile f(qd.absoluteFilePath(sf + ".gen.tex"));
+   f.open(QIODevice::WriteOnly);
+   f.write(QByteArray("\\placeholderTBD{") + sfo.toLatin1() + "}");
+   f.close();
+  }
+  qd.cdUp();
+  qd.cdUp();
+  qd.cd("src");
+  {
+   QFile f(qd.absoluteFilePath(sf + ".src.tex"));
+   f.open(QIODevice::WriteOnly);
+   f.write(QByteArray("%% ") + sf.toLatin1());
+   f.close();
+  }
+  qd.cdUp();
+ }
+ 
+}
