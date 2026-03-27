@@ -459,6 +459,18 @@ inline void make_light_hover_back_button(WIDGET_Type* w)
  w->setMaximumHeight(15);
 }
 
+template<typename WIDGET_Type>
+inline void make_light_hover_full_back_button(WIDGET_Type* w)
+{
+ make_unicode_text(w, 0x219E);
+// QString unicode = QString(QChar(0x21E0));
+// w->setText(unicode);
+ w->setStyleSheet(light_back_forward_button_style_sheet_green_hover_());
+ w->setMaximumWidth(19);
+ w->setMaximumHeight(15);
+}
+
+
 
 
 template<typename WIDGET_Type>
@@ -864,6 +876,54 @@ inline QString tab_style_sheet_()
 
 //        "QTabWidget{border:solid white 3px; background:white}"
 }
+
+
+inline QString tab_rectangle_style_sheet_()
+{
+ return "QTabBar::tab {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+        "                            stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,"
+        "                            stop: 0.5 #D8D8D8, stop: 1.0 #D39999);"
+        "border: 2px solid #C4C4C3;"
+        "border-bottom-color: #C2C7CB; /* same as the pane color */"
+        "border-top-left-radius: 4px;"
+        "border-top-right-radius: 4px;"
+        "min-width: 20ex;"
+        "padding: 2px;"
+        "color:rgb(145,50,70)"
+        "}"
+
+        "QTabBar::tab:selected, QTabBar::tab:hover {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+        "                            stop: 0 #fafafa, stop: 0.4 #f4f4f4,"
+        "                            stop: 0.5 #e7e7e7, stop: 1.0 #fafadd);"
+        "border-color: #5BAB9B;"
+        "border-bottom-color: #C2C7CB; /* same as pane color */"
+        "color:rgb(85,10,10)"
+        "}"
+
+        "QTabBar::tab:hover { border-color: #ABABCB; }"
+
+        "QTabBar::tab:selected {"
+        "border-color: #1B9B9B;"
+        "border-bottom-color: #C2C7CB; /* same as pane color */"
+        "}"
+
+        "QTabBar::tab:!selected {"
+        "margin-top: 2px; /* make non-selected tabs look smaller */"
+        "}"
+
+        "QTabBar::tab::disabled {"
+        "width: 0; height: 0; margin: 0; padding: 0; border: none;"
+        "}"
+   ;
+
+//        "QTabWidget{border:solid white 3px; background:white}"
+}
+
+
+
+
 
 inline QString soft_group_box_style_sheet_()
 {
@@ -1404,7 +1464,7 @@ inline  QString colorful_toggle_button_style_sheet_()
    " border-left: 4px groove rgb(150,240,190); "
    " border-right: 4px ridge rgb(150,240,190); "
    "}\n"
-   "QPushButton:checked {color:black; background:rgb(200,10,100); "
+   "QPushButton:checked {color:yellow; background:rgb(40,10,200); "
    " border-left: 4px groove rgb(200,10,100); "
    " border-right: 4px ridge rgb(200,10,100); "
    "}\n"

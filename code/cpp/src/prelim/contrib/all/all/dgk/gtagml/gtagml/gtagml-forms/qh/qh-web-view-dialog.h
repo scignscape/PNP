@@ -114,11 +114,16 @@ class QH_Web_View_Dialog : public QDialog
  Demo_Form_Frame* demo_form_frame_;
  Text_Edit_Frame* text_edit_frame_;
 
+ QString current_html_text_;
+
+ QString ref_folder_;
+
 public:
 
 
  QH_Web_View_Dialog(QWidget* parent);
- QH_Web_View_Dialog(QString initial_url = {}, QWidget* parent = nullptr);
+ QH_Web_View_Dialog(QString ref_folder, QString initial_url,
+   QWidget* parent = nullptr);
 
 
  ~QH_Web_View_Dialog();
@@ -138,6 +143,7 @@ public:
  ACCESSORS(r8 ,current_longitude)
 
  ACCESSORS(QString ,initial_url)
+ ACCESSORS(QString ,current_html_text)
 
  ACCESSORS(MACRO_PASTE(std::function<void(r8, r8, r8, QString)>) ,zoom_or_coordinates_changed_callback)
  ACCESSORS(MACRO_PASTE(std::function<void(const QH_Cross_Map_Coords&)>) ,mark_location_callback)
@@ -184,6 +190,12 @@ public:
  void reset_tab_selection();
 
  QRect get_web_view_geometry();
+
+ void stash_html(bool load_ok);
+
+ void get_internal_arefs(QStringList& result);
+ void load_internal_arefs();
+
 
 Q_SIGNALS:
 

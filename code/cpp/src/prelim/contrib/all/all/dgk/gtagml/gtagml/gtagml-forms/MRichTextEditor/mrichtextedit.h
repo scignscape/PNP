@@ -30,10 +30,24 @@
 /**
  * @Brief A simple rich-text editor
  */
-class MRichTextEdit : public QWidget, protected Ui::MRichTextEdit {
+class MRichTextEdit : public QWidget, protected Ui::MRichTextEdit
+{
     Q_OBJECT
+
+
+ enum class Edit_Modes {
+   N_A, GTagML, HTML
+ };
+
+ Edit_Modes edit_mode_;
+
   public:
     MRichTextEdit(QWidget *parent = nullptr);
+
+    void activate_gtagml()
+    {
+     edit_mode_ = Edit_Modes::GTagML;
+    }
 
     QString toPlainText() const { return f_textedit->toPlainText(); }
     QString toHtml() const;

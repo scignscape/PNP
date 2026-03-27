@@ -20,30 +20,54 @@ class Text_Edit_Frame : public QFrame
 {
  Q_OBJECT
 
- MRichTextEdit* rte_;// = new MRichTextEdit(fr);
+ enum class View_Modes {
+  N_A, GTagML, HTML, Preview_
+ };
+
+ View_Modes view_mode_;
+
+ MRichTextEdit* rte_; // = new MRichTextEdit(fr);
  QVBoxLayout* main_layout_;
  QHBoxLayout* bottom_layout_;
 
  QPushButton* btn_save_;
+ QPushButton* btn_full_back_;
  QPushButton* btn_back_;
  QPushButton* btn_forward_;
 
+ QPushButton* btn_gt_mode_;
+
  QLabel* current_subfolder_label_;
  QComboBox* subfolder_options_;
+
+ QLabel* description_label_;
+ QLabel* path_label_;
+ QHBoxLayout* description_path_layout_;
 
  u2 current_file_counter_;
  u2 max_file_count_;
 
  QStringList subfolder_names_;
+ QStringList subfolder_descriptions_;
+ QStringList subfolder_paths_;
+ QStringList subfolder_briefs_;
+
+ QString base_folder_;
 
  void reset_subfolder_label();
- void subfolder_ff();
+ void reset_text_view();
+
+ void subfolder_fw();
  void subfolder_bk();
+ void subfolder_bb();
  void subfolder_nav(int index);
 
 public:
 
- Text_Edit_Frame(QWidget* parent = nullptr);
+ Text_Edit_Frame(QString base_folder, QWidget* parent = nullptr);
+
+ void init_descriptions(QStringList arefs);
+
 
 };
 

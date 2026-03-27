@@ -157,14 +157,14 @@ void QH_Web_View_Dialog::add_url_pattern(QUrl url)
 
 
 QH_Web_View_Dialog::QH_Web_View_Dialog(QWidget* parent)
- : QH_Web_View_Dialog({}, parent)
+ : QH_Web_View_Dialog({}, {}, parent)
 {
 
 }
 
 
-QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
-  :  QDialog(parent), initial_url_(initial_url), mark_location_callback_(nullptr),
+QH_Web_View_Dialog::QH_Web_View_Dialog(QString ref_folder, QString initial_url, QWidget* parent)
+  :  QDialog(parent), ref_folder_(ref_folder), initial_url_(initial_url), mark_location_callback_(nullptr),
      url_changed_callback_(nullptr), js_callback_(nullptr),
      zoom_or_coordinates_changed_callback_(nullptr) //?, context_menu_provider_(nullptr), pm_runtime_(nullptr)
 {
@@ -183,6 +183,7 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
 //?
  wep_ = new QH_Web_Engine_Page(wev_);
  wep_->set_dialog(this);
+
 
  QObject::connect(wep_, &QH_Web_Engine_Page::urlChanged,[this](const QUrl& url)
  {
@@ -262,6 +263,8 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
 
  wep_->load(QUrl(initial_url_));
 
+ connect(wep_, &QWebEnginePage::loadFinished, this, &QH_Web_View_Dialog::stash_html);
+
 // QString url = "http://localhost:%1/qh-link"_qt.arg(EMBER_PORT);
 
 
@@ -299,9 +302,10 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
 // iwev_->page()->load(url); //  QUrl("file:///" + iurl));
 // qtw_->addTab(iwev_, "360 Provider Info");
 
- qtw_->tabBar()->setShape(QTabBar::TriangularNorth);
+//? qtw_->tabBar()->setShape(QTabBar::TriangularNorth);
+ qtw_->tabBar()->setShape(QTabBar::RoundedNorth);
  //?
- qtw_->setStyleSheet(tab_style_sheet_());
+ qtw_->setStyleSheet(tab_rectangle_style_sheet_());
 
 
  url_patterns_frame_ = new QFrame(this);
@@ -356,7 +360,7 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
 
  qtw_->addTab(demo_form_frame_, "Form");
 
- text_edit_frame_ = new Text_Edit_Frame(this);
+ text_edit_frame_ = new Text_Edit_Frame(ref_folder_, this);
 
 //    dialog->setWindowTitle("Rich text editor");
 //    dialog->setMinimumWidth (400);
@@ -413,6 +417,49 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString initial_url, QWidget* parent)
  //wev->show();
  //this->show();
 
+}
+
+
+void QH_Web_View_Dialog::load_internal_arefs()
+{
+ QStringList arefs;
+ get_internal_arefs(arefs);
+
+ text_edit_frame_->init_descriptions(arefs);
+
+}
+
+
+void QH_Web_View_Dialog::get_internal_arefs(QStringList& result)
+{
+ QRegularExpression rx("<a\\s+href=\"@([^'\"]+)\"");
+// QRegularExpression rx("a");
+
+// qDebug() << current_html_text_;
+
+ QRegularExpressionMatchIterator it = rx.globalMatch(current_html_text_);
+
+ while (it.hasNext())
+ {
+  QRegularExpressionMatch match = it.next();
+  QString aref = match.captured(1);
+  result.push_back(aref);
+ }
+ //
+
+}
+
+
+void QH_Web_View_Dialog::stash_html(bool load_ok)
+{
+ if(load_ok)
+ {
+  wep_->toHtml([this](const QString& text)
+  {
+   current_html_text_ = text;
+   load_internal_arefs();
+  });
+ }
 }
 
 void QH_Web_View_Dialog::check_run_js_callback(QString key, const QJsonValue& msg)
