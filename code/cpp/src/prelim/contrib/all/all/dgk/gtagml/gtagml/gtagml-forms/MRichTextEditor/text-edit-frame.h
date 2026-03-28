@@ -61,6 +61,7 @@ class Text_Edit_Frame : public QFrame
  void subfolder_bk();
  void subfolder_bb();
  void subfolder_nav(int index);
+ void handle_save();
 
 public:
 

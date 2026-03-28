@@ -104,6 +104,7 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
  connect(btn_forward_, &QPushButton::clicked, this, &Text_Edit_Frame::subfolder_fw);
  connect(btn_back_, &QPushButton::clicked, this, &Text_Edit_Frame::subfolder_bk);
  connect(btn_full_back_, &QPushButton::clicked, this, &Text_Edit_Frame::subfolder_bb);
+ connect(btn_save_, &QPushButton::clicked, this, &Text_Edit_Frame::handle_save);
 
  btn_save_->setStyleSheet(basic_button_style_sheet_());
 
@@ -212,3 +213,20 @@ void Text_Edit_Frame::subfolder_bb()
  btn_full_back_->setEnabled(false);
 }
 
+void Text_Edit_Frame::handle_save()
+{
+ QString text = rte_->text_as_gtagml();
+
+ QString path = subfolder_paths_.value(current_file_counter_ - 1);
+
+ QFileInfo qfi(path);
+
+ QString bp = qfi.absolutePath() + "/" + qfi.completeBaseName() + ".bak." + qfi.suffix();
+
+ if( QFile::exists(bp) )
+   QFile::remove(bp);
+
+ QFile::copy(path, bp);
+
+ save_file(path, text);
+}

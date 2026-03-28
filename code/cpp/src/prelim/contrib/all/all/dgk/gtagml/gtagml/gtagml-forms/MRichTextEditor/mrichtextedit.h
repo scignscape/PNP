@@ -39,14 +39,14 @@ class MRichTextEdit : public QWidget, protected Ui::MRichTextEdit
    N_A, GTagML, HTML
  };
 
- Edit_Modes edit_mode_;
+ Edit_Modes current_edit_mode_;
 
   public:
     MRichTextEdit(QWidget *parent = nullptr);
 
     void activate_gtagml()
     {
-     edit_mode_ = Edit_Modes::GTagML;
+     current_edit_mode_ = Edit_Modes::GTagML;
     }
 
     QString toPlainText() const { return f_textedit->toPlainText(); }
@@ -55,6 +55,7 @@ class MRichTextEdit : public QWidget, protected Ui::MRichTextEdit
     QTextCursor    textCursor() const { return f_textedit->textCursor(); }
     void           setTextCursor(const QTextCursor& cursor) { f_textedit->setTextCursor(cursor); }
 
+    QString text_as_gtagml();
 
   public slots:
     void setText(const QString &text);
@@ -83,6 +84,9 @@ class MRichTextEdit : public QWidget, protected Ui::MRichTextEdit
     void decreaseIndentation();
     void insertImage();
     void textSource();
+
+    void text_blk_quote();
+    void text_inl_quote();
 
 
   protected:
