@@ -13,8 +13,12 @@
 
 #include "global-types.h"
 
+#include "kans.h"
 
 class MRichTextEdit;
+
+KANS_CLASS_DECLARE(GTagML ,GTagML_Project_Info)
+USING_KANS(GTagML)
 
 class Text_Edit_Frame : public QFrame
 {
@@ -53,6 +57,7 @@ class Text_Edit_Frame : public QFrame
  QStringList subfolder_briefs_;
 
  QString base_folder_;
+ QString templates_folder_;
 
  void reset_subfolder_label();
  void reset_text_view();
@@ -62,6 +67,10 @@ class Text_Edit_Frame : public QFrame
  void subfolder_bb();
  void subfolder_nav(int index);
  void handle_save();
+
+ void process_gtagml_file(QString file, QString template_path, QString folder);
+ void process_gtagml_file(QString path, QString template_path, GTagML_Project_Info& gpi);
+
 
 public:
 

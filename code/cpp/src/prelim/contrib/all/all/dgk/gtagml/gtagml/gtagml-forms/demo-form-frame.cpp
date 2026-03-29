@@ -198,7 +198,8 @@ void Demo_Form_Frame::create_fields_folder(QString path)
   {
    QFile f(qd.absoluteFilePath(sf + ".src.gt"));
    f.open(QIODevice::WriteOnly);
-   f.write(QByteArray("%% ") + sf.toLatin1());
+   f.write(QByteArray("/>>\n\n/// ") + sf.toLatin1());
+   f.write(QByteArray("\n\n\n\n\n\n/// //\n"));
    f.close();
   }
   qd.cdUp();

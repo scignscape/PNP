@@ -9,11 +9,16 @@
 
 USING_KANS(TextIO)
 
+#include "gtagml/kernel/document/gtagml-project-info.h"
+#include "gtagml/kernel/document/gtagml-document.h"
+
 
 Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
   :  QFrame(parent), view_mode_(View_Modes::GTagML),
      base_folder_(base_folder), current_file_counter_(1)
 {
+ templates_folder_ = base_folder_ + "/../templates";
+
  rte_ = new MRichTextEdit(this);
 
  rte_->activate_gtagml();
@@ -213,6 +218,31 @@ void Text_Edit_Frame::subfolder_bb()
  btn_full_back_->setEnabled(false);
 }
 
+void Text_Edit_Frame::process_gtagml_file(QString file, QString template_path, QString folder)
+{
+ GTagML_Project_Info gpi(folder);
+ process_gtagml_file(file, template_path, gpi);
+}
+
+void Text_Edit_Frame::process_gtagml_file(QString path, QString template_path, GTagML_Project_Info& gpi)
+{
+ qDebug() << "Processing file: " << path;
+
+ GTagML_Document gdoc;
+
+ gdoc.set_project_info(&gpi);
+
+ gdoc.load_and_parse(path);
+
+ gdoc.insert_latex_template(template_path + "-template.tex");
+ gdoc.insert_xml_template(template_path + "-template.xml");
+
+ gdoc.save_jats(path + ".jats.xml", path + ".jats-bib.txt");
+ gdoc.save_latex(path + ".tex");
+ gdoc.save_sentences(path + ".sentences.sdi");
+
+}
+
 void Text_Edit_Frame::handle_save()
 {
  QString text = rte_->text_as_gtagml();
@@ -229,4 +259,10 @@ void Text_Edit_Frame::handle_save()
  QFile::copy(path, bp);
 
  save_file(path, text);
+
+ if(qfi.suffix() == "gt")
+ {
+  process_gtagml_file(path, templates_folder_ + "/fields-generic", qfi.absolutePath());
+ }
+
 }

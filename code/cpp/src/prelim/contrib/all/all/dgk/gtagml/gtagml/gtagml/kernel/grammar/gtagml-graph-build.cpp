@@ -116,7 +116,7 @@ void GTagML_Graph_Build::init(caon_ptr<GTagML_Parser> parser)
 
  xml_writer_.writeStartElement("body");
 
- latex_stream_ << "\n\n%PREAMBLE-TEMPLATE%\n\n\\begin{document}\n%BEGIN-TEMPLATE%";
+ //?  latex_stream_ << "\n\n%PREAMBLE-TEMPLATE%\n\n\\begin{document}\n%BEGIN-TEMPLATE%";
 
  sentences_sdi_stream_ << "--- Global/start\n\n";
 // xml_writer_.set
@@ -160,45 +160,78 @@ void GTagML_Graph_Build::enter_abstract()
 }
 
 
-void GTagML_Graph_Build::insert_latex_template(QString path)
+void GTagML_Graph_Build::insert_latex_template(QString path, QString* result)
 {
  QString contents = KA::TextIO::load_file(path);
 
  s4 ix = contents.indexOf("\n%%\n");
  s4 ix1 = contents.indexOf("\n%%%\n");
 
+ QString lat = latex_;
+
+ bool have_pt = lat.contains("%PREAMBLE-TEMPLATE%");
+ bool have_bt = lat.contains("%BEGIN-TEMPLATE%");
+
+ QString econtents;
+
+ if(ix1 != -1)
+ {
+  econtents = contents.mid(ix1 + 5);
+  contents = contents.left(ix1);
+ }
+
  if(ix != -1)
  {
-  if(ix1 != -1)
+  QString bcontents = contents.mid(ix + 4);
+
+  //  contents.replace(ix + 4, contents.length() - ix - 4, "");
+  contents = contents.left(ix);
+
+  if(have_pt)
   {
-   QString bcontents = contents.mid(ix + 4, ix1 - ix - 4);
-   QString econtents = contents.mid(ix1 + 4);
-   contents.replace(ix + 4, contents.length() - ix - 4, "");
-   latex_.replace("%PREAMBLE-TEMPLATE%", contents);
-   latex_.replace("%BEGIN-TEMPLATE%", bcontents);
-   latex_.replace("%END-TEMPLATE%", econtents);
+   if(have_bt)
+   {
+    lat.replace("%PREAMBLE-TEMPLATE%", contents);
+    lat.replace("%BEGIN-TEMPLATE%", bcontents);
+   }
+   else
+   {
+    lat.replace("%PREAMBLE-TEMPLATE%", contents + "\n\n" + bcontents + "\n\n");
+   }
+  }
+  else if(have_bt)
+  {
+   lat.replace("%BEGIN-TEMPLATE%", bcontents);
+   lat.prepend(contents + "\n\n");
   }
   else
   {
-   QString bcontents = contents.mid(ix + 4);
-   contents.replace(ix + 4, contents.length() - ix - 4, "");
-   latex_.replace("%PREAMBLE-TEMPLATE%", contents);
-   latex_.replace("%BEGIN-TEMPLATE%", bcontents);
+   lat.prepend(contents + "\n\n" + bcontents + "\n\n");
   }
  }
- else if(ix1 != -1)
- {
-  QString econtents = contents.mid(ix1 + 4);
-  contents.replace(ix1 + 4, contents.length() - ix1 - 4, "");
-  latex_.replace("%PREAMBLE-TEMPLATE%", contents);
-  latex_.replace("%END-TEMPLATE%", econtents);
- }
+
+ if(lat.contains("%END-TEMPLATE%"))
+   lat.replace("%END-TEMPLATE%", "\n\n" + econtents);
+ else if(!econtents.isEmpty())
+   lat.append("\n\n" + econtents);
+
+ if(result)
+   *result = lat;
+ else
+   latex_ = lat;
 }
 
-void GTagML_Graph_Build::insert_xml_template(QString path)
+void GTagML_Graph_Build::insert_xml_template(QString path, QString* result)
 {
  QString contents = KA::TextIO::load_file(path);
- jats_array_.replace("%XML-TEMPLATE%", contents.toLatin1());
+
+ if(result)
+ {
+  *result = jats_array_;
+  result->replace("%XML-TEMPLATE%", contents.toLatin1());
+ }
+ else
+   jats_array_.replace("%XML-TEMPLATE%", contents.toLatin1());
 }
 
 void GTagML_Graph_Build::primary_acc(QString text)

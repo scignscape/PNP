@@ -391,8 +391,8 @@ public:
  void enter_special_section(QString text);
  void enter_abstract();
 
- void insert_latex_template(QString path);
- void insert_xml_template(QString path);
+ void insert_latex_template(QString path, QString* result = nullptr);
+ void insert_xml_template(QString path, QString* result = nullptr);
 
  void primary_acc(QString text);
  void reset_primary();

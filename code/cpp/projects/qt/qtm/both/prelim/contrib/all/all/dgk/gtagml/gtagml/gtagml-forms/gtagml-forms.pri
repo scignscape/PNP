@@ -82,7 +82,9 @@ SOURCES +=  \
   $$SRC_DIR/demo-form-frame.cpp \
   $$SRC_DIR/form-weaver.cpp \
 
-#LIBS += -L$$TARGETSDIR -lgtagml
+
+LIBS += -L$$TARGETSDIR -lgtagml
+
 
 message(choice: $$CPP_ROOT_DIR/targets/$$CHOICE_CODE/$$PROJECT_SET--$$PROJECT_GROUP--$$PROJECT_NAME)
 mkpath($$CPP_ROOT_DIR/targets/$$CHOICE_CODE/$$PROJECT_SET--$$PROJECT_GROUP--$$PROJECT_NAME)
