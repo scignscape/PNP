@@ -18,6 +18,8 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
      base_folder_(base_folder), current_file_counter_(1)
 {
  templates_folder_ = base_folder_ + "/../templates";
+ gen_folder_ = base_folder_ + "/../gen";
+
 
  rte_ = new MRichTextEdit(this);
 
@@ -68,6 +70,7 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
   QString sfo = sf;
   sf.replace(".", "_");
   subfolder_paths_.push_back(base_folder_ + "/" + sf + "/" + sf + ".src.gt");
+  gen_paths_.push_back(gen_folder_ + "/" + sf + "/" + sf + ".gen.tex");
   subfolder_briefs_.push_back("# " + sfo);
   subfolder_descriptions_.push_back("(contents of file %1)"_qt.arg(sf + ".src.gt"));
  }
@@ -248,6 +251,9 @@ void Text_Edit_Frame::handle_save()
  QString text = rte_->text_as_gtagml();
 
  QString path = subfolder_paths_.value(current_file_counter_ - 1);
+ QString gpath = gen_paths_.value(current_file_counter_ - 1);
+
+
 
  QFileInfo qfi(path);
 
@@ -263,6 +269,15 @@ void Text_Edit_Frame::handle_save()
  if(qfi.suffix() == "gt")
  {
   process_gtagml_file(path, templates_folder_ + "/fields-generic", qfi.absolutePath());
+  QString bak = load_file(gpath + ".tex");
+  save_file(gpath + ".bak", bak);
+
+  QString tex = load_file(path + ".tex");
+  save_file(gpath, tex);
+
+//  QString gen = gen_folder_ + "/" + sf + "/" + sf + ".gen.tex";
+
+
  }
 
 }

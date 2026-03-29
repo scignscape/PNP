@@ -55,8 +55,10 @@ class Text_Edit_Frame : public QFrame
  QStringList subfolder_descriptions_;
  QStringList subfolder_paths_;
  QStringList subfolder_briefs_;
+ QStringList gen_paths_;
 
  QString base_folder_;
+ QString gen_folder_;
  QString templates_folder_;
 
  void reset_subfolder_label();
