@@ -1,7 +1,9 @@
 
 #include "demo-form-frame.h"
 
-//#include "clg-db-antemodel.h";
+#include "MRichTextEditor/text-edit-frame.h"
+
+#include "form-weaver.h"
 
 #include <QApplication>
 
@@ -37,8 +39,11 @@
 #include <QGraphicsTextItem>
 #include <QListWidget>
 
+#include "styles.h"
 
-Demo_Form_Frame::Demo_Form_Frame(QWidget* parent) : QFrame(parent)
+
+Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* parent)
+  :  QFrame(parent), text_edit_frame_(text_edit_frame)
 {
  cLE_classification_ = new QLineEdit(this);
  cLE_classification_->setPlaceholderText("Defaults to \"FOR OFFICIAL USE ONLY\"");
@@ -147,12 +152,40 @@ Demo_Form_Frame::Demo_Form_Frame(QWidget* parent) : QFrame(parent)
  main_form_layout_->addWidget(top_form_group_box_);
  main_form_layout_->addWidget(questions_group_box_);
 
- main_layout_->addItem(main_form_layout_);
+ main_layout_->addLayout(main_form_layout_);
 
+ btn_save_ = new QPushButton("Save", this);
+ connect(btn_save_, &QPushButton::clicked, this, &Demo_Form_Frame::handle_save);
+
+ btn_save_->setStyleSheet(basic_button_style_sheet_());
+
+ bottom_layout_ = new QHBoxLayout;
+
+ bottom_layout_->addWidget(btn_save_);
+ bottom_layout_->addStretch();
+
+ main_layout_->addLayout(bottom_layout_);
 
  setLayout(main_layout_);
 
 }
+
+void Demo_Form_Frame::handle_save()
+{
+ QString dt = text_edit_frame_->document_title();
+ QString df = text_edit_frame_->document_folder();
+
+ QString src = df + "/" + dt + ".tex";
+ QString gen = df + "/" + dt + ".gen.tex";
+
+ Form_Weaver fw(df);
+
+ QMap<QString, QString> data;
+
+ fw.form_to_latex(src, gen, data);
+
+}
+
 
 
 void Demo_Form_Frame::create_fields_folder(QString path)
@@ -198,7 +231,7 @@ void Demo_Form_Frame::create_fields_folder(QString path)
   {
    QFile f(qd.absoluteFilePath(sf + ".src.gt"));
    f.open(QIODevice::WriteOnly);
-   f.write(QByteArray("/>>\n\n/// ") + sf.toLatin1());
+   f.write(QByteArray("/>>\n\n/// ") + sfo.toLatin1());
    f.write(QByteArray("\n\n\n\n\n\n/// //\n"));
    f.close();
   }

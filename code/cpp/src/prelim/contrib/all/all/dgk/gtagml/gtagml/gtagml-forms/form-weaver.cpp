@@ -24,6 +24,36 @@ void Form_Weaver::default_folders()
  latex_folder_ = base_folder_ + "/..";
 }
 
+void Form_Weaver::form_to_latex(QString inpath, QString outpath, QMap<QString, QString> data)
+{
+ QString text = load_file(inpath);
+
+ QRegularExpression rx("\\\\%-([^%]+)-\\\\%");
+
+ u1 count = 0;
+
+ while(++count)
+ {
+  QRegularExpressionMatch match = rx.match(text);
+
+  if(match.hasMatch())
+  {
+   QString cap = match.captured(1);
+
+   QString repl = data.value(cap, "???");
+
+   text.replace(match.capturedStart(), match.capturedEnd() - match.capturedStart(),
+     repl);
+//   text.replace(match.capturedStart(), match.capturedEnd() - match.capturedStart(),
+//     "\\input{fields/gen/%1/%1.gen}"_qt.arg(repl));
+  }
+  else
+    break;
+ }
+
+// save_file(outpath, text);
+
+}
 
 void Form_Weaver::gen_latex(QString inpath)
 {

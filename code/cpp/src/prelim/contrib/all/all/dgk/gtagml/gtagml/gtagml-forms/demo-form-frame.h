@@ -51,7 +51,7 @@ class QTableWidgetItem;
 //namespace RZ{ namespace CTQ{
 
 
-class Game_Player;
+class Text_Edit_Frame;
 
 
 class Demo_Form_Frame : public QFrame
@@ -89,14 +89,20 @@ class Demo_Form_Frame : public QFrame
  QFormLayout* top_form_layout_;
  QVBoxLayout* main_form_layout_;
 
+ QPushButton* btn_save_;
+
+ QHBoxLayout* bottom_layout_;
  QVBoxLayout* main_layout_;
+
+ Text_Edit_Frame* text_edit_frame_;
 
 public:
 
- Demo_Form_Frame(QWidget* parent = nullptr);
+ Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* parent = nullptr);
 
  static void create_fields_folder(QString path);
 
+ void handle_save();
 
 };
 

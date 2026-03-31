@@ -355,12 +355,12 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString ref_folder, QString initial_url, 
 
 // url_patterns_table_->horizontalHeaderItem(3)->set
 
+ text_edit_frame_ = new Text_Edit_Frame(ref_folder_, this);
 
- demo_form_frame_ = new Demo_Form_Frame(this);
+ demo_form_frame_ = new Demo_Form_Frame(text_edit_frame_, this);
 
  qtw_->addTab(demo_form_frame_, "Form");
 
- text_edit_frame_ = new Text_Edit_Frame(ref_folder_, this);
 
 //    dialog->setWindowTitle("Rich text editor");
 //    dialog->setMinimumWidth (400);

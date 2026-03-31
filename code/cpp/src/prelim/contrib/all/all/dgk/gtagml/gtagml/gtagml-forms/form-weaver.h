@@ -69,6 +69,7 @@ public:
  void weave_to_latex(QString inpath);
  void default_folders();
 
+ void form_to_latex(QString inpath, QString outpath, QMap<QString, QString> data);
 
 };
 

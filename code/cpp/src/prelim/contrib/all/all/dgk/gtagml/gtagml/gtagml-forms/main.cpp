@@ -46,12 +46,13 @@ USING_KANS(RdSC)
 #include "MRichTextEditor/mrichtextedit.h"
 
 #include "demo-form-frame.h"
+#include "text-edit-frame.h"
 
 #include "form-weaver.h"
 
 int main(int argc, char *argv[])
 {
- Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_FOLDER);
+// Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_FOLDER);
 
 // Form_Weaver fw(DEFAULT_FIELDS_FOLDER);
 // fw.default_folders();
@@ -75,6 +76,9 @@ int main(int argc, char *argv[])
 
 
  QH_Web_View_Dialog dlg(DEFAULT_FIELDS_SRC_FOLDER, url);
+
+ dlg.text_edit_frame()->set_document_title("ScignTorq");
+ dlg.text_edit_frame()->set_document_folder(DEFAULT_LATEX_FOLDER);
 
  dlg.show();
 

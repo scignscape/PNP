@@ -154,6 +154,8 @@ public:
 
  ACCESSORS(MACRO_PASTE(std::function<void(QH_Web_View_Dialog*, QString, const QJsonValue&)>) ,js_callback)
 
+ ACCESSORS(Text_Edit_Frame* ,text_edit_frame)
+
  QPoint map_point_for_context_menu(const QPoint& qp)
  {
   QPoint result = wev_->mapToGlobal(qp + QPoint{8, 8});

@@ -15,6 +15,8 @@
 
 #include "kans.h"
 
+#include "accessors.h"
+
 class MRichTextEdit;
 
 KANS_CLASS_DECLARE(GTagML ,GTagML_Project_Info)
@@ -61,6 +63,9 @@ class Text_Edit_Frame : public QFrame
  QString gen_folder_;
  QString templates_folder_;
 
+ QString document_title_;
+ QString document_folder_;
+
  void reset_subfolder_label();
  void reset_text_view();
 
@@ -78,7 +83,12 @@ public:
 
  Text_Edit_Frame(QString base_folder, QWidget* parent = nullptr);
 
+ ACCESSORS(QString ,document_title)
+ ACCESSORS(QString ,document_folder)
+
  void init_descriptions(QStringList arefs);
+
+
 
 
 };
