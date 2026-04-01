@@ -47,9 +47,7 @@ class QTableWidgetItem;
 #include <QComboBox>
 #include <QFormLayout>
 
-//RZNS_(QWN)
-//namespace RZ{ namespace CTQ{
-
+#include "global-types.h"
 
 class Text_Edit_Frame;
 
@@ -58,11 +56,19 @@ class Demo_Form_Frame : public QFrame
 {
  Q_OBJECT
 
+ enum class Field_Keys : u2 {
+   N_A, Classification, Acquisition_Plan_Number,
+   REV, Program_Title, ACAT,
+   Acquisition_Program_Manager, CODE,
+   Contact_Name, Contact_Code, Contact_Tel,
+   Questions_Cutoff_Date
+ };
+
  QLineEdit* cLE_classification_;
  QLineEdit* cLE_acquisition_plan_number_;
  QLineEdit* cLE_rev_;
  QLineEdit* cLE_program_title_;
- QLineEdit* cLE_act_;
+ QLineEdit* cLE_acat_;
  QLineEdit* cLE_program_manager_;
  QLineEdit* cLE_code_;
  QLineEdit* cLE_questions_name_;

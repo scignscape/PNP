@@ -53,7 +53,7 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* pare
 
 
  cLE_program_title_ = new QLineEdit(this);
- cLE_act_ = new QLineEdit(this);
+ cLE_acat_ = new QLineEdit(this);
  cLE_program_manager_ = new QLineEdit(this);
  cLE_code_ = new QLineEdit(this);
  cLE_questions_name_ = new QLineEdit(this);
@@ -121,8 +121,8 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* pare
  l2->addSpacing(20);
  l2->addWidget(cLBL_act_);
  cLBL_act_->setMinimumWidth(short_minimum_width);
- l2->addWidget(cLE_act_);
- cLE_act_->setMaximumWidth(medium_maximum_width);
+ l2->addWidget(cLE_acat_);
+ cLE_acat_->setMaximumWidth(medium_maximum_width);
  top_form_layout_->addRow(l2);
 
  QHBoxLayout* l3 = new QHBoxLayout;
@@ -181,6 +181,39 @@ void Demo_Form_Frame::handle_save()
  Form_Weaver fw(df);
 
  QMap<QString, QString> data;
+
+// N_A, Classification, Acquisition_Plan_Number,
+// REV, Program_Title, ACAT,
+// Acquisition_Program_Manager, CODE,
+// Contact_Name, Contact_Code, Contact_Tel,
+// Questions_Cutoff_Date
+
+// QLineEdit* cLE_classification_;
+// QLineEdit* cLE_acquisition_plan_number_;
+// QLineEdit* cLE_rev_;
+// QLineEdit* cLE_program_title_;
+// QLineEdit* cLE_acat_;
+// QLineEdit* cLE_program_manager_;
+// QLineEdit* cLE_code_;
+// QLineEdit* cLE_questions_name_;
+// QLineEdit* cLE_questions_code_;
+// QLineEdit* cLE_questions_tel_;
+// QLineEdit* cLE_questions_cutoff_date_;
+
+ data.insert("Classification", cLE_classification_->text());
+ data.insert("Acquisition_Plan_Number", cLE_acquisition_plan_number_->text());
+ data.insert("REV", cLE_rev_->text());
+ data.insert("Program_Title", cLE_program_title_->text());
+
+ data.insert("ACAT", cLE_acat_->text());
+ data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
+ data.insert("CODE", cLE_code_->text());
+
+ data.insert("Contact_Name", cLE_questions_name_->text());
+ data.insert("Contact_Code", cLE_questions_code_->text());
+ data.insert("Contact_Tel", cLE_questions_tel_->text());
+
+ data.insert("Questions_Cutoff_Date", cLE_questions_cutoff_date_->text());
 
  fw.form_to_latex(src, gen, data);
 

@@ -19,7 +19,7 @@
 
 #include "accessors.h"
 
-//#include "flags.h"
+#include "global-types.h"
 
 class QPushButton;
 class QTextEdit;
@@ -47,12 +47,6 @@ class QTableWidgetItem;
 #include <QComboBox>
 #include <QFormLayout>
 
-//RZNS_(QWN)
-//namespace RZ{ namespace CTQ{
-
-
-class Game_Player;
-
 
 class Form_Weaver
 {
@@ -73,8 +67,8 @@ public:
 
 };
 
-//} } //_RZNS(CTQ)
 
 
-#endif // FORM_WEAVER__HPP
+
+#endif // FORM_WEAVER__H
 

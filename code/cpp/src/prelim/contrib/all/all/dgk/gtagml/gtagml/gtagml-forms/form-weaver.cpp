@@ -40,7 +40,10 @@ void Form_Weaver::form_to_latex(QString inpath, QString outpath, QMap<QString, Q
   {
    QString cap = match.captured(1);
 
-   QString repl = data.value(cap, "???");
+   QString repl = data.value(cap); //, "???");
+
+   if(repl.isEmpty())
+     repl = "???";
 
    text.replace(match.capturedStart(), match.capturedEnd() - match.capturedStart(),
      repl);
