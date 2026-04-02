@@ -198,6 +198,7 @@ public:
  void get_internal_arefs(QStringList& result);
  void load_internal_arefs();
 
+ void focus_tab(QWidget* which);
 
 Q_SIGNALS:
 
@@ -210,6 +211,7 @@ Q_SIGNALS:
  void youtube_download_requested(QString url);
 
  void zoom_or_coordinates_changed(r8, r8, r8);
+
 
 
 };

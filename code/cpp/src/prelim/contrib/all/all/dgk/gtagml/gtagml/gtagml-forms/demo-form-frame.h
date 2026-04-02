@@ -107,19 +107,34 @@ class Demo_Form_Frame : public QFrame
  QVBoxLayout* main_form_layout_;
 
  QPushButton* btn_save_;
+ QPushButton* btn_reset_;
 
  QHBoxLayout* bottom_layout_;
  QVBoxLayout* main_layout_;
 
  Text_Edit_Frame* text_edit_frame_;
 
+ QString form_file_path_;
+
 public:
 
- Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* parent = nullptr);
+ Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QString form_file_path, QWidget* parent = nullptr);
 
  static void create_fields_folder(QString path);
 
+ void coalesce_form_data(QMap<QString, QString>& data);
+
+
  void handle_save();
+
+ void reset_form(QMap<QString, QString> data);
+ void handle_reset();
+
+ void save_form_data(QMap<QString, QString>& data);
+ void save_form_data();
+ void load_form_data();
+ void load_form_data(QMap<QString, QString>& data);
+
 
 };
 

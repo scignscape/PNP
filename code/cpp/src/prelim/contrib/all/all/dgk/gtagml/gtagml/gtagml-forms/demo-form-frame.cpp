@@ -42,8 +42,9 @@
 #include "styles.h"
 
 
-Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* parent)
-  :  QFrame(parent), text_edit_frame_(text_edit_frame)
+Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
+  QString form_file_path, QWidget* parent)
+  :  QFrame(parent), text_edit_frame_(text_edit_frame), form_file_path_(form_file_path)
 {
  author_title_group_box_ = new QGroupBox("Document", this);
  author_title_layout_ = new QFormLayout(author_title_group_box_);
@@ -183,16 +184,175 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* pare
 
  btn_save_->setStyleSheet(basic_button_style_sheet_());
 
+
+ btn_reset_ = new QPushButton("Reset", this);
+ connect(btn_reset_, &QPushButton::clicked, this, &Demo_Form_Frame::handle_reset);
+
+ btn_reset_->setStyleSheet(basic_button_style_sheet_());
+
  bottom_layout_ = new QHBoxLayout;
 
  bottom_layout_->addWidget(btn_save_);
+ bottom_layout_->addWidget(btn_reset_);
  bottom_layout_->addStretch();
 
  main_layout_->addLayout(bottom_layout_);
 
  setLayout(main_layout_);
 
+ load_form_data();
+
 }
+
+void Demo_Form_Frame::handle_reset()
+{
+ QMap<QString, QString> data;
+ coalesce_form_data(data);
+
+ if(data.isEmpty())
+ {
+  save_form_data();
+  return;
+ }
+
+ QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm",
+   "Clear all form data?", QMessageBox::Ok | QMessageBox::Cancel);
+ if (reply == QMessageBox::Ok)
+ {
+  reset_form(data);
+ }
+}
+
+void Demo_Form_Frame::reset_form(QMap<QString, QString> data)
+{
+ cLE_author_->setText("");
+ cLE_author_->setText("");
+ cLE_title_->setText("");
+
+ cLE_acquisition_plan_number_->setText("");
+ cLE_rev_->setText("");
+ cLE_program_title_->setText("");
+
+ cLE_acat_->setText("");
+ cLE_program_manager_->setText("");
+ cLE_code_->setText("");
+
+ cLE_questions_name_->setText("");
+ cLE_questions_code_->setText("");
+ cLE_questions_tel_->setText("");
+ cLE_questions_cutoff_date_->setText("");
+
+ cLE_classification_->setText("");
+
+ data.insert("Author", "");
+ data.insert("affiliation", "");
+ data.insert("Title", "");
+
+ data.insert("Classification", "");
+ data.insert("APN", "");
+ data.insert("REV", "");
+ data.insert("program-title", "");
+
+ data.insert("ACAT", "");
+ data.insert("Acquisition_Program_Manager", "");
+ data.insert("CODE", "");
+
+ data.insert("questions-name", "");
+ data.insert("questions-code", "");
+ data.insert("questions-telephone", "");
+
+ data.insert("questions-date", "");
+
+ save_form_data(data);
+
+}
+
+
+void Demo_Form_Frame::load_form_data(QMap<QString, QString>& data)
+{
+ cLE_author_->setText(data.value("Author"));
+ cLE_author_->setText(data.value("affiliation"));
+ cLE_title_->setText(data.value("Title"));
+
+ cLE_acquisition_plan_number_->setText(data.value("APN"));
+ cLE_rev_->setText(data.value("REV"));
+ cLE_program_title_->setText(data.value("program-title"));
+
+ cLE_acat_->setText(data.value("ACAT"));
+ cLE_program_manager_->setText(data.value("Acquisition_Program_Manager"));
+ cLE_code_->setText(data.value("CODE"));
+
+ cLE_questions_name_->setText(data.value("questions-name"));
+ cLE_questions_code_->setText(data.value("questions-code"));
+ cLE_questions_tel_->setText(data.value("questions-telephone"));
+ cLE_questions_cutoff_date_->setText(data.value("questions-date"));
+
+ cLE_classification_->setText(data.value("Classification"));
+
+
+}
+
+
+void Demo_Form_Frame::coalesce_form_data(QMap<QString, QString>& data)
+{
+ data.insert("Author", cLE_author_->text());
+ data.insert("affiliation", cLE_affiliation_->text());
+ data.insert("Title", cLE_title_->text());
+
+ data.insert("Classification", cLE_classification_->text());
+ data.insert("APN", cLE_acquisition_plan_number_->text());
+ data.insert("REV", cLE_rev_->text());
+ data.insert("program-title", cLE_program_title_->text());
+
+ data.insert("ACAT", cLE_acat_->text());
+ data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
+ data.insert("CODE", cLE_code_->text());
+
+ data.insert("questions-name", cLE_questions_name_->text());
+ data.insert("questions-code", cLE_questions_code_->text());
+ data.insert("questions-telephone", cLE_questions_tel_->text());
+
+ data.insert("questions-date", cLE_questions_cutoff_date_->text());
+
+}
+
+void Demo_Form_Frame::save_form_data(QMap<QString, QString>& data)
+{
+ QFile outfile(form_file_path_);
+
+ if(outfile.open(QIODevice::WriteOnly))
+ {
+  QDataStream qds(&outfile);
+  qds << data;
+  outfile.close();
+ }
+}
+
+void Demo_Form_Frame::save_form_data()
+{
+ QMap<QString, QString> data;
+ coalesce_form_data(data);
+ save_form_data(data);
+}
+
+void Demo_Form_Frame::load_form_data()
+{
+ QMap<QString, QString> data;
+
+ QFile infile(form_file_path_);
+
+ if(infile.open(QIODevice::ReadOnly))
+ {
+  QDataStream qds(&infile);
+  qds >> data;
+  infile.close();
+ }
+
+ if(!data.isEmpty())
+   load_form_data(data);
+
+}
+
 
 void Demo_Form_Frame::handle_save()
 {
@@ -205,6 +365,10 @@ void Demo_Form_Frame::handle_save()
  Form_Weaver fw(df);
 
  QMap<QString, QString> data;
+
+ coalesce_form_data(data);
+
+ save_form_data(data);
 
 // N_A, Classification, Acquisition_Plan_Number,
 // REV, Program_Title, ACAT,
@@ -224,24 +388,6 @@ void Demo_Form_Frame::handle_save()
 // QLineEdit* cLE_questions_tel_;
 // QLineEdit* cLE_questions_cutoff_date_;
 
- data.insert("Author", cLE_author_->text());
- data.insert("affiliation", cLE_affiliation_->text());
- data.insert("Title", cLE_title_->text());
-
- data.insert("Classification", cLE_classification_->text());
- data.insert("APN", cLE_acquisition_plan_number_->text());
- data.insert("REV", cLE_rev_->text());
- data.insert("program-title", cLE_program_title_->text());
-
- data.insert("ACAT", cLE_acat_->text());
- data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
- data.insert("CODE", cLE_code_->text());
-
- data.insert("questions-name", cLE_questions_name_->text());
- data.insert("questions-code", cLE_questions_code_->text());
- data.insert("questions-telephone", cLE_questions_tel_->text());
-
- data.insert("questions-date", cLE_questions_cutoff_date_->text());
 
  fw.form_to_latex(src, gen, data);
 
