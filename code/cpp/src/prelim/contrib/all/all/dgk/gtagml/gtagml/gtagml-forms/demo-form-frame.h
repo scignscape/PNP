@@ -57,12 +57,23 @@ class Demo_Form_Frame : public QFrame
  Q_OBJECT
 
  enum class Field_Keys : u2 {
-   N_A, Classification, Acquisition_Plan_Number,
+   N_A, Author, Affiliation, Title, Classification, Acquisition_Plan_Number,
    REV, Program_Title, ACAT,
    Acquisition_Program_Manager, CODE,
    Contact_Name, Contact_Code, Contact_Tel,
    Questions_Cutoff_Date
  };
+
+ QGroupBox* author_title_group_box_;
+ QFormLayout* author_title_layout_;
+
+ QHBoxLayout* author_layout_;
+ QLineEdit* cLE_author_;
+ QLineEdit* cLE_affiliation_;
+ QLabel* cLB_author_;
+ QLabel* cLB_affiliation_;
+
+ QLineEdit* cLE_title_;
 
  QLineEdit* cLE_classification_;
  QLineEdit* cLE_acquisition_plan_number_;

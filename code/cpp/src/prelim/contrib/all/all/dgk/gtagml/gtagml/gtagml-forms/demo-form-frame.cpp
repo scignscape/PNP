@@ -45,6 +45,27 @@
 Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* parent)
   :  QFrame(parent), text_edit_frame_(text_edit_frame)
 {
+ author_title_group_box_ = new QGroupBox("Document", this);
+ author_title_layout_ = new QFormLayout(author_title_group_box_);
+
+ cLE_author_ = new QLineEdit(this);
+ cLE_title_ = new QLineEdit(this);
+ cLE_affiliation_ = new QLineEdit(this);
+
+ cLB_author_ = new QLabel("Author", this);
+ cLB_affiliation_ = new QLabel("Affiliation", this);
+
+ author_layout_ = new QHBoxLayout;
+ author_layout_->addWidget(cLB_author_);
+ author_layout_->addWidget(cLE_author_);
+ author_layout_->addWidget(cLB_affiliation_);
+ author_layout_->addWidget(cLE_affiliation_);
+
+ author_title_layout_->addRow(author_layout_);
+ author_title_layout_->addRow("Title", cLE_title_);
+
+
+
  cLE_classification_ = new QLineEdit(this);
  cLE_classification_->setPlaceholderText("Defaults to \"FOR OFFICIAL USE ONLY\"");
 
@@ -82,7 +103,7 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* pare
  cLBL_questions_cutoff_date_ = new QLabel("Questions Cutoff Date", this);
 
 
- main_form_layout_ = new QVBoxLayout;
+// main_form_layout_ = new QVBoxLayout;
 
  //cLBL_acquisition_plan_number_;
  //cLBL_rev_;
@@ -149,6 +170,9 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QWidget* pare
  main_layout_ = new QVBoxLayout;
 
  main_form_layout_ = new QVBoxLayout;
+
+
+ main_form_layout_->addWidget(author_title_group_box_);
  main_form_layout_->addWidget(top_form_group_box_);
  main_form_layout_->addWidget(questions_group_box_);
 
@@ -200,20 +224,24 @@ void Demo_Form_Frame::handle_save()
 // QLineEdit* cLE_questions_tel_;
 // QLineEdit* cLE_questions_cutoff_date_;
 
+ data.insert("Author", cLE_author_->text());
+ data.insert("affiliation", cLE_affiliation_->text());
+ data.insert("Title", cLE_title_->text());
+
  data.insert("Classification", cLE_classification_->text());
- data.insert("Acquisition_Plan_Number", cLE_acquisition_plan_number_->text());
+ data.insert("APN", cLE_acquisition_plan_number_->text());
  data.insert("REV", cLE_rev_->text());
- data.insert("Program_Title", cLE_program_title_->text());
+ data.insert("program-title", cLE_program_title_->text());
 
  data.insert("ACAT", cLE_acat_->text());
  data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
  data.insert("CODE", cLE_code_->text());
 
- data.insert("Contact_Name", cLE_questions_name_->text());
- data.insert("Contact_Code", cLE_questions_code_->text());
- data.insert("Contact_Tel", cLE_questions_tel_->text());
+ data.insert("questions-name", cLE_questions_name_->text());
+ data.insert("questions-code", cLE_questions_code_->text());
+ data.insert("questions-telephone", cLE_questions_tel_->text());
 
- data.insert("Questions_Cutoff_Date", cLE_questions_cutoff_date_->text());
+ data.insert("questions-date", cLE_questions_cutoff_date_->text());
 
  fw.form_to_latex(src, gen, data);
 
@@ -226,6 +254,7 @@ void Demo_Form_Frame::create_fields_folder(QString path)
  QDir qd(path);
 
  static QStringList subfolders {
+  "0.1",
   "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
   "2.1", "2.1.1", "2.1.2", "2.1.3", "2.2", "2.2.1", "2.2.2",
   "3.1", "3.2", "3.3",

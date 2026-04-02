@@ -15,6 +15,8 @@
 
 #include "qh-web-view-dialog.h"
 
+#include "MRichTextEditor/text-edit-frame.h"
+
 USING_KANS(RdSC)
 
 NavigationRequestInterceptor::NavigationRequestInterceptor(QWebEnginePage*
@@ -232,13 +234,24 @@ void QH_Web_Engine_Page::reset_last_youtube_link(const QUrl &url)
 bool QH_Web_Engine_Page::acceptNavigationRequest(const QUrl &url,
                                                  NavigationType type, bool isMainFrame)
 {
+ QString url_string = url.toString();
+
+ if(url_string.startsWith("file://"))
+ {
+  if(_midcut("/@", url_string))
+  {
+   dialog_->text_edit_frame()->nav_to(url_string);
+   return false;
+  }
+ }
+
+
  QString host = url.host();
  if(host == "www.youtube.com")
   reset_last_youtube_link(url);
 
  //?
 
- QString url_string = url.toString();
  QString path = url.path();
 
  qDebug()  << "!url" << url_string;

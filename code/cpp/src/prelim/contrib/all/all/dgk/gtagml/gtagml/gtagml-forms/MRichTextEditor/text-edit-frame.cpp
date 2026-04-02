@@ -51,18 +51,19 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
  btn_forward_ = new QPushButton("->", this);
 
  subfolder_names_ = QStringList {
-  "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
-  "2.1", "2.1.1", "2.1.2", "2.1.3", "2.2", "2.2.1", "2.2.2",
-  "3.1", "3.2", "3.3",
-  "4.1", "4.2", "4.3", "4.4",
-  "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7",
-    "5.8", "5.9", "5.10", "5.11", "5.12", "5.13",
-  "6.1", "6.2", "6.3", "6.4",
-    "6.4.1", "6.4.2", "6.4.3", "6.4.4", "6.4.5",
-    "6.4.6", "6.4.7", "6.4.8", "6.4.9",
-  "7.1", "7.2", "7.3", "7.4", "7.5", "7.6",
-  "8.1", "8.2", "8.3", "8.4", "8.5", "8.6",
-    "8.7", "8.8", "8.9", "8.10", "8.11",
+   "0.1",
+   "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
+   "2.1", "2.1.1", "2.1.2", "2.1.3", "2.2", "2.2.1", "2.2.2",
+   "3.1", "3.2", "3.3",
+   "4.1", "4.2", "4.3", "4.4",
+   "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7",
+     "5.8", "5.9", "5.10", "5.11", "5.12", "5.13",
+   "6.1", "6.2", "6.3", "6.4",
+     "6.4.1", "6.4.2", "6.4.3", "6.4.4", "6.4.5",
+     "6.4.6", "6.4.7", "6.4.8", "6.4.9",
+   "7.1", "7.2", "7.3", "7.4", "7.5", "7.6",
+   "8.1", "8.2", "8.3", "8.4", "8.5", "8.6",
+     "8.7", "8.8", "8.9", "8.10", "8.11",
  };
 
  for(QString sf : subfolder_names_)
@@ -136,6 +137,9 @@ void Text_Edit_Frame::init_descriptions(QStringList arefs)
  //subfolder_descriptions_.insert();
 
  std::copy(arefs.begin(), arefs.end(), subfolder_descriptions_.begin());
+
+// subfolder_descriptions_.prepend("Description of Program");
+
  reset_subfolder_label();
  reset_text_view();
 }
@@ -164,6 +168,11 @@ void Text_Edit_Frame::subfolder_nav(int index)
  btn_forward_->setEnabled(current_file_counter_ == max_file_count_);
  reset_subfolder_label();
  reset_text_view();
+}
+
+void Text_Edit_Frame::nav_to(QString target)
+{
+ qDebug() << "T: " << target;
 }
 
 

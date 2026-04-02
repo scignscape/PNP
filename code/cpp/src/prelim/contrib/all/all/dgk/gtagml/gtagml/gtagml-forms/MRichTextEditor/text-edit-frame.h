@@ -88,6 +88,8 @@ public:
 
  void init_descriptions(QStringList arefs);
 
+ void nav_to(QString target);
+
 
 
 

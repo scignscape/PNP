@@ -416,6 +416,7 @@ public:
  void leave_justline(QString pretext, QString follow);
 
  void end_document();
+ void end_inner_document();
 
  void emph_symbolic(QString text);
  void emph_acronym(QString text);

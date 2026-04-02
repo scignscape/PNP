@@ -677,9 +677,24 @@ void GTagML_Graph_Build::prepare_bibliography()
 // xml_writer_.writeEndElement();
 }
 
-void GTagML_Graph_Build::end_document()
+
+void GTagML_Graph_Build::end_inner_document()
 {
  reset_primary();
+
+ latex_stream_ << "\n%END-TEMPLATE%\n";
+
+}
+
+void GTagML_Graph_Build::end_document()
+{
+ // //  for now
+ end_inner_document();
+
+ return;
+
+ reset_primary();
+
 
 //?? check_close_paragraph();
 

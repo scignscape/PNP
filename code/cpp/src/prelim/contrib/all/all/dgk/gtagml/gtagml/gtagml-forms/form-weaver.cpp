@@ -54,7 +54,7 @@ void Form_Weaver::form_to_latex(QString inpath, QString outpath, QMap<QString, Q
     break;
  }
 
-// save_file(outpath, text);
+ save_file(outpath, text);
 
 }
 
