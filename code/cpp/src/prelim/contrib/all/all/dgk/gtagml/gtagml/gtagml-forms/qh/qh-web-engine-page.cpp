@@ -240,10 +240,14 @@ bool QH_Web_Engine_Page::acceptNavigationRequest(const QUrl &url,
  {
   if(_midcut("/@", url_string))
   {
-   QWidget* target = dialog_->text_edit_frame()->nav_to(url_string);
-   if(target)
+   u2 target_index = dialog_->text_edit_frame()->nav_to(url_string);
+   if(target_index > 1)
    {
-    dialog_->focus_tab(target);
+    dialog_->focus_tab(dialog_->text_edit_frame());
+   }
+   else if(target_index == 1)
+   {
+    dialog_->focus_tab((QFrame*)dialog_->demo_form_frame());
    }
    return false;
   }

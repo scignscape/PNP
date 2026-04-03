@@ -46,6 +46,29 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
   QString form_file_path, QWidget* parent)
   :  QFrame(parent), text_edit_frame_(text_edit_frame), form_file_path_(form_file_path)
 {
+ btn_select_project_folder_ = new QPushButton("Select", this);
+
+ connect(btn_select_project_folder_, &QPushButton::clicked, this, &Demo_Form_Frame::handle_select_project_folder);
+
+ btn_select_project_folder_->setStyleSheet(basic_button_style_sheet_());
+
+
+ project_group_box_ = new QGroupBox("Project", this);
+ project_layout_ = new QHBoxLayout(project_group_box_);
+
+ cLE_project_name_ = new QLineEdit(this);
+ cLE_project_folder_ = new QLineEdit(this);
+
+ cLB_project_name_ = new QLabel("Name", this);
+ cLB_project_folder_ = new QLabel("Folder", this);
+
+ project_layout_->addWidget(cLB_project_name_);
+ project_layout_->addWidget(cLE_project_name_);
+ project_layout_->addWidget(cLB_project_folder_);
+ project_layout_->addWidget(cLE_project_folder_);
+ project_layout_->addWidget(btn_select_project_folder_);
+
+
  author_title_group_box_ = new QGroupBox("Document", this);
  author_title_layout_ = new QFormLayout(author_title_group_box_);
 
@@ -172,7 +195,7 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
 
  main_form_layout_ = new QVBoxLayout;
 
-
+ main_form_layout_->addWidget(project_group_box_);
  main_form_layout_->addWidget(author_title_group_box_);
  main_form_layout_->addWidget(top_form_group_box_);
  main_form_layout_->addWidget(questions_group_box_);
@@ -394,6 +417,10 @@ void Demo_Form_Frame::handle_save()
 }
 
 
+void Demo_Form_Frame::handle_select_project_folder()
+{
+
+}
 
 void Demo_Form_Frame::create_fields_folder(QString path)
 {

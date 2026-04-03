@@ -170,20 +170,20 @@ void Text_Edit_Frame::subfolder_nav(int index)
  reset_text_view();
 }
 
-QWidget* Text_Edit_Frame::nav_to(QString target)
+u2 Text_Edit_Frame::nav_to(QString target)
 {
- u2 ix = subfolder_descriptions_.indexOf(target);
+ s2 ix = subfolder_descriptions_.indexOf(target);
 
  if(ix == -1)
  {
   qDebug() << "Unknown link/subfolder " << target;
-  return nullptr;
  }
-
- current_file_counter_ = ix + 1;
- reset_subfolder_label();
-
- return this;
+ else
+ {
+  current_file_counter_ = ix + 1;
+  reset_subfolder_label();
+ }
+ return ix + 1;
 }
 
 

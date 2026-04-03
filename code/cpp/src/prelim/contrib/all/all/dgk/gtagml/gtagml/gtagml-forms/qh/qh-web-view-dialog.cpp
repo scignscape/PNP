@@ -39,6 +39,8 @@
 #include "MRichTextEditor/mrichtextedit.h"
 #include "MRichTextEditor/text-edit-frame.h"
 
+#include "demo-form-frame.h"
+
 
 USING_KANS(RdSC)
 
@@ -357,7 +359,8 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString ref_folder, QString initial_url, 
 
  text_edit_frame_ = new Text_Edit_Frame(ref_folder_, this);
 
- demo_form_frame_ = new Demo_Form_Frame(text_edit_frame_, ref_folder_ + "/_form-data.txt", this);
+//? demo_form_frame_ = new Demo_Form_Frame(text_edit_frame_, ref_folder_ + "/_form-data.txt", this);
+ demo_form_frame_ = new Demo_Form_Frame(text_edit_frame_, ref_folder_ + "/projects", this);
 
  qtw_->addTab(demo_form_frame_, "Form");
 
@@ -419,7 +422,7 @@ QH_Web_View_Dialog::QH_Web_View_Dialog(QString ref_folder, QString initial_url, 
 
 }
 
-void QH_Web_View_Dialog::focus_tab(QWidget* which)
+void QH_Web_View_Dialog::focus_tab(QFrame* which)
 {
  qtw_->setCurrentWidget(which);
 }

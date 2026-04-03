@@ -64,6 +64,14 @@ class Demo_Form_Frame : public QFrame
    Questions_Cutoff_Date
  };
 
+ QGroupBox* project_group_box_;
+ QHBoxLayout* project_layout_;
+ QLineEdit* cLE_project_name_;
+ QLineEdit* cLE_project_folder_;
+ QLabel* cLB_project_name_;
+ QLabel* cLB_project_folder_;
+ QPushButton* btn_select_project_folder_;
+
  QGroupBox* author_title_group_box_;
  QFormLayout* author_title_layout_;
 
@@ -124,7 +132,7 @@ public:
 
  void coalesce_form_data(QMap<QString, QString>& data);
 
-
+ void handle_select_project_folder();
  void handle_save();
 
  void reset_form(QMap<QString, QString> data);

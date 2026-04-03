@@ -155,6 +155,7 @@ public:
  ACCESSORS(MACRO_PASTE(std::function<void(QH_Web_View_Dialog*, QString, const QJsonValue&)>) ,js_callback)
 
  ACCESSORS(Text_Edit_Frame* ,text_edit_frame)
+ ACCESSORS(Demo_Form_Frame* ,demo_form_frame)
 
  QPoint map_point_for_context_menu(const QPoint& qp)
  {
@@ -198,7 +199,7 @@ public:
  void get_internal_arefs(QStringList& result);
  void load_internal_arefs();
 
- void focus_tab(QWidget* which);
+ void focus_tab(QFrame* which);
 
 Q_SIGNALS:
 

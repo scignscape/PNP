@@ -52,7 +52,7 @@ USING_KANS(RdSC)
 
 int main(int argc, char *argv[])
 {
-// Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_FOLDER);
+ Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_TEMPLATE_FOLDER);
 
 // Form_Weaver fw(DEFAULT_FIELDS_FOLDER);
 // fw.default_folders();
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 // fw.weave_to_latex("1_2");
 
-// return 0;
+ return 0;
 
  QApplication qapp(argc, argv);
 
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
    //"https://www.google.com/maps/place/607+Ashburton+St,+Baltimore,+MD+21216/@39.2950837,-76.6612176,16z/data=!3m1!4b1!4m6!3m5!1s0x89c81b5f0923b6af:0x91f4d91b76d85c37!8m2!3d39.2950837!4d-76.6612176!16s%2Fg%2F11cpm1ftjm?entry=ttu&g_ep=EgoyMDI1MDQzMC4xIKXMDSoASAFQAw%3D%3D";
 
 
- QH_Web_View_Dialog dlg(DEFAULT_FIELDS_SRC_FOLDER, url);
+ QH_Web_View_Dialog dlg(DEFAULT_GTAGML_FORMS_FOLDER, url);
 
- dlg.text_edit_frame()->set_document_title("ScignTorq");
- dlg.text_edit_frame()->set_document_folder(DEFAULT_LATEX_FOLDER);
+// dlg.text_edit_frame()->set_document_title("ScignTorq");
+// dlg.text_edit_frame()->set_document_folder(DEFAULT_LATEX_FOLDER);
 
  dlg.show();
 

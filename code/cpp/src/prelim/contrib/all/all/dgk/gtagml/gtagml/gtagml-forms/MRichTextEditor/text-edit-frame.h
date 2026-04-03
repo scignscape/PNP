@@ -88,7 +88,7 @@ public:
 
  void init_descriptions(QStringList arefs);
 
- QWidget* nav_to(QString target);
+ u2 nav_to(QString target);
 
 
 
