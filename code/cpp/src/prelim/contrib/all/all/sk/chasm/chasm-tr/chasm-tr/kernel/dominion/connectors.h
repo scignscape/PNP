@@ -1,0 +1,19 @@
+
+//           Copyright Nathaniel Christen 2026.
+//  Distributed under the Boost Software License, Version 1.0.
+//     (See accompanying file LICENSE_1_0.txt or copy at
+//           http://www.boost.org/LICENSE_1_0.txt)
+
+
+DOMINION_CONNECTOR(N_A, "No Connection")
+DOMINION_CONNECTOR(Generic, "generic")
+DOMINION_CONNECTOR(Root_Sequence, "root-sequence")
+
+
+DOMINION_CONNECTOR(Symbol_to_Type_Object, "symbol-to-type-object")
+
+DOMINION_CONNECTOR(Infix_Left_Operand, "infix-left-operand")
+DOMINION_CONNECTOR(Infix_Right_Operand, "infix-right-operand")
+
+DOMINION_CONNECTOR(Infix_From_Left_Operand, "infix-from-left-operand")
+DOMINION_CONNECTOR(Infix_From_Right_Operand, "infix-from-right-operand")
