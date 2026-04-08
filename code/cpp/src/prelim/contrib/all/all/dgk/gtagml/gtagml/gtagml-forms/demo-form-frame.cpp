@@ -258,6 +258,11 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
 
  load_initial_form_data();
 
+ if(!project_form_file_path_.isEmpty())
+ {
+  load_project_form_data();
+ }
+
 }
 
 void Demo_Form_Frame::handle_reset()
@@ -352,6 +357,8 @@ void Demo_Form_Frame::coalesce_project_form_data(QMap<QString, QString>& data)
 
  data.insert("questions-date", cLE_questions_cutoff_date_->text());
 
+ data.insert("creation-date", init_project_date_);
+
 }
 
 void Demo_Form_Frame::save_initial_form_data(QMap<QString, QString>& data)
@@ -416,6 +423,12 @@ void Demo_Form_Frame::load_initial_form_data()
 
  if(!data.isEmpty())
    load_initial_form_data(data);
+
+ if(!project_folder_value_.isEmpty())
+ {
+  project_form_file_path_ = project_folder_value_ + "/form-data.txt";
+ }
+
 }
 
 void Demo_Form_Frame::load_initial_form_data(QMap<QString, QString>& data)
@@ -461,6 +474,10 @@ void Demo_Form_Frame::load_project_form_data(QMap<QString, QString>& data)
 
  cLE_classification_->setText(data.value("Classification"));
 
+ init_project_date_ = data.value("creation-date");
+
+ cLE_project_created_->setText(init_project_date_);
+ cLE_project_created_->setCursorPosition(0);
 
 }
 
@@ -515,7 +532,9 @@ void copyAndReplaceFolderContents(const QString& fromDir, const QString& toDir, 
 
 void Demo_Form_Frame::init_project()
 {
- QString path = base_projects_folder_ + "/" + current_project_name_;
+ QString path1 = base_projects_folder_ + "/" + current_project_name_;
+
+ QString path = cLE_project_folder_->text();
  QDir qdir(path);
 
  if(!qdir.exists("."))
@@ -527,6 +546,7 @@ void Demo_Form_Frame::init_project()
  copyAndReplaceFolderContents(tsrc, path);
 
  init_project_date_ = QDateTime::currentDateTime().toString();
+ project_form_file_path_ = path + "/form-data.txt";
 
 // qDebug() << "tsrc = " << tsrc;
 // qDebug() << "tdest = " << tdest;
@@ -557,15 +577,16 @@ void Demo_Form_Frame::handle_save()
 
  save_initial_form_data();
 
- return;
+// return;
 
- QString dt = text_edit_frame_->document_title();
- QString df = text_edit_frame_->document_folder();
+// QString dt = text_edit_frame_->document_title();
+// QString df = text_edit_frame_->document_folder();
 
- QString src = df + "/" + dt + ".tex";
- QString gen = df + "/" + dt + ".gen.tex";
+// QString src = df + "/" + dt + ".tex";
+// QString gen = df + "/" + dt + ".gen.tex";
 
- Form_Weaver fw(df);
+// Form_Weaver fw(df);
+
 
  QMap<QString, QString> project_data;
 
@@ -573,26 +594,7 @@ void Demo_Form_Frame::handle_save()
 
  save_project_form_data(project_data);
 
-// N_A, Classification, Acquisition_Plan_Number,
-// REV, Program_Title, ACAT,
-// Acquisition_Program_Manager, CODE,
-// Contact_Name, Contact_Code, Contact_Tel,
-// Questions_Cutoff_Date
-
-// QLineEdit* cLE_classification_;
-// QLineEdit* cLE_acquisition_plan_number_;
-// QLineEdit* cLE_rev_;
-// QLineEdit* cLE_program_title_;
-// QLineEdit* cLE_acat_;
-// QLineEdit* cLE_program_manager_;
-// QLineEdit* cLE_code_;
-// QLineEdit* cLE_questions_name_;
-// QLineEdit* cLE_questions_code_;
-// QLineEdit* cLE_questions_tel_;
-// QLineEdit* cLE_questions_cutoff_date_;
-
-
- fw.form_to_latex(src, gen, project_data);
+// fw.form_to_latex(src, gen, project_data);
 
 }
 
