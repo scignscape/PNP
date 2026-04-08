@@ -40,7 +40,7 @@ DEFINES += DEFAULT_SDI_FOLDER=\\\"$$ROOT_DIR/dev/consoles/gtagml/sdi\\\"
 DEFINES += DEFAULT_HTML_FOLDER=\\\"$$ROOT_DIR/html\\\"
 
 
-DEFINES += DEFAULT_GTAGML_FORMS_FOLDER=\\\"$$ROOT_DIR/../GTagML-Forms\\\"
+DEFINES += DEFAULT_GTAGML_FORMS_FOLDER=\\\"$$ROOT_DIR/../GTagML-forms\\\"
 
 DEFINES += DEFAULT_FIELDS_TEMPLATE_FOLDER=\\\"$$ROOT_DIR/../GTagML-forms/templates/latex/fields\\\"
 DEFINES += DEFAULT_FIELDS_SRC_TEMPLATE_FOLDER=\\\"$$ROOT_DIR/../GTagML-forms/templates/latex/fields/src\\\"

@@ -15,11 +15,13 @@ USING_KANS(TextIO)
 
 Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
   :  QFrame(parent), view_mode_(View_Modes::GTagML),
-     base_folder_(base_folder), current_file_counter_(1)
+     base_folder_(base_folder), current_file_counter_(1),
+     init_descriptions_length_(0)
 {
- templates_folder_ = base_folder_ + "/../templates";
- gen_folder_ = base_folder_ + "/../gen";
+ templates_folder_ = base_folder_ + "/templates";
 
+ project_templates_folder_ = base_folder_ + "/projects/%%/templates";
+ project_gen_folder_ = base_folder_ + "/projects/%%/gen";
 
  rte_ = new MRichTextEdit(this);
 
@@ -70,8 +72,8 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
  {
   QString sfo = sf;
   sf.replace(".", "_");
-  subfolder_paths_.push_back(base_folder_ + "/" + sf + "/" + sf + ".src.gt");
-  gen_paths_.push_back(gen_folder_ + "/" + sf + "/" + sf + ".gen.tex");
+  subfolder_paths_.push_back(base_folder_ + "/projects/%%/" + sf + "/" + sf + ".src.gt");
+  gen_paths_.push_back(project_gen_folder_ + "/" + sf + "/" + sf + ".gen.tex");
   subfolder_briefs_.push_back("# " + sfo);
   subfolder_descriptions_.push_back("(contents of file %1)"_qt.arg(sf + ".src.gt"));
  }
@@ -130,6 +132,11 @@ Text_Edit_Frame::Text_Edit_Frame(QString base_folder, QWidget* parent)
 
 }
 
+void Text_Edit_Frame::update_project_name(QString project_name)
+{
+ project_name_ = project_name;
+}
+
 
 void Text_Edit_Frame::init_descriptions(QStringList arefs)
 {
@@ -142,11 +149,34 @@ void Text_Edit_Frame::init_descriptions(QStringList arefs)
 
  reset_subfolder_label();
  reset_text_view();
+
+ init_descriptions_length_ = arefs.size();
+}
+
+void Text_Edit_Frame::insert_project_name(QString& path)
+{
+ path.replace("%%", project_name_);
+}
+
+s2 Text_Edit_Frame::check_project_name(QString& path)
+{
+ if(project_name_.isEmpty())
+ {
+  if(init_descriptions_length_)
+    Q_EMIT empty_project_name();
+  return 0;
+ }
+ insert_project_name(path);
+ return project_name_.size();
 }
 
 void Text_Edit_Frame::reset_text_view()
 {
  QString path = subfolder_paths_.value(current_file_counter_ - 1);
+
+ if(!check_project_name(path))
+   return;
+
  QString text = load_file(path);
 
  rte_->setText(text);
@@ -189,13 +219,18 @@ u2 Text_Edit_Frame::nav_to(QString target)
 
 void Text_Edit_Frame::reset_subfolder_label()
 {
+ QString p1 = subfolder_paths_.value(current_file_counter_ - 1);
+ if(!check_project_name(p1))
+   return;
+
+
  QString n = subfolder_names_.value(current_file_counter_ - 1);
  current_subfolder_label_->setText(n);
 
  QString d = subfolder_descriptions_.value(current_file_counter_ - 1);
  description_label_->setText(d);
 
- QString p1 = subfolder_paths_.value(current_file_counter_ - 1);
+
  QString p2 = subfolder_briefs_.value(current_file_counter_ - 1);
 
  path_label_->setText("(%1) %2"_qt.arg(p1).arg(p2));
@@ -273,7 +308,10 @@ void Text_Edit_Frame::handle_save()
  QString path = subfolder_paths_.value(current_file_counter_ - 1);
  QString gpath = gen_paths_.value(current_file_counter_ - 1);
 
+ if(!check_project_name(path))
+   return;
 
+ insert_project_name(gpath);
 
  QFileInfo qfi(path);
 

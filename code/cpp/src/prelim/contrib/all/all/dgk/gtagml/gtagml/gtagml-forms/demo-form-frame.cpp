@@ -23,6 +23,8 @@
 #include <QGroupBox>
 #include <QDebug>
 
+#include <QDateTime>
+
 #include <QPlainTextEdit>
 #include <QTextStream>
 
@@ -39,13 +41,20 @@
 #include <QGraphicsTextItem>
 #include <QListWidget>
 
+#include <QDirIterator>
+
 #include "styles.h"
 
 
 Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
-  QString form_file_path, QWidget* parent)
-  :  QFrame(parent), text_edit_frame_(text_edit_frame), form_file_path_(form_file_path)
+  QString initial_form_file_path, QString base_projects_folder, QWidget* parent)
+  :  QFrame(parent), text_edit_frame_(text_edit_frame),
+     base_projects_folder_(base_projects_folder),
+     initial_form_file_path_(initial_form_file_path)
 {
+ connect(text_edit_frame, &Text_Edit_Frame::empty_project_name, this,
+   &Demo_Form_Frame::handle_empty_project_name);
+
  btn_select_project_folder_ = new QPushButton("Select", this);
 
  connect(btn_select_project_folder_, &QPushButton::clicked, this, &Demo_Form_Frame::handle_select_project_folder);
@@ -58,12 +67,36 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
 
  cLE_project_name_ = new QLineEdit(this);
  cLE_project_folder_ = new QLineEdit(this);
+ cLE_project_created_ = new QLineEdit(this);
+
+// cLE_project_created_->set
+
+ connect(cLE_project_name_, &QLineEdit::textEdited,
+   [this](const QString& text)
+ {
+  current_project_name_ = text;
+  text_edit_frame_->update_project_name(text);
+  if(project_folder_edited_value_.isEmpty())
+  {
+   project_folder_value_ = base_projects_folder_ + "/" + text;
+   cLE_project_folder_->setText(project_folder_value_);
+  }
+ });
 
  cLB_project_name_ = new QLabel("Name", this);
  cLB_project_folder_ = new QLabel("Folder", this);
+ cLB_project_created_ = new QLabel("Created", this);
+ cLB_project_created_->setMaximumWidth(40);
+ cLB_project_created_->setMinimumWidth(40);
+
+ cLE_project_created_->setMaximumWidth(80);
+ cLE_project_created_->setMinimumWidth(80);
 
  project_layout_->addWidget(cLB_project_name_);
  project_layout_->addWidget(cLE_project_name_);
+ project_layout_->addWidget(cLB_project_created_);
+ project_layout_->addWidget(cLE_project_created_);
+
  project_layout_->addWidget(cLB_project_folder_);
  project_layout_->addWidget(cLE_project_folder_);
  project_layout_->addWidget(btn_select_project_folder_);
@@ -223,18 +256,18 @@ Demo_Form_Frame::Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
 
  setLayout(main_layout_);
 
- load_form_data();
+ load_initial_form_data();
 
 }
 
 void Demo_Form_Frame::handle_reset()
 {
  QMap<QString, QString> data;
- coalesce_form_data(data);
+ coalesce_project_form_data(data);
 
  if(data.isEmpty())
  {
-  save_form_data();
+  save_project_form_data();
   return;
  }
 
@@ -286,12 +319,128 @@ void Demo_Form_Frame::reset_form(QMap<QString, QString> data)
 
  data.insert("questions-date", "");
 
- save_form_data(data);
+ save_project_form_data(data);
 
 }
 
 
-void Demo_Form_Frame::load_form_data(QMap<QString, QString>& data)
+void Demo_Form_Frame::coalesce_initial_form_data(QMap<QString, QString>& data)
+{
+ data.insert("project-name", cLE_project_name_->text());
+ data.insert("project-folder", cLE_project_folder_->text());
+ data.insert("creation-date", init_project_date_);
+}
+
+void Demo_Form_Frame::coalesce_project_form_data(QMap<QString, QString>& data)
+{
+ data.insert("Author", cLE_author_->text());
+ data.insert("affiliation", cLE_affiliation_->text());
+ data.insert("Title", cLE_title_->text());
+
+ data.insert("Classification", cLE_classification_->text());
+ data.insert("APN", cLE_acquisition_plan_number_->text());
+ data.insert("REV", cLE_rev_->text());
+ data.insert("program-title", cLE_program_title_->text());
+
+ data.insert("ACAT", cLE_acat_->text());
+ data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
+ data.insert("CODE", cLE_code_->text());
+
+ data.insert("questions-name", cLE_questions_name_->text());
+ data.insert("questions-code", cLE_questions_code_->text());
+ data.insert("questions-telephone", cLE_questions_tel_->text());
+
+ data.insert("questions-date", cLE_questions_cutoff_date_->text());
+
+}
+
+void Demo_Form_Frame::save_initial_form_data(QMap<QString, QString>& data)
+{
+ QFile outfile(initial_form_file_path_);
+
+ if(outfile.open(QIODevice::WriteOnly))
+ {
+  QDataStream qds(&outfile);
+  qds << data;
+  outfile.close();
+ }
+}
+
+void Demo_Form_Frame::save_initial_form_data()
+{
+ QMap<QString, QString> data;
+ coalesce_initial_form_data(data);
+ save_initial_form_data(data);
+}
+
+void Demo_Form_Frame::save_project_form_data(QMap<QString, QString>& data)
+{
+ QFile outfile(project_form_file_path_);
+
+ if(outfile.open(QIODevice::WriteOnly))
+ {
+  QDataStream qds(&outfile);
+  qds << data;
+  outfile.close();
+ }
+}
+
+void Demo_Form_Frame::save_project_form_data()
+{
+ QMap<QString, QString> data;
+ coalesce_project_form_data(data);
+ save_project_form_data(data);
+}
+
+
+
+void Demo_Form_Frame::load_form_data(QString file_path, QMap<QString, QString>& data)
+{
+ QFile infile(file_path);
+
+ if(infile.open(QIODevice::ReadOnly))
+ {
+  QDataStream qds(&infile);
+  qds >> data;
+  infile.close();
+ }
+
+// if(!data.isEmpty())
+//   load_form_data(data);
+}
+
+void Demo_Form_Frame::load_initial_form_data()
+{
+ QMap<QString, QString> data;
+ load_form_data(initial_form_file_path_, data);
+
+ if(!data.isEmpty())
+   load_initial_form_data(data);
+}
+
+void Demo_Form_Frame::load_initial_form_data(QMap<QString, QString>& data)
+{
+ project_folder_value_ = data.value("project-folder");
+ cLE_project_folder_->setText(project_folder_value_);
+
+ cLE_project_name_->setText(data.value("project-name"));
+
+ init_project_date_ = data.value("creation-date");
+
+ cLE_project_created_->setText(init_project_date_);
+ cLE_project_created_->setCursorPosition(0);
+}
+
+void Demo_Form_Frame::load_project_form_data()
+{
+ QMap<QString, QString> data;
+ load_form_data(project_form_file_path_, data);
+ if(!data.isEmpty())
+   load_project_form_data(data);
+}
+
+
+void Demo_Form_Frame::load_project_form_data(QMap<QString, QString>& data)
 {
  cLE_author_->setText(data.value("Author"));
  cLE_author_->setText(data.value("affiliation"));
@@ -316,69 +465,100 @@ void Demo_Form_Frame::load_form_data(QMap<QString, QString>& data)
 }
 
 
-void Demo_Form_Frame::coalesce_form_data(QMap<QString, QString>& data)
+//void Demo_Form_Frame::load_project_form_data(QMap<QString, QString>& data)
+//{
+
+//}
+
+void Demo_Form_Frame::handle_empty_project_name()
 {
- data.insert("Author", cLE_author_->text());
- data.insert("affiliation", cLE_affiliation_->text());
- data.insert("Title", cLE_title_->text());
-
- data.insert("Classification", cLE_classification_->text());
- data.insert("APN", cLE_acquisition_plan_number_->text());
- data.insert("REV", cLE_rev_->text());
- data.insert("program-title", cLE_program_title_->text());
-
- data.insert("ACAT", cLE_acat_->text());
- data.insert("Acquisition_Program_Manager", cLE_program_manager_->text());
- data.insert("CODE", cLE_code_->text());
-
- data.insert("questions-name", cLE_questions_name_->text());
- data.insert("questions-code", cLE_questions_code_->text());
- data.insert("questions-telephone", cLE_questions_tel_->text());
-
- data.insert("questions-date", cLE_questions_cutoff_date_->text());
-
+ QMessageBox::warning(this, "Empty Project Name",
+   "You need to set a project name at the top of the form");
 }
 
-void Demo_Form_Frame::save_form_data(QMap<QString, QString>& data)
-{
- QFile outfile(form_file_path_);
 
- if(outfile.open(QIODevice::WriteOnly))
+void copyAndReplaceFolderContents(const QString& fromDir, const QString& toDir, bool copyAndRemove = false)
+{
+ QDirIterator it(fromDir, QDirIterator::Subdirectories);
+ QDir dir(fromDir);
+ const int absSourcePathLength = dir.absoluteFilePath(fromDir).length();
+
+ while (it.hasNext())
  {
-  QDataStream qds(&outfile);
-  qds << data;
-  outfile.close();
- }
-}
+  it.next();
+  const auto fileInfo = it.fileInfo();
+  if(!fileInfo.isHidden())
+  { //filters dot and dotdot
+   const QString subPathStructure = fileInfo.absoluteFilePath().mid(absSourcePathLength);
+   const QString constructedAbsolutePath = toDir + subPathStructure;
 
-void Demo_Form_Frame::save_form_data()
-{
- QMap<QString, QString> data;
- coalesce_form_data(data);
- save_form_data(data);
-}
+   if(fileInfo.isDir())
+   {
+    //Create directory in target folder
+    dir.mkpath(constructedAbsolutePath);
+   }
+   else if(fileInfo.isFile())
+   {
+    //Copy File to target directory
 
-void Demo_Form_Frame::load_form_data()
-{
- QMap<QString, QString> data;
-
- QFile infile(form_file_path_);
-
- if(infile.open(QIODevice::ReadOnly))
- {
-  QDataStream qds(&infile);
-  qds >> data;
-  infile.close();
+    //Remove file at target location, if it exists, or QFile::copy will fail
+    QFile::remove(constructedAbsolutePath);
+    QFile::copy(fileInfo.absoluteFilePath(), constructedAbsolutePath);
+   }
+  }
  }
 
- if(!data.isEmpty())
-   load_form_data(data);
+ if(copyAndRemove)
+  dir.removeRecursively();
+}
+
+
+void Demo_Form_Frame::init_project()
+{
+ QString path = base_projects_folder_ + "/" + current_project_name_;
+ QDir qdir(path);
+
+ if(!qdir.exists("."))
+   qdir.mkpath(".");
+
+ QString tsrc = text_edit_frame_->templates_folder();
+// QString tdest = text_edit_frame_->current_project_templates_folder();
+
+ copyAndReplaceFolderContents(tsrc, path);
+
+ init_project_date_ = QDateTime::currentDateTime().toString();
+
+// qDebug() << "tsrc = " << tsrc;
+// qDebug() << "tdest = " << tdest;
+
 
 }
 
+//void Demo_Form_Frame::save_initial_form_data()
+//{
+// QMap<QString, QString> data;
+// coalesce_initial_form_data(data);
+// save_initial_form_data(data);
+//}
 
 void Demo_Form_Frame::handle_save()
 {
+ if(current_project_name_.isEmpty())
+ {
+  handle_empty_project_name();
+  return;
+ }
+
+ if(init_project_date_.isEmpty())
+ {
+  init_project();
+ }
+
+
+ save_initial_form_data();
+
+ return;
+
  QString dt = text_edit_frame_->document_title();
  QString df = text_edit_frame_->document_folder();
 
@@ -387,11 +567,11 @@ void Demo_Form_Frame::handle_save()
 
  Form_Weaver fw(df);
 
- QMap<QString, QString> data;
+ QMap<QString, QString> project_data;
 
- coalesce_form_data(data);
+ coalesce_project_form_data(project_data);
 
- save_form_data(data);
+ save_project_form_data(project_data);
 
 // N_A, Classification, Acquisition_Plan_Number,
 // REV, Program_Title, ACAT,
@@ -412,7 +592,7 @@ void Demo_Form_Frame::handle_save()
 // QLineEdit* cLE_questions_cutoff_date_;
 
 
- fw.form_to_latex(src, gen, data);
+ fw.form_to_latex(src, gen, project_data);
 
 }
 

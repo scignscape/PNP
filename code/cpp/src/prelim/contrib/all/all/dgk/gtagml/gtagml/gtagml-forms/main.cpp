@@ -52,7 +52,7 @@ USING_KANS(RdSC)
 
 int main(int argc, char *argv[])
 {
- Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_TEMPLATE_FOLDER);
+// Demo_Form_Frame::create_fields_folder(DEFAULT_FIELDS_TEMPLATE_FOLDER);
 
 // Form_Weaver fw(DEFAULT_FIELDS_FOLDER);
 // fw.default_folders();
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 // fw.weave_to_latex("1_2");
 
- return 0;
+// return 0;
 
  QApplication qapp(argc, argv);
 

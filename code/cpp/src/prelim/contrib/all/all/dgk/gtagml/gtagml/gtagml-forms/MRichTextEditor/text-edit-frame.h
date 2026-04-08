@@ -60,11 +60,16 @@ class Text_Edit_Frame : public QFrame
  QStringList gen_paths_;
 
  QString base_folder_;
- QString gen_folder_;
  QString templates_folder_;
+ QString project_gen_folder_;
+ QString project_templates_folder_;
 
  QString document_title_;
  QString document_folder_;
+
+ QString project_name_;
+
+ u2 init_descriptions_length_;
 
  void reset_subfolder_label();
  void reset_text_view();
@@ -78,6 +83,9 @@ class Text_Edit_Frame : public QFrame
  void process_gtagml_file(QString file, QString template_path, QString folder);
  void process_gtagml_file(QString path, QString template_path, GTagML_Project_Info& gpi);
 
+ s2 check_project_name(QString& path);
+ void insert_project_name(QString& path);
+
 
 public:
 
@@ -86,11 +94,36 @@ public:
  ACCESSORS(QString ,document_title)
  ACCESSORS(QString ,document_folder)
 
+ ACCESSORS(QString ,base_folder)
+ ACCESSORS(QString ,templates_folder)
+ ACCESSORS(QString ,project_gen_folder)
+ ACCESSORS(QString ,project_templates_folder)
+
+ QString current_project_gen_folder()
+ {
+  QString result = project_gen_folder_;
+  insert_project_name(result);
+  return result;
+ }
+
+ QString current_project_templates_folder()
+ {
+  QString result = project_templates_folder_;
+  insert_project_name(result);
+  return result;
+ }
+
+
+
  void init_descriptions(QStringList arefs);
 
  u2 nav_to(QString target);
 
+ void update_project_name(QString project_name);
 
+Q_SIGNALS:
+
+ void empty_project_name();
 
 
 };

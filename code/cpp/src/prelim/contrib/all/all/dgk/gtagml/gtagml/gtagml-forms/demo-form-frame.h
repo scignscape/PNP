@@ -68,8 +68,14 @@ class Demo_Form_Frame : public QFrame
  QHBoxLayout* project_layout_;
  QLineEdit* cLE_project_name_;
  QLineEdit* cLE_project_folder_;
+ QLineEdit* cLE_project_created_;
+
+ QString project_folder_edited_value_;
+ QString project_folder_value_;
+
  QLabel* cLB_project_name_;
  QLabel* cLB_project_folder_;
+ QLabel* cLB_project_created_;
  QPushButton* btn_select_project_folder_;
 
  QGroupBox* author_title_group_box_;
@@ -122,26 +128,50 @@ class Demo_Form_Frame : public QFrame
 
  Text_Edit_Frame* text_edit_frame_;
 
- QString form_file_path_;
+ QString project_form_file_path_;
+ QString initial_form_file_path_;
+ QString base_projects_folder_;
+
+ QString current_project_name_;
+
+ QString init_project_date_;
+
+ void handle_empty_project_name();
+
+ void save_project_form_data(QMap<QString, QString>& data);
+ void save_project_form_data();
+
+ void save_initial_form_data(QMap<QString, QString>& data);
+ void save_initial_form_data();
+
+ void load_initial_form_data(QMap<QString, QString>& data);
+ void load_project_form_data(QMap<QString, QString>& data);
+
+ void load_form_data(QString file_path, QMap<QString, QString>& data);
+
+ void load_initial_form_data();
+ void load_project_form_data();
+
+ void init_project();
+
+
 
 public:
 
- Demo_Form_Frame(Text_Edit_Frame* text_edit_frame, QString form_file_path, QWidget* parent = nullptr);
+ Demo_Form_Frame(Text_Edit_Frame* text_edit_frame,
+   QString initial_form_file_path, QString base_projects_folder, QWidget* parent = nullptr);
+
 
  static void create_fields_folder(QString path);
 
- void coalesce_form_data(QMap<QString, QString>& data);
+ void coalesce_initial_form_data(QMap<QString, QString>& data);
+ void coalesce_project_form_data(QMap<QString, QString>& data);
 
  void handle_select_project_folder();
  void handle_save();
 
  void reset_form(QMap<QString, QString> data);
  void handle_reset();
-
- void save_form_data(QMap<QString, QString>& data);
- void save_form_data();
- void load_form_data();
- void load_form_data(QMap<QString, QString>& data);
 
 
 };
