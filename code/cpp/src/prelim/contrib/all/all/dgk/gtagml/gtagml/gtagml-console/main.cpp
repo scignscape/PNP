@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
  QString manfolder;
 
 
- file = ROOT_FOLDER "/../conf/paper-conf.gt";
- folder = ROOT_FOLDER "/../conf/gt/src";
+ file = ROOT_FOLDER "/../gt/t1/t1.gt";
+ folder = ROOT_FOLDER "/../gt/t1/src";
 
  _main(file, folder, manfolder);
 

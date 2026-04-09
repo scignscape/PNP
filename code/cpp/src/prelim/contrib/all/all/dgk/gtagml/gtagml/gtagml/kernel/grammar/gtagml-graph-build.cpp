@@ -64,30 +64,6 @@ GTagML_Graph_Build::GTagML_Graph_Build(GTagML_Graph& g, GTagML_Document_Info& do
    ,fn_count_(0)
 //   ,jats_stream_(&jats_)
 {
- ref_labels_ = QStringList {
-  "ArunaBansal",
-  "ContractsforC++",
-  "ElliBleekerEtAl",
-  "ElliBleekerEtAlTEI",
-  "ChavdarBotevEtAl",
-  "EdwinCBrady",
-  "MartinBraenne",
-  "NCDataIntegration",
-  "DonaldCComeauEtAl",
-  "ReginaldCushingEtAl",
-  "NickGarabedianEtAl",
-  "HarijsGrinbergs",
-  "PottayilHarisankerMenonEtAl",
-  "BertramLudascherEtAl",
-  "SeanMurphy",
-  "LimorPeerEtAl",
-  "SimplexNumericaManual",
-  "VickyStevensEtAl",
-  "YuyaUezato",
-  "LucyLuWangEtAl",
-  "AntonZhilin",
-  };
-
 
 // flags.use_latex_sdi_all_markers = true;
 // flags.use_latex_sdi_paragraph_markers = true;
@@ -116,7 +92,7 @@ void GTagML_Graph_Build::init(caon_ptr<GTagML_Parser> parser)
 
  xml_writer_.writeStartElement("body");
 
- //?  latex_stream_ << "\n\n%PREAMBLE-TEMPLATE%\n\n\\begin{document}\n%BEGIN-TEMPLATE%";
+ latex_stream_ << "\n\n%PREAMBLE-TEMPLATE%\n\n%BEGIN-TEMPLATE%";
 
  sentences_sdi_stream_ << "--- Global/start\n\n";
 // xml_writer_.set
@@ -688,10 +664,9 @@ void GTagML_Graph_Build::end_inner_document()
 
 void GTagML_Graph_Build::end_document()
 {
- // //  for now
- end_inner_document();
-
- return;
+// // //  for now
+// end_inner_document();
+// return;
 
  reset_primary();
 
@@ -700,7 +675,7 @@ void GTagML_Graph_Build::end_document()
 
  latex_stream_ << "\n%END-TEMPLATE%\n";
 
- latex_stream_ << "\n\\end{document}";
+// latex_stream_ << "\n\\end{document}";
 
 //? xml_writer_.writeEndElement();
 //? xml_writer_.writeComment("prepare end document");
