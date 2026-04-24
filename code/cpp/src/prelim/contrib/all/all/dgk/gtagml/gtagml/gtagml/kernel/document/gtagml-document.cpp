@@ -333,12 +333,12 @@ void GTagML_Document::load_file(QString path)
 
 void GTagML_Document::insert_latex_template(QString path)
 {
- parse_state_->insert_latex_template(path);
+ streams_->insert_latex_template(path);
 }
 
 void GTagML_Document::insert_xml_template(QString path)
 {
- parse_state_->insert_xml_template(path);
+ streams_->insert_xml_template(path);
 }
 
 void GTagML_Document::sdi_check(QString sdi_path, QString out_path)

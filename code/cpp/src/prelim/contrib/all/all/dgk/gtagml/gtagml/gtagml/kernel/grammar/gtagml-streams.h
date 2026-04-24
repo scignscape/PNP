@@ -60,7 +60,8 @@ class GTagML_Streams
 
  ACCESSORS__RGET(QTextStream ,latex_stream)
  ACCESSORS__RGET(QTextStream ,jats_stream)
-
+ ACCESSORS__RGET(QTextStream ,sentences_sdi_stream)
+ ACCESSORS__RGET(QXmlStreamWriter ,xml_writer)
 
  void insert_latex_template(QString path, QString* result = nullptr);
  void insert_xml_template(QString path, QString* result = nullptr);
