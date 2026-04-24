@@ -72,6 +72,46 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Graph_Build&
 
 // size_t test;
 
+
+ add_rule( gtagml_context, "left-right-mid-processing-instruction",
+   " \\[ (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\] "
+   ,[&] //raw_context, &graph_build, this, &p]
+ {
+  QString lrcode = QString::number(p.matched("left").size())
+    + QString::number(p.matched("left-dash").size())
+    + QString::number(p.matched("right-dash").size())
+    + QString::number(p.matched("right").size());
+
+  QString instruction = p.matched("instruction");
+  graph_build.parse_processing_instruction(instruction, lrcode);
+ });
+
+
+ add_rule( gtagml_context, "tag-command-enter",
+   " \\[ (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
+   " (?: ` (?<post> [^\\s\\[\\]`,;.]+) )? "
+   ,[&] //raw_context, &graph_build, this, &p]
+ {
+  QString pre = p.matched("pre");
+  QString main = p.matched("main");
+  QString post = p.matched("post");
+
+ });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  add_rule( gtagml_context, "enter-multi-line-comment",
    " ; ;+ (?<tail> [~-]{2,}) "
    ,[comment_context, this, &p] //raw_context, &graph_build, this, &p]

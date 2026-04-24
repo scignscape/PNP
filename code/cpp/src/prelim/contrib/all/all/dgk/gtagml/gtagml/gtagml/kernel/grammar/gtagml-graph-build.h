@@ -585,6 +585,12 @@ QString argument, QString parent_tag_type = QString());
  caon_ptr<tNode> make_new_node(caon_ptr<GTagML_Annotation_Tile> tile, QString label);
 
 
+
+
+
+ void parse_processing_instruction(QString instruction, QString lrcode);
+
+
 };
 
 _KANS(GTagML)

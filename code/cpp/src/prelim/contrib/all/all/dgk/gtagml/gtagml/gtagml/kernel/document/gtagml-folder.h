@@ -45,7 +45,7 @@ class GTagML_Folder
  QString latex_code_;
 
  QMap<QString, int> user_highlights_;
- QMap<QString, caon_ptr<GTagML_Annotation_Tile>> annotations_;
+ QMap<QString, GTagML_Annotation_Tile*> annotations_;
 
  QMap<QString, QString> file_list_output_;
  QMap<QString, QString> partials_codes_;

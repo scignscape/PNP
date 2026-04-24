@@ -32,6 +32,10 @@ KANS_(GTagML)
 class GTagML_Parser;
 class GTagML_Grammar;
 class GTagML_Graph_Build;
+
+class GTagML_Pregraph;
+
+
 class GTagML_Word_Entry_List;
 
 class GTagML_Project_Info;
@@ -40,10 +44,11 @@ class GTagML_Annotation_Tile;
 
 class GTagML_Document
 {
- caon_ptr<GTagML_Graph> graph_;
- caon_ptr<GTagML_Parser> parser_;
- caon_ptr<GTagML_Graph_Build> graph_build_;
- caon_ptr<GTagML_Grammar> grammar_;
+ GTagML_Graph* graph_;
+ GTagML_Parser* parser_;
+ GTagML_Graph_Build* graph_build_;
+ GTagML_Pregraph* pregraph_;
+ GTagML_Grammar* grammar_;
 
  QString local_path_;
  QString raw_text_;
@@ -53,11 +58,11 @@ class GTagML_Document
  QString file_job_name_;
 
 
- QMap<QString, caon_ptr<GTagML_Annotation_Tile> >* annotations_;
+ QMap<QString, GTagML_Annotation_Tile* >* annotations_;
 
- typedef QMap<QString, caon_ptr<GTagML_Annotation_Tile> >* annotations_type;
+ typedef QMap<QString, GTagML_Annotation_Tile* >* annotations_type;
 
- QMap<QString, caon_ptr<GTagML_Annotation_Tile> > local_annotations_;
+ QMap<QString, GTagML_Annotation_Tile* > local_annotations_;
 
  GTagML_Parsing_Modes parsing_mode_;
 
@@ -80,8 +85,8 @@ public:
 
  ACCESSORS(QString ,local_path)
  ACCESSORS(QString ,raw_text)
- ACCESSORS(caon_ptr<GTagML_Graph> ,graph)
- ACCESSORS__GET(caon_ptr<GTagML_Grammar> ,grammar)
+ ACCESSORS(GTagML_Graph* ,graph)
+ ACCESSORS__GET(GTagML_Grammar* ,grammar)
 
  ACCESSORS__RGET(GTagML_Document_Info ,document_info)
  ACCESSORS(GTagML_Project_Info* ,project_info)
@@ -125,13 +130,11 @@ public:
 
  void check_sdi_tag_command_info();
 
- void load_and_parse(QString path, caon_ptr<GTagML_Grammar> grammar =
-   caon_ptr<GTagML_Grammar>(nullptr) );
+ void load_and_parse(QString path, GTagML_Grammar* grammar = nullptr );
 
  void load_file(QString path);
 
- void set_grammar(caon_ptr<GTagML_Grammar> grammar =
-   caon_ptr<GTagML_Grammar>(nullptr) );
+ void set_grammar(GTagML_Grammar* grammar = nullptr );
  void parse();
 
  void use_light_xml();
@@ -157,11 +160,11 @@ public:
  static void clean_html(QString& str);
  static QString escape_unicode(QString contents);
 
-// void tag_command_annotation(caon_ptr<GTagML_Tile> nt, caon_ptr<GTagML_Annotation_Tile> tile);
- void tag_command_annotation(caon_ptr<GTagML_Annotation_Tile> tile);
+// void tag_command_annotation(GTagML_Tile> nt, GTagML_Annotation_Tile> tile);
+ void tag_command_annotation(GTagML_Annotation_Tile* tile);
 
  void write_local_annotations(QString path);
- static void write_annotations(QString path, QMap<QString, caon_ptr<GTagML_Annotation_Tile>>& annotations);
+ static void write_annotations(QString path, QMap<QString, GTagML_Annotation_Tile*>& annotations);
 
 };
 

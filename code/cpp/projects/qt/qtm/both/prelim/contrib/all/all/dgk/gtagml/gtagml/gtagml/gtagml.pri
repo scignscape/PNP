@@ -46,6 +46,7 @@ HEADERS += \
   $$SRC_DIR/kernel/frame/gtagml-frame.h \
   $$SRC_DIR/kernel/grammar/gtagml-grammar.h \
   $$SRC_DIR/kernel/grammar/gtagml-graph-build.h \
+  $$SRC_DIR/kernel/grammar/gtagml-pregraph.h \
   $$SRC_DIR/kernel/grammar/gtagml-parser.h \
   $$SRC_DIR/kernel/grammar/gtagml-parsing-mode.h \
   $$SRC_DIR/kernel/grammar/gtagml-parse-context.h \
@@ -99,6 +100,7 @@ SOURCES += \
   $$SRC_DIR/kernel/frame/gtagml-frame.cpp \
   $$SRC_DIR/kernel/grammar/gtagml-grammar.cpp \
   $$SRC_DIR/kernel/grammar/gtagml-graph-build.cpp \
+  $$SRC_DIR/kernel/grammar/gtagml-pregraph.cpp \
   $$SRC_DIR/kernel/grammar/gtagml-parser.cpp \
   $$SRC_DIR/kernel/grammar/gtagml-parse-context.cpp \
   $$SRC_DIR/kernel/graph/gtagml-graph.cpp \

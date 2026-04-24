@@ -110,7 +110,7 @@ QString GTagML_Document::get_path_root()
 }
 
 
-void GTagML_Document::write_annotations(QString path, QMap<QString, caon_ptr<GTagML_Annotation_Tile>>& annotations)
+void GTagML_Document::write_annotations(QString path, QMap<QString, GTagML_Annotation_Tile*>& annotations)
 {
  qDebug() << "Writing to path: " << path;
 
@@ -150,7 +150,7 @@ void GTagML_Document::write_local_annotations(QString path)
 {
  QString contents;
 
- QMapIterator<QString, caon_ptr<GTagML_Annotation_Tile> >
+ QMapIterator<QString, GTagML_Annotation_Tile* >
    it(local_annotations_);
 
  contents = "<html><body><table>";
@@ -233,7 +233,7 @@ void GTagML_Document::use_light_xml()
 // }
 //}
 
-void GTagML_Document::tag_command_annotation(caon_ptr<GTagML_Annotation_Tile> tile)
+void GTagML_Document::tag_command_annotation(GTagML_Annotation_Tile* tile)
 {
  QString key;// = tile->subject();
  if(annotations_)
@@ -363,12 +363,12 @@ void GTagML_Document::save_latex(QString path)
  graph_build_->save_latex(path);
 }
 
-void GTagML_Document::set_grammar(caon_ptr<GTagML_Grammar> grammar)
+void GTagML_Document::set_grammar(GTagML_Grammar* grammar)
 {
  if(grammar)
   grammar_ = grammar;
  else
-  grammar_ = caon_ptr<GTagML_Grammar>( new GTagML_Grammar() );
+  grammar_ = new GTagML_Grammar();
 }
 
 void GTagML_Document::parse()
@@ -376,11 +376,10 @@ void GTagML_Document::parse()
  caon_ptr<GTagML_Root> root = caon_ptr<GTagML_Root>( new GTagML_Root() );
  caon_ptr<GTagML_Node> node = caon_ptr<GTagML_Node>( new GTagML_Node(root) );
 
- graph_ = caon_ptr<GTagML_Graph> ( new GTagML_Graph(node) );
- parser_ = caon_ptr<GTagML_Parser> ( new GTagML_Parser(graph_) );
+ graph_ = new GTagML_Graph(node);
+ parser_ = new GTagML_Parser(graph_);
 
- graph_build_ = caon_ptr<GTagML_Graph_Build>(
-  new GTagML_Graph_Build(*graph_, document_info_) );
+ graph_build_ = new GTagML_Graph_Build(*graph_, document_info_);
 
  graph_build_->init(parser_);
 
@@ -413,7 +412,7 @@ void GTagML_Document::check_sdi_tag_command_info()
  }
 }
 
-void GTagML_Document::load_and_parse(QString path, caon_ptr<GTagML_Grammar> grammar)
+void GTagML_Document::load_and_parse(QString path, GTagML_Grammar* grammar)
 {
  check_sdi_tag_command_info();
 

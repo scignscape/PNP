@@ -72,7 +72,10 @@ public:
 //  flag_(14, inside_html_tag_body)
 
 //  flag_(22, inside_html_script_tag)
-  flag_(25, inside_html_style_tag)
+
+  flag_(25, inside_tag_command_entry)
+
+
   flag_(26, inside_multi_parent_semis)
   flag_(27, inside_multi_generic)
   flag_(28, inside_attribute_sequence)

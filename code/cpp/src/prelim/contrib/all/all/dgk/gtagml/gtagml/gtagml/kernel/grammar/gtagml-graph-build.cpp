@@ -70,6 +70,20 @@ GTagML_Graph_Build::GTagML_Graph_Build(GTagML_Graph& g, GTagML_Document_Info& do
 }
 
 
+void GTagML_Graph_Build::parse_processing_instruction(QString instruction, QString lrcode)
+{
+ if(instruction == "spar")
+ {
+  if(lrcode == "0111")
+    enter_auto_paragraph_mode();
+  else if(lrcode == "1110")
+    parse_context_.flags.auto_paragraph_mode = false;
+
+  return;
+ }
+}
+
+
 void GTagML_Graph_Build::init(caon_ptr<GTagML_Parser> parser)
 {
  parser_ = parser;
