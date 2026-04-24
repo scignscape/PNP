@@ -16,7 +16,7 @@ KANS_(GTagML)
 
 class GTagML_Graph;
 class GTagML_Parser;
-class GTagML_Graph_Build;
+class GTagML_Parse_State;
 
 class GTagML_Grammar : public Relae_Grammar<GTagML_Graph, GTagML_Parser>
 {
@@ -25,7 +25,7 @@ public:
  GTagML_Grammar();
 
  void init(GTagML_Parser& p, GTagML_Graph& g,
-           GTagML_Graph_Build& graph_build);
+           GTagML_Parse_State& graph_build);
 
 
 };

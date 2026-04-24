@@ -22,7 +22,7 @@ KANS_(GTagML)
 
 class GTagML_Parser;
 class GTagML_Grammar;
-class GTagML_Graph_Build;
+class GTagML_Parse_State;
 class GTagML_Word_Entry_List;
 
 class GTagML_Document_Light_Xml;

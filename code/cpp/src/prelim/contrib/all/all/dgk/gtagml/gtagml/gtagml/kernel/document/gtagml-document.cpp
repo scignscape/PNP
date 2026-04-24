@@ -17,7 +17,7 @@
 #include "kernel/graph/gtagml-node.h"
 #include "kernel/graph/gtagml-graph.h"
 #include "kernel/grammar/gtagml-parser.h"
-#include "kernel/grammar/gtagml-graph-build.h"
+#include "kernel/grammar/gtagml-parse-state.h"
 
 #include "sdi-sentence-reader.h"
 
@@ -333,34 +333,39 @@ void GTagML_Document::load_file(QString path)
 
 void GTagML_Document::insert_latex_template(QString path)
 {
- graph_build_->insert_latex_template(path);
+ parse_state_->insert_latex_template(path);
 }
 
 void GTagML_Document::insert_xml_template(QString path)
 {
- graph_build_->insert_xml_template(path);
+ parse_state_->insert_xml_template(path);
 }
 
 void GTagML_Document::sdi_check(QString sdi_path, QString out_path)
 {
  SDI_Sentence_Reader ssr(sdi_path);
  ssr.sdi_check(raw_text_, out_path);
- //? graph_build_->sdi_check(sdi_path, out_path);
+ //? parse_state_->sdi_check(sdi_path, out_path);
 }
 
 void GTagML_Document::save_sentences(QString path)
 {
- graph_build_->save_sentences(path);
+ streams_->save_sentences(path);
 }
 
 void GTagML_Document::save_jats(QString path, QString bib_path)
 {
- graph_build_->save_jats(path, bib_path);
+ streams_->save_jats(path, bib_path);
 }
 
 void GTagML_Document::save_latex(QString path)
 {
- graph_build_->save_latex(path);
+ streams_->save_latex(path);
+}
+
+void GTagML_Document::save_pregraph(QString path)
+{
+
 }
 
 void GTagML_Document::set_grammar(GTagML_Grammar* grammar)
@@ -379,13 +384,13 @@ void GTagML_Document::parse()
  graph_ = new GTagML_Graph(node);
  parser_ = new GTagML_Parser(graph_);
 
- graph_build_ = new GTagML_Graph_Build(*graph_, document_info_);
+ parse_state_ = new GTagML_Parse_State(*graph_, document_info_);
 
- graph_build_->init(parser_);
+ parse_state_->init(parser_);
 
- graph_build_->set_current_parsing_mode(parsing_mode_);
+ parse_state_->set_current_parsing_mode(parsing_mode_);
 
- grammar_->init(*parser_, *graph_, *graph_build_);
+ grammar_->init(*parser_, *graph_, *parse_state_);
 
  grammar_->compile(*parser_, *graph_, raw_text_);
 }

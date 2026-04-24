@@ -12,21 +12,28 @@
 #include <QString>
 #include <QTextStream>
 
+#include "global-types.h"
+
 
 #include "kans.h"
 
 KANS_(GTagML)
 
+class GTagML_Parser;
 
 class GTagML_Pregraph
 {
  QString acc_;
  QTextStream acc;
 
+ void write_raw_text(QString text);
+
  public:
 
  GTagML_Pregraph();
 
+ void new_text_node(u2 ply_id, QString text);
+ void init(GTagML_Parser* parser);
 
 
 };

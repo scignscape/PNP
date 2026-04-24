@@ -5,7 +5,7 @@
 //           http://www.boost.org/LICENSE_1_0.txt)
 
 
-#include "gtagml-graph-build.h"
+#include "gtagml-parse-state.h"
 
 #include "tile/gtagml-tile.h"
 #include "kernel/graph/gtagml-graph.h"
@@ -30,12 +30,14 @@
 
 USING_KANS(GTagML)
 
-GTagML_Graph_Build::GTagML_Graph_Build(GTagML_Graph& g, GTagML_Document_Info& document_info)
+GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& document_info)
  : Flags(0), markup_position_(g.root_node()), acc_mode_(Acc_Mode::Main_Tile), document_info_(document_info),
    current_parsing_mode_(GTagML_Parsing_Modes::GTagML), //?current_annotation_tile_(nullptr),
-   tile_acc_length_adjustment_(0),
+   parser_(nullptr), tile_acc_length_adjustment_(0),
    tile_acc_qts_(&tile_acc_), string_literal_acc_qts_(&string_literal_acc_),
    current_raw_format_("latex"), held_semantic_mark_mode_(0)
+
+   ,streams_(this)
 
    ,current_exs_group_number_(0)
    ,current_exs_number_(0)
@@ -69,7 +71,7 @@ GTagML_Graph_Build::GTagML_Graph_Build(GTagML_Graph& g, GTagML_Document_Info& do
 }
 
 
-void GTagML_Graph_Build::parse_processing_instruction(QString instruction, QString lrcode)
+void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)
 {
  if(instruction == "spar")
  {
@@ -85,7 +87,7 @@ void GTagML_Graph_Build::parse_processing_instruction(QString instruction, QStri
 
 
 
-void GTagML_Graph_Build::enter_special_section(QString text)
+void GTagML_Parse_State::enter_special_section(QString text)
 {
  if(text == "Abstract")
    enter_abstract();
@@ -102,7 +104,14 @@ void GTagML_Graph_Build::enter_special_section(QString text)
  }
 }
 
-void GTagML_Graph_Build::enter_abstract()
+void GTagML_Parse_State::init(GTagML_Parser* parser)
+{
+ parser_ = parser;
+
+ streams_.init();
+}
+
+void GTagML_Parse_State::enter_abstract()
 {
  reset_primary();
 
@@ -110,91 +119,14 @@ void GTagML_Graph_Build::enter_abstract()
 
  current_paragraph_type_ = Paragraph_Types::Abstract;
 
- xml_writer_.writeCharacters("\n\n");
- xml_writer_.writeStartElement("doc-abstract");
- latex_stream_ << "\n\n\\twocolumn[\\begin{docAbstract}\n";
+ streams_.enter_abstract();
 
- sentences_sdi_stream_ << "\n\n--- Abstract/start\n";
-
- sentences_sdi_stream_ << "\n\n--- Sentence/start\nid: " << sentence_id_;
 }
 
 
-void GTagML_Graph_Build::insert_latex_template(QString path, QString* result)
-{
- QString contents = KA::TextIO::load_file(path);
 
- s4 ix = contents.indexOf("\n%%\n");
- s4 ix1 = contents.indexOf("\n%%%\n");
 
- QString lat = latex_;
-
- bool have_pt = lat.contains("%PREAMBLE-TEMPLATE%");
- bool have_bt = lat.contains("%BEGIN-TEMPLATE%");
-
- QString econtents;
-
- if(ix1 != -1)
- {
-  econtents = contents.mid(ix1 + 5);
-  contents = contents.left(ix1);
- }
-
- if(ix != -1)
- {
-  QString bcontents = contents.mid(ix + 4);
-
-  //  contents.replace(ix + 4, contents.length() - ix - 4, "");
-  contents = contents.left(ix);
-
-  if(have_pt)
-  {
-   if(have_bt)
-   {
-    lat.replace("%PREAMBLE-TEMPLATE%", contents);
-    lat.replace("%BEGIN-TEMPLATE%", bcontents);
-   }
-   else
-   {
-    lat.replace("%PREAMBLE-TEMPLATE%", contents + "\n\n" + bcontents + "\n\n");
-   }
-  }
-  else if(have_bt)
-  {
-   lat.replace("%BEGIN-TEMPLATE%", bcontents);
-   lat.prepend(contents + "\n\n");
-  }
-  else
-  {
-   lat.prepend(contents + "\n\n" + bcontents + "\n\n");
-  }
- }
-
- if(lat.contains("%END-TEMPLATE%"))
-   lat.replace("%END-TEMPLATE%", "\n\n" + econtents);
- else if(!econtents.isEmpty())
-   lat.append("\n\n" + econtents);
-
- if(result)
-   *result = lat;
- else
-   latex_ = lat;
-}
-
-void GTagML_Graph_Build::insert_xml_template(QString path, QString* result)
-{
- QString contents = KA::TextIO::load_file(path);
-
- if(result)
- {
-  *result = jats_array_;
-  result->replace("%XML-TEMPLATE%", contents.toLatin1());
- }
- else
-   jats_array_.replace("%XML-TEMPLATE%", contents.toLatin1());
-}
-
-void GTagML_Graph_Build::primary_acc(QString text)
+void GTagML_Parse_State::primary_acc(QString text)
 {
  if(flags.heading_acc)
  {
@@ -272,7 +204,7 @@ void GTagML_Graph_Build::primary_acc(QString text)
  primary_acc_stream_ << text;
 }
 
-void GTagML_Graph_Build::reset_primary()
+void GTagML_Parse_State::reset_primary()
 {
  auto handle_sentences = [this]()
  {
@@ -326,7 +258,7 @@ void GTagML_Graph_Build::reset_primary()
 }
 
 
-//void GTagML_Graph_Build::subsection_heading(QString stext, QString ltext, u1 level)
+//void GTagML_Parse_State::subsection_heading(QString stext, QString ltext, u1 level)
 //{
 //// reset_primary();
 //// check_close_paragraph();
@@ -340,7 +272,7 @@ void GTagML_Graph_Build::reset_primary()
 //}
 
 
-void GTagML_Graph_Build::section_heading(QString stext, QString ltext, u1 level)
+void GTagML_Parse_State::section_heading(QString stext, QString ltext, u1 level)
 {
  ++current_section_number_;
 
@@ -365,7 +297,7 @@ void GTagML_Graph_Build::section_heading(QString stext, QString ltext, u1 level)
  set_paragraph_bridge();
 }
 
-void GTagML_Graph_Build::blank_line_as_visible_space()
+void GTagML_Parse_State::blank_line_as_visible_space()
 {
  reset_primary();
 
@@ -375,13 +307,13 @@ void GTagML_Graph_Build::blank_line_as_visible_space()
 // <%- \ifnum\presetStretch=2\vspace*{9pt}\else\fi -%>
 
 
-//void GTagML_Graph_Build::latex_only(QString text)
+//void GTagML_Parse_State::latex_only(QString text)
 //{
 // latex_stream_ << text;
 //}
 
 
-void GTagML_Graph_Build::enter_latex_only_to_space(QString match, QString space)
+void GTagML_Parse_State::enter_latex_only_to_space(QString match, QString space)
 {
  primary_acc(space);
 
@@ -390,14 +322,14 @@ void GTagML_Graph_Build::enter_latex_only_to_space(QString match, QString space)
  //latex_stream_ << text;
 }
 
-void GTagML_Graph_Build::enter_latex_only_to_space(QString match)
+void GTagML_Parse_State::enter_latex_only_to_space(QString match)
 {
  enter_latex_only(match);
 
  parse_context_.flags.latex_only_to_space = true;
 }
 
-void GTagML_Graph_Build::leave_latex_only_to_space(QString match)
+void GTagML_Parse_State::leave_latex_only_to_space(QString match)
 {
  leave_latex_only(match);
 
@@ -405,7 +337,7 @@ void GTagML_Graph_Build::leave_latex_only_to_space(QString match)
 }
 
 
-void GTagML_Graph_Build::enter_latex_only(QString match)
+void GTagML_Parse_State::enter_latex_only(QString match)
 {
  reset_primary();
 
@@ -415,7 +347,7 @@ void GTagML_Graph_Build::enter_latex_only(QString match)
  flags.latex_only = true;
 }
 
-void GTagML_Graph_Build::leave_latex_only(QString match)
+void GTagML_Parse_State::leave_latex_only(QString match)
 {
  reset_primary();
 
@@ -426,7 +358,7 @@ void GTagML_Graph_Build::leave_latex_only(QString match)
 }
 
 
-void GTagML_Graph_Build::enter_sentences_only(QString open, QString pre_space)
+void GTagML_Parse_State::enter_sentences_only(QString open, QString pre_space)
 {
  u1 count = open.size();
  if(pre_space.contains("\n"))
@@ -438,7 +370,7 @@ void GTagML_Graph_Build::enter_sentences_only(QString open, QString pre_space)
  flags.sentences_only = true;
 }
 
-void GTagML_Graph_Build::leave_sentences_only(QString close, QString post_space)
+void GTagML_Parse_State::leave_sentences_only(QString close, QString post_space)
 {
  reset_primary();
 
@@ -463,12 +395,12 @@ void GTagML_Graph_Build::leave_sentences_only(QString close, QString post_space)
  }
 }
 
-void GTagML_Graph_Build::force_switch_sentence()
+void GTagML_Parse_State::force_switch_sentence()
 {
  end_sentence("");
 }
 
-void GTagML_Graph_Build::ell_2_nonbreak()
+void GTagML_Parse_State::ell_2_nonbreak()
 {
  reset_primary();
 
@@ -479,7 +411,7 @@ void GTagML_Graph_Build::ell_2_nonbreak()
    sentences_text_stream_ << ". ";
 }
 
-void GTagML_Graph_Build::ell_count(u1 count, QString follow)
+void GTagML_Parse_State::ell_count(u1 count, QString follow)
 {
  reset_primary();
 
@@ -516,14 +448,14 @@ void GTagML_Graph_Build::ell_count(u1 count, QString follow)
 
 }
 
-void GTagML_Graph_Build::noindent_marker()
+void GTagML_Parse_State::noindent_marker()
 {
  if(!flags.sentences_only)
    latex_stream_ << "\\noindent{}";
 }
 
 
-void GTagML_Graph_Build::footnote_marker(QString text)
+void GTagML_Parse_State::footnote_marker(QString text)
 {
  reset_primary();
 
@@ -535,7 +467,7 @@ void GTagML_Graph_Build::footnote_marker(QString text)
 }
 
 
-void GTagML_Graph_Build::end_sentence(QString punctuation,
+void GTagML_Parse_State::end_sentence(QString punctuation,
   u1 nesting_code, QVector<QPair<QString, QString>> supplements)
 {
  flags.just_ended_sentence = true;
@@ -597,7 +529,7 @@ void GTagML_Graph_Build::end_sentence(QString punctuation,
 
 
 
-void GTagML_Graph_Build::heading(u1 count, QString stext, QString ltext)
+void GTagML_Parse_State::heading(u1 count, QString stext, QString ltext)
 {
  if(count == 3)
  {
@@ -619,7 +551,7 @@ void GTagML_Graph_Build::heading(u1 count, QString stext, QString ltext)
 
 }
 
-void GTagML_Graph_Build::prepare_bibliography()
+void GTagML_Parse_State::prepare_bibliography()
 {
  xml_writer_.writeCharacters("\n\n");
  //<sec><title>Introduction</title> <ref
@@ -638,7 +570,7 @@ void GTagML_Graph_Build::prepare_bibliography()
 }
 
 
-void GTagML_Graph_Build::end_inner_document()
+void GTagML_Parse_State::end_inner_document()
 {
  reset_primary();
 
@@ -646,7 +578,7 @@ void GTagML_Graph_Build::end_inner_document()
 
 }
 
-void GTagML_Graph_Build::end_document()
+void GTagML_Parse_State::end_document()
 {
 // // //  for now
 // end_inner_document();
@@ -680,12 +612,12 @@ void GTagML_Graph_Build::end_document()
  parse_context_.flags.auto_paragraph_mode = false;
 }
 
-void GTagML_Graph_Build::set_paragraph_bridge()
+void GTagML_Parse_State::set_paragraph_bridge()
 {
  current_paragraph_bridge_ = current_paragraph_count_ + 1;
 }
 
-void GTagML_Graph_Build::leave_footnote(QString pretext, QString space)
+void GTagML_Parse_State::leave_footnote(QString pretext, QString space)
 {
  reset_primary();
 
@@ -719,7 +651,7 @@ void GTagML_Graph_Build::leave_footnote(QString pretext, QString space)
 
 }
 
-void GTagML_Graph_Build::enter_footnote(QString pretext, QString space)
+void GTagML_Parse_State::enter_footnote(QString pretext, QString space)
 {
  reset_primary();
 
@@ -761,7 +693,7 @@ void GTagML_Graph_Build::enter_footnote(QString pretext, QString space)
    latex_stream_ << "\\docFootnote{" << latex_space;
 }
 
-void GTagML_Graph_Build::latex_command_via_semantic_annotation(QString concept, QString text)
+void GTagML_Parse_State::latex_command_via_semantic_annotation(QString concept, QString text)
 {
  reset_primary();
 
@@ -770,28 +702,28 @@ void GTagML_Graph_Build::latex_command_via_semantic_annotation(QString concept, 
 }
 
 
-QString GTagML_Graph_Build::line_and_column_string_tight()
+QString GTagML_Parse_State::line_and_column_string_tight()
 {
  return line_and_column_string_tight(parser_->current_position());
 }
 
-QString GTagML_Graph_Build::line_and_column_string()
+QString GTagML_Parse_State::line_and_column_string()
 {
  return line_and_column_string(parser_->current_position());
 }
 
 
-QString GTagML_Graph_Build::line_and_column_string_tight(u4 pos)
+QString GTagML_Parse_State::line_and_column_string_tight(u4 pos)
 {
  return document_info_.line_and_column_string(pos, "/");
 }
 
-QString GTagML_Graph_Build::line_and_column_string(u4 pos)
+QString GTagML_Parse_State::line_and_column_string(u4 pos)
 {
  return document_info_.line_and_column_string(pos);
 }
 
-void GTagML_Graph_Build::enter_sentences_latex_filter(QString pretext)
+void GTagML_Parse_State::enter_sentences_latex_filter(QString pretext)
 {
  reset_primary();
 
@@ -814,7 +746,7 @@ void GTagML_Graph_Build::enter_sentences_latex_filter(QString pretext)
  flags.sentences_latex_filter = true;
 }
 
-void GTagML_Graph_Build::leave_sentences_latex_filter(QString pretext)
+void GTagML_Parse_State::leave_sentences_latex_filter(QString pretext)
 {
  reset_primary();
 
@@ -836,7 +768,7 @@ void GTagML_Graph_Build::leave_sentences_latex_filter(QString pretext)
  flags.sentences_latex_filter = false;
 }
 
-void GTagML_Graph_Build::enter_heading(u1 count1, u1 count2)
+void GTagML_Parse_State::enter_heading(u1 count1, u1 count2)
 {
  reset_primary();
  check_close_paragraph();
@@ -859,7 +791,7 @@ void GTagML_Graph_Build::enter_heading(u1 count1, u1 count2)
 }
 
 
-void GTagML_Graph_Build::leave_heading()
+void GTagML_Parse_State::leave_heading()
 {
  heading(heading_counts_.first, heading_counts_.second,
    sentences_section_heading_, latex_section_heading_);
@@ -870,7 +802,7 @@ void GTagML_Graph_Build::leave_heading()
 }
 
 
-void GTagML_Graph_Build::enter_justline(QString pretext)
+void GTagML_Parse_State::enter_justline(QString pretext)
 {
  reset_primary();
 
@@ -893,7 +825,7 @@ void GTagML_Graph_Build::enter_justline(QString pretext)
  parse_context_.flags.justline = true;
 }
 
-void GTagML_Graph_Build::leave_justline(QString pretext, QString follow)
+void GTagML_Parse_State::leave_justline(QString pretext, QString follow)
 { 
  follow = follow.simplified().replace(' ', "");
 
@@ -923,7 +855,7 @@ void GTagML_Graph_Build::leave_justline(QString pretext, QString follow)
 }
 
 
-void GTagML_Graph_Build::heading(u1 count1, u1 count2, QString stext, QString ltext)
+void GTagML_Parse_State::heading(u1 count1, u1 count2, QString stext, QString ltext)
 {
 // reset_primary();
 // qDebug() <<  latex_;
@@ -954,13 +886,13 @@ void GTagML_Graph_Build::heading(u1 count1, u1 count2, QString stext, QString lt
  }
 }
 
-void GTagML_Graph_Build::enter_auto_paragraph_mode()
+void GTagML_Parse_State::enter_auto_paragraph_mode()
 {
  set_paragraph_bridge();
  parse_context_.flags.auto_paragraph_mode = true;
 }
 
-void GTagML_Graph_Build::close_paragraph()
+void GTagML_Parse_State::close_paragraph()
 {
  if(flags.in_pa_1)
  {
@@ -1016,7 +948,7 @@ void GTagML_Graph_Build::close_paragraph()
  flags.just_ended_sentence = false;
 }
 
-void GTagML_Graph_Build::check_close_paragraph()
+void GTagML_Parse_State::check_close_paragraph()
 {
  if(current_paragraph_bridge_)
    current_paragraph_bridge_ = 0;
@@ -1024,17 +956,17 @@ void GTagML_Graph_Build::check_close_paragraph()
    close_paragraph();
 }
 
-void GTagML_Graph_Build::show_latex()
+void GTagML_Parse_State::show_latex()
 {
  qDebug() << "\n" << latex_ << "\n";
 }
 
-void GTagML_Graph_Build::auto_new_paragraph()
+void GTagML_Parse_State::auto_new_paragraph()
 {
  auto_new_paragraph("p.1");
 }
 
-void GTagML_Graph_Build::auto_new_paragraph(QString cmd)
+void GTagML_Parse_State::auto_new_paragraph(QString cmd)
 { // p.1
  reset_primary();
 
@@ -1077,7 +1009,7 @@ void GTagML_Graph_Build::auto_new_paragraph(QString cmd)
  flags.await_sentence_start = true;
 }
 
-void GTagML_Graph_Build::pseudo_paragraph()
+void GTagML_Parse_State::pseudo_paragraph()
 {
  reset_primary();
 
@@ -1098,7 +1030,7 @@ void GTagML_Graph_Build::pseudo_paragraph()
 }
 
 
-void GTagML_Graph_Build::enter_subparagraph(QString text, QString sup)
+void GTagML_Parse_State::enter_subparagraph(QString text, QString sup)
 {
  reset_primary();
 
@@ -1186,7 +1118,7 @@ void GTagML_Graph_Build::enter_subparagraph(QString text, QString sup)
 
 }
 
-void GTagML_Graph_Build::check_blank_line()
+void GTagML_Parse_State::check_blank_line()
 {
  if(current_paragraph_type_ == Paragraph_Types::Block_Quote)
  {
@@ -1210,7 +1142,7 @@ void GTagML_Graph_Build::check_blank_line()
  }
 }
 
-void GTagML_Graph_Build::single_slash_line_plus()
+void GTagML_Parse_State::single_slash_line_plus()
 {
  single_slash_line();
 
@@ -1225,7 +1157,7 @@ void GTagML_Graph_Build::single_slash_line_plus()
 
 }
 
-void GTagML_Graph_Build::single_slash_line()
+void GTagML_Parse_State::single_slash_line()
 {
  reset_primary();
 
@@ -1291,7 +1223,7 @@ void GTagML_Graph_Build::single_slash_line()
 
 
 
-void GTagML_Graph_Build::paren_ref_global(u2 number, QString text)
+void GTagML_Parse_State::paren_ref_global(u2 number, QString text)
 {
  reset_primary();
 
@@ -1302,7 +1234,7 @@ void GTagML_Graph_Build::paren_ref_global(u2 number, QString text)
 }
 
 
-void GTagML_Graph_Build::paren_ref(u2 number, QString text)
+void GTagML_Parse_State::paren_ref(u2 number, QString text)
 {
  reset_primary();
 
@@ -1313,7 +1245,7 @@ void GTagML_Graph_Build::paren_ref(u2 number, QString text)
 }
 
 
-void GTagML_Graph_Build::latex_command_auto_closed(QString command_name, QString arg)
+void GTagML_Parse_State::latex_command_auto_closed(QString command_name, QString arg)
 {
  reset_primary();
 
@@ -1330,7 +1262,7 @@ void GTagML_Graph_Build::latex_command_auto_closed(QString command_name, QString
  }
 }
 
-void GTagML_Graph_Build::citation(QString full_match, QString label, QString locator)
+void GTagML_Parse_State::citation(QString full_match, QString label, QString locator)
 {
  u2 ref_index = ref_labels_.indexOf(label);
 
@@ -1396,7 +1328,7 @@ void GTagML_Graph_Build::citation(QString full_match, QString label, QString loc
  xml_writer_.writeCharacters("]");
 }
 
-void GTagML_Graph_Build::bulleted_item(QString symbol, QString supp)
+void GTagML_Parse_State::bulleted_item(QString symbol, QString supp)
 {
  reset_primary(); //? qDebug() << "\n\n" << latex_ << "\n\n";
 
@@ -1405,7 +1337,7 @@ void GTagML_Graph_Build::bulleted_item(QString symbol, QString supp)
 }
 
 
-void GTagML_Graph_Build::enums_item(u2 number, QString text, QString follow)
+void GTagML_Parse_State::enums_item(u2 number, QString text, QString follow)
 {
  reset_primary();
 
@@ -1422,7 +1354,7 @@ void GTagML_Graph_Build::enums_item(u2 number, QString text, QString follow)
  xml_writer_.writeComment("enums-item");
 }
 
-void GTagML_Graph_Build::desc_item_with_multiline_label(QString text)
+void GTagML_Parse_State::desc_item_with_multiline_label(QString text)
 {
  reset_primary();
 
@@ -1462,7 +1394,7 @@ void GTagML_Graph_Build::desc_item_with_multiline_label(QString text)
  end_sentence();
 }
 
-void GTagML_Graph_Build::desc_item(QString text)
+void GTagML_Parse_State::desc_item(QString text)
 {
  reset_primary();
 
@@ -1508,7 +1440,7 @@ void GTagML_Graph_Build::desc_item(QString text)
 }
 
 
-void GTagML_Graph_Build::exs_item(u2 number, QString text)
+void GTagML_Parse_State::exs_item(u2 number, QString text)
 {
  reset_primary();
 
@@ -1526,7 +1458,7 @@ void GTagML_Graph_Build::exs_item(u2 number, QString text)
  end_sentence();
 }
 
-void GTagML_Graph_Build::enter_block_float_mode()
+void GTagML_Parse_State::enter_block_float_mode()
 {
  reset_primary();
  latex_stream_ << "\\ndntext{";
@@ -1535,7 +1467,7 @@ void GTagML_Graph_Build::enter_block_float_mode()
 //? parse_context_.flags.heading_acc = false;
 }
 
-void GTagML_Graph_Build::leave_block_float_mode()
+void GTagML_Parse_State::leave_block_float_mode()
 {
  reset_primary();
 
@@ -1545,7 +1477,7 @@ void GTagML_Graph_Build::leave_block_float_mode()
 }
 
 
-void GTagML_Graph_Build::enter_italics_mode()
+void GTagML_Parse_State::enter_italics_mode()
 {
  reset_primary();
 
@@ -1556,7 +1488,7 @@ void GTagML_Graph_Build::enter_italics_mode()
  parse_context_.flags.italics_mode = true;
 }
 
-void GTagML_Graph_Build::leave_italics_mode()
+void GTagML_Parse_State::leave_italics_mode()
 {
  reset_primary();
 
@@ -1567,7 +1499,7 @@ void GTagML_Graph_Build::leave_italics_mode()
 
 }
 
-void GTagML_Graph_Build::hyperlink_2(QString text, QString link)
+void GTagML_Parse_State::hyperlink_2(QString text, QString link)
 {
  reset_primary();
 
@@ -1575,7 +1507,7 @@ void GTagML_Graph_Build::hyperlink_2(QString text, QString link)
  latex_stream_ << "\\hlinkTwo{" << text << "}{" + link + "}";
 }
 
-void GTagML_Graph_Build::hyperlink_1(QString text)
+void GTagML_Parse_State::hyperlink_1(QString text)
 {
  reset_primary();
 
@@ -1583,7 +1515,7 @@ void GTagML_Graph_Build::hyperlink_1(QString text)
  latex_stream_ << "\\hlinkOne{" << text << "}";
 }
 
-void GTagML_Graph_Build::emph_symbolic(QString text)
+void GTagML_Parse_State::emph_symbolic(QString text)
 {
  reset_primary();
 
@@ -1591,7 +1523,7 @@ void GTagML_Graph_Build::emph_symbolic(QString text)
  latex_stream_ << "\\eS{" << text << "}";
 }
 
-void GTagML_Graph_Build::emph_acronym(QString text)
+void GTagML_Parse_State::emph_acronym(QString text)
 {
  reset_primary();
 
@@ -1616,7 +1548,7 @@ void GTagML_Graph_Build::emph_acronym(QString text)
  latex_stream_ << "\\eA" << version << "{" << text << "}";
 }
 
-void GTagML_Graph_Build::enter_double_quote_mode(QString pre)
+void GTagML_Parse_State::enter_double_quote_mode(QString pre)
 {
  reset_primary();
 
@@ -1638,7 +1570,7 @@ void GTagML_Graph_Build::enter_double_quote_mode(QString pre)
    latex_stream_ << "\\q{";
 }
 
-void GTagML_Graph_Build::leave_double_quote_mode()
+void GTagML_Parse_State::leave_double_quote_mode()
 {
  reset_primary();
 
@@ -1654,7 +1586,7 @@ void GTagML_Graph_Build::leave_double_quote_mode()
  latex_stream_ << "}";
 }
 
-void GTagML_Graph_Build::enter_single_quote_mode()
+void GTagML_Parse_State::enter_single_quote_mode()
 {
  reset_primary();
  parse_context_.flags.single_quote_mode = true;
@@ -1662,7 +1594,7 @@ void GTagML_Graph_Build::enter_single_quote_mode()
  latex_stream_ << "\\sq{";
 }
 
-void GTagML_Graph_Build::leave_single_quote_mode()
+void GTagML_Parse_State::leave_single_quote_mode()
 {
  reset_primary();
 
@@ -1670,7 +1602,7 @@ void GTagML_Graph_Build::leave_single_quote_mode()
  latex_stream_ << "}";
 }
 
-void GTagML_Graph_Build::enter_single_quote_mode_doubled()
+void GTagML_Parse_State::enter_single_quote_mode_doubled()
 {
  reset_primary();
  parse_context_.flags.single_quote_mode_doubled = true;
@@ -1678,7 +1610,7 @@ void GTagML_Graph_Build::enter_single_quote_mode_doubled()
  latex_stream_ << "\\sqq{";
 }
 
-void GTagML_Graph_Build::leave_single_quote_mode_doubled()
+void GTagML_Parse_State::leave_single_quote_mode_doubled()
 {
  reset_primary();
  parse_context_.flags.single_quote_mode_doubled = false;
@@ -1686,19 +1618,19 @@ void GTagML_Graph_Build::leave_single_quote_mode_doubled()
  latex_stream_ << "}";
 }
 
-void GTagML_Graph_Build::enter_single_quote_mode_trebled()
+void GTagML_Parse_State::enter_single_quote_mode_trebled()
 {
  parse_context_.flags.single_quote_mode_trebled = true;
 
 }
 
-void GTagML_Graph_Build::leave_single_quote_mode_trebled()
+void GTagML_Parse_State::leave_single_quote_mode_trebled()
 {
  parse_context_.flags.single_quote_mode_trebled = false;
 
 }
 
-void GTagML_Graph_Build::enter_acronym_mode(u1 size)
+void GTagML_Parse_State::enter_acronym_mode(u1 size)
 {
  if(size == 2)
  {
@@ -1716,7 +1648,7 @@ void GTagML_Graph_Build::enter_acronym_mode(u1 size)
 }
 
 
-void GTagML_Graph_Build::leave_acronym_mode()
+void GTagML_Parse_State::leave_acronym_mode()
 {
  QString version;
 
@@ -1752,7 +1684,7 @@ skip_this:
  latex_stream_ << "}";
 }
 
-void GTagML_Graph_Build::enter_sample_mode()
+void GTagML_Parse_State::enter_sample_mode()
 {
  reset_primary();
 
@@ -1763,7 +1695,7 @@ void GTagML_Graph_Build::enter_sample_mode()
 }
 
 
-void GTagML_Graph_Build::leave_sample_mode()
+void GTagML_Parse_State::leave_sample_mode()
 {
  reset_primary();
 
@@ -1774,7 +1706,7 @@ void GTagML_Graph_Build::leave_sample_mode()
 }
 
 
-void GTagML_Graph_Build::short_macro(QString text, u1 size)
+void GTagML_Parse_State::short_macro(QString text, u1 size)
 {
  if(size == 2)
  {
@@ -1788,7 +1720,7 @@ void GTagML_Graph_Build::short_macro(QString text, u1 size)
  leave_short_macro_mode();
 }
 
-void GTagML_Graph_Build::short_acronym(QString text, u1 size)
+void GTagML_Parse_State::short_acronym(QString text, u1 size)
 {
  if(size == 2)
  {
@@ -1803,14 +1735,14 @@ void GTagML_Graph_Build::short_acronym(QString text, u1 size)
  leave_acronym_mode();
 }
 
-void GTagML_Graph_Build::short_emph_sample(QString text)
+void GTagML_Parse_State::short_emph_sample(QString text)
 {
  enter_sample_mode();
  primary_acc_ = text;
  leave_sample_mode();
 }
 
-void GTagML_Graph_Build::enter_highlight_mode()
+void GTagML_Parse_State::enter_highlight_mode()
 {
  reset_primary();
 
@@ -1820,7 +1752,7 @@ void GTagML_Graph_Build::enter_highlight_mode()
  latex_stream_ << "\\eH{";
 }
 
-void GTagML_Graph_Build::leave_highlight_mode()
+void GTagML_Parse_State::leave_highlight_mode()
 {
  reset_primary();
 
@@ -1830,7 +1762,7 @@ void GTagML_Graph_Build::leave_highlight_mode()
  latex_stream_ << "}";
 }
 
-void GTagML_Graph_Build::enter_short_macro_mode(u1 size)
+void GTagML_Parse_State::enter_short_macro_mode(u1 size)
 {
  if(size == 2)
  {
@@ -1847,7 +1779,7 @@ void GTagML_Graph_Build::enter_short_macro_mode(u1 size)
 }
 
 
-void GTagML_Graph_Build::leave_short_macro_mode()
+void GTagML_Parse_State::leave_short_macro_mode()
 {
  QString latex = primary_acc_;
  latex.replace("0", "Zero");
@@ -1872,7 +1804,7 @@ void GTagML_Graph_Build::leave_short_macro_mode()
 }
 
 
-void GTagML_Graph_Build::enter_emph_italics_mode(QString mid)
+void GTagML_Parse_State::enter_emph_italics_mode(QString mid)
 {
  reset_primary();
 
@@ -1890,7 +1822,7 @@ void GTagML_Graph_Build::enter_emph_italics_mode(QString mid)
  }
 }
 
-void GTagML_Graph_Build::leave_emph_italics_mode()
+void GTagML_Parse_State::leave_emph_italics_mode()
 {
  reset_primary();
 
@@ -1901,7 +1833,7 @@ void GTagML_Graph_Build::leave_emph_italics_mode()
 }
 
 
-void GTagML_Graph_Build::special_character_sequence(QString text)
+void GTagML_Parse_State::special_character_sequence(QString text)
 {
  auto process = [this](QString latex, QString sentences, QString xml)
  {
@@ -1965,7 +1897,7 @@ void GTagML_Graph_Build::special_character_sequence(QString text)
 // }
 }
 
-void GTagML_Graph_Build::prepare_jats(QString& text, QString bib_path)
+void GTagML_Parse_State::prepare_jats(QString& text, QString bib_path)
 {
  QString bibtext = KA::TextIO::load_file(bib_path);
 
@@ -2130,31 +2062,31 @@ SOURCES: PDF <uri>https://scignscape.github.io/PNP/documents/A-perspective-from-
 }
 
 
-void GTagML_Graph_Build::enter_multiline_comment(QString semis, QString tildes)
+void GTagML_Parse_State::enter_multiline_comment(QString semis, QString tildes)
 {
  markup_position_.enter_multiline_comment(cutmax(semis.length()), cutmax(tildes.length()));
 //? parse_context_.flags.inside_multiline_comment = true;
 }
 
-void GTagML_Graph_Build::check_leave_multiline_comment(QString semis, QString tildes)
+void GTagML_Parse_State::check_leave_multiline_comment(QString semis, QString tildes)
 {
  if(markup_position_.check_leave_multiline_comment(cutmax(tildes.length()),
   cutmax(tildes.length())));
 //?  parse_context_.flags.inside_multiline_comment = false;
 }
 
-void GTagML_Graph_Build::tile_acc(QString str)
+void GTagML_Parse_State::tile_acc(QString str)
 {
  tile_acc_qts_ << str;
 }
 
-//void GTagML_Graph_Build::spm_acc(QString str)
+//void GTagML_Parse_State::spm_acc(QString str)
 //{
 // spm_acc_qts_ << str;
 //}
 
 
-void GTagML_Graph_Build::tag_command_annotation(QString annotation)
+void GTagML_Parse_State::tag_command_annotation(QString annotation)
 {
  //?
  // current_annotation_tile_ = new GTagML_Annotation_Tile("");
@@ -2163,7 +2095,7 @@ void GTagML_Graph_Build::tag_command_annotation(QString annotation)
  // markup_position_.tag_command_annotation(node);
 }
 
-void GTagML_Graph_Build::annotation_entry(QString flag, QString text, QString rel, QString tile, QString follow)
+void GTagML_Parse_State::annotation_entry(QString flag, QString text, QString rel, QString tile, QString follow)
 {
  check_tile_acc();
 
@@ -2215,7 +2147,7 @@ void GTagML_Graph_Build::annotation_entry(QString flag, QString text, QString re
  }
 }
 
-void GTagML_Graph_Build::check_tile_acc(Acc_Mode new_mode)
+void GTagML_Parse_State::check_tile_acc(Acc_Mode new_mode)
 {
  if(tile_acc_.isEmpty())
  {
@@ -2302,7 +2234,7 @@ void GTagML_Graph_Build::check_tile_acc(Acc_Mode new_mode)
  acc_mode_ = new_mode;
 }
 
-void GTagML_Graph_Build::check_add_words()
+void GTagML_Parse_State::check_add_words()
 {
  QStringList strings = tile_acc_.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
  for(QString s : strings)
@@ -2362,14 +2294,14 @@ void GTagML_Graph_Build::check_add_words()
 }
 
 
-void GTagML_Graph_Build::mark_attribute_tile()
+void GTagML_Parse_State::mark_attribute_tile()
 {
  check_tile_acc(Acc_Mode::Attribute);
 }
 
 
 
-void GTagML_Graph_Build::attach_left_whitespace()
+void GTagML_Parse_State::attach_left_whitespace()
 {
  if(get_light_xml())
  {
@@ -2387,7 +2319,7 @@ void GTagML_Graph_Build::attach_left_whitespace()
  }
 }
 
-void GTagML_Graph_Build::attach_right_whitespace()
+void GTagML_Parse_State::attach_right_whitespace()
 {
  if(get_light_xml())
  {
@@ -2402,7 +2334,7 @@ void GTagML_Graph_Build::attach_right_whitespace()
 }
 
 
-void GTagML_Graph_Build::attach_whitespace(QString whitespace)
+void GTagML_Parse_State::attach_whitespace(QString whitespace)
 {
  if(get_light_xml())
  {
@@ -2419,7 +2351,7 @@ void GTagML_Graph_Build::attach_whitespace(QString whitespace)
 }
 
 #ifdef HIDE
-void GTagML_Graph_Build::end_khif_tile(QString connector_prefix, QString connectors)
+void GTagML_Parse_State::end_khif_tile(QString connector_prefix, QString connectors)
 {
  end_khif_tile();
 
@@ -2431,7 +2363,7 @@ void GTagML_Graph_Build::end_khif_tile(QString connector_prefix, QString connect
 
 }
 
-void GTagML_Graph_Build::attach_khif_tile()
+void GTagML_Parse_State::attach_khif_tile()
 {
  if(!khif_tile_.isEmpty())
  {
@@ -2462,7 +2394,7 @@ void GTagML_Graph_Build::attach_khif_tile()
  }
 }
 
-void GTagML_Graph_Build::end_khif_tile()
+void GTagML_Parse_State::end_khif_tile()
 {
  //? parse_context.flags.inside_khif_tile = false;
  attach_khif_tile();
@@ -2471,7 +2403,7 @@ void GTagML_Graph_Build::end_khif_tile()
 #endif //def HIDE
 
 
-void GTagML_Graph_Build::enter_tag_command_with_predicate_vector(QString tag_command,
+void GTagML_Parse_State::enter_tag_command_with_predicate_vector(QString tag_command,
  QString connector_prefix, QString connectors)
 {
  bool string_follow = (connector_prefix.startsWith('+'));
@@ -2489,12 +2421,12 @@ void GTagML_Graph_Build::enter_tag_command_with_predicate_vector(QString tag_com
 }
 
 
-//void GTagML_Graph_Build::khif_tile_acc(QString m)
+//void GTagML_Parse_State::khif_tile_acc(QString m)
 //{
 // khif_tile_ += m;
 //}
 
-void GTagML_Graph_Build::attach_predicate_vector(QString connector_prefix, QString connectors)
+void GTagML_Parse_State::attach_predicate_vector(QString connector_prefix, QString connectors)
 {
 // attach_khif_tile();
  bool string_follow = (connector_prefix.startsWith('+'));
@@ -2503,7 +2435,7 @@ void GTagML_Graph_Build::attach_predicate_vector(QString connector_prefix, QStri
 }
 
 
-caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::html_tag_instruction(QString prefix,
+caon_ptr<GTagML_Tag_Command> GTagML_Parse_State::html_tag_instruction(QString prefix,
  QString tag_command, QString argument)
 {
  check_tile_acc();
@@ -2531,7 +2463,7 @@ caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::html_tag_instruction(QString pr
 
 
 
-caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::html_tag_command_entry(QString prefix, QString tag_command)
+caon_ptr<GTagML_Tag_Command> GTagML_Parse_State::html_tag_command_entry(QString prefix, QString tag_command)
 {
  check_tile_acc();
 
@@ -2553,7 +2485,7 @@ caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::html_tag_command_entry(QString 
 
 }
 
-void GTagML_Graph_Build::check_non_or_left_wrapped(QString wmi, caon_ptr<GTagML_Tag_Command> gtc)
+void GTagML_Parse_State::check_non_or_left_wrapped(QString wmi, caon_ptr<GTagML_Tag_Command> gtc)
 {
  if(wmi.startsWith(':'))
  {
@@ -2568,7 +2500,7 @@ void GTagML_Graph_Build::check_non_or_left_wrapped(QString wmi, caon_ptr<GTagML_
  } 
 }
 
-caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::tag_command_entry(QString wmi, 
+caon_ptr<GTagML_Tag_Command> GTagML_Parse_State::tag_command_entry(QString wmi, 
   QString prefix, QString tag_command, QString argument, QString parent_tag_type)
 {
  if(held_semantic_mark_mode_)
@@ -2597,7 +2529,7 @@ caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::tag_command_entry(QString wmi,
 }
 
 
-void GTagML_Graph_Build::html_tag_command_attribute_entry(QString pre_space,
+void GTagML_Parse_State::html_tag_command_attribute_entry(QString pre_space,
  QString attribute, QString s_or_d)
 {
  current_html_attribute_ = attribute;
@@ -2607,12 +2539,12 @@ void GTagML_Graph_Build::html_tag_command_attribute_entry(QString pre_space,
 //?  parse_context_.flags.inside_html_tag_attribute_double_quote = true;
 }
 
-void GTagML_Graph_Build::html_tag_command_attribute_acc(QString str)
+void GTagML_Parse_State::html_tag_command_attribute_acc(QString str)
 {
  tile_acc_ += str;
 }
 
-caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::complete_html_tag_command_attribute()
+caon_ptr<GTagML_Attribute_Tile> GTagML_Parse_State::complete_html_tag_command_attribute()
 {
  if(get_light_xml())
  {
@@ -2645,19 +2577,19 @@ caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::complete_html_tag_command_at
 
 }
 
-GTagML_Document_Light_Xml* GTagML_Graph_Build::get_light_xml()
+GTagML_Document_Light_Xml* GTagML_Parse_State::get_light_xml()
 {
  return nullptr;
  //return document_info_.light_xml();
 }
 
-void GTagML_Graph_Build::multi_arg_transition_to_main_tile()
+void GTagML_Parse_State::multi_arg_transition_to_main_tile()
 {
  multi_arg_transition({}, {}, {}, "-->", "=>");
   // // need to mark as main tile somehow ...
 }
 
-void GTagML_Graph_Build::multi_arg_transition(QString wmi, QString inner_wmi,
+void GTagML_Parse_State::multi_arg_transition(QString wmi, QString inner_wmi,
   QString fiat, QString arg_marker, QString carried_arg_marker)
 {
  if(flags.active_attribute_sequence)
@@ -2690,7 +2622,7 @@ void GTagML_Graph_Build::multi_arg_transition(QString wmi, QString inner_wmi,
    arg_marker, &carried_arg_marker);
 }
 
-void GTagML_Graph_Build::tag_command_entry_with_layer(QString tag_command, QString layer_marker)
+void GTagML_Parse_State::tag_command_entry_with_layer(QString tag_command, QString layer_marker)
 {
  caon_ptr<GTagML_Tag_Command> gtc = tag_command_entry({}, {}, tag_command, {});
    //make_new_tag_command(tag_command, {});
@@ -2715,7 +2647,7 @@ void GTagML_Graph_Build::tag_command_entry_with_layer(QString tag_command, QStri
  tag_body_leave();
 }
 
-void GTagML_Graph_Build::tag_command_entry_inside_multi(QString wmi,
+void GTagML_Parse_State::tag_command_entry_inside_multi(QString wmi,
   QString inner_wmi,
   QString fiat,
   QString tag_command, QString arg_marker, 
@@ -2778,7 +2710,7 @@ void GTagML_Graph_Build::tag_command_entry_inside_multi(QString wmi,
  }
 }
 
-void GTagML_Graph_Build::tag_command_entry_multi(QString wmi,
+void GTagML_Parse_State::tag_command_entry_multi(QString wmi,
   QString inner_wmi, QString tag_command,
   QString tag_body_follow, QString fiat, QString first_arg_wmi, QString first_arg_marker)
 {
@@ -2821,7 +2753,7 @@ void GTagML_Graph_Build::tag_command_entry_multi(QString wmi,
  }
 }
 
-void GTagML_Graph_Build::tag_command_entry_inline(QString wmi,
+void GTagML_Parse_State::tag_command_entry_inline(QString wmi,
   QString inner_wmi, QString fiat, QString tag_command,
   QString tag_body_follow, QString argument)
 {
@@ -2860,7 +2792,7 @@ void GTagML_Graph_Build::tag_command_entry_inline(QString wmi,
  }
 }
 
-void GTagML_Graph_Build::gtag_command_entry_inline(QString tag_command,
+void GTagML_Parse_State::gtag_command_entry_inline(QString tag_command,
  QString tag_body_follow)
 {
  Tag_Body_Follow_Mode m = parse_tag_body_follow(tag_body_follow);
@@ -2886,7 +2818,7 @@ void GTagML_Graph_Build::gtag_command_entry_inline(QString tag_command,
 }
 
 
-caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::make_new_tag_command(QString name, QString argument, QString parent_tag_type)
+caon_ptr<GTagML_Tag_Command> GTagML_Parse_State::make_new_tag_command(QString name, QString argument, QString parent_tag_type)
 {
  GTagML_Tag_Command* result;
 
@@ -2928,7 +2860,7 @@ caon_ptr<GTagML_Tag_Command> GTagML_Graph_Build::make_new_tag_command(QString na
 }
 
 
-caon_ptr<GTagML_Tile> GTagML_Graph_Build::add_tile(QString tile_str)
+caon_ptr<GTagML_Tile> GTagML_Parse_State::add_tile(QString tile_str)
 {
  if(get_light_xml())
  {
@@ -2944,7 +2876,7 @@ caon_ptr<GTagML_Tile> GTagML_Graph_Build::add_tile(QString tile_str)
  return tile;
 }
 
-caon_ptr<GTagML_Raw_Tile> GTagML_Graph_Build::add_raw_tile(QString tile_str)
+caon_ptr<GTagML_Raw_Tile> GTagML_Parse_State::add_raw_tile(QString tile_str)
 {
   // // current latex is the only raw format ...
  caon_ptr<GTagML_Raw_Tile> tile = make_new_raw_tile(current_raw_format_, tile_str);
@@ -2954,7 +2886,7 @@ caon_ptr<GTagML_Raw_Tile> GTagML_Graph_Build::add_raw_tile(QString tile_str)
  return tile;
 }
 
-caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::add_attribute_tile(QString tile_str)
+caon_ptr<GTagML_Attribute_Tile> GTagML_Parse_State::add_attribute_tile(QString tile_str)
 {
  if(get_light_xml())
  {
@@ -2970,29 +2902,18 @@ caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::add_attribute_tile(QString t
 }
 
 
-void GTagML_Graph_Build::add_string_literal_tile(QString str)
+void GTagML_Parse_State::add_string_literal_tile(QString str)
 {
  //? caon_ptr<GTagML_Tile> tile = add_tile(str);
  //? tile->flags.is_string_literal = true;
 }
 
-void GTagML_Graph_Build::tag_command_leave(QString connector_to_load, QString tag_command)
+void GTagML_Parse_State::tag_command_leave(QString connector_to_load, QString tag_command)
 {
 
 }
 
-void GTagML_Graph_Build::block_gtag_command_leave()
-{
- if(caon_ptr<tNode> node = markup_position_.tag_command_leave())
- {
-  CAON_PTR_DEBUG(tNode ,node)
-  check_tile_acc();
-  markup_position_.confirm_tag_command_leave(node);
-  check_multi_parent_reset();
- }
-}
-
-void GTagML_Graph_Build::inline_tag_command_leave()
+void GTagML_Parse_State::block_gtag_command_leave()
 {
  if(caon_ptr<tNode> node = markup_position_.tag_command_leave())
  {
@@ -3003,7 +2924,18 @@ void GTagML_Graph_Build::inline_tag_command_leave()
  }
 }
 
-void GTagML_Graph_Build::tag_command_leave_multi(QString tag_command)
+void GTagML_Parse_State::inline_tag_command_leave()
+{
+ if(caon_ptr<tNode> node = markup_position_.tag_command_leave())
+ {
+  CAON_PTR_DEBUG(tNode ,node)
+  check_tile_acc();
+  markup_position_.confirm_tag_command_leave(node);
+  check_multi_parent_reset();
+ }
+}
+
+void GTagML_Parse_State::tag_command_leave_multi(QString tag_command)
 {
  if(caon_ptr<tNode> node = markup_position_.tag_command_leave())
  {
@@ -3031,7 +2963,7 @@ void GTagML_Graph_Build::tag_command_leave_multi(QString tag_command)
  }
 }
 
-void GTagML_Graph_Build::tag_command_leave()
+void GTagML_Parse_State::tag_command_leave()
 {
  if(caon_ptr<tNode> node = markup_position_.tag_command_leave())
  {
@@ -3042,13 +2974,13 @@ void GTagML_Graph_Build::tag_command_leave()
  }
 }
 
-void GTagML_Graph_Build::tag_command_instruction_leave(caon_ptr<tNode> node)
+void GTagML_Parse_State::tag_command_instruction_leave(caon_ptr<tNode> node)
 {
  check_tile_acc();
  markup_position_.restore_current_node(node);
 }
 
-void GTagML_Graph_Build::check_html_tag_command_leave(QString tag_command, QString match_text)
+void GTagML_Parse_State::check_html_tag_command_leave(QString tag_command, QString match_text)
 {
  check_tile_acc();
 
@@ -3061,7 +2993,7 @@ void GTagML_Graph_Build::check_html_tag_command_leave(QString tag_command, QStri
  markup_position_.rewind_tag_command_leave(tag_command);
 }
 
-void GTagML_Graph_Build::check_multi_parent_reset()
+void GTagML_Parse_State::check_multi_parent_reset()
 {
  if(caon_ptr<GTagML_Tag_Command> gtc = markup_position_.get_current_tag_command())
  {
@@ -3089,7 +3021,7 @@ void GTagML_Graph_Build::check_multi_parent_reset()
  }
 }
 
-void GTagML_Graph_Build::check_tag_command_leave(QString tag_command, QString match_text)
+void GTagML_Parse_State::check_tag_command_leave(QString tag_command, QString match_text)
 {
  // //  If the tag command does not match the current node, treat the whole match
   //    as just text to accumulate
@@ -3106,7 +3038,7 @@ void GTagML_Graph_Build::check_tag_command_leave(QString tag_command, QString ma
  }
 }
 
-//void GTagML_Graph_Build::add_string_literal_tile()
+//void GTagML_Parse_State::add_string_literal_tile()
 //{
 // if(!tile_acc_.isEmpty())
 // {
@@ -3123,7 +3055,7 @@ void GTagML_Graph_Build::check_tag_command_leave(QString tag_command, QString ma
 // qts_string_literal_acc_.reset();
 //}
 
-caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::make_new_attribute_tile(QString tile)
+caon_ptr<GTagML_Attribute_Tile> GTagML_Parse_State::make_new_attribute_tile(QString tile)
 {
  QRegularExpression rx("(\\S+)\\s+(.+)", QRegularExpression::DotMatchesEverythingOption);
  QRegularExpressionMatch rxm = rx.match(tile);
@@ -3134,25 +3066,25 @@ caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::make_new_attribute_tile(QStr
  }
 }
 
-caon_ptr<GTagML_Attribute_Tile> GTagML_Graph_Build::make_new_attribute_tile(QString key, QString value)
+caon_ptr<GTagML_Attribute_Tile> GTagML_Parse_State::make_new_attribute_tile(QString key, QString value)
 {
  return caon_ptr<GTagML_Attribute_Tile>(
    new GTagML_Attribute_Tile(key, value) );
 }
 
-caon_ptr<GTagML_Raw_Tile> GTagML_Graph_Build::make_new_raw_tile(QString format, QString value)
+caon_ptr<GTagML_Raw_Tile> GTagML_Parse_State::make_new_raw_tile(QString format, QString value)
 {
  return caon_ptr<GTagML_Raw_Tile>(
    new GTagML_Raw_Tile(format, value) );
 }
 
-caon_ptr<GTagML_Tile> GTagML_Graph_Build::make_new_tile(QString tile)
+caon_ptr<GTagML_Tile> GTagML_Parse_State::make_new_tile(QString tile)
 {
  return caon_ptr<GTagML_Tile>( new GTagML_Tile(tile) );
 }
 
 
-caon_ptr<GTagML_Paralex_Tile> GTagML_Graph_Build::make_new_paralex_tile(QString tile,
+caon_ptr<GTagML_Paralex_Tile> GTagML_Parse_State::make_new_paralex_tile(QString tile,
   u1 kind, u1 w_or_a)
 {
  return caon_ptr<GTagML_Paralex_Tile>( new GTagML_Paralex_Tile(tile, 
@@ -3160,7 +3092,7 @@ caon_ptr<GTagML_Paralex_Tile> GTagML_Graph_Build::make_new_paralex_tile(QString 
 }
 
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Tile> tile)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Tile> tile)
 {
  CAON_PTR_DEBUG(GTagML_Tile ,tile)
  caon_ptr<tNode> result = caon_ptr<tNode>( new tNode(tile) );
@@ -3170,7 +3102,7 @@ caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<G
  return result;
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Raw_Tile> tile)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Raw_Tile> tile)
 {
  CAON_PTR_DEBUG(GTagML_Raw_Tile ,tile)
  caon_ptr<tNode> result = caon_ptr<tNode>( new tNode(tile) );
@@ -3180,7 +3112,7 @@ caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<G
  return result;
 }
 
-void GTagML_Graph_Build::check_nonstandard_special_character_sequence
+void GTagML_Parse_State::check_nonstandard_special_character_sequence
   (QString match_text, QString& esc, u1& mode, QString& sup_text)
 {
  static QMap<QString, std::pair<QString, u1>> static_map {
@@ -3206,7 +3138,7 @@ void GTagML_Graph_Build::check_nonstandard_special_character_sequence
  }
 }
 
-void GTagML_Graph_Build::semantic_mark(QString match_text, QString sem, u1 mode)
+void GTagML_Parse_State::semantic_mark(QString match_text, QString sem, u1 mode)
 {
  QString acc;
 
@@ -3237,7 +3169,7 @@ void GTagML_Graph_Build::semantic_mark(QString match_text, QString sem, u1 mode)
 
 
 
-void GTagML_Graph_Build::special_character_sequence(QString match_text, 
+void GTagML_Parse_State::special_character_sequence(QString match_text, 
   QString esc, u1 mode)
 {
  QString sup_text;
@@ -3318,21 +3250,21 @@ void GTagML_Graph_Build::special_character_sequence(QString match_text,
  markup_position_.add_tile_node(node);
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Annotation_Tile> tile)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Annotation_Tile> tile)
 {
  caon_ptr<tNode> result = new tNode(tile);
  result->set_label(tile->thumbnail());
  return result;
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Annotation_Tile> tile, QString label)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Annotation_Tile> tile, QString label)
 {
  caon_ptr<tNode> result = new tNode(tile);
  result->set_label(label);
  return result;
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Attribute_Tile> tile)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Attribute_Tile> tile)
 {
  CAON_PTR_DEBUG(GTagML_Attribute_Tile ,tile)
  caon_ptr<tNode> result = caon_ptr<tNode>( new tNode(tile) );
@@ -3342,7 +3274,7 @@ caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<G
  return result;
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Paralex_Tile> tile)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Paralex_Tile> tile)
 {
  CAON_PTR_DEBUG(GTagML_Paralex_Tile ,tile)
  caon_ptr<tNode> result = caon_ptr<tNode>( new tNode(tile) );
@@ -3352,7 +3284,7 @@ caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<G
  return result;
 }
 
-caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<GTagML_Tag_Command> gtc)
+caon_ptr<GTagML_Parse_State::tNode> GTagML_Parse_State::make_new_node(caon_ptr<GTagML_Tag_Command> gtc)
 {
  CAON_PTR_DEBUG(GTagML_Tag_Command ,gtc)
  caon_ptr<tNode> result = caon_ptr<tNode>( new tNode(gtc) );
@@ -3362,7 +3294,7 @@ caon_ptr<GTagML_Graph_Build::tNode> GTagML_Graph_Build::make_new_node(caon_ptr<G
  return result;
 }
 
-void GTagML_Graph_Build::attribute_sequence_leave()
+void GTagML_Parse_State::attribute_sequence_leave()
 {
  check_tile_acc();
  parse_context_.flags.inside_attribute_sequence = false;
@@ -3370,7 +3302,7 @@ void GTagML_Graph_Build::attribute_sequence_leave()
  markup_position_.attribute_sequence_leave();
 }
 
-void GTagML_Graph_Build::tag_body_leave(QString match)
+void GTagML_Parse_State::tag_body_leave(QString match)
 {
  check_tile_acc();
  markup_position_.tag_body_leave();
@@ -3379,7 +3311,7 @@ void GTagML_Graph_Build::tag_body_leave(QString match)
   tag_command_leave();
 }
 
-void GTagML_Graph_Build::enter_special_parse_mode(QString spm)
+void GTagML_Parse_State::enter_special_parse_mode(QString spm)
 {
  if(spm.startsWith("raw-"))
  {
@@ -3396,7 +3328,7 @@ void GTagML_Graph_Build::enter_special_parse_mode(QString spm)
  current_parsing_mode_ = GTagML_Parsing_Modes::Raw;
 }
 
-void GTagML_Graph_Build::leave_special_parse_mode(QString spm)
+void GTagML_Parse_State::leave_special_parse_mode(QString spm)
 {
  if(prior_parsing_modes_.isEmpty())
    current_parsing_mode_ = GTagML_Parsing_Modes::Parse_Error;
@@ -3407,12 +3339,12 @@ void GTagML_Graph_Build::leave_special_parse_mode(QString spm)
  }
 }
 
-void GTagML_Graph_Build::special_parse_mode_acc(QString text)
+void GTagML_Parse_State::special_parse_mode_acc(QString text)
 {
  tile_acc(text);
 }
 
-void GTagML_Graph_Build::html_tag_body_leave(QString prefix)
+void GTagML_Parse_State::html_tag_body_leave(QString prefix)
 {
 
  if(get_light_xml())

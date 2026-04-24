@@ -9,7 +9,7 @@
 
 #include "kernel/grammar/gtagml-parse-context.h"
 
-#include "kernel/grammar/gtagml-graph-build.h"
+#include "kernel/grammar/gtagml-parse-state.h"
 
 #include "kernel/grammar/gtagml-parser.h"
 
@@ -21,7 +21,7 @@ GTagML_Grammar::GTagML_Grammar()
 {
 }
 
-void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Graph_Build& graph_build)
+void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State& graph_build)
 {
  pre_rule( "script-word", "(?:[^{}()\\[\\]\\s`;,:]|(?:\\w::?\\w))+" );
  pre_rule( "valid-tag-command-name", "[\\w@](?:[^{}()\\[\\]<>/\\s`;,.:]|(?:\\w+::?\\w))*" );

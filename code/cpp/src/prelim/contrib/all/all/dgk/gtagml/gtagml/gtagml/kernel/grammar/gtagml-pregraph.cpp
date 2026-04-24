@@ -16,3 +16,21 @@ GTagML_Pregraph::GTagML_Pregraph()
 {
 
 }
+
+void GTagML_Pregraph::write_raw_text(QString text)
+{
+ QString pre = "| ";
+ text.replace("\n", pre);
+ text.prepend(pre);
+ acc << "\n\n" << pre << "\n\n";
+}
+
+void GTagML_Pregraph::new_text_node(u2 ply_id, QString text)
+{
+ write_raw_text(text);
+
+ acc << ".text-node $ " << ply_id << " ;.\n";
+
+}
+
+

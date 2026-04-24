@@ -5,8 +5,8 @@
 //           http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef GTAGML_GRAPH_BUILD__H
-#define GTAGML_GRAPH_BUILD__H
+#ifndef GTAGML_PARSE_STATE__H
+#define GTAGML_PARSE_STATE__H
 
 #include "kernel/graph/gtagml-markup-position.h"
 #include "kernel/grammar/gtagml-parse-context.h"
@@ -18,6 +18,8 @@
 #include "global-types.h"
 
 #include "accessors.h"
+
+#include "gtagml-streams.h"
 
 
 #include <QXmlStreamWriter>
@@ -42,7 +44,7 @@ class GTagML_Annotation_Tile;
 class GTagML_Document_Light_Xml;
 
 
-class GTagML_Graph_Build
+class GTagML_Parse_State
 {
  flags_(4)
   bool math_mode:1;
@@ -84,11 +86,13 @@ class GTagML_Graph_Build
   return static_map.value(str, Tag_Body_Follow_Mode_Not_Recognized);
  }
 
+ GTagML_Streams streams_;
+
+ GTagML_Parser* parser_;
+
  GTagML_Parsing_Modes current_parsing_mode_;
 
  QStack<QPair<GTagML_Parsing_Modes, Acc_Mode>> prior_parsing_modes_;
-
- caon_ptr<GTagML_Parser> parser_;
 
  GTagML_Parse_Context parse_context_;
 
@@ -240,11 +244,14 @@ class GTagML_Graph_Build
 public:
 
 
+ GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& document_info);
+
  ACCESSORS__RGET(GTagML_Parse_Context ,parse_context)
  ACCESSORS(GTagML_Parsing_Modes ,current_parsing_mode)
 
+ ACCESSORS(u4 ,sentence_id)
 
- GTagML_Graph_Build(GTagML_Graph& g, GTagML_Document_Info& document_info);
+ void init(GTagML_Parser* parser);
 
  QString current_paragraph_type_to_string()
  {
@@ -358,8 +365,6 @@ public:
  void enter_special_section(QString text);
  void enter_abstract();
 
- void insert_latex_template(QString path, QString* result = nullptr);
- void insert_xml_template(QString path, QString* result = nullptr);
 
  void primary_acc(QString text);
  void reset_primary();
@@ -562,4 +567,4 @@ QString argument, QString parent_tag_type = QString());
 
 _KANS(GTagML)
 
-#endif
+#endif //  GTAGML_PARSE_STATE__H

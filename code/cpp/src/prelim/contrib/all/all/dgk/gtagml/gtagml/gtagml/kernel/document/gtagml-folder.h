@@ -26,7 +26,7 @@ KANS_(GTagML)
 
 class GTagML_Graph;
 class GTagML_Parser;
-class GTagML_Graph_Build;
+class GTagML_Parse_State;
 class GTagML_Grammar;
 class GTagML_Annotation_Tile;
 class GTagML_Project_Info;

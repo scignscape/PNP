@@ -31,9 +31,10 @@ KANS_(GTagML)
 
 class GTagML_Parser;
 class GTagML_Grammar;
-class GTagML_Graph_Build;
+class GTagML_Parse_State;
 
 class GTagML_Pregraph;
+class GTagML_Streams;
 
 
 class GTagML_Word_Entry_List;
@@ -46,7 +47,9 @@ class GTagML_Document
 {
  GTagML_Graph* graph_;
  GTagML_Parser* parser_;
- GTagML_Graph_Build* graph_build_;
+ GTagML_Parse_State* parse_state_;
+ GTagML_Streams* streams_;
+
  GTagML_Pregraph* pregraph_;
  GTagML_Grammar* grammar_;
 
@@ -122,6 +125,7 @@ public:
 
  void save_jats(QString path, QString bib_path);
  void save_latex(QString path);
+ void save_pregraph(QString path);
 
  QString use_info_path();
 
