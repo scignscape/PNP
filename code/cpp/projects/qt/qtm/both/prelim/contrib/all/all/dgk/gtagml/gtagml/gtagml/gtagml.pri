@@ -88,6 +88,8 @@ HEADERS += \
   $$SRC_DIR/output/gtagml-output-sdi-infoset.h \
   $$SRC_DIR/output/gtagml-output-sdi-infoset.callbacks.h \
   $$SRC_DIR/sdi/gh-sdi-document.h \
+  $$SRC_DIR/tag/gtagml-tag-node.h \
+  $$SRC_DIR/tag/gtagml-text-node.h \
 
 
 SOURCES += \
@@ -138,6 +140,9 @@ SOURCES += \
   $$SRC_DIR/output/gtagml-output-blocks.cpp \
   $$SRC_DIR/output/gtagml-output-sdi-infoset.cpp \
   $$SRC_DIR/sdi/gh-sdi-document.cpp \
+  $$SRC_DIR/tag/gtagml-tag-node.cpp \
+  $$SRC_DIR/tag/gtagml-text-node.cpp \
+
 
 
 message(choice: $$CPP_ROOT_DIR/targets/$$CHOICE_CODE/$$PROJECT_SET--$$PROJECT_GROUP--$$PROJECT_NAME)
