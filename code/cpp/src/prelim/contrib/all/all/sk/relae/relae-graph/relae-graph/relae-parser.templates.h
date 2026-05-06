@@ -136,6 +136,26 @@ tString Relae_Parser<GALAXY>::matched(tString capture_name)
  return "";
 }
 
+template<typename GALAXY>
+QVector<tString> Relae_Parser<GALAXY>::unnamed_captures(int start_position)
+{
+ if(match_)
+ {
+  return match_->unnamed_captures(start_position);
+ }
+ return {};
+}
+
+template<typename GALAXY>
+QVector<tString> Relae_Parser<GALAXY>::unnamed_captures(tString capture_name)
+{
+ if(match_)
+ {
+  return match_->unnamed_captures(capture_name);
+ }
+ return {};
+}
+
 
 template<typename GALAXY>
 tString Relae_Parser<GALAXY>::match_text()

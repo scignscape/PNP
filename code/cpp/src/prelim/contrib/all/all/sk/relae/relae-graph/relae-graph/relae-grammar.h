@@ -414,11 +414,44 @@ public:
   add_regex_rule(name, s, block);
  }
 
+ void check_repeated_capturing_syntax(QString& rx)
+ {
+  qDebug() << rx;
+
+//  QRegularExpression group_name("\\?\\(\\*([\\w-]+)\\*");
+  QRegularExpression group_name("\\(\\?\\*([\\w-]+)\\*");
+  QRegularExpressionMatchIterator it = group_name.globalMatch(rx);
+
+  QVector<QString> group_names;
+  QMap<QString, QPair<int, int>> replace_positions;
+
+  while(it.hasNext())
+  {
+   QRegularExpressionMatch m = it.next();
+   QString c = m.captured(1);
+   group_names.push_back(c);
+   replace_positions[c] = {m.capturedStart(1) - 1, m.capturedEnd(1)};
+  }
+
+  if(group_names.isEmpty())
+    return;
+
+  for(QString n : group_names)
+  {
+   rx.replace(replace_positions[n].first, 1, '<');
+   rx.replace(replace_positions[n].second, 1, '>');
+  }
+
+  qDebug() << rx;
+ }
+
  void add_compound_anchored_rule(QString name, QString rx, RZ_MATCH_CALLBACK block)
  {
-
   QString prelim;
   QString main_rx;
+
+  check_repeated_capturing_syntax(rx);
+
   prepare_compound_rule(rx, prelim, main_rx);
   add_anchored_rule_with_prelim(name, prelim, main_rx, block);
  }
@@ -653,6 +686,12 @@ public:
    QRegularExpression::NormalMatch, r.match_options);  //QRegExp::CaretAtOffset
   if(match.hasMatch())
   {
+   QString c1 = match.captured(1);
+   QString c2 = match.captured(2);
+   QString c3 = match.captured(3);
+   QString c4 = match.captured(4);
+   QString c5 = match.captured(5);
+
    return new RZ_Match_Data_Qt(match.capturedEnd(), // pos + match.capturedLength(),
     match.capturedTexts(), r.capture_name_map);
   }

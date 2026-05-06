@@ -47,7 +47,7 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
 
    ,current_paragraph_type_(Paragraph_Types::N_A)
    ,current_paragraph_count_(0), current_paragraph_bridge_(0)
-   ,primary_acc_stream_(&primary_acc_)
+   //?,streams_.primary_acc()stream_(&streams_.primary_acc())
    ,sentences_text_stream_(&sentences_text_)
    ,sentence_gaps_stream_(&sentence_gaps_)
    ,sentences_section_heading_stream_(&sentences_section_heading_)
@@ -70,6 +70,12 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
 }
 
 
+void GTagML_Parse_State::outer_tag_command_entry(QString outer,
+  QString pre, QString main, QString post)
+{
+
+}
+
 void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)
 {
  if(instruction == "spar")
@@ -81,9 +87,21 @@ void GTagML_Parse_State::parse_processing_instruction(QString instruction, QStri
 
   return;
  }
+
+ if(instruction == "end")
+ {
+  if(lrcode == "1111")
+  {
+   // //  same lines as /// // -- refactor?
+   streams_.latex_stream() << "\n\n";
+   parse_context_.flags.auto_paragraph_mode = false;
+
+   end_document();
+
+   return;
+  }
+ }
 }
-
-
 
 
 void GTagML_Parse_State::enter_special_section(QString text)
@@ -157,7 +175,7 @@ void GTagML_Parse_State::primary_acc(QString text)
   if(count < 2)
   {
    if(flags.use_latex_sdi_all_markers)
-     streams_.latex_stream() << " \\> ";
+     streams_.latex(" \\> ");
 
    ++sentence_id_;
    streams_.sentences_sdi_stream() << "\n\n--- Sentence/switch\nid: "
@@ -177,7 +195,7 @@ void GTagML_Parse_State::primary_acc(QString text)
   {
    flags.await_paragraph_start = false;
    if(flags.use_latex_sdi_all_markers || flags.use_latex_sdi_paragraph_markers)
-     streams_.latex_stream() << "\\:";
+     streams_.latex("\\:");
 
    ++paragraph_id_;
    streams_.sentences_sdi_stream() << "\n\n--- Paragraph/start\nid: " << paragraph_id_
@@ -191,7 +209,7 @@ void GTagML_Parse_State::primary_acc(QString text)
   {
    flags.await_sentence_start = false;
    if(flags.use_latex_sdi_all_markers)
-     streams_.latex_stream() << "\\+";
+     streams_.latex("\\+");
 
    ++sentence_id_;
    streams_.sentences_sdi_stream() << "\n\n--- Sentence/start\nid: " << sentence_id_
@@ -200,7 +218,7 @@ void GTagML_Parse_State::primary_acc(QString text)
   }
  }
 
- primary_acc_stream_ << text;
+ streams_.primary(text);
 }
 
 void GTagML_Parse_State::reset_primary()
@@ -209,7 +227,7 @@ void GTagML_Parse_State::reset_primary()
  {
   if(flags.sentences_latex_filter)
   {
-   QString pa = primary_acc_;
+   QString pa = streams_.primary_acc();
    QRegularExpression rx ("\\\\\\w+");
    while(true)
    {
@@ -225,7 +243,7 @@ void GTagML_Parse_State::reset_primary()
    sentences_text_stream_ << pa;
   }
   else
-    sentences_text_stream_ << primary_acc_;
+    sentences_text_stream_ << streams_.primary_acc();
  };
 
  if(flags.sentences_only)
@@ -235,25 +253,25 @@ void GTagML_Parse_State::reset_primary()
 
  else if(flags.latex_only)
  {
-  streams_.latex_stream() << primary_acc_;
+  streams_.latex_stream() << streams_.primary_acc();
   u4 pos = parser_->current_position();
 
   sentence_gaps_stream_ << "\n +" << line_and_column_string_tight(pos);
 
-  pos += primary_acc_.size();
+  pos += streams_.primary_acc().size();
 
-  sentence_gaps_stream_ << ":" << primary_acc_.size();
+  sentence_gaps_stream_ << ":" << streams_.primary_acc().size();
   sentence_gaps_stream_ << "=" << line_and_column_string_tight(pos);
  }
 
  else
  {
-  streams_.latex_stream() << primary_acc_;
-  streams_.xml_writer().writeCharacters(primary_acc_);
+  streams_.latex_stream() << streams_.primary_acc();
+  streams_.xml_writer().writeCharacters(streams_.primary_acc());
   handle_sentences();
  }
 
- primary_acc_.clear();
+ streams_.primary_acc().clear();
 }
 
 
@@ -522,7 +540,7 @@ void GTagML_Parse_State::end_sentence(QString punctuation,
 
   //? streams_.latex_stream() << punctuation << "@ ";
 
-// primary_acc_stream_ << punctuation << "  ";
+// streams_.primary_acc()stream_ << punctuation << "  ";
 }
 
 
@@ -1651,14 +1669,14 @@ void GTagML_Parse_State::leave_acronym_mode()
 {
  QString version;
 
- if(primary_acc_ == primary_acc_.toLower())
+ if(streams_.primary_acc() == streams_.primary_acc().toLower())
    version = "AllLower";
- else if(primary_acc_ != primary_acc_.toUpper())
+ else if(streams_.primary_acc() != streams_.primary_acc().toUpper())
  {
   // //  what to do
-  if(primary_acc_.endsWith("s"))
+  if(streams_.primary_acc().endsWith("s"))
   {
-   QString t = primary_acc_;
+   QString t = streams_.primary_acc();
    t.chop(1);
    if(t == t.toUpper())
      goto skip_this;
@@ -1710,12 +1728,12 @@ void GTagML_Parse_State::short_macro(QString text, u1 size)
  if(size == 2)
  {
   enter_highlight_mode();
-  primary_acc_ = text;
+  streams_.primary_acc() = text;
   leave_highlight_mode();
   return;
  }
  enter_short_macro_mode(1);
- primary_acc_ = text;
+ streams_.primary_acc() = text;
  leave_short_macro_mode();
 }
 
@@ -1724,20 +1742,20 @@ void GTagML_Parse_State::short_acronym(QString text, u1 size)
  if(size == 2)
  {
   enter_sample_mode();
-  primary_acc_ = text;
+  streams_.primary_acc() = text;
   leave_sample_mode();
   return;
  }
 
  enter_acronym_mode(1);
- primary_acc_ = text;
+ streams_.primary_acc() = text;
  leave_acronym_mode();
 }
 
 void GTagML_Parse_State::short_emph_sample(QString text)
 {
  enter_sample_mode();
- primary_acc_ = text;
+ streams_.primary_acc() = text;
  leave_sample_mode();
 }
 
@@ -1780,7 +1798,7 @@ void GTagML_Parse_State::enter_short_macro_mode(u1 size)
 
 void GTagML_Parse_State::leave_short_macro_mode()
 {
- QString latex = primary_acc_;
+ QString latex = streams_.primary_acc();
  latex.replace("0", "Zero");
  latex.replace("1", "One");
  latex.replace("2", "Two");
@@ -1794,10 +1812,10 @@ void GTagML_Parse_State::leave_short_macro_mode()
 
  parse_context_.flags.short_macro_mode = false;
 
- streams_.xml_writer().writeCDATA(primary_acc_);
+ streams_.xml_writer().writeCDATA(streams_.primary_acc());
  streams_.xml_writer().writeEndElement();
 
- primary_acc_.clear();
+ streams_.primary_acc().clear();
 
  streams_.latex_stream() << latex << "{}";
 }

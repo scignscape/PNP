@@ -48,6 +48,8 @@ class GTagML_Streams
  QString sentences_sdi_;
  QTextStream sentences_sdi_stream_;
 
+ QString primary_acc_;
+ QTextStream primary_acc_stream_;
 
 
  GTagML_Parser* parser_;
@@ -58,10 +60,15 @@ class GTagML_Streams
 
  ACCESSORS(QString ,jats)
 
+ ACCESSORS__RGET(QTextStream ,primary_acc_stream)
  ACCESSORS__RGET(QTextStream ,latex_stream)
  ACCESSORS__RGET(QTextStream ,jats_stream)
  ACCESSORS__RGET(QTextStream ,sentences_sdi_stream)
  ACCESSORS__RGET(QXmlStreamWriter ,xml_writer)
+ ACCESSORS__RGET(QString ,primary_acc)
+
+ void latex(QString text);
+ void primary(QString text);
 
  void insert_latex_template(QString path, QString* result = nullptr);
  void insert_xml_template(QString path, QString* result = nullptr);

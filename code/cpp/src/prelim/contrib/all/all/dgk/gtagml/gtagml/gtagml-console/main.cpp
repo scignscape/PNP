@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
  QString manfolder;
 
 
- file = ROOT_FOLDER "/../gt/t1/t1.gt";
- folder = ROOT_FOLDER "/../gt/t1/src";
+ file = ROOT_FOLDER "/../gt/ScignTorq/ScignTorq.gt";
+ folder = ROOT_FOLDER "/../gt/ScignTorq/src";
 
  _main(file, folder, manfolder);
 

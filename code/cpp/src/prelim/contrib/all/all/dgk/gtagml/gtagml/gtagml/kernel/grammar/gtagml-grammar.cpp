@@ -21,7 +21,7 @@ GTagML_Grammar::GTagML_Grammar()
 {
 }
 
-void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State& graph_build)
+void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State& parse_state)
 {
  pre_rule( "script-word", "(?:[^{}()\\[\\]\\s`;,:]|(?:\\w::?\\w))+" );
  pre_rule( "valid-tag-command-name", "[\\w@](?:[^{}()\\[\\]<>/\\s`;,.:]|(?:\\w+::?\\w))*" );
@@ -52,7 +52,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  track_context({&gtagml_context, &raw_context,
    &gtagml_or_html_context, &html_context, &comment_context});
 
- switch(graph_build.current_parsing_mode())
+ switch(parse_state.current_parsing_mode())
  {
  case GTagML_Parsing_Modes::HTML:
   activate(gtagml_or_html_context);
@@ -68,14 +68,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  }
 
 
- GTagML_Parse_Context& parse_context = graph_build.parse_context();
+ GTagML_Parse_Context& parse_context = parse_state.parse_context();
 
 // size_t test;
 
 
  add_rule( gtagml_context, "left-right-mid-processing-instruction",
-   " \\[ (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\] "
-   ,[&] //raw_context, &graph_build, this, &p]
+   " \\( (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\) "
+   ,[&] //raw_context, &parse_state, this, &p]
  {
   QString lrcode = QString::number(p.matched("left").size())
     + QString::number(p.matched("left-dash").size())
@@ -83,18 +83,36 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
     + QString::number(p.matched("right").size());
 
   QString instruction = p.matched("instruction");
-  graph_build.parse_processing_instruction(instruction, lrcode);
+  parse_state.parse_processing_instruction(instruction, lrcode);
  });
 
 
  add_rule( gtagml_context, "tag-command-enter",
-   " \\[ (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
-   " (?: ` (?<post> [^\\s\\[\\]`,;.]+) )? "
-   ,[&] //raw_context, &graph_build, this, &p]
+   " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
+        " (?*rep* (?: ` (/ [^\\s\\[\\]`,;.]+ ) /)* ) "
+   //?" (?: ` (?<post> [^\\s\\[\\]`,;.]+) )? "
+   ,[&] //raw_context, &parse_state, this, &p]
  {
+  QString outer = p.matched("outer");
   QString pre = p.matched("pre");
   QString main = p.matched("main");
   QString post = p.matched("post");
+
+  QString rep = p.matched("rep");
+
+  QVector<QString> ums = p.unnamed_captures(3);
+
+            QRegularExpression repm("`([^\\s\\[\\]`,;.]+)");
+            QRegularExpressionMatchIterator repmi = repm.globalMatch(rep);
+ while(repmi.hasNext())
+            {
+             QRegularExpressionMatch repmm = repmi.next();
+             QString ms = repmm.captured(1);
+             QString c0 = repmm.captured(0);
+
+            }
+
+  parse_state.outer_tag_command_entry(outer, pre, main, post);
 
  });
 
@@ -114,7 +132,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
  add_rule( gtagml_context, "enter-multi-line-comment",
    " ; ;+ (?<tail> [~-]{2,}) "
-   ,[comment_context, this, &p] //raw_context, &graph_build, this, &p]
+   ,[comment_context, this, &p] //raw_context, &parse_state, this, &p]
  {
   QString tail = p.matched("tail");
   activate_with_depth_mark(comment_context, tail.length());
@@ -122,7 +140,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
  add_rule( gtagml_context, "single-line-comment",
    " ;{2,} [~=-] [^\\n]* \\n "
-   ,[] //raw_context, &graph_build, this, &p]
+   ,[] //raw_context, &parse_state, this, &p]
  {
  });
 
@@ -134,13 +152,13 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString concept = p.matched("concept");
   QString text = p.matched("text");
 
-  graph_build.latex_command_via_semantic_annotation(concept, text);
+  parse_state.latex_command_via_semantic_annotation(concept, text);
  });
 
 
  add_rule( comment_context, "leave-multi-line-comment",
    " (?<tail> [~-]{2,}) ; ;+  "
-   ,[gtagml_context, comment_context, this, &p] //raw_context, &graph_build, this, &p]
+   ,[gtagml_context, comment_context, this, &p] //raw_context, &parse_state, this, &p]
  {
   QString tail = p.matched("tail");
   check_activate_with_depth_mark(gtagml_context, comment_context, tail.length());
@@ -151,7 +169,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /\\\\ (?=/) "
    ,[&]
  {
-  graph_build.leave_emph_italics_mode();
+  parse_state.leave_emph_italics_mode();
  });
 
  add_rule( flags_all_(parse_context ,emph_italics_mode),
@@ -159,14 +177,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / (?!=/) "
    ,[&]
  {
-  graph_build.leave_emph_italics_mode();
+  parse_state.leave_emph_italics_mode();
  });
 
  add_rule( gtagml_context, "enter-emph-italics-mode",
    " & (?<mid> =?) / "
    ,[&]
  {
-  graph_build.enter_emph_italics_mode(p.matched("mid"));
+  parse_state.enter_emph_italics_mode(p.matched("mid"));
  });
 
 
@@ -174,7 +192,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?<! \\S) --- (?= \\S) "
    ,[&]
  {
-  graph_build.noindent_marker();
+  parse_state.noindent_marker();
  });
 
 
@@ -182,21 +200,21 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " [.]{3} (?= \\s) "
    ,[&]
  {
-  graph_build.ell_count(p.match_text().size(), "\\");
+  parse_state.ell_count(p.match_text().size(), "\\");
  });
 
  add_rule( gtagml_context, "ell-2-nonbreak",
    " [.]{2} (?= [^\\s.]) "
    ,[&]
  {
-  graph_build.ell_2_nonbreak();
+  parse_state.ell_2_nonbreak();
  });
 
  add_rule( gtagml_context, "ell-count",
    " [.]{2,} "
    ,[&]
  {
-  graph_build.ell_count(p.match_text().size());
+  parse_state.ell_count(p.match_text().size());
  });
 
 
@@ -204,28 +222,28 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " \n (?<first> /\\+) \\s* (?=\\n) "
   ,[&]
  {
-  graph_build.single_slash_line_plus();
+  parse_state.single_slash_line_plus();
  });
 
  add_rule( gtagml_context, "single-slash-line",
   " \n (?<first> /) .single-space.* (?=\\n) "
   ,[&]
  {
-  graph_build.single_slash_line();
+  parse_state.single_slash_line();
  });
 
 // add_rule( gtagml_context, "single-slash-line",
 //  " \n (?<first> /) .single-space.* (?=\\n) "
 //  ,[&]
 // {
-//  graph_build.single_slash_line();
+//  parse_state.single_slash_line();
 // });
 
  add_rule( gtagml_context, "enter-latex-only-to-space--leave-space",
   " .single-space.* -%>> (?<sp> .single-space.*)  "
   ,[&]
  {
-  graph_build.enter_latex_only_to_space(p.matched("sp"));
+  parse_state.enter_latex_only_to_space(p.matched("sp"));
  });
 
 
@@ -233,7 +251,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " .single-space.* (?<m> -%>) .single-space.*  "
   ,[&]
  {
-  graph_build.enter_latex_only_to_space(p.matched("m"));
+  parse_state.enter_latex_only_to_space(p.matched("m"));
  });
 
 
@@ -243,7 +261,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " (?<m> _) (?= \\s) "
   ,[&]
  {
-  graph_build.leave_latex_only_to_space(p.matched("m"));
+  parse_state.leave_latex_only_to_space(p.matched("m"));
  });
 
 
@@ -252,7 +270,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " .single-space.+ (?=\\S) "
   ,[&]
  {
-  graph_build.leave_latex_only_to_space("");
+  parse_state.leave_latex_only_to_space("");
  });
 
  add_rule( flags_all_(parse_context ,latex_only_to_space),
@@ -260,7 +278,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " .single-space.* (?=\\n) "
   ,[&]
  {
-  graph_build.leave_latex_only_to_space("");
+  parse_state.leave_latex_only_to_space("");
  });
 
 
@@ -269,7 +287,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //  ,[&]
 // {
 //  QString m = p.matched("text");
-//  graph_build.latex_only(m);
+//  parse_state.latex_only(m);
 // });
 
 
@@ -279,14 +297,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " (?<m> <<-%) \\s* "
   ,[&]
  {
-  graph_build.enter_latex_only(p.matched("m"));
+  parse_state.enter_latex_only(p.matched("m"));
  });
 
  add_rule( gtagml_context, "enter-latex-only",
   " \\s+ (?<m> <-%) \\s* "
   ,[&]
  {
-  graph_build.enter_latex_only(p.matched("m"));
+  parse_state.enter_latex_only(p.matched("m"));
  });
 
  add_rule( flags_all_(parse_context ,latex_only),
@@ -294,7 +312,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s* (?<m> %->>) "
    ,[&]
  {
-  graph_build.leave_latex_only(p.matched("m"));
+  parse_state.leave_latex_only(p.matched("m"));
  });
 
 
@@ -303,7 +321,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s* (?<m> %->) \\s* "
    ,[&]
  {
-  graph_build.leave_latex_only(p.matched("m"));
+  parse_state.leave_latex_only(p.matched("m"));
  });
 
 
@@ -313,7 +331,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\\\ (?<number> \\d+) (?= [\\s)%]) "
    ,[&]
  {
-  graph_build.footnote_marker(p.matched("number"));
+  parse_state.footnote_marker(p.matched("number"));
  });
 
 
@@ -321,21 +339,21 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " => \\s "
   ,[&]
  {
-  graph_build.force_switch_sentence();
+  parse_state.force_switch_sentence();
  });
 
  add_rule( gtagml_context, "enter-sentences-latex-filter",
   " (?<pretext> [~-]+) > (?= [\\\\$]) "
   ,[&]
  {
-  graph_build.enter_sentences_latex_filter(p.matched("pretext"));
+  parse_state.enter_sentences_latex_filter(p.matched("pretext"));
  });
 
  add_rule( gtagml_context, "leave-sentences-latex-filter",
   " (?<= [}$]) < (?<pretext> [~-]+) "
   ,[&]
  {
-  graph_build.leave_sentences_latex_filter(p.matched("pretext"));
+  parse_state.leave_sentences_latex_filter(p.matched("pretext"));
  });
 
 
@@ -345,7 +363,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " (?<open> <{0,2}) \\{ (?![[%<>-]) "
   ,[&]
  {
-  graph_build.enter_sentences_only(p.matched("open"), p.matched("pre-space"));
+  parse_state.enter_sentences_only(p.matched("open"), p.matched("pre-space"));
  });
 
  add_rule( flags_all_(parse_context ,sentences_only),
@@ -354,7 +372,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?<post-space> .single-space.* \\n? .single-space.*) "
    ,[&]
  {
-  graph_build.leave_sentences_only(p.matched("close"), p.matched("post-space"));
+  parse_state.leave_sentences_only(p.matched("close"), p.matched("post-space"));
  });
 
  add_rule( flags_all_(parse_context ,read_parens_as_label),
@@ -362,7 +380,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?: \\n \\s*){2,} "
    ,[&]
  {
-  graph_build.blank_line_as_visible_space();
+  parse_state.blank_line_as_visible_space();
  });
 
  add_rule( flags_all_(parse_context ,read_parens_as_ref),
@@ -370,7 +388,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\( (?<number> \\d+ ) (?<text> \\S*) \\) "
    ,[&]
  {
-  graph_build.paren_ref(p.matched("number").toShort(), p.matched("text"));
+  parse_state.paren_ref(p.matched("number").toShort(), p.matched("text"));
  });
 
  add_rule( flags_all_(parse_context ,read_parens_as_ref),
@@ -378,7 +396,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\(! (?<number> \\d+ ) (?<text> \\S*) \\) "
    ,[&]
  {
-  graph_build.paren_ref_global(p.matched("number").toShort(), p.matched("text"));
+  parse_state.paren_ref_global(p.matched("number").toShort(), p.matched("text"));
  });
 
 
@@ -386,7 +404,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    "  \\{% (?<pretext> -+ ) "
    ,[&]
  {
-  graph_build.enter_justline(p.matched("pretext"));
+  parse_state.enter_justline(p.matched("pretext"));
  });
 
 
@@ -395,7 +413,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?<pretext> \\s* [|-]+) % (?<follow> \\s* = \\d [\\d.]* )? \\s* \\}  "
    ,[&]
  {
-  graph_build.leave_justline(p.matched("pretext"), p.matched("follow"));
+  parse_state.leave_justline(p.matched("pretext"), p.matched("follow"));
  });
 
 
@@ -404,7 +422,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?= \\n) "
    ,[&]
  {
-  graph_build.leave_heading();
+  parse_state.leave_heading();
  });
 
  add_rule( gtagml_context, "slashes",
@@ -416,7 +434,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString second = p.matched("second");
   // QString text = p.matched("text");
 
-  graph_build.enter_heading(first.size(), second.size());
+  parse_state.enter_heading(first.size(), second.size());
 
  });
 
@@ -427,14 +445,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //   " (?<punctuation> [!?:.]) (\\s{2,} | \\n)"
    ,[&]
  {
-  graph_build.end_sentence(p.matched("punctuation"));
+  parse_state.end_sentence(p.matched("punctuation"));
  });
 
  add_rule( gtagml_context, "manual-end-sentence",
    "\\\\[.]/"
    ,[&]
  {
-  graph_build.end_sentence();
+  parse_state.end_sentence();
  });
 
 // -.>
@@ -443,28 +461,28 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " - \\. > "
    ,[&]
  {
-  graph_build.pseudo_paragraph();
+  parse_state.pseudo_paragraph();
  });
 
  add_rule( gtagml_context, "special-section",
    " .blank-lines. %\\. \\s* (?<text> \\S+) \\s+"
    ,[&]
  {
-  graph_build.enter_special_section(p.matched("text"));
+  parse_state.enter_special_section(p.matched("text"));
  });
 
  add_rule( gtagml_context, "subparagraph",
    " .blank-lines.  %\\/ \\s* (?<text> \\S+) (?:\\s* = (?<sup>\\S+))? \\s+"
    ,[&]
  {
-  graph_build.enter_subparagraph(p.matched("text"), p.matched("sup"));
+  parse_state.enter_subparagraph(p.matched("text"), p.matched("sup"));
  });
 
  add_rule( gtagml_context, "enter-auto-paragraph-mode",
    " />> "
    ,[&]
  {
-  graph_build.enter_auto_paragraph_mode();
+  parse_state.enter_auto_paragraph_mode();
  });
 
  add_rule( flags_all_(parse_context ,read_parens_as_label),
@@ -474,7 +492,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  {
   u2 number = p.matched("number").toShort();
   QString text = p.matched("text");
-  graph_build.exs_item(number, text);
+  parse_state.exs_item(number, text);
  });
 
  add_rule( flags_all_(parse_context ,read_desc_label),
@@ -483,7 +501,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.desc_item(text);
+  parse_state.desc_item(text);
  });
 
  add_rule( flags_all_(parse_context ,read_desc_label),
@@ -492,7 +510,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.desc_item_with_multiline_label(text);
+  parse_state.desc_item_with_multiline_label(text);
  });
 
  add_rule( flags_all_(parse_context ,ignore_blank_lines),
@@ -501,8 +519,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " .single-space.* \\n .blank-line-content. "
    ,[&]
  {
-  graph_build.check_blank_line();
-//  graph_build.show_latex();
+  parse_state.check_blank_line();
+//  parse_state.show_latex();
  });
 
  add_rule( flags_all_(parse_context ,read_numbered_items),
@@ -514,7 +532,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString text = p.matched("text");
   QString follow = p.matched("follow");
 
-  graph_build.enums_item(number, text, follow);
+  parse_state.enums_item(number, text, follow);
  });
 
  add_rule( flags_all_(parse_context ,read_bulleted_items),
@@ -524,7 +542,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  {
   QString symbol = p.matched("symbol");
   QString supp = p.matched("supp");
-  graph_build.bulleted_item(symbol, supp);
+  parse_state.bulleted_item(symbol, supp);
  });
 
 
@@ -533,7 +551,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s* \\n .single-space.* \\n"
    ,[&]
  {
-  graph_build.auto_new_paragraph();
+  parse_state.auto_new_paragraph();
  });
 
 
@@ -541,7 +559,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\*/ "
    ,[&]
  {
-  graph_build.enter_italics_mode();
+  parse_state.enter_italics_mode();
  });
 
  add_rule( flags_all_(parse_context ,italics_mode),
@@ -549,7 +567,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /\\* "
    ,[&]
  {
-  graph_build.leave_italics_mode();
+  parse_state.leave_italics_mode();
  });
 
 
@@ -557,7 +575,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s* \\[-> "
    ,[&]
  {
-  graph_build.enter_block_float_mode();
+  parse_state.enter_block_float_mode();
  });
 
  add_rule( flags_all_(parse_context ,block_float_mode),
@@ -565,7 +583,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s* ->\\] "
    ,[&]
  {
-  graph_build.leave_block_float_mode();
+  parse_state.leave_block_float_mode();
  });
 
 
@@ -573,7 +591,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " ` (?<cmd-name> \\w+) (?: < (?<arg> [^>]+) > )?; "
    ,[&]
  {
-  graph_build.latex_command_auto_closed(p.matched("cmd-name"),
+  parse_state.latex_command_auto_closed(p.matched("cmd-name"),
     p.matched("arg"));
  });
 
@@ -581,21 +599,21 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\[/ (?<label> [^:;*/]+) (?: (?<locator> [^/]*) )? /\\] "
    ,[&]
  {
-  graph_build.citation(p.match_text(), p.matched("label"), p.matched("locator"));
+  parse_state.citation(p.match_text(), p.matched("label"), p.matched("locator"));
  });
 
  add_rule( gtagml_context, "enter-footnote",
    " \\{< (?<pretext> [~_-]*) (?<space> \\s+)  "
    ,[&]
  {
-  graph_build.enter_footnote(p.matched("pretext"), p.matched("space"));
+  parse_state.enter_footnote(p.matched("pretext"), p.matched("space"));
  });
 
  add_rule( gtagml_context, "leave-footnote",
    " (?<space> \\s+) (?<pretext> [~_-]*) >\\} "
    ,[&]
  {
-  graph_build.leave_footnote(p.matched("pretext"), p.matched("space"));
+  parse_state.leave_footnote(p.matched("pretext"), p.matched("space"));
  });
 
  add_rule( flags_all_(parse_context ,acronym_mode),
@@ -603,7 +621,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / "
    ,[&]
  {
-  graph_build.leave_acronym_mode();
+  parse_state.leave_acronym_mode();
  });
 
  add_rule( flags_all_(parse_context ,short_macro_mode),
@@ -611,7 +629,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / "
    ,[&]
  {
-  graph_build.leave_short_macro_mode();
+  parse_state.leave_short_macro_mode();
  });
 
  add_rule( flags_all_(parse_context ,emph_sample_mode),
@@ -619,7 +637,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / ; (?! ;) "
    ,[&]
  {
-  graph_build.leave_sample_mode();
+  parse_state.leave_sample_mode();
  });
 
  add_rule( flags_all_(parse_context ,emph_sample_mode),
@@ -627,7 +645,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / (?! \\w) "
    ,[&]
  {
-  graph_build.leave_sample_mode();
+  parse_state.leave_sample_mode();
  });
 
  add_rule( flags_all_(parse_context ,emph_sample_mode),
@@ -635,7 +653,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / (?! \\w) "
    ,[&]
  {
-  graph_build.leave_sample_mode();
+  parse_state.leave_sample_mode();
  });
 
  add_rule( flags_all_(parse_context ,emph_highlight_mode),
@@ -643,7 +661,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " / "
    ,[&]
  {
-  graph_build.leave_highlight_mode();
+  parse_state.leave_highlight_mode();
  });
 
  add_rule( gtagml_context, "enter-acronym-mode",
@@ -651,14 +669,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString pre = p.matched("pre");
-  graph_build.enter_acronym_mode(pre.size());
+  parse_state.enter_acronym_mode(pre.size());
  });
 
  add_rule( gtagml_context, "enter-short-macro-mode",
    " (?<pre> ,+) / (?=\\w) "
    ,[&]
  {
-  graph_build.enter_short_macro_mode(p.matched("pre").size());
+  parse_state.enter_short_macro_mode(p.matched("pre").size());
  });
 
  add_rule( gtagml_context, "short-macro",
@@ -666,7 +684,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.short_macro(text, p.matched("pre").size());
+  parse_state.short_macro(text, p.matched("pre").size());
  });
 
  add_rule( gtagml_context, "short-acronym",
@@ -674,7 +692,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.short_acronym(text, p.matched("pre").size());
+  parse_state.short_acronym(text, p.matched("pre").size());
  });
 
 
@@ -683,7 +701,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.emph_symbolic(text);
+  parse_state.emph_symbolic(text);
  });
 
 
@@ -695,7 +713,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  {
   QString text = p.matched("text");
   QString link = p.matched("link");
-  graph_build.hyperlink_2(text.simplified(), link.simplified());
+  parse_state.hyperlink_2(text.simplified(), link.simplified());
  });
 
 
@@ -706,7 +724,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString text = p.matched("text");
-  graph_build.hyperlink_1(text.simplified());
+  parse_state.hyperlink_1(text.simplified());
  });
 
 
@@ -715,14 +733,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /\" "
    ,[&]
  {
-  graph_build.leave_double_quote_mode();
+  parse_state.leave_double_quote_mode();
  });
 
  add_rule( gtagml_context, "enter-double-quote-mode",
    " \"(?<pre> [\\w!] *)/ "
    ,[&]
  {
-  graph_build.enter_double_quote_mode(p.matched("pre"));
+  parse_state.enter_double_quote_mode(p.matched("pre"));
  });
 
 
@@ -732,14 +750,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /' "
    ,[&]
  {
-  graph_build.leave_single_quote_mode();
+  parse_state.leave_single_quote_mode();
  });
 
  add_rule( gtagml_context, "enter-single-quote-mode",
    " '/ "
    ,[&]
  {
-  graph_build.enter_single_quote_mode();
+  parse_state.enter_single_quote_mode();
  });
 
 
@@ -749,14 +767,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /'' "
    ,[&]
  {
-  graph_build.leave_single_quote_mode_doubled();
+  parse_state.leave_single_quote_mode_doubled();
  });
 
  add_rule( gtagml_context, "enter-single-quote-mode-doubled",
    " ''(?<pre> \\w*)/ "
    ,[&]
  {
-  graph_build.enter_single_quote_mode_doubled();
+  parse_state.enter_single_quote_mode_doubled();
  });
 
 
@@ -766,14 +784,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " /''' "
    ,[&]
  {
-  graph_build.leave_single_quote_mode_trebled();
+  parse_state.leave_single_quote_mode_trebled();
  });
 
  add_rule( gtagml_context, "enter-single-quote-mode-trebled",
    " '''(?<pre> \\w*)/ "
    ,[&]
  {
-  graph_build.enter_single_quote_mode_trebled();
+  parse_state.enter_single_quote_mode_trebled();
  });
 
  add_rule( gtagml_context, "special-character-sequence",
@@ -781,7 +799,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString m = p.match_text();
-  graph_build.special_character_sequence(m);
+  parse_state.special_character_sequence(m);
  });
 
 
@@ -795,7 +813,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //  QString second = p.matched("second");
 //  QString text = p.matched("text");
 
-//  graph_build.heading(first.size(), second.size(), text);
+//  parse_state.heading(first.size(), second.size(), text);
 // });
 
 
@@ -804,14 +822,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " .single-space.+ \\n "
            ,[&]
  {
-  graph_build.primary_acc("\n");
+  parse_state.primary_acc("\n");
  });
 
  add_rule( gtagml_context, "primary-acc",
   " . "
            ,[&]
  {
-  graph_build.primary_acc(p.match_text());
+  parse_state.primary_acc(p.match_text());
  });
 
 
@@ -832,23 +850,23 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\{  "
    " (?<spm> .valid-tag-command-name. ) "
    " >> "
-   ,[raw_context, &graph_build, this, &p]
+   ,[raw_context, &parse_state, this, &p]
  {
   QString spm = p.matched("spm");
-  graph_build.enter_special_parse_mode(spm);
-  if(graph_build.current_parsing_mode() == GTagML_Parsing_Modes::Raw)
+  parse_state.enter_special_parse_mode(spm);
+  if(parse_state.current_parsing_mode() == GTagML_Parsing_Modes::Raw)
     activate(raw_context);
  });
 
  add_rule( raw_context, "leave-special-parse-mode",
    " << (?<spm> .valid-tag-command-name. )? \\}  "
-   ,[gtagml_context, &graph_build, this, &p]
+   ,[gtagml_context, &parse_state, this, &p]
  {
   QString spm = p.matched("spm");
   if(spm.isEmpty())
     spm = "raw";
-  graph_build.leave_special_parse_mode(spm);
-  if(graph_build.current_parsing_mode() == GTagML_Parsing_Modes::GTagML)
+  parse_state.leave_special_parse_mode(spm);
+  if(parse_state.current_parsing_mode() == GTagML_Parsing_Modes::GTagML)
     activate(gtagml_context);
  });
 
@@ -856,14 +874,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " [^<]+  "
    ,[&]
  {
-  graph_build.special_parse_mode_acc(p.match_text());
+  parse_state.special_parse_mode_acc(p.match_text());
  });
 
  add_rule( raw_context, "spm-short-acc",
    " < "
    ,[&]
  {
-  graph_build.special_parse_mode_acc(p.match_text());
+  parse_state.special_parse_mode_acc(p.match_text());
  });
 
 
@@ -876,15 +894,15 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString tag_command = p.matched("tag-command");
   QString tag_body_follow = p.matched("tag-body-follow");
  // QString argument = p.matched("argument");
-  graph_build.gtag_command_entry_inline(tag_command, tag_body_follow);
-  //graph_build.tag_body_leave();
+  parse_state.gtag_command_entry_inline(tag_command, tag_body_follow);
+  //parse_state.tag_body_leave();
  });
 
  add_rule( gtagml_context, "block-gtag-command-leave",
   " < (?<tag-command> .valid-tag-command-name. ) \\]  "
            ,[&]
  {
-  graph_build.inline_tag_command_leave();
+  parse_state.inline_tag_command_leave();
  });
 
  add_rule( flags_all_(parse_context ,inside_attribute_sequence),
@@ -896,7 +914,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   //QString m = p.match_text();
-  graph_build.attribute_sequence_leave();
+  parse_state.attribute_sequence_leave();
  });
 
  add_rule( flags_all_(parse_context ,inside_attribute_sequence),
@@ -904,12 +922,12 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s+ @ \\s+ "
    ,[&]
  {
-  graph_build.mark_attribute_tile();
+  parse_state.mark_attribute_tile();
  });
 
 
 
- // //  these should be for graph_build the equivalent
+ // //  these should be for parse_state the equivalent
   //    of ->> (etc.) then `::some_cmd;
  add_rule( flags_all_(parse_context ,inside_multi_generic),
    gtagml_context,
@@ -925,17 +943,17 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
   if(fiat_or_wmi == ".")
   {
-   graph_build.multi_arg_transition({}, fiat_or_wmi, {}, "->");
-   graph_build.tile_acc(cmd);
+   parse_state.multi_arg_transition({}, fiat_or_wmi, {}, "->");
+   parse_state.tile_acc(cmd);
   }
   else
   {
-   graph_build.multi_arg_transition({}, {}, {}, m);
+   parse_state.multi_arg_transition({}, {}, {}, m);
 
    if(fiat_or_wmi == "=")
-     graph_build.tag_command_entry_inline("::", {}, "==", cmd, ";", {});
+     parse_state.tag_command_entry_inline("::", {}, "==", cmd, ";", {});
    else
-     graph_build.tag_command_entry_inline(fiat_or_wmi, {}, {}, cmd, ";", {});
+     parse_state.tag_command_entry_inline(fiat_or_wmi, {}, {}, cmd, ";", {});
   }
  });
 
@@ -946,7 +964,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " \\s+ => \\s+ "
    ,[&]
  {
-  graph_build.multi_arg_transition_to_main_tile();
+  parse_state.multi_arg_transition_to_main_tile();
  });
 
  add_rule( flags_all_(parse_context ,inside_multi_generic),
@@ -960,7 +978,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString wmi = p.matched("wmi");
   QString fiat = p.matched("fiat");
   QString m = p.matched("main");
-  graph_build.multi_arg_transition(wmi, {}, fiat, m);
+  parse_state.multi_arg_transition(wmi, {}, fiat, m);
  });
 
  add_rule( flags_all_(parse_context ,inside_multi_parent_semis),
@@ -968,7 +986,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    "  \\s+ ;[.]*; "
    ,[&]
  {
-  graph_build.tag_command_leave_multi({});
+  parse_state.tag_command_leave_multi({});
  //?  parse_context.flags.inside_multi_parent_semis = false;
  //? parse_context.flags.inside_multi_parent = false;
  });
@@ -981,7 +999,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    ,[&]
  {
   QString tag_command = p.matched("tag-command");
-  graph_build.tag_command_leave_multi(tag_command);
+  parse_state.tag_command_leave_multi(tag_command);
 //?  parse_context.flags.inside_multi_parent = false;
  });
 
@@ -1006,19 +1024,19 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
   if(fiat_or_wmi == ".")
   {
-   graph_build.tag_command_entry_multi(wmi, fiat_or_wmi, tag_command,
+   parse_state.tag_command_entry_multi(wmi, fiat_or_wmi, tag_command,
      tag_body_follow, {}, {}, first_arg_marker);
-   graph_build.tile_acc(cmd);
+   parse_state.tile_acc(cmd);
   }
   else
   {
-   graph_build.tag_command_entry_multi(wmi, {}, tag_command,
+   parse_state.tag_command_entry_multi(wmi, {}, tag_command,
      tag_body_follow, {}, {}, first_arg_marker);
 
    if(fiat_or_wmi == "=")
-     graph_build.tag_command_entry_inline("::",  {}, fiat_or_wmi, cmd, ";", {});
+     parse_state.tag_command_entry_inline("::",  {}, fiat_or_wmi, cmd, ";", {});
    else
-     graph_build.tag_command_entry_inline(fiat_or_wmi, {}, {}, cmd, ";", {});
+     parse_state.tag_command_entry_inline(fiat_or_wmi, {}, {}, cmd, ";", {});
   }
  });
 
@@ -1036,9 +1054,9 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString tag_command = p.matched("tag-command");
   QString tag_body_follow = p.matched("tag-body-follow");
   QString first_arg_marker = p.matched("first-arg-marker");
-  graph_build.tag_command_entry_multi(wmi, {}, tag_command,
+  parse_state.tag_command_entry_multi(wmi, {}, tag_command,
     tag_body_follow, {}, fwmi, first_arg_marker);
-    //graph_build.tag_body_leave();
+    //parse_state.tag_body_leave();
  });
 
 
@@ -1051,8 +1069,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  {
   QString tag_command = p.matched("tag-command");
   QString layer_marker = p.matched("layer-marker");
-  graph_build.tag_command_entry_with_layer(tag_command, layer_marker);
-  //graph_build.tag_body_leave();
+  parse_state.tag_command_entry_with_layer(tag_command, layer_marker);
+  //parse_state.tag_body_leave();
  });
 
 
@@ -1066,8 +1084,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString tag_command = p.matched("tag-command");
   QString tag_body_follow = p.matched("tag-body-follow");
   QString argument = p.matched("argument");
-  graph_build.tag_command_entry_inline(wmi,  {}, {}, tag_command, tag_body_follow, argument);
-  //graph_build.tag_body_leave();
+  parse_state.tag_command_entry_inline(wmi,  {}, {}, tag_command, tag_body_follow, argument);
+  //parse_state.tag_body_leave();
  });
 
  add_rule( gtagml_context, "alt-tag-command-entry-inline",
@@ -1085,8 +1103,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   argument.replace('}', " ");
   argument.replace(']', " ");
 
-  graph_build.tag_command_entry_inline(wmi, {}, {}, tag_command, ";", argument);
-  //graph_build.tag_body_leave();
+  parse_state.tag_command_entry_inline(wmi, {}, {}, tag_command, ";", argument);
+  //parse_state.tag_body_leave();
  });
 
 #endif
@@ -1098,7 +1116,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   ,[&]
  {
   QString tag_command = p.matched("tag-command");
-  graph_build.check_html_tag_command_leave(tag_command, p.match_text());
+  parse_state.check_html_tag_command_leave(tag_command, p.match_text());
  });
 
  add_rule( gtagml_context, "tag-command-leave",
@@ -1111,9 +1129,9 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString load_connector = p.matched("load-connector");
   QString tag_command = p.matched("tag-command");
   if(load_connector.isEmpty())
-   graph_build.check_tag_command_leave(tag_command, p.match_text());
+   parse_state.check_tag_command_leave(tag_command, p.match_text());
   else
-   graph_build.tag_command_leave(load_connector, tag_command);
+   parse_state.tag_command_leave(load_connector, tag_command);
  });
 #endif //def HIDE_before
 
@@ -1124,14 +1142,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   ,[&]
  {
   QString tag_command = p.matched("tag-command");
-  graph_build.check_tag_command_leave(tag_command, p.match_text());
+  parse_state.check_tag_command_leave(tag_command, p.match_text());
  });
 
  add_rule( gtagml_context, "inline-tag-command-leave",
   " ` (?: / | (?= \\s))  "
            ,[&]
  {
-  graph_build.inline_tag_command_leave();
+  parse_state.inline_tag_command_leave();
  });
 
 
@@ -1140,7 +1158,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " </>  "
            ,[&]
  {
-  graph_build.tag_command_leave();
+  parse_state.tag_command_leave();
  });
 #endif //def HIDE
 
@@ -1150,7 +1168,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //           ,[&]
 // {
 //  QString m = p.match_text();
-//  graph_build.special_character_sequence(m);
+//  parse_state.special_character_sequence(m);
 // });
 
   add_rule( gtagml_context, "semantic-mark",
@@ -1185,7 +1203,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
    QString m = p.match_text();
 
-   graph_build.semantic_mark(m, sem, which);
+   parse_state.semantic_mark(m, sem, which);
 
 
   });
@@ -1195,7 +1213,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
     [&]
   {
    QString m = p.match_text();
-   graph_build.tile_acc("\n");
+   parse_state.tile_acc("\n");
   });
 
   add_rule( gtagml_context, "deleted-visual-line-then-sentence-start",
@@ -1203,7 +1221,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
     [&]
   {
    QString m = p.match_text();
-   graph_build.tile_acc("\n`\(@)");
+   parse_state.tile_acc("\n`\(@)");
   });
 
 
@@ -1227,10 +1245,10 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //    QString m = "`\\<~>";
 //    QString esc = "~";
 //    u1 which0 = 4;
-//    graph_build.tile_acc(se);
-//    graph_build.special_character_sequence(m, esc, which0);
-//    //?graph_build.tile_acc(sp);
-//    graph_build.special_character_sequence(m1, esc1, which);
+//    parse_state.tile_acc(se);
+//    parse_state.special_character_sequence(m, esc, which0);
+//    //?parse_state.tile_acc(sp);
+//    parse_state.special_character_sequence(m1, esc1, which);
 //    return;
 //   }
 
@@ -1238,8 +1256,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    QString esc = se;
 
 
-   graph_build.special_character_sequence(m, esc, which);
-   graph_build.special_character_sequence(m1, esc1, which);
+   parse_state.special_character_sequence(m, esc, which);
+   parse_state.special_character_sequence(m1, esc1, which);
 
   });
 
@@ -1312,14 +1330,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //   // else others?
 
    if(m.isEmpty())
-     graph_build.tile_acc(se);
+     parse_state.tile_acc(se);
    else
-     graph_build.special_character_sequence(m, esc, which);
+     parse_state.special_character_sequence(m, esc, which);
 
    if(!mid.isEmpty())
-     graph_build.tile_acc(mid);
+     parse_state.tile_acc(mid);
 
-   graph_build.special_character_sequence(m1, esc1, which);
+   parse_state.special_character_sequence(m1, esc1, which);
 
   });
 
@@ -1331,7 +1349,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    QString esc = cue;
    QString m = QString("`\\[%1]").arg(cue);
    u1 which = 3;
-   graph_build.special_character_sequence(m, esc, which);
+   parse_state.special_character_sequence(m, esc, which);
   });
 
   add_rule( gtagml_context, "special-character-sequence",
@@ -1374,7 +1392,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
    QString m = p.match_text();
 
-   graph_build.special_character_sequence(m, esc, which);
+   parse_state.special_character_sequence(m, esc, which);
   });
 
 
@@ -1383,14 +1401,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   " .single-space.+ \\n "
            ,[&]
  {
-  graph_build.tile_acc("\n");
+  parse_state.tile_acc("\n");
  });
 
  add_rule( gtagml_context, "tile-acc",
   " . "
            ,[&]
  {
-  graph_build.tile_acc(p.match_text());
+  parse_state.tile_acc(p.match_text());
  });
 
 #endif //def HIDE

@@ -81,6 +81,11 @@ public:
  tString matched(int capture_number);
  tString matched(tString capture_name);
  tString match_text();
+
+ QVector<tString> unnamed_captures(int start_position);
+ QVector<tString> unnamed_captures(tString prior_capture_name);
+
+
 };
 
 #endif //RELAE_PARSER__H

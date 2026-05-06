@@ -205,8 +205,6 @@ class GTagML_Parse_State
  u4 footnote_id_;
 
 
- QString primary_acc_;
- QTextStream primary_acc_stream_;
 
  QMap<u1, u2> current_section_counts_;
 
@@ -561,6 +559,8 @@ QString argument, QString parent_tag_type = QString());
 
 
  void parse_processing_instruction(QString instruction, QString lrcode);
+
+ void outer_tag_command_entry(QString outer, QString pre, QString main, QString post);
 
 
 };

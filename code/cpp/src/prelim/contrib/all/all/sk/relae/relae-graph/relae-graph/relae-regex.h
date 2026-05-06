@@ -93,6 +93,16 @@ struct RZ_Match_Data_Base
   return "";
  }
 
+ virtual QVector<tString> unnamed_captures(int position)
+ {
+  return {};
+ }
+ virtual QVector<tString> unnamed_captures(tString prior_capture_name)
+ {
+  return {};
+ }
+
+
 };
 
 struct RZ_Match_Data_False : RZ_Match_Data_Base
@@ -108,14 +118,36 @@ struct RZ_Match_Data_False : RZ_Match_Data_Base
  }
 };
 
+template<typename T> class KeyValueRange {
+private:
+    T iterable; // This is either a reference or a moved-in value. The map data isn't copied.
+public:
+    KeyValueRange(T &iterable) : iterable(iterable) { }
+    KeyValueRange(std::remove_reference_t<T> &&iterable) noexcept : iterable(std::move(iterable)) { }
+    auto begin() const { return iterable.keyValueBegin(); }
+    auto end() const { return iterable.keyValueEnd(); }
+};
+
+template <typename T> auto asKeyValueRange(T &iterable) { return KeyValueRange<T &>(iterable); }
+template <typename T> auto asKeyValueRange(const T &iterable) { return KeyValueRange<const T &>(iterable); }
+template <typename T> auto asKeyValueRange(T &&iterable) noexcept { return KeyValueRange<T>(std::move(iterable)); }
+
+
 struct RZ_Match_Data_Qt : RZ_Match_Data_Base
 {
  int position;
  QRegularExpression* rexpr;
  QStringList captures;
  QMap<tString, int> capture_name_map;
+ QMap<int, tString> reverse_capture_name_map;
  RZ_Match_Data_Qt(int p, QStringList s, QMap<QString, int>& m):position(p + 1),
-   captures(s),capture_name_map(m){}
+   captures(s),capture_name_map(m)
+ {
+  for(auto [key, value] : asKeyValueRange(capture_name_map))
+  {
+   reverse_capture_name_map[value] = key;
+  }
+ }
  operator bool()
  {
   return position > 0;
@@ -151,6 +183,25 @@ struct RZ_Match_Data_Qt : RZ_Match_Data_Base
   return captures[capture_number];
  }
 
+ QVector<tString> unnamed_captures(int position)
+ {
+  QVector<tString> result;
+
+  for(; position <= captures.size(); ++position)
+  {
+   if(reverse_capture_name_map.contains(position - 1))
+     continue;
+
+   result.push_back(captures[position - 1]);
+  }
+
+  return result;
+ }
+
+ QVector<tString> unnamed_captures(QString prior_name)
+ {
+  return unnamed_captures(capture_name_map[prior_name]);
+ }
 };
 
 inline RZ_Match_Data_Base* RZ_Match_Fail()

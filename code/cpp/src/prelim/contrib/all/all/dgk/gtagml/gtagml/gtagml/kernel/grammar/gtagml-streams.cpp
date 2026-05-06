@@ -13,8 +13,9 @@
 USING_KANS(GTagML)
 
 GTagML_Streams::GTagML_Streams(GTagML_Parse_State* parse_state)
-  :  parse_state_(parse_state), latex_stream_(&latex_)
-
+  :  parse_state_(parse_state), latex_stream_(&latex_),
+     sentences_sdi_stream_(&sentences_sdi_),
+     primary_acc_stream_(&primary_acc_)
 {
 
 }
@@ -47,6 +48,17 @@ void GTagML_Streams::init()
 // jats_stream_.setString(&jats_); // = QTextStream(&jats_);
 // xml_writer_.setDevice(&jats_stream_);
 }
+
+void GTagML_Streams::latex(QString text)
+{
+ latex_stream_ << text;
+}
+
+void GTagML_Streams::primary(QString text)
+{
+ primary_acc_stream_ << text;
+}
+
 
 void GTagML_Streams::enter_abstract()
 {
