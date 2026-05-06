@@ -402,47 +402,84 @@ public:
  }
 
 
- void add_anchored_rule_with_prelim(QString name, QString prelim, QString rx, RZ_MATCH_CALLBACK block)
+ void add_anchored_rule_with_prelim(QString name, QString prelim, QString rx,
+   RZ_MATCH_CALLBACK block, QMap<QString, QVector<QString>> inner_patterns)
  {
   QString s = prelim + "^" + rx;
-  add_regex_rule(name, s, block);
+  add_regex_rule(name, s, block, inner_patterns);
  }
 
- void add_rule_with_prelim(QString name, QString prelim, QString rx, RZ_MATCH_CALLBACK block)
+ void add_rule_with_prelim(QString name, QString prelim, QString rx,
+   RZ_MATCH_CALLBACK block, QMap<QString, QVector<QString>> inner_patterns)
  {
   QString s = prelim + rx;
-  add_regex_rule(name, s, block);
+  add_regex_rule(name, s, block, inner_patterns);
  }
 
- void check_repeated_capturing_syntax(QString& rx)
+ QMap<QString, QVector<QString>> check_repeated_capturing_syntax(QString& rx)
  {
-  qDebug() << rx;
+//  qDebug() << rx;
 
 //  QRegularExpression group_name("\\?\\(\\*([\\w-]+)\\*");
-  QRegularExpression group_name("\\(\\?\\*([\\w-]+)\\*");
+  QRegularExpression group_name("\\(\\?\\*([\\w-]+)\\*|\\(/|/\\)");
   QRegularExpressionMatchIterator it = group_name.globalMatch(rx);
 
   QVector<QString> group_names;
-  QMap<QString, QPair<int, int>> replace_positions;
+  //inner_pattern_positions;
+  QMap<QString, QVector<QPair<int, int>>> replace_positions;
+
+  QString current_group_name;
 
   while(it.hasNext())
   {
    QRegularExpressionMatch m = it.next();
-   QString c = m.captured(1);
-   group_names.push_back(c);
-   replace_positions[c] = {m.capturedStart(1) - 1, m.capturedEnd(1)};
+   QString c = m.captured();
+   if(c == "(/")
+   {
+    if(current_group_name.isEmpty())
+      continue;
+    replace_positions[current_group_name].push_back({m.capturedStart(),0});
+   }
+   else if(c == "/)")
+   {
+    if(current_group_name.isEmpty())
+      continue;
+    replace_positions[current_group_name].last().second = m.capturedEnd();
+   }
+   else
+   {
+    current_group_name = m.captured(1);
+    group_names.push_back(current_group_name);
+    replace_positions[current_group_name] = {{m.capturedStart(1) - 1, m.capturedEnd(1)}};
+   }
   }
 
   if(group_names.isEmpty())
-    return;
+    return {};
+
+  QMap<QString, QVector<QString>> result;
 
   for(QString n : group_names)
   {
-   rx.replace(replace_positions[n].first, 1, '<');
-   rx.replace(replace_positions[n].second, 1, '>');
+   auto vec = replace_positions[n];
+   auto f = vec.takeFirst();
+   rx.replace(f.first, 1, '<');
+   rx.replace(f.second, 1, '>');
+   qDebug() << rx;
+
+   for(auto pr : vec)
+   {
+    rx.replace(pr.first + 1, 1, ' ');
+    rx.replace(pr.second - 2, 1, ' ');
+    QString inner_pattern = rx.mid(pr.first, pr.second - pr.first - 2);
+    inner_pattern.replace(" ", "");
+    result[n].push_back(inner_pattern);
+   }
   }
 
-  qDebug() << rx;
+//  qDebug() << rx;
+
+  return result;
  }
 
  void add_compound_anchored_rule(QString name, QString rx, RZ_MATCH_CALLBACK block)
@@ -450,18 +487,21 @@ public:
   QString prelim;
   QString main_rx;
 
-  check_repeated_capturing_syntax(rx);
+  QMap<QString, QVector<QString>> inner_patterns = check_repeated_capturing_syntax(rx);
 
   prepare_compound_rule(rx, prelim, main_rx);
-  add_anchored_rule_with_prelim(name, prelim, main_rx, block);
+  add_anchored_rule_with_prelim(name, prelim, main_rx, block, inner_patterns);
  }
 
  void add_compound_rule(QString name, QString rx, RZ_MATCH_CALLBACK block)
  {
   QString prelim;
   QString main_rx;
+
+  QMap<QString, QVector<QString>> inner_patterns = check_repeated_capturing_syntax(rx);
+
   prepare_compound_rule(rx, prelim, main_rx);
-  add_rule_with_prelim(name, prelim, main_rx, block);
+  add_rule_with_prelim(name, prelim, main_rx, block, inner_patterns);
  }
 
  // preprecesses the rule string for both anchors and named matches
@@ -657,16 +697,18 @@ public:
  }
 
 
- void add_anchored_rule(QString name, QString rx, RZ_MATCH_CALLBACK block)
+ void add_anchored_rule(QString name, QString rx, RZ_MATCH_CALLBACK block,
+   QMap<QString, QVector<QString>> inner_patterns)
  {
   QString s = "\\g" + rx;
-  add_regex_rule(name, s, block);
+  add_regex_rule(name, s, block, inner_patterns);
  }
 
  // does no preprocessing on the rule string
- void add_regex_rule(QString name, QString rx, RZ_MATCH_CALLBACK block)
+ void add_regex_rule(QString name, QString rx, RZ_MATCH_CALLBACK block,
+   QMap<QString, QVector<QString>> inner_patterns)
  {
-  tRule* r = new tRule (name, rx, block);
+  tRule* r = new tRule (name, rx, block, inner_patterns);
   add_rule(name, r);
  }
 
@@ -676,7 +718,7 @@ public:
 
  void add_char_rule(QString name, tChar char_, RZ_MATCH_CALLBACK block)
  {
-  tRule* r = new tRule (name, QString(char_), block);
+  tRule* r = new tRule (name, QString(char_), block, {});
   add_rule(name, r);
  }
 
@@ -693,7 +735,7 @@ public:
    QString c5 = match.captured(5);
 
    return new RZ_Match_Data_Qt(match.capturedEnd(), // pos + match.capturedLength(),
-    match.capturedTexts(), r.capture_name_map);
+    match.capturedTexts(), r.capture_name_map, r.inner_patterns);
   }
   return nullptr;
  }

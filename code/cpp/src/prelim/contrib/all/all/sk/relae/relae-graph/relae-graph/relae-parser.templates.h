@@ -137,6 +137,16 @@ tString Relae_Parser<GALAXY>::matched(tString capture_name)
 }
 
 template<typename GALAXY>
+QVector<tString> Relae_Parser<GALAXY>::rematched(tString capture_name)
+{
+ if(match_)
+ {
+  return match_->retext(capture_name);
+ }
+ return {};
+}
+
+template<typename GALAXY>
 QVector<tString> Relae_Parser<GALAXY>::unnamed_captures(int start_position)
 {
  if(match_)

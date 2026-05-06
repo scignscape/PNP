@@ -49,9 +49,13 @@ struct RZ_Core_Rule
 
  RZ_MATCH_CALLBACK callback;
 
- RZ_Core_Rule(tString n, tString e, RZ_MATCH_CALLBACK c):name(n),expr(e),
+ QMap<QString, QVector<QString>> inner_patterns;
+
+ RZ_Core_Rule(tString n, tString e, RZ_MATCH_CALLBACK c,
+   QMap<QString, QVector<QString>> inner) : name(n),expr(e),
    callback(c), context_index(0), condition(0), negative_condition(0),
-  condition_length(0), negative_condition_length(0), flag_test(0)
+  condition_length(0), negative_condition_length(0),
+  flag_test(0), inner_patterns(inner)
  {
   // //  Check if we want an achor at the carat, like
   //     RegExp::CaretAtOffset -- but QRegularExpression
@@ -102,6 +106,11 @@ struct RZ_Match_Data_Base
   return {};
  }
 
+ virtual QVector<tString> retext(tString capture_name)
+ {
+  return {};
+ }
+
 
 };
 
@@ -140,8 +149,11 @@ struct RZ_Match_Data_Qt : RZ_Match_Data_Base
  QStringList captures;
  QMap<tString, int> capture_name_map;
  QMap<int, tString> reverse_capture_name_map;
- RZ_Match_Data_Qt(int p, QStringList s, QMap<QString, int>& m):position(p + 1),
-   captures(s),capture_name_map(m)
+ QMap<tString, QVector<tString>> inner_patterns;
+
+ RZ_Match_Data_Qt(int p, QStringList s, QMap<QString, int>& m,
+   QMap<QString, QVector<QString>>& inner):position(p + 1),
+   captures(s),capture_name_map(m),inner_patterns(inner)
  {
   for(auto [key, value] : asKeyValueRange(capture_name_map))
   {
@@ -181,6 +193,29 @@ struct RZ_Match_Data_Qt : RZ_Match_Data_Base
  tString text(int capture_number)
  {
   return captures[capture_number];
+ }
+
+ QVector<tString> retext(tString capture_name)
+ {
+  QString c = text(capture_name);
+  if(c.isEmpty())
+    return {};
+
+  QVector<tString> result;
+
+  for(QString ip : inner_patterns[capture_name])
+  {
+   QRegularExpression iprx(ip);
+   QRegularExpressionMatchIterator ipi = iprx.globalMatch(c);
+   while(ipi.hasNext())
+   {
+    QRegularExpressionMatch ipm = ipi.next();
+    QString ipmc = ipm.captured(1);
+    result.push_back(ipmc);
+   }
+  }
+
+  return result;
  }
 
  QVector<tString> unnamed_captures(int position)

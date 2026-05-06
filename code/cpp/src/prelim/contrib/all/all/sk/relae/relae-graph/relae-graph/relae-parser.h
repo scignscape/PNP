@@ -82,6 +82,8 @@ public:
  tString matched(tString capture_name);
  tString match_text();
 
+ QVector<tString> rematched(tString capture_name);
+
  QVector<tString> unnamed_captures(int start_position);
  QVector<tString> unnamed_captures(tString prior_capture_name);
 

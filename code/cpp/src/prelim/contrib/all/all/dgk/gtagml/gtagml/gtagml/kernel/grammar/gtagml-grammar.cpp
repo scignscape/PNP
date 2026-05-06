@@ -100,17 +100,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
   QString rep = p.matched("rep");
 
-  QVector<QString> ums = p.unnamed_captures(3);
+  QVector<QString> reps = p.rematched("rep");
 
-            QRegularExpression repm("`([^\\s\\[\\]`,;.]+)");
-            QRegularExpressionMatchIterator repmi = repm.globalMatch(rep);
- while(repmi.hasNext())
-            {
-             QRegularExpressionMatch repmm = repmi.next();
-             QString ms = repmm.captured(1);
-             QString c0 = repmm.captured(0);
-
-            }
 
   parse_state.outer_tag_command_entry(outer, pre, main, post);
 
