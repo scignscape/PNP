@@ -23,6 +23,7 @@
 #include "global-macros.h"
 #include "enum-macros.h"
 
+typedef QVector<QString> QStringVector;
 
 #define _auto_new(obj) \
   new std::remove_pointer<decltype(obj)>::type

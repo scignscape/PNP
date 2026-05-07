@@ -15,6 +15,8 @@
 
 #include "relae-graph/relae-parser.templates.h"
 
+#include "global-types.h"
+
 USING_KANS(GTagML)
 
 GTagML_Grammar::GTagML_Grammar()
@@ -89,21 +91,19 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
  add_rule( gtagml_context, "tag-command-enter",
    " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
-        " (?*rep* (?: ` (/ [^\\s\\[\\]`,;.]+ ) /)* ) "
-   //?" (?: ` (?<post> [^\\s\\[\\]`,;.]+) )? "
+   " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
+   " (?<post> [,;.]+ )"
    ,[&] //raw_context, &parse_state, this, &p]
  {
   QString outer = p.matched("outer");
   QString pre = p.matched("pre");
   QString main = p.matched("main");
+
+  QStringVector supl = p.rematched("supl");
+
   QString post = p.matched("post");
 
-  QString rep = p.matched("rep");
-
-  QVector<QString> reps = p.rematched("rep");
-
-
-  parse_state.outer_tag_command_entry(outer, pre, main, post);
+  parse_state.outer_tag_command_entry(outer, pre, main, supl, post);
 
  });
 

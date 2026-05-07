@@ -560,7 +560,8 @@ QString argument, QString parent_tag_type = QString());
 
  void parse_processing_instruction(QString instruction, QString lrcode);
 
- void outer_tag_command_entry(QString outer, QString pre, QString main, QString post);
+ void outer_tag_command_entry(QString outer, QString pre, QString main,
+   QStringVector supl, QString post);
 
 
 };

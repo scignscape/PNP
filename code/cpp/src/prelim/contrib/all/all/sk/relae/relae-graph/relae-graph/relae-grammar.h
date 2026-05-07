@@ -421,7 +421,7 @@ public:
 //  qDebug() << rx;
 
 //  QRegularExpression group_name("\\?\\(\\*([\\w-]+)\\*");
-  QRegularExpression group_name("\\(\\?\\*([\\w-]+)\\*|\\(/|/\\)");
+  QRegularExpression group_name("\\(\\?\\*([\\w-]+)\\*|\\(/-|-/\\)");
   QRegularExpressionMatchIterator it = group_name.globalMatch(rx);
 
   QVector<QString> group_names;
@@ -434,13 +434,13 @@ public:
   {
    QRegularExpressionMatch m = it.next();
    QString c = m.captured();
-   if(c == "(/")
+   if(c == "(/-")
    {
     if(current_group_name.isEmpty())
       continue;
     replace_positions[current_group_name].push_back({m.capturedStart(),0});
    }
-   else if(c == "/)")
+   else if(c == "-/)")
    {
     if(current_group_name.isEmpty())
       continue;
@@ -467,13 +467,16 @@ public:
    rx.replace(f.second, 1, '>');
    qDebug() << rx;
 
+     qDebug() << rx;
+
    for(auto pr : vec)
    {
-    rx.replace(pr.first + 1, 1, ' ');
-    rx.replace(pr.second - 2, 1, ' ');
-    QString inner_pattern = rx.mid(pr.first, pr.second - pr.first - 2);
+    rx.replace(pr.first + 1, 2, "  ");
+    rx.replace(pr.second - 3, 2, "  ");
+    QString inner_pattern = rx.mid(pr.first, pr.second - pr.first);
     inner_pattern.replace(" ", "");
     result[n].push_back(inner_pattern);
+    rx.replace(pr.first + 1, 2, "?:");
    }
   }
 

@@ -71,7 +71,7 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
 
 
 void GTagML_Parse_State::outer_tag_command_entry(QString outer,
-  QString pre, QString main, QString post)
+  QString pre, QString main, QStringVector supl, QString post)
 {
 
 }
