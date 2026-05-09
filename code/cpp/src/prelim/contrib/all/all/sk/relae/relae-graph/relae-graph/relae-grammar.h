@@ -465,9 +465,6 @@ public:
    auto f = vec.takeFirst();
    rx.replace(f.first, 1, '<');
    rx.replace(f.second, 1, '>');
-   qDebug() << rx;
-
-     qDebug() << rx;
 
    for(auto pr : vec)
    {

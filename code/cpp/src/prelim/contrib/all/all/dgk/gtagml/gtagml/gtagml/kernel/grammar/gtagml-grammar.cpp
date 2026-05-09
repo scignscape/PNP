@@ -107,6 +107,21 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
  });
 
+ add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
+   gtagml_context, "tag-command-name-transform-entry",
+   " \s+ => \s+ "
+   ,[&]
+ {
+  parse_state.tag_command_name_transform_entry();
+ });
+
+ add_rule( flags_all_(parse_context ,inside_tag_command_name_transform),
+   gtagml_context, "tag-command-name-transform-acc",
+   " [^\\])}]+ | [^\\])}] "
+   ,[&]
+ {
+  parse_state.tag_command_name_transform_acc(p.match_text());
+ });
 
 
 

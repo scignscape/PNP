@@ -116,6 +116,8 @@ public:
 
  ~GTagML_Document();
 
+ void init();
+
  QString get_path_root();
 
  void insert_latex_template(QString path);

@@ -67,43 +67,43 @@
 template<int i>
 struct RZ_Flags_type
 {
- typedef size_t type;
+ typedef quint32 type;
 };
 
 template<>
 struct RZ_Flags_type<1>
 {
- typedef unsigned char type;
+ typedef quint8 type;
 };
 
 template<>
 struct RZ_Flags_type<2>
 {
- typedef unsigned short type;
+ typedef quint16 type;
 };
 
 template<>
 struct RZ_Flags_type<5>
 {
- typedef qint64 type;
+ typedef quint64 type;
 };
 
 template<>
 struct RZ_Flags_type<6>
 {
- typedef qint64 type;
+ typedef quint64 type;
 };
 
 template<>
 struct RZ_Flags_type<7>
 {
- typedef qint64 type;
+ typedef quint64 type;
 };
 
 template<>
 struct RZ_Flags_type<8>
 {
- typedef qint64 type;
+ typedef quint64 type;
 };
 
 #include <QDebug>
@@ -289,7 +289,7 @@ union { RZ_Flags_type<byte_count>::type Flags; struct \
 #ifndef flag_
 #define flag_(index ,name) \
  bool name:1; \
- enum { name##_ = (1 << (index - 1)), _##name = index };
+ enum { name##_ = ( (quint64)1 << (index - 1)), _##name = index };
 #endif
 
 #ifndef _flag

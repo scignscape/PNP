@@ -46,7 +46,7 @@ class GTagML_Document_Light_Xml;
 
 class GTagML_Parse_State
 {
- flags_(4)
+ flags_(6)
   bool math_mode:1;
   bool skip_command_node_insert:1;
   bool active_annotation_entry:1;
@@ -239,12 +239,21 @@ class GTagML_Parse_State
 
 // QMap<QString, u2> paragraph_cmd_counts_;
 
+ QString current_auto_closed_tag_command_;
+ QString active_encloser_;
+ QString current_tag_command_name_transform_;
+
+ QMap<QString, QString> tag_command_name_transforms_;
+
 public:
 
 
  GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& document_info);
 
  ACCESSORS__RGET(GTagML_Parse_Context ,parse_context)
+ ACCESSORS__RGET(GTagML_Streams, streams)
+
+
  ACCESSORS(GTagML_Parsing_Modes ,current_parsing_mode)
 
  ACCESSORS(u4 ,sentence_id)
@@ -563,6 +572,9 @@ QString argument, QString parent_tag_type = QString());
  void outer_tag_command_entry(QString outer, QString pre, QString main,
    QStringVector supl, QString post);
 
+ void tag_command_name_transform_entry();
+ void tag_command_name_transform_acc(QString text);
+ void resolve_tag_command_name_transform();
 
 };
 

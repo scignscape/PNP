@@ -69,11 +69,60 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
 // flags.use_latex_sdi_paragraph_markers = true;
 }
 
+void GTagML_Parse_State::resolve_tag_command_name_transform()
+{
+ tag_command_name_transforms_[current_auto_closed_tag_command_] =
+   current_tag_command_name_transform_;
+ current_tag_command_name_transform_.clear();
+ parse_context_.flags.inside_tag_command_name_transform = false;
+}
+
+void GTagML_Parse_State::tag_command_name_transform_acc(QString text)
+{
+ if(text.size() == 1)
+ {
+  if((text == "]" && active_encloser_ == "[")
+    || (text == "}" && active_encloser_ == "{")
+    || (text == ")" && active_encloser_ == "("))
+  {
+   resolve_tag_command_name_transform();
+   return;
+  }
+ }
+
+ current_tag_command_name_transform_ += text;
+}
+
+void GTagML_Parse_State::tag_command_name_transform_entry()
+{
+ parse_context_.flags.after_auto_closed_tag_command = false;
+ parse_context_.flags.inside_tag_command_name_transform = true;
+}
 
 void GTagML_Parse_State::outer_tag_command_entry(QString outer,
   QString pre, QString main, QStringVector supl, QString post)
 {
+ active_encloser_ = outer;
 
+ if(post == ",")
+ {
+  streams_.latex_stream() << "\\begin{" << main << "}";
+ }
+ else
+ {
+  streams_.latex_stream() << "\\" << main << "{";
+  if(post == ";")
+  {
+   parse_context_.flags.after_auto_closed_tag_command = true;
+   streams_.latex_stream() << "}";
+   current_auto_closed_tag_command_ = main;
+  }
+  else if(post == ".")
+  {
+
+  }
+
+ }
 }
 
 void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)

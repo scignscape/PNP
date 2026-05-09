@@ -45,18 +45,18 @@ GTagML_Document::GTagML_Document()
  : parsing_mode_(GTagML_Parsing_Modes::GTagML),
    graph_(nullptr), grammar_(nullptr),
    annotations_(nullptr), divert_(nullptr),
-   project_info_(nullptr)
+   project_info_(nullptr), streams_(nullptr)
 {
-
+ init();
 }
 
 GTagML_Document::GTagML_Document(GTagML_Project_Info* gpi)
  : parsing_mode_(GTagML_Parsing_Modes::GTagML),
    graph_(nullptr), grammar_(nullptr),
    annotations_(nullptr), divert_(nullptr),
-   project_info_(gpi)
+   project_info_(gpi), streams_(nullptr)
 {
-
+ init();
 }
 
 
@@ -65,6 +65,13 @@ GTagML_Project_Info* GTagML_Document::init_project_info(QString folder)
  project_info_ = new GTagML_Project_Info(folder);
  return project_info_;
 }
+
+
+void GTagML_Document::init()
+{
+
+}
+
 
 
 QString GTagML_Document::use_info_path()
@@ -385,6 +392,9 @@ void GTagML_Document::parse()
  parser_ = new GTagML_Parser(graph_);
 
  parse_state_ = new GTagML_Parse_State(*graph_, document_info_);
+
+ streams_ = &parse_state_->streams();
+
 
  parse_state_->init(parser_);
 

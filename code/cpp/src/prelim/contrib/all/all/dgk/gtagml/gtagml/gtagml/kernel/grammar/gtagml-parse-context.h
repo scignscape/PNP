@@ -91,6 +91,10 @@ public:
 //  flag_(33, inside_multiline_comment)
 
 
+  flag_(33, after_auto_closed_tag_command)
+  flag_(34, inside_tag_command_name_transform)
+
+
  _flags_
 
 public:
