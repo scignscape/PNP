@@ -76,6 +76,8 @@ void GTagML_Parse_State::auto_closed_tag_command_leave(QString post)
 
 void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
 {
+ reset_primary();
+
  // //  check for encloser mismatch?
 
  QStringList pres = pre.split("`");
@@ -127,6 +129,8 @@ void GTagML_Parse_State::tag_command_name_transform_entry()
 void GTagML_Parse_State::outer_tag_command_entry(QString outer,
   QString pre, QString main, QStringVector supl, QString post)
 {
+ reset_primary();
+
  active_encloser_ = outer;
 
  if(post == ",")
@@ -153,6 +157,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString outer,
 
 void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)
 {
+ reset_primary();
+
  if(instruction == "spar")
  {
   if(lrcode == "0111")
@@ -168,10 +174,15 @@ void GTagML_Parse_State::parse_processing_instruction(QString instruction, QStri
   if(lrcode == "1111")
   {
    // //  same lines as /// // -- refactor?
-   streams_.latex_stream() << "\n\n";
-   parse_context_.flags.auto_paragraph_mode = false;
+   prepare_end_document();
 
-   end_document();
+//   reset_primary();
+//   check_close_paragraph();
+
+//   streams_.latex_stream() << "\n\n";
+//   parse_context_.flags.auto_paragraph_mode = false;
+
+//   end_document();
 
    return;
   }
@@ -858,6 +869,17 @@ void GTagML_Parse_State::leave_sentences_latex_filter(QString pretext)
  }
 
  flags.sentences_latex_filter = false;
+}
+
+void GTagML_Parse_State::prepare_end_document()
+{
+ reset_primary();
+ check_close_paragraph();
+
+ streams_.latex_stream() << "\n\n";
+ parse_context_.flags.auto_paragraph_mode = false;
+
+ end_document();
 }
 
 void GTagML_Parse_State::enter_heading(u1 count1, u1 count2)

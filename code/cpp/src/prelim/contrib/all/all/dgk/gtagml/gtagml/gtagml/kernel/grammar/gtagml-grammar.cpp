@@ -82,8 +82,16 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   parse_state.auto_closed_tag_command_leave(p.match_text());
  });
 
+// add_rule( gtagml_context, "sslashes",
+//  " .space-to-end-of-line.+ \\(<-end->\\) "
+//  " .single-space.* "
+//  ,[&]
+// {
+//  parse_state.prepare_end_document();
+// });
+
  add_rule( gtagml_context, "left-right-mid-processing-instruction",
-   " \\( (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\) "
+   "  .space-to-end-of-line.* \\( (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\) "
    ,[&] //raw_context, &parse_state, this, &p]
  {
   QString lrcode = QString::number(p.matched("left").size())
@@ -448,6 +456,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  {
   parse_state.leave_heading();
  });
+
 
  add_rule( gtagml_context, "slashes",
   " .space-to-end-of-line.+ (?<first> /+) .single-space.+ (?<second> /*) "

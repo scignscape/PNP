@@ -578,6 +578,7 @@ QString argument, QString parent_tag_type = QString());
  void resolve_tag_command_name_transform();
  void outer_tag_command_leave(QString pre, QString post);
  void auto_closed_tag_command_leave(QString post);
+ void prepare_end_document();
 
 };
 
