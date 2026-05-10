@@ -74,6 +74,13 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 // size_t test;
 
+ add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
+   gtagml_context, "auto-closed-tag-command-leave",
+   " [\\])}] "
+   ,[&]
+ {
+  parse_state.auto_closed_tag_command_leave(p.match_text());
+ });
 
  add_rule( gtagml_context, "left-right-mid-processing-instruction",
    " \\( (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\) "
@@ -89,7 +96,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  });
 
 
- add_rule( gtagml_context, "tag-command-enter",
+ add_rule( gtagml_context, "tag-command-entry",
    " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
    " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
    " (?<post> [,;.]+ )"
@@ -107,6 +114,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
  });
 
+
+
  add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
    gtagml_context, "tag-command-name-transform-entry",
    " \s+ => \s+ "
@@ -115,15 +124,24 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   parse_state.tag_command_name_transform_entry();
  });
 
+
  add_rule( flags_all_(parse_context ,inside_tag_command_name_transform),
    gtagml_context, "tag-command-name-transform-acc",
-   " [^\\])}]+ | [^\\])}] "
+   " [^\\])}]+ | [\\])}] "
    ,[&]
  {
   parse_state.tag_command_name_transform_acc(p.match_text());
  });
 
+ add_rule( gtagml_context, "outer-tag-command-leave",
+   " (?<pre> ` [\\w`-]+ )* ` (?<post> [\\])}] )"
+   ,[&]
+ {
+  QString pre = p.matched("pre");
+  QString post = p.matched("post");
 
+  parse_state.outer_tag_command_leave(pre, post);
+ });
 
 
 

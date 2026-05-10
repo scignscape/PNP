@@ -244,6 +244,7 @@ class GTagML_Parse_State
  QString current_tag_command_name_transform_;
 
  QMap<QString, QString> tag_command_name_transforms_;
+ QStringStack tag_command_name_stack_;
 
 public:
 
@@ -575,6 +576,8 @@ QString argument, QString parent_tag_type = QString());
  void tag_command_name_transform_entry();
  void tag_command_name_transform_acc(QString text);
  void resolve_tag_command_name_transform();
+ void outer_tag_command_leave(QString pre, QString post);
+ void auto_closed_tag_command_leave(QString post);
 
 };
 

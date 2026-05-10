@@ -25,7 +25,7 @@ class GTagML_Parse_Context
  typedef GTagML_Node tNode;
 
 public:
- flags_(4)
+ flags_(6)
   flag_(1, auto_paragraph_mode)
   flag_(2, italics_mode)
   flag_(3, double_quote_mode)
@@ -64,8 +64,10 @@ public:
   flag_(22, block_float_mode)
 
   flag_(23, single_quote_mode_doubled)
-
   flag_(24, single_quote_mode_trebled)
+
+//  flag_(23, after_auto_closed_tag_command)
+//  flag_(24, inside_tag_command_name_transform)
 
 
 //  flag_(14, inside_tag_body)

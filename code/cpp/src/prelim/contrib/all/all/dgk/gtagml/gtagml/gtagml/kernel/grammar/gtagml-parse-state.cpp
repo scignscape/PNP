@@ -69,6 +69,31 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
 // flags.use_latex_sdi_paragraph_markers = true;
 }
 
+void GTagML_Parse_State::auto_closed_tag_command_leave(QString post)
+{
+ parse_context_.flags.after_auto_closed_tag_command = false;
+}
+
+void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
+{
+ // //  check for encloser mismatch?
+
+ QStringList pres = pre.split("`");
+ QString pop = tag_command_name_stack_.pop();
+
+ if(pres.size() == 0)
+ {
+  streams_.latex_stream() << "}";
+ }
+ else if(pres.size() == 1)
+ {
+  if(pop.startsWith(","))
+    streams_.latex_stream() << "\n\\end{" + pop.mid(1) + "}\n";
+  else
+    streams_.latex_stream() << "}";
+ }
+}
+
 void GTagML_Parse_State::resolve_tag_command_name_transform()
 {
  tag_command_name_transforms_[current_auto_closed_tag_command_] =
@@ -107,6 +132,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString outer,
  if(post == ",")
  {
   streams_.latex_stream() << "\\begin{" << main << "}";
+  tag_command_name_stack_.push(post + main);
  }
  else
  {
@@ -119,7 +145,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString outer,
   }
   else if(post == ".")
   {
-
+   tag_command_name_stack_.push(post + main);
   }
 
  }

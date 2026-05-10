@@ -134,6 +134,10 @@ struct RZ_Flag_Test
    TEST_IMPL_CASE(2)
    TEST_IMPL_CASE(3)
    TEST_IMPL_CASE(4)
+   TEST_IMPL_CASE(5)
+   TEST_IMPL_CASE(6)
+   TEST_IMPL_CASE(7)
+   TEST_IMPL_CASE(8)
    default: return false;
   }
   #undef TEST_IMPL_CASE
@@ -150,6 +154,11 @@ struct RZ_Flag_Test
    TEST_IMPL_CASE(2)
    TEST_IMPL_CASE(3)
    TEST_IMPL_CASE(4)
+   TEST_IMPL_CASE(5)
+   TEST_IMPL_CASE(6)
+   TEST_IMPL_CASE(7)
+   TEST_IMPL_CASE(8)
+
    default: return false;
   }
   #undef TEST_IMPL_CASE
@@ -166,6 +175,10 @@ struct RZ_Flag_Test
    TEST_IMPL_CASE(2)
    TEST_IMPL_CASE(3)
    TEST_IMPL_CASE(4)
+   TEST_IMPL_CASE(5)
+   TEST_IMPL_CASE(6)
+   TEST_IMPL_CASE(7)
+   TEST_IMPL_CASE(8)
    default: return false;
   }
   #undef TEST_IMPL_CASE
