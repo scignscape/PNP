@@ -728,13 +728,7 @@ public:
    QRegularExpression::NormalMatch, r.match_options);  //QRegExp::CaretAtOffset
   if(match.hasMatch())
   {
-   QString c1 = match.captured(1);
-   QString c2 = match.captured(2);
-   QString c3 = match.captured(3);
-   QString c4 = match.captured(4);
-   QString c5 = match.captured(5);
-
-   return new RZ_Match_Data_Qt(match.capturedEnd(), // pos + match.capturedLength(),
+   return new RZ_Match_Data_Qt(str, match.capturedEnd(), // pos + match.capturedLength(),
     match.capturedTexts(), r.capture_name_map, r.inner_patterns);
   }
   return nullptr;
@@ -872,7 +866,7 @@ neg_main_continue:
      r->callback();
 
      if(parser.reset_cancel())
-      continue;
+       continue;
      else if(parser.end_of_file_info())
      {
       pos = 0;
@@ -881,6 +875,7 @@ neg_main_continue:
      {
       md->reset_position(pos);
       QString seek;
+      parser.check_skip_pos(pos);
       if(parser.check_seek(seek))
       {
        // this depends on QString functions

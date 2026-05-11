@@ -133,14 +133,50 @@ void GTagML_Parse_State::outer_tag_command_entry(QString outer,
 
  active_encloser_ = outer;
 
+ QString alt;
+
+ main = main.simplified();
+
+ if(main.contains(" "))
+ {
+  QStringList qsl = main.split(" ");
+  main = qsl.takeFirst();
+
+  QString arrow;
+  for(u1 i = 0; i < qsl.size(); ++i)
+  {
+   if(i % 2)
+   {
+    QString repl = qsl[i];
+    if(arrow.startsWith("->"))
+      latex_command_name_transforms_[main] = repl;
+   }
+   else
+     arrow = qsl[i];
+  }
+
+  if(post == ";" && outer == "{")
+  {
+   QString next_char = parser_->skip(1);
+   if(next_char != "}")
+   {
+    // //  problem?
+   }
+   return;
+  }
+ }
+
+ QString latex = latex_command_name_transforms_.value(main, main);
+
+
  if(post == ",")
  {
-  streams_.latex_stream() << "\\begin{" << main << "}";
+  streams_.latex_stream() << "\\begin{" << latex << "}";
   tag_command_name_stack_.push(post + main);
  }
  else
  {
-  streams_.latex_stream() << "\\" << main << "{";
+  streams_.latex_stream() << "\\" << latex << "{";
   if(post == ";")
   {
    parse_context_.flags.after_auto_closed_tag_command = true;

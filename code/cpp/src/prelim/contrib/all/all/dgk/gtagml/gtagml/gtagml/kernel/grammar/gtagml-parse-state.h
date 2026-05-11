@@ -246,6 +246,8 @@ class GTagML_Parse_State
  QMap<QString, QString> tag_command_name_transforms_;
  QStringStack tag_command_name_stack_;
 
+ QMap<QString, QString> latex_command_name_transforms_;
+
 public:
 
 

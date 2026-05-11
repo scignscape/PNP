@@ -87,12 +87,17 @@ struct RZ_Match_Data_Base
  virtual void clean_up() {}
 
  virtual void reset_position(int& pos) = 0;
+ virtual int anticipated_position() = 0;
  virtual tString text() = 0;
  virtual tString text(tString capture_name)
  {
   return "";
  }
  virtual tString text(int capture_number)
+ {
+  return "";
+ }
+ virtual tString original_text()
  {
   return "";
  }
@@ -117,6 +122,7 @@ struct RZ_Match_Data_Base
 struct RZ_Match_Data_False : RZ_Match_Data_Base
 {
  void reset_position(int& pos){}
+ int anticipated_position(){return 0;}
  operator bool()
  {
   return false;
@@ -144,6 +150,13 @@ template <typename T> auto asKeyValueRange(T &&iterable) noexcept { return KeyVa
 
 struct RZ_Match_Data_Qt : RZ_Match_Data_Base
 {
+ QString orig_text;
+ QString original_text()
+ {
+  return orig_text;
+ }
+
+
  int position;
  QRegularExpression* rexpr;
  QStringList captures;
@@ -151,8 +164,9 @@ struct RZ_Match_Data_Qt : RZ_Match_Data_Base
  QMap<int, tString> reverse_capture_name_map;
  QMap<tString, QVector<tString>> inner_patterns;
 
- RZ_Match_Data_Qt(int p, QStringList s, QMap<QString, int>& m,
-   QMap<QString, QVector<QString>>& inner):position(p + 1),
+ RZ_Match_Data_Qt(QString orig, int p, QStringList s, QMap<QString, int>& m,
+   QMap<QString, QVector<QString>>& inner):orig_text(orig),
+   position(p + 1),
    captures(s),capture_name_map(m),inner_patterns(inner)
  {
   for(auto [key, value] : asKeyValueRange(capture_name_map))
@@ -170,6 +184,10 @@ struct RZ_Match_Data_Qt : RZ_Match_Data_Base
  }
  void clean_up()
  {
+ }
+ int anticipated_position()
+ {
+  return position - 1;
  }
  void reset_position(int& pos)
  {

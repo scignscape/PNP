@@ -105,7 +105,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 
  add_rule( gtagml_context, "tag-command-entry",
-   " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` (?<main> [^\\s\\[\\]`,;.]+)"
+   " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` "
+   " (?<main> (?: [^\\s\\[\\]`,;.] | (?: \\s+ ->> \\s+ ) )+ ) "
    " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
    " (?<post> [,;.]+ )"
    ,[&] //raw_context, &parse_state, this, &p]
@@ -392,7 +393,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  add_rule( gtagml_context, "enter-sentences-only",
   " (?<pre-space> (?: .single-space.* \\n .single-space.*) | "
   "  (?: .single-space.+ ) ) "
-  " (?<open> <{0,2}) \\{ (?![[%<>-]) "
+  " (?<open> <{0,2}) \\{ (?![[%<>`-]) "
   ,[&]
  {
   parse_state.enter_sentences_only(p.matched("open"), p.matched("pre-space"));

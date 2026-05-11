@@ -101,6 +101,16 @@ void Relae_Parser<GALAXY>::end_of_file(void* pVoid)
  end_of_file_info_ = pVoid;
 }
 
+//template<typename GALAXY>
+//tString Relae_Parser<GALAXY>::skip(int how_many)
+//{
+// tString result = eval_string_.mid(current_position_, how_many);
+// current_position_ += how_many;
+
+// return result;
+//}
+
+
 template<typename GALAXY>
 void* Relae_Parser<GALAXY>::reset_cancel()
 {
@@ -112,7 +122,7 @@ void* Relae_Parser<GALAXY>::reset_cancel()
 template<typename GALAXY>
 QPair<int, int> Relae_Parser<GALAXY>::position_pair()
 {
- return{current_position() - match_text().size(), current_position()};
+ return{current_position_ - match_text().size(), current_position_};
 }
 
 template<typename GALAXY>

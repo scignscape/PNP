@@ -38,7 +38,7 @@ class Relae_Parser
 
  int current_position_;
 
- caon_ptr<tGraph> graph_;
+ tGraph* graph_;
 
  QVector<Match_Info> saved_matches_;
 
@@ -47,6 +47,8 @@ class Relae_Parser
  void* cancel_info_;
  void* end_of_file_info_;
 
+ int skip_length_;
+
 public:
 
  ACCESSORS(caon_ptr<tGraph> ,graph)
@@ -54,8 +56,8 @@ public:
 
  ACCESSORS(int ,current_position)
 
- Relae_Parser(caon_ptr<tGraph> g):graph_(g),match_(nullptr),
-   cancel_info_(nullptr), end_of_file_info_(nullptr), current_position_(0)
+ Relae_Parser(tGraph* g):graph_(g),match_(nullptr),
+   cancel_info_(nullptr), end_of_file_info_(nullptr), current_position_(0), skip_length_(0)
  {
 
  }
@@ -86,6 +88,30 @@ public:
 
  QVector<tString> unnamed_captures(int start_position);
  QVector<tString> unnamed_captures(tString prior_capture_name);
+
+ tString skip(int how_many)
+ {
+  skip_length_ = how_many;
+
+  tString result;
+
+  if(match_)
+  {
+   int ap = match_->anticipated_position();
+   result = match_->original_text().mid(ap, how_many);
+  }
+
+  return result;
+ }
+
+ void check_skip_pos(int& pos)
+ {
+  if(skip_length_)
+  {
+   pos += skip_length_;
+   skip_length_ = 0;
+  }
+ }
 
 
 };

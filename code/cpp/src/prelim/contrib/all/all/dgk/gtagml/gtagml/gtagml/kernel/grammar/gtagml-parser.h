@@ -21,7 +21,7 @@ KANS_(GTagML)
 class GTagML_Parser : public Relae_Parser<GTagML_Galaxy>
 {
 public:
- GTagML_Parser(caon_ptr<GTagML_Graph> g);
+ GTagML_Parser(GTagML_Graph* g);
 };
 
 _KANS(GTagML)
