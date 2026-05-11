@@ -350,6 +350,7 @@ public:
  void single_slash_line_plus();
 
  void enter_subparagraph(QString text, QString sup = {});
+ void enter_implicit_subparagraph(QString pre, QString text);
 
  void enter_footnote(QString pretext, QString space);
  void leave_footnote(QString pretext, QString space);

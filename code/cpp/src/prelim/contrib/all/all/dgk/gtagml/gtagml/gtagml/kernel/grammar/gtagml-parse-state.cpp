@@ -168,24 +168,36 @@ void GTagML_Parse_State::outer_tag_command_entry(QString outer,
 
  QString latex = latex_command_name_transforms_.value(main, main);
 
+ QString prepend;
+ QString lprepend;
+
+ if(pre.endsWith("%"))
+ {
+  pre = pre.mid(1);
+  prepend = "GT";
+  lprepend = "<GT>";
+  enter_implicit_subparagraph(pre, latex);
+  //parse_context_.flags.ignore_blank_lines = true;
+ }
+
 
  if(post == ",")
  {
-  streams_.latex_stream() << "\\begin{" << latex << "}";
-  tag_command_name_stack_.push(post + main);
+  streams_.latex_stream() << "\\begin{" << prepend << latex << "}";
+  tag_command_name_stack_.push(post + lprepend + main);
  }
  else
  {
-  streams_.latex_stream() << "\\" << latex << "{";
+  streams_.latex_stream() << "\\" << prepend << latex << "{";
   if(post == ";")
   {
    parse_context_.flags.after_auto_closed_tag_command = true;
    streams_.latex_stream() << "}";
-   current_auto_closed_tag_command_ = main;
+   current_auto_closed_tag_command_ = lprepend + main;
   }
   else if(post == ".")
   {
-   tag_command_name_stack_.push(post + main);
+   tag_command_name_stack_.push(post + lprepend + main);
   }
 
  }
@@ -1179,6 +1191,16 @@ void GTagML_Parse_State::pseudo_paragraph()
  streams_.latex_stream() << "\n\n\\pseudoIndent{} ";
 }
 
+
+void GTagML_Parse_State::enter_implicit_subparagraph(QString pre, QString text)
+{
+ //?streams_.latex_stream() << "\n\n\\begin{" << text << "}\n";
+ //?parse_context_.flags.read_numbered_items = true;
+ parse_context_.flags.ignore_blank_lines = true;
+
+ parse_context_.flags.read_numbered_items = true;
+
+}
 
 void GTagML_Parse_State::enter_subparagraph(QString text, QString sup)
 {
