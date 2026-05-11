@@ -573,7 +573,7 @@ QString argument, QString parent_tag_type = QString());
 
  void parse_processing_instruction(QString instruction, QString lrcode);
 
- void outer_tag_command_entry(QString outer, QString pre, QString main,
+ void outer_tag_command_entry(QString blank_lines, QString outer, QString pre, QString main,
    QStringVector supl, QString post);
 
  void tag_command_name_transform_entry();

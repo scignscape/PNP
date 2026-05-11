@@ -105,12 +105,15 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 
  add_rule( gtagml_context, "tag-command-entry",
+   " (?<blank-lines> .blank-lines.?) "
    " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` "
    " (?<main> (?: [^\\s\\[\\]`,;.] | (?: \\s+ ->> \\s+ ) )+ ) "
    " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
    " (?<post> [,;.]+ )"
    ,[&] //raw_context, &parse_state, this, &p]
  {
+  QString blank_lines = p.matched("blank-lines");
+
   QString outer = p.matched("outer");
   QString pre = p.matched("pre");
   QString main = p.matched("main");
@@ -119,7 +122,8 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
   QString post = p.matched("post");
 
-  parse_state.outer_tag_command_entry(outer, pre, main, supl, post);
+  parse_state.outer_tag_command_entry(blank_lines,
+    outer, pre, main, supl, post);
 
  });
 

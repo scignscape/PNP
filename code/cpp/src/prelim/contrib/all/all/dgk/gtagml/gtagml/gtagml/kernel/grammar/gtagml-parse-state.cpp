@@ -126,9 +126,23 @@ void GTagML_Parse_State::tag_command_name_transform_entry()
  parse_context_.flags.inside_tag_command_name_transform = true;
 }
 
-void GTagML_Parse_State::outer_tag_command_entry(QString outer,
+void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
+  QString outer,
   QString pre, QString main, QStringVector supl, QString post)
 {
+ u2 nlcount = blank_lines.count(QLatin1Char('\n'));
+
+ if(nlcount > 1)
+ {
+  if(parse_context_.flags.auto_paragraph_mode && !pre.endsWith("%"))
+    auto_new_paragraph();
+ }
+ else if(nlcount == 1)
+ {
+  primary_acc(blank_lines);
+ }
+
+ //
  reset_primary();
 
  active_encloser_ = outer;
