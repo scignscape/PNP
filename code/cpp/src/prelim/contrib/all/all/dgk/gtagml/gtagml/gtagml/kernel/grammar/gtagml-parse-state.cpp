@@ -126,6 +126,15 @@ void GTagML_Parse_State::tag_command_name_transform_entry()
  parse_context_.flags.inside_tag_command_name_transform = true;
 }
 
+
+void GTagML_Parse_State::item_marker(QString pre)
+{
+ reset_primary();
+
+ streams_.latex_stream() << "\n\\" << GT_item_ << "Item{} ";
+}
+
+
 void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   QString outer,
   QString pre, QString main, QStringVector supl, QString post)
@@ -185,12 +194,19 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  QString prepend;
  QString lprepend;
 
+ QString append;
+
  if(pre.endsWith("%"))
  {
+  streams_.latex("\n\n");
+
   pre = pre.mid(1);
   prepend = "GT";
   lprepend = "<GT>";
   enter_implicit_subparagraph(pre, latex);
+
+  append = "\n";
+
   //parse_context_.flags.ignore_blank_lines = true;
  }
 
@@ -215,6 +231,9 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   }
 
  }
+
+ if(!append.isEmpty())
+   streams_.latex(append);
 }
 
 void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)
@@ -1208,6 +1227,8 @@ void GTagML_Parse_State::pseudo_paragraph()
 
 void GTagML_Parse_State::enter_implicit_subparagraph(QString pre, QString text)
 {
+ GT_item_ = "GT" + text;
+
  //?streams_.latex_stream() << "\n\n\\begin{" << text << "}\n";
  //?parse_context_.flags.read_numbered_items = true;
  parse_context_.flags.ignore_blank_lines = true;

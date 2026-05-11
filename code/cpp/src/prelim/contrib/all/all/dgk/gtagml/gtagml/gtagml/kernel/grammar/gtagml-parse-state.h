@@ -248,6 +248,8 @@ class GTagML_Parse_State
 
  QMap<QString, QString> latex_command_name_transforms_;
 
+ QString GT_item_;
+
 public:
 
 
@@ -582,6 +584,9 @@ QString argument, QString parent_tag_type = QString());
  void outer_tag_command_leave(QString pre, QString post);
  void auto_closed_tag_command_leave(QString post);
  void prepare_end_document();
+
+ void item_marker(QString pre);
+
 
 };
 

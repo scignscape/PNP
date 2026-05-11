@@ -104,6 +104,16 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  });
 
 
+ add_rule( gtagml_context, "item-marker",
+   "  (?<= \\n) (?: (?<pre> [\\S]+ ) .single-space.+ )? ~> .single-space.+ "
+   ,[&] //raw_context, &parse_state, this, &p]
+ {
+  QString pre = p.matched("pre");
+
+  parse_state.item_marker(pre);
+ });
+
+
  add_rule( gtagml_context, "tag-command-entry",
    " (?<blank-lines> .blank-lines.?) "
    " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` "
