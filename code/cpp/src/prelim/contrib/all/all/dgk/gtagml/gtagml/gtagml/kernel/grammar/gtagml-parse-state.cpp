@@ -82,17 +82,31 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
 
  QStringList pres = pre.split("`");
  QString pop = tag_command_name_stack_.pop();
+ pre = pres.takeFirst();
 
  if(pres.size() == 0)
  {
   streams_.latex_stream() << "}";
  }
- else if(pres.size() == 1)
+ else
  {
-  if(pop.startsWith(","))
-    streams_.latex_stream() << "\n\\end{" + pop.mid(1) + "}\n";
-  else
-    streams_.latex_stream() << "}";
+  if(pres.size() == 1)
+  {
+   if(pop.startsWith(",<GT>"))
+     streams_.latex_stream() << "\n%\n\\end{GT" + pop.mid(5) + "}\n";
+   else if(pop.startsWith(","))
+     streams_.latex_stream() << "\n%\n\\end{" + pop.mid(1) + "}\n";
+   else
+     streams_.latex_stream() << "}";
+  }
+
+  if(pre == "+")
+  {
+   leave_subparagraph_with_continue();
+   streams_.latex_stream() << "\n";
+  }
+
+
  }
 }
 
@@ -131,7 +145,11 @@ void GTagML_Parse_State::item_marker(QString pre)
 {
  reset_primary();
 
- streams_.latex_stream() << "\n\\" << GT_item_ << "Item{} ";
+ streams_.latex_stream() << "\n\\" << GT_item_;
+ if(pre.isEmpty())
+   streams_.latex_stream() << "Item{} ";
+ else
+   streams_.latex_stream() << "Item[" << pre << "] ";
 }
 
 
@@ -198,7 +216,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  if(pre.endsWith("%"))
  {
-  streams_.latex("\n\n");
+  streams_.latex("\n%\n");
 
   pre = pre.mid(1);
   prepend = "GT";
@@ -1349,10 +1367,9 @@ void GTagML_Parse_State::check_blank_line()
  }
 }
 
-void GTagML_Parse_State::single_slash_line_plus()
-{
- single_slash_line();
 
+void GTagML_Parse_State::leave_subparagraph_with_continue()
+{
  static QString letters = "abcdefghijklmnopqrstuvwxyz";
 
 // streams_.latex_stream() << "\n\\nip";
@@ -1361,7 +1378,13 @@ void GTagML_Parse_State::single_slash_line_plus()
    << letters[current_slash_line_plus_count_] << "}%";
 
  ++current_slash_line_plus_count_;
+}
 
+void GTagML_Parse_State::single_slash_line_plus()
+{
+ single_slash_line();
+
+ leave_subparagraph_with_continue();
 }
 
 void GTagML_Parse_State::single_slash_line()

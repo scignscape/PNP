@@ -157,7 +157,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  });
 
  add_rule( gtagml_context, "outer-tag-command-leave",
-   " (?<pre> ` [\\w`-]+ )* ` (?<post> [\\])}] )"
+   " (?<pre> [%+]* ` [\\w`-]+ )* ` (?<post> [\\])}] )"
    ,[&]
  {
   QString pre = p.matched("pre");

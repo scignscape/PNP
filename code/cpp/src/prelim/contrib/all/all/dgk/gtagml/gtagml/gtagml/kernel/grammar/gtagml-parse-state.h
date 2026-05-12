@@ -351,6 +351,8 @@ public:
  void single_slash_line();
  void single_slash_line_plus();
 
+ void leave_subparagraph_with_continue();
+
  void enter_subparagraph(QString text, QString sup = {});
  void enter_implicit_subparagraph(QString pre, QString text);
 
