@@ -105,7 +105,11 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
    leave_subparagraph_with_continue();
    streams_.latex_stream() << "\n";
   }
-
+  else if(pre == "%")
+  {
+   streams_.latex_stream() << " %! (subparagraph ends paragraph)";
+   leave_subparagraph_with_reset();
+  }
 
  }
 }
@@ -223,7 +227,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   lprepend = "<GT>";
   enter_implicit_subparagraph(pre, latex);
 
-  append = "\n";
+  append = "\n %! (subparagraph)";
 
   //parse_context_.flags.ignore_blank_lines = true;
  }
@@ -1367,6 +1371,47 @@ void GTagML_Parse_State::check_blank_line()
  }
 }
 
+
+void GTagML_Parse_State::leave_subparagraph_with_reset()
+{
+ if(parse_context_.flags.read_desc_label)
+ {
+  parse_context_.flags.read_desc_label = false;
+  parse_context_.flags.ignore_blank_lines = false;
+ }
+
+ else if(parse_context_.flags.read_parens_as_label)
+ {
+  parse_context_.flags.read_parens_as_label = false;
+  parse_context_.flags.read_parens_as_ref = true;
+ }
+
+ else if(parse_context_.flags.read_numbered_items)
+ {
+  parse_context_.flags.read_numbered_items = false;
+  parse_context_.flags.ignore_blank_lines = false;
+ }
+
+ else if(parse_context_.flags.read_bulleted_items)
+ {
+  parse_context_.flags.read_bulleted_items = false;
+  parse_context_.flags.ignore_blank_lines = false;
+ }
+
+
+ else if(current_paragraph_type_ == Paragraph_Types::Block_Quote)
+ {
+  parse_context_.flags.ignore_blank_lines = false;
+  current_paragraph_type_ = held_paragraph_types_.pop();
+ }
+
+ else if(current_paragraph_type_ == Paragraph_Types::Endnote_Block_Quote)
+ {
+  parse_context_.flags.ignore_blank_lines = false;
+  current_paragraph_type_ = held_paragraph_types_.pop();
+ }
+
+}
 
 void GTagML_Parse_State::leave_subparagraph_with_continue()
 {
