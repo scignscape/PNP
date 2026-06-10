@@ -3,7 +3,7 @@
 
 #include "kans.h"
 
-#include <QRegExp>
+//?  #include <QRegExp>
 
 USING_KANS(GTagML)
 
@@ -39,22 +39,23 @@ bool GTagML_Annotation_Filter::check(QString& key)
 
 void GTagML_Annotation_Filter::parse(QString raw_text, QStringList& target)
 {
- QRegExp rx("(\\s*/\\s*)|$");
+ //?
+// QRegExp rx("(\\s*/\\s*)|$");
 
- int pos = 0;
- int old_pos = 0;
- while((pos = rx.indexIn(raw_text, pos)) != -1)
- {
-  int length = rx.cap().length();
-  QString key = raw_text.mid(old_pos, pos - old_pos).trimmed();
-  pos += length;
-  old_pos = pos;
-  if(!key.isEmpty())
-   target.push_back(key);
-  if(length == 0)
-    //  meaning end of raw_text
-   break;
- }
+// int pos = 0;
+// int old_pos = 0;
+// while((pos = rx.indexIn(raw_text, pos)) != -1)
+// {
+//  int length = rx.cap().length();
+//  QString key = raw_text.mid(old_pos, pos - old_pos).trimmed();
+//  pos += length;
+//  old_pos = pos;
+//  if(!key.isEmpty())
+//   target.push_back(key);
+//  if(length == 0)
+//    //  meaning end of raw_text
+//   break;
+// }
 
 }
 

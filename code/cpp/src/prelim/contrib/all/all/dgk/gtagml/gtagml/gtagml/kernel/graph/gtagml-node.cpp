@@ -16,16 +16,17 @@ QString GTagML_Node::debug_connectors() const
 
  static GTagML_Frame* fr = GTagML_Frame::instance_ptr();
 
- in_frame_targets_iterator_type it(targets_[fr]);
+//?
+// in_frame_targets_iterator_type it(targets_[fr]);
 
- while(it.hasNext())
- {
-  it.next();
-  QString connector = it.key()->label();
-  caon_ptr<GTagML_Node> target = it.value();
-  CAON_PTR_DEBUG(GTagML_Node ,target)
-  result += QString("\n |%1| %2").arg(connector).arg(target->label());
+// while(it.hasNext())
+// {
+//  it.next();
+//  QString connector = it.key()->label();
+//  caon_ptr<GTagML_Node> target = it.value();
+//  CAON_PTR_DEBUG(GTagML_Node ,target)
+//  result += QString("\n |%1| %2").arg(connector).arg(target->label());
 
- }
+// }
  return result;
 }

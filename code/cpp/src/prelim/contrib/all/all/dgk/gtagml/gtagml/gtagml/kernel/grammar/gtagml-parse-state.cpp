@@ -62,6 +62,8 @@ GTagML_Parse_State::GTagML_Parse_State(GTagML_Graph& g, GTagML_Document_Info& do
    ,current_item_count_(0)
    ,pseudo_paragraph_counts_({0,0})
    ,fn_count_(0)
+   ,parameter_count_(0)
+   ,last_parameter_kind_(Parameter_Kinds::N_A)
 //   ,jats_stream_(&jats_)
 {
 
@@ -74,19 +76,61 @@ void GTagML_Parse_State::auto_closed_tag_command_leave(QString post)
  parse_context_.flags.after_auto_closed_tag_command = false;
 }
 
+void GTagML_Parse_State::enter_tag_command_parameter(Parameter_Kinds pk, QString post)
+{
+ if(parameter_count_ > 0)
+ {
+  if(last_parameter_kind_ & Parameter_Kinds::Mandatory)
+    streams_.latex("}");
+  else if(last_parameter_kind_ & Parameter_Kinds::Optional)
+    streams_.latex("]");
+ }
+
+ if(post.isEmpty())
+   last_parameter_kind_ = pk;
+ else
+   last_parameter_kind_ = Parameter_Kinds::N_A;
+
+ if(pk & Parameter_Kinds::Mandatory)
+ {
+  streams_.latex("{");
+ }
+ else if(pk & Parameter_Kinds::Optional)
+ {
+  streams_.latex("[");
+ }
+}
+
+
 void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
 {
  reset_primary();
 
  // //  check for encloser mismatch?
 
- QStringList pres = pre.split("`");
+ QString no_auto_paragraph_flag;
+
  QString pop = tag_command_name_stack_.pop();
+
+ if(pop.contains("`*`"))
+ {
+  QStringVector pops = pop.split("`*`");
+  pop = pops.takeLast();
+  no_auto_paragraph_flag = pops.join("`") + "*";
+ }
+
+ QStringList pres = pre.split("`");
  pre = pres.takeFirst();
 
  if(pres.size() == 0)
  {
   streams_.latex_stream() << "}";
+
+  if(no_auto_paragraph_flag.endsWith("*"))
+  {
+   streams_.latex_stream() << "\n";
+   current_paragraph_bridge_ = 1;
+  }
  }
  else
  {
@@ -99,6 +143,9 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
    else
      streams_.latex_stream() << "}";
   }
+
+  if(no_auto_paragraph_flag.endsWith("*"))
+    streams_.latex_stream() << "\n";
 
   if(pre == "+")
   {
@@ -163,9 +210,22 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 {
  u2 nlcount = blank_lines.count(QLatin1Char('\n'));
 
+ QString no_auto_paragraph_flag;
+
  if(nlcount > 1)
  {
-  if(parse_context_.flags.auto_paragraph_mode && !pre.endsWith("%"))
+  if(pre.endsWith("*"))
+  {
+   no_auto_paragraph_flag = pre.chopped(1) + "`*`";
+   if(pre.startsWith("-"))
+     primary_acc("\n\n");
+   else
+   {
+    auto_close_paragraph();
+    primary_acc("\n\n");
+   }
+  }
+  else if(parse_context_.flags.auto_paragraph_mode && !pre.endsWith("%"))
     auto_new_paragraph();
  }
  else if(nlcount == 1)
@@ -213,6 +273,18 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  QString latex = latex_command_name_transforms_.value(main, main);
 
+ QRegularExpression num_end("([^\\d].*)(\\d+)");
+ QRegularExpressionMatch m = num_end.match(latex);
+ if(m.hasMatch())
+ {
+  QString m1 = m.captured(1);
+  QString m2 = m.captured(2);
+  latex = m1 + "|" + m2 + "|";
+
+  if(m1 == "s")
+    section_command(m2.toUInt());
+ }
+
  QString prepend;
  QString lprepend;
 
@@ -236,7 +308,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  if(post == ",")
  {
   streams_.latex_stream() << "\\begin{" << prepend << latex << "}";
-  tag_command_name_stack_.push(post + lprepend + main);
+  tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + main);
  }
  else
  {
@@ -245,11 +317,11 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   {
    parse_context_.flags.after_auto_closed_tag_command = true;
    streams_.latex_stream() << "}";
-   current_auto_closed_tag_command_ = lprepend + main;
+   current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + main;
   }
   else if(post == ".")
   {
-   tag_command_name_stack_.push(post + lprepend + main);
+   tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + main);
   }
 
  }
@@ -985,6 +1057,13 @@ void GTagML_Parse_State::prepare_end_document()
  end_document();
 }
 
+
+void GTagML_Parse_State::section_command(u1 depth)
+{
+
+}
+
+
 void GTagML_Parse_State::enter_heading(u1 count1, u1 count2)
 {
  reset_primary();
@@ -1178,6 +1257,13 @@ void GTagML_Parse_State::show_latex()
  //?qDebug() << "\n" << latex_ << "\n";
 }
 
+void GTagML_Parse_State::auto_close_paragraph()
+{
+ reset_primary();
+
+ check_close_paragraph();
+}
+
 void GTagML_Parse_State::auto_new_paragraph()
 {
  auto_new_paragraph("p.1");
@@ -1185,9 +1271,7 @@ void GTagML_Parse_State::auto_new_paragraph()
 
 void GTagML_Parse_State::auto_new_paragraph(QString cmd)
 { // p.1
- reset_primary();
-
- check_close_paragraph();
+ auto_close_paragraph();
 
  current_slash_line_plus_count_ = 0;
 
@@ -2348,7 +2432,8 @@ void GTagML_Parse_State::check_tile_acc(Acc_Mode new_mode)
 
 void GTagML_Parse_State::check_add_words()
 {
- QStringList strings = tile_acc_.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
+ //?QStringList strings = tile_acc_.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
+ QStringList strings; // = tile_acc_.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
  for(QString s : strings)
  {
   QRegularExpression rx_start("\\A\\$(\\w+)\\$");

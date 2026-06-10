@@ -279,42 +279,46 @@ void GTagML_Output_SDI_Infoset::finalize_widowed_sentence_boundaries(GH_Block_Ba
  static QString* ss = new QString("\\+");
  static QString* se = new QString("\\;");
  {
-  QMapIterator<caon_ptr<tNode>, u4> it(widowed_sentence_starts_);
-  while(it.hasNext())
-  {
-   it.next();
-   u4 i = it.value();
-   bl.set_pre_insert_back(i, ss);
-  }
+// //??
+//  QMapIterator<caon_ptr<tNode>, u4> it(widowed_sentence_starts_);
+//  while(it.hasNext())
+//  {
+//   it.next();
+//   u4 i = it.value();
+//   bl.set_pre_insert_back(i, ss);
+//  }
  }
 
  {
-  QMapIterator<caon_ptr<tNode>, u4> it(declared_sentence_starts_);
-  while(it.hasNext())
-  {
-   it.next();
-   u4 i = it.value();
-   bl.set_pre_insert_back(i, ss);
-  }
+  // //??
+//  QMapIterator<caon_ptr<tNode>, u4> it(declared_sentence_starts_);
+//  while(it.hasNext())
+//  {
+//   it.next();
+//   u4 i = it.value();
+//   bl.set_pre_insert_back(i, ss);
+//  }
  }
 
  {
-  QMapIterator<caon_ptr<tNode>, u4> it(widowed_sentence_ends_);
-  while(it.hasNext())
-  {
-   it.next();
-   u4 i = it.value();
-   bl.set_insert_front(i, se);
-  }
+  // //??
+//  QMapIterator<caon_ptr<tNode>, u4> it(widowed_sentence_ends_);
+//  while(it.hasNext())
+//  {
+//   it.next();
+//   u4 i = it.value();
+//   bl.set_insert_front(i, se);
+//  }
  }
  {
-  QMapIterator<caon_ptr<tNode>, u4> it(declared_sentence_ends_);
-  while(it.hasNext())
-  {
-   it.next();
-   u4 i = it.value();
-   bl.set_insert_front(i, se);
-  }
+  // //??
+//  QMapIterator<caon_ptr<tNode>, u4> it(declared_sentence_ends_);
+//  while(it.hasNext())
+//  {
+//   it.next();
+//   u4 i = it.value();
+//   bl.set_insert_front(i, se);
+//  }
  }
 }
 

@@ -134,7 +134,7 @@ void GTagML_Document::write_annotations(QString path, QMap<QString, GTagML_Annot
  }
 
 
- qSort(qsl.begin(), qsl.end());
+ //? qSort(qsl.begin(), qsl.end());
 
  for(QString qs : qsl)
  {

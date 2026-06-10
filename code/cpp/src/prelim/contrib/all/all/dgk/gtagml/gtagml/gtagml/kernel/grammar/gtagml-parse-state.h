@@ -72,6 +72,22 @@ class GTagML_Parse_State
 
  Acc_Mode acc_mode_;
 
+public:
+
+ enum class Parameter_Kinds {
+  N_A, Mandatory = 1, Optional = 2, Numindexed = 4, Strindexed = 8,
+  Mandatory_Numindexed = Mandatory | Numindexed,
+  Mandatory_Strindexed = Mandatory | Strindexed,
+  Optional_Numindexed = Optional | Numindexed,
+  Optional_Strindexed = Optional | Strindexed,
+ };
+
+ ENUM_FLAGS_OP_MACROS(Parameter_Kinds)
+
+private:
+
+ Parameter_Kinds last_parameter_kind_;
+
  enum Tag_Body_Follow_Mode {
   Tag_Body_Follow_Mode_Not_Recognized, Normal, Region, Empty
  };
@@ -250,6 +266,8 @@ class GTagML_Parse_State
 
  QString GT_item_;
 
+ u2 parameter_count_;
+
 public:
 
 
@@ -264,6 +282,9 @@ public:
  ACCESSORS(u4 ,sentence_id)
 
  void init(GTagML_Parser* parser);
+
+ void section_command(u1 depth);
+
 
  QString current_paragraph_type_to_string()
  {
@@ -287,6 +308,7 @@ public:
 
  }
 
+ void enter_tag_command_parameter(Parameter_Kinds pk, QString post);
 
  void end_sentence(QString punctuation,
    u1 nesting_code = Nesting_Codes::Signal_Default,
@@ -411,6 +433,8 @@ public:
 
  void auto_new_paragraph(QString cmd);
  void auto_new_paragraph();
+
+ void auto_close_paragraph();
 
  void enter_block_float_mode();
  void leave_block_float_mode();

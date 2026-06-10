@@ -108,4 +108,4 @@ class GTagML_Streams
 _KANS(GTagML)
 
 
-#endif GTAGML_STREAMS__H
+#endif //  GTAGML_STREAMS__H

@@ -3,7 +3,7 @@
 
 #include "kans.h"
 
-#include <QRegExp>
+//? #include <QRegExp>
 
 USING_KANS(GTagML)
 

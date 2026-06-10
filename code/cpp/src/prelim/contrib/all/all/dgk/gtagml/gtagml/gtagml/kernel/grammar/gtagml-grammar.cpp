@@ -75,6 +75,15 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 // size_t test;
 
  add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
+   gtagml_context, "tag-command-name-transform-entry",
+   " \\s+ => \\s+ "
+   ,[&]
+ {
+  parse_state.tag_command_name_transform_entry();
+ });
+
+
+ add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
    gtagml_context, "auto-closed-tag-command-leave",
    " [\\])}] "
    ,[&]
@@ -139,13 +148,14 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 
 
- add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
-   gtagml_context, "tag-command-name-transform-entry",
-   " \s+ => \s+ "
-   ,[&]
- {
-  parse_state.tag_command_name_transform_entry();
- });
+// add_rule( flags_all_(parse_context ,after_auto_closed_tag_command),
+//   gtagml_context, "tag-command-name-transform-entry",
+////?   " \\s+ => \\s+ "
+//   " => "
+//   ,[&]
+// {
+//  parse_state.tag_command_name_transform_entry();
+// });
 
 
  add_rule( flags_all_(parse_context ,inside_tag_command_name_transform),
@@ -164,6 +174,15 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString post = p.matched("post");
 
   parse_state.outer_tag_command_leave(pre, post);
+ });
+
+ add_rule( gtagml_context, "tag-command-mandatory-numindexed",
+   " \\s+ # (?<post> [.,;]*) \\s+ "
+   ,[&]
+ {
+  QString post = p.matched("post");
+
+  parse_state.enter_tag_command_parameter(GTagML_Parse_State::Parameter_Kinds::Mandatory_Numindexed, post);
  });
 
 

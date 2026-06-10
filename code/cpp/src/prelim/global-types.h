@@ -185,7 +185,8 @@ inline bool _cut(const QString pre_cut, const QString to_cut, QString& original)
  if(index == -1)
    return 0;
 
- if(original.midRef(index).startsWith(to_cut))
+ //?  if(original.midRef(index).startsWith(to_cut))
+ if(original.mid(index).startsWith(to_cut))
  {
   original = original.mid(index + to_cut.size());
   return to_cut.size();

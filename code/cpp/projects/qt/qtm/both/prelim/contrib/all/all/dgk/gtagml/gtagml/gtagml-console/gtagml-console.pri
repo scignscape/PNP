@@ -6,11 +6,20 @@
 
 PROJECT_NAME = gtagml-console
 
-#QT -= gui
+QT -= gui
 
-QT += xmlpatterns gui widgets
+#?QT += xmlpatterns gui widgets
+
+#QT +=  gui widgets
 
 include(../build-group.pri)
+
+
+
+INCLUDEPATH += /home/nlevisrael/Qt6-src/clang-llvm/install/include
+
+
+QMAKE_CXXFLAGS += -gdwarf-4
 
 
 DEFINES += HAVE_NO_QT_GUI_MODULE
@@ -20,6 +29,8 @@ TEMPLATE = app
 
 
 exists($$ROOT_DIR/../preferred/sysr.pri): include($$ROOT_DIR/../preferred/sysr.pri)
+
+#exists($$ROOT_DIR/../preferred/llvm.pri): include($$ROOT_DIR/../preferred/llvm.pri)
 
 
 INCLUDEPATH += $$SRC_DIR $$SRC_GROUP_DIR $$SRC_ROOT_DIR
@@ -52,7 +63,11 @@ SOURCES += \
   $$SRC_DIR/main.cpp \
 
 
+message($$TARGETSDIR)
+
+
 LIBS += -L$$TARGETSDIR -lgtagml
+
 
 
 message(choice: $$CPP_ROOT_DIR/targets/$$CHOICE_CODE/$$PROJECT_SET--$$PROJECT_GROUP--$$PROJECT_NAME)
