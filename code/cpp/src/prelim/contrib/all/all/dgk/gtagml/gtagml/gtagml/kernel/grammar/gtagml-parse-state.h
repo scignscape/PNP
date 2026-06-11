@@ -88,6 +88,13 @@ private:
 
  Parameter_Kinds last_parameter_kind_;
 
+ enum class Paragraph_Bridge_Flags {
+  Normal = 0, Double_New_Line = 1,
+  Single_New_Line = 2, Custom = 3,
+ };
+
+ ENUM_FLAGS_OP_MACROS(Paragraph_Bridge_Flags)
+
  enum Tag_Body_Follow_Mode {
   Tag_Body_Follow_Mode_Not_Recognized, Normal, Region, Empty
  };
@@ -225,7 +232,7 @@ private:
  QMap<u1, u2> current_section_counts_;
 
  u2 current_paragraph_count_;
- u2 current_paragraph_bridge_;
+ u4 current_paragraph_bridge_;
 
  u2 current_exs_group_number_;
  u2 current_exs_number_;
@@ -239,7 +246,7 @@ private:
 
  u2 fn_count_;
 
- void set_paragraph_bridge();
+ void set_paragraph_bridge(u1 flag = 0);
 
  enum class Paragraph_Types {
   N_A, Abstract, P0, P1, Block_Quote,
@@ -608,7 +615,7 @@ QString argument, QString parent_tag_type = QString());
  void tag_command_name_transform_entry();
  void tag_command_name_transform_acc(QString text);
  void resolve_tag_command_name_transform();
- void outer_tag_command_leave(QString pre, QString post);
+ void outer_tag_command_leave(QString pre, QString inter, QString post);
  void auto_closed_tag_command_leave(QString post);
  void prepare_end_document();
 

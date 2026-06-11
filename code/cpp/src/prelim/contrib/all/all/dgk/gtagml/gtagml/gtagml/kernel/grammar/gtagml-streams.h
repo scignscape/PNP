@@ -102,6 +102,12 @@ class GTagML_Streams
 
  void enter_abstract();
 
+ void chop_latex(s4 count)
+ {
+  latex_.chop(count);
+ }
+
+
 };
 
 

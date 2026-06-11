@@ -78,6 +78,8 @@ void GTagML_Parse_State::auto_closed_tag_command_leave(QString post)
 
 void GTagML_Parse_State::enter_tag_command_parameter(Parameter_Kinds pk, QString post)
 {
+ reset_primary();
+
  if(parameter_count_ > 0)
  {
   if(last_parameter_kind_ & Parameter_Kinds::Mandatory)
@@ -85,11 +87,25 @@ void GTagML_Parse_State::enter_tag_command_parameter(Parameter_Kinds pk, QString
   else if(last_parameter_kind_ & Parameter_Kinds::Optional)
     streams_.latex("]");
  }
+ else
+   streams_.chop_latex(1);
+
+// if(post.isEmpty())
+// {
+//  ++parameter_count_;
+// }
 
  if(post.isEmpty())
-   last_parameter_kind_ = pk;
+ {
+  last_parameter_kind_ = pk;
+  ++parameter_count_;
+ }
  else
-   last_parameter_kind_ = Parameter_Kinds::N_A;
+ {
+  last_parameter_kind_ = Parameter_Kinds::N_A;
+  parameter_count_ = 0;
+ }
+
 
  if(pk & Parameter_Kinds::Mandatory)
  {
@@ -102,22 +118,32 @@ void GTagML_Parse_State::enter_tag_command_parameter(Parameter_Kinds pk, QString
 }
 
 
-void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
+void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QString post)
 {
  reset_primary();
 
  // //  check for encloser mismatch?
 
- QString no_auto_paragraph_flag;
+//? QString no_auto_paragraph_flag;
 
  QString pop = tag_command_name_stack_.pop();
 
- if(pop.contains("`*`"))
- {
-  QStringVector pops = pop.split("`*`");
-  pop = pops.takeLast();
-  no_auto_paragraph_flag = pops.join("`") + "*";
- }
+//?
+// if(pop.contains("`*`"))
+// {
+//  QStringVector pops = pop.split("`*`");
+//  pop = pops.takeLast();
+//  no_auto_paragraph_flag = pops.join("`") + "*";
+// }
+
+ u2 paragraph_bridge = 0;
+
+ if(inter.endsWith("*"))
+   paragraph_bridge = (u2) Paragraph_Bridge_Flags::Double_New_Line + 1;
+
+ else if(inter.endsWith(";"))
+   paragraph_bridge = (u2) Paragraph_Bridge_Flags::Normal + 1;
+
 
  QStringList pres = pre.split("`");
  pre = pres.takeFirst();
@@ -126,11 +152,11 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
  {
   streams_.latex_stream() << "}";
 
-  if(no_auto_paragraph_flag.endsWith("*"))
-  {
-   streams_.latex_stream() << "\n";
-   current_paragraph_bridge_ = 1;
-  }
+//  if(no_auto_paragraph_flag.endsWith("*"))
+//  {
+//   streams_.latex_stream() << "\n";
+//   set_paragraph_bridge_ = 1;
+//  }
  }
  else
  {
@@ -144,8 +170,9 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
      streams_.latex_stream() << "}";
   }
 
-  if(no_auto_paragraph_flag.endsWith("*"))
-    streams_.latex_stream() << "\n";
+//?
+//  if(no_auto_paragraph_flag.endsWith("*"))
+//    streams_.latex_stream() << "\n";
 
   if(pre == "+")
   {
@@ -159,6 +186,9 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString post)
   }
 
  }
+
+ if(paragraph_bridge)
+   set_paragraph_bridge(paragraph_bridge - 1);
 }
 
 void GTagML_Parse_State::resolve_tag_command_name_transform()
@@ -272,6 +302,16 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  }
 
  QString latex = latex_command_name_transforms_.value(main, main);
+
+ // //  should this be optional?
+ latex.replace("-@", "@");
+ latex.replace("---", "@@@%%%");
+ latex.replace("--", "@@%%");
+ latex.replace("-", "");
+ latex.replace("@@@%%%", "--");
+ latex.replace("@@%%", "-");
+
+ latex.replace("+", "PLUS");
 
  QRegularExpression num_end("([^\\d].*)(\\d+)");
  QRegularExpressionMatch m = num_end.match(latex);
@@ -890,9 +930,10 @@ void GTagML_Parse_State::end_document()
  parse_context_.flags.auto_paragraph_mode = false;
 }
 
-void GTagML_Parse_State::set_paragraph_bridge()
+void GTagML_Parse_State::set_paragraph_bridge(u1 flag)
 {
- current_paragraph_bridge_ = current_paragraph_count_ + 1;
+ current_paragraph_bridge_ =
+   (current_paragraph_count_ << 2) + flag + 1;
 }
 
 void GTagML_Parse_State::leave_footnote(QString pretext, QString space)
@@ -1247,7 +1288,15 @@ void GTagML_Parse_State::close_paragraph()
 void GTagML_Parse_State::check_close_paragraph()
 {
  if(current_paragraph_bridge_)
-   current_paragraph_bridge_ = 0;
+ {
+  --current_paragraph_bridge_;
+  Paragraph_Bridge_Flags flag = (Paragraph_Bridge_Flags) (current_paragraph_bridge_ & 3);
+  if(flag == Paragraph_Bridge_Flags::Double_New_Line)
+    streams_.latex("\n\n");
+  else if(flag == Paragraph_Bridge_Flags::Single_New_Line)
+    streams_.latex("\n");
+  current_paragraph_bridge_ = 0;
+ }
  else
    close_paragraph();
 }

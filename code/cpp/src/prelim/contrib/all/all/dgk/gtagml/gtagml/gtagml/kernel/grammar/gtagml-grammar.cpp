@@ -167,13 +167,23 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  });
 
  add_rule( gtagml_context, "outer-tag-command-leave",
-   " (?<pre> [%+]* ` [\\w`-]+ )* ` (?<post> [\\])}] )"
+   " (?<pre> [%+]* ` [\\w`-]+ )* ` (?<inter> [*;]*) (?<post> [\\])}] )"
    ,[&]
  {
   QString pre = p.matched("pre");
+  QString inter = p.matched("inter");
   QString post = p.matched("post");
 
-  parse_state.outer_tag_command_leave(pre, post);
+  parse_state.outer_tag_command_leave(pre, inter, post);
+ });
+
+ add_rule( gtagml_context, "tag-command-optional-numindexed",
+   " \\s+ # \\? (?<post> [.,;]*) \\s+ "
+   ,[&]
+ {
+  QString post = p.matched("post");
+
+  parse_state.enter_tag_command_parameter(GTagML_Parse_State::Parameter_Kinds::Optional_Numindexed, post);
  });
 
  add_rule( gtagml_context, "tag-command-mandatory-numindexed",
