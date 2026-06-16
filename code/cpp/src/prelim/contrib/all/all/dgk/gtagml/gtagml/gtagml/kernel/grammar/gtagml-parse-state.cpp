@@ -226,7 +226,7 @@ void GTagML_Parse_State::item_marker(QString pre)
 {
  reset_primary();
 
- streams_.latex_stream() << "\n\\" << GT_item_;
+ streams_.latex_stream() << "\n\n\\" << GT_item_;
  if(pre.isEmpty())
    streams_.latex_stream() << "Item{} ";
  else
@@ -236,7 +236,7 @@ void GTagML_Parse_State::item_marker(QString pre)
 
 void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   QString outer,
-  QString pre, QString main, QStringVector supl, QString post)
+  QString pre, QString main, QStringVector supl, QString post, QString at_flag)
 {
  u2 nlcount = blank_lines.count(QLatin1Char('\n'));
 
@@ -299,9 +299,12 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
    }
    return;
   }
+
  }
 
  QString latex = latex_command_name_transforms_.value(main, main);
+
+ QString tsom = latex;
 
  // //  should this be optional?
  latex.replace("-@", "@");
@@ -312,6 +315,15 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  latex.replace("@@%%", "-");
 
  latex.replace("+", "PLUS");
+
+ if(at_flag.contains("/@"))
+ {
+  tsom.replace("-@", "@");
+  tsom.replace("---", "--");
+  tsom.replace("--", "-");
+ }
+
+
 
  QRegularExpression num_end("([^\\d].*)(\\d+)");
  QRegularExpressionMatch m = num_end.match(latex);
@@ -369,6 +381,13 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  if(!append.isEmpty())
    streams_.latex(append);
 }
+
+
+void GTagML_Parse_State::insert_latex_item()
+{
+ streams_.latex("\n\n\\item{}  ");
+}
+
 
 void GTagML_Parse_State::parse_processing_instruction(QString instruction, QString lrcode)
 {

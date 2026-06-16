@@ -33,6 +33,9 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 // pre_rule( "single-dot", "[.]" );
 
  pre_rule( "blank-line-content", "[__\\t]* \\n" );
+ pre_rule( "de-facto-new-line", "[__\\t]* \\n" );
+
+
 
  pre_rule( "blank-line", " \\n [__\\t]* " );
 
@@ -99,6 +102,13 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 //  parse_state.prepare_end_document();
 // });
 
+ add_rule( gtagml_context, "shortcut-for-item",
+  " `- .single-space.+ "
+  ,[&]
+ {
+  parse_state.insert_latex_item();
+ });
+
  add_rule( gtagml_context, "left-right-mid-processing-instruction",
    "  .space-to-end-of-line.* \\( (?<left> <*) (?<left-dash> -+) (?<instruction> [^-]*) (?<right-dash> -+) (?<right> >*) \\) "
    ,[&] //raw_context, &parse_state, this, &p]
@@ -112,9 +122,21 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   parse_state.parse_processing_instruction(instruction, lrcode);
  });
 
+ //   "  (?<= \\n) (?: (?<pre> [\\S]+ ) .single-space.+ )? ~> .single-space.+ "
+ //  " (?: \\s+ (?<pre> [\\S]*)  .single-space.+)  ~>  "
 
  add_rule( gtagml_context, "item-marker",
-   "  (?<= \\n) (?: (?<pre> [\\S]+ ) .single-space.+ )? ~> .single-space.+ "
+  " (?: .de-facto-new-line.+ .single-space.*)  `-  "
+   ,[&] //raw_context, &parse_state, this, &p]
+ {
+  QString pre = p.matched("pre");
+
+  parse_state.item_marker(pre);
+ });
+
+
+ add_rule( gtagml_context, "arrow-item-marker",
+  " (?: .de-facto-new-line.+ (?<pre> [\\S]*)  .single-space.*)  ~>  "
    ,[&] //raw_context, &parse_state, this, &p]
  {
   QString pre = p.matched("pre");
@@ -129,6 +151,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?<main> (?: [^\\s\\[\\]`,;.] | (?: \\s+ ->> \\s+ ) )+ ) "
    " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
    " (?<post> [,;.]+ )"
+   " (?<at-flag> /@ )?"
    ,[&] //raw_context, &parse_state, this, &p]
  {
   QString blank_lines = p.matched("blank-lines");
@@ -140,9 +163,10 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QStringVector supl = p.rematched("supl");
 
   QString post = p.matched("post");
+  QString atf = p.matched("atf");
 
   parse_state.outer_tag_command_entry(blank_lines,
-    outer, pre, main, supl, post);
+    outer, pre, main, supl, post, atf);
 
  });
 

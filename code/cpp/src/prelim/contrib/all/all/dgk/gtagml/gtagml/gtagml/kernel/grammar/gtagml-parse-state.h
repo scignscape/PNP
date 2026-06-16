@@ -606,11 +606,12 @@ QString argument, QString parent_tag_type = QString());
 
 
 
+ void insert_latex_item();
 
  void parse_processing_instruction(QString instruction, QString lrcode);
 
  void outer_tag_command_entry(QString blank_lines, QString outer, QString pre, QString main,
-   QStringVector supl, QString post);
+   QStringVector supl, QString post, QString at_flag);
 
  void tag_command_name_transform_entry();
  void tag_command_name_transform_acc(QString text);
