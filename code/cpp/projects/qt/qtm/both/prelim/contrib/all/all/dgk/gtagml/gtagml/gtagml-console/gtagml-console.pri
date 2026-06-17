@@ -65,6 +65,8 @@ SOURCES += \
 
 message($$TARGETSDIR)
 
+QMAKE_CXXFLAGS_DEBUG += -O0
+
 
 LIBS += -L$$TARGETSDIR -lgtagml
 

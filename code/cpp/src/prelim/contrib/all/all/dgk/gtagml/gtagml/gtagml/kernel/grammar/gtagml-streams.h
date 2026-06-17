@@ -67,6 +67,11 @@ class GTagML_Streams
  ACCESSORS__RGET(QXmlStreamWriter ,xml_writer)
  ACCESSORS__RGET(QString ,primary_acc)
 
+ QString get_latex()
+ {
+  return latex_;
+ }
+
  void latex(QString text);
  void primary(QString text);
 

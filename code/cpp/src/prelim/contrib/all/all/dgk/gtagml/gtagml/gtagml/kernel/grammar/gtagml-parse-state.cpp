@@ -124,28 +124,36 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
 
  // //  check for encloser mismatch?
 
-//? QString no_auto_paragraph_flag;
+ QString no_auto_paragraph_flag;
 
  QString pop = tag_command_name_stack_.pop();
 
 //?
-// if(pop.contains("`*`"))
-// {
-//  QStringVector pops = pop.split("`*`");
-//  pop = pops.takeLast();
-//  no_auto_paragraph_flag = pops.join("`") + "*";
-// }
+ if(pop.contains("`*`"))
+ {
+  QStringVector pops = pop.split("`*`");
+  pop = pops.takeLast();
+  no_auto_paragraph_flag = pops.join("`") + "*";
+ }
 
  u2 paragraph_bridge = 0;
 
+ bool orig_star = false;
+ bool orig_no_star = false;
+
+ bool inter_star = false;
+
  if(inter.endsWith("*"))
-   paragraph_bridge = (u2) Paragraph_Bridge_Flags::Double_New_Line + 1;
+   inter_star = true;
+
+//?   paragraph_bridge = (u2) Paragraph_Bridge_Flags::Double_New_Line + 1;
 
  else if(inter.endsWith(";"))
    paragraph_bridge = (u2) Paragraph_Bridge_Flags::Normal + 1;
 
- bool orig_star = false;
- bool orig_no_star = false;
+ if(no_auto_paragraph_flag.endsWith("*"))
+   paragraph_bridge = (u2) Paragraph_Bridge_Flags::Double_New_Line + 1;
+
 
  if(orig.endsWith("*"))
  {
@@ -203,11 +211,14 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
 
  }
 
- if(pre == "+" || orig_star)
+ if(pre == "+" || orig_star || inter_star)
  {
-  leave_subparagraph_with_continue();
+  if(inter_star)
+    streams_.latex("\n");
+  else
+    leave_subparagraph_with_continue();
 
-  if(orig_star)
+  if(orig_star || inter_star)
     if(parse_context_.flags.auto_paragraph_mode)
       parse_context_.flags.paragraph_continuation = true;
 
@@ -306,6 +317,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  main = main.simplified();
 
+ QStringList tokens = main.split("//");
+
  if(main.contains(" "))
  {
   QStringList qsl = main.split(" ");
@@ -336,36 +349,45 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  }
 
- QString latex = latex_command_name_transforms_.value(main, main);
+ QStringVector latex_tokens;
+ QStringVector tsom_tokens;
 
- QString tsom = latex;
-
- // //  should this be optional?
- latex.replace("-@", "@");
- latex.replace("---", "@@@%%%");
- latex.replace("--", "@@%%");
- latex.replace("-", "");
- latex.replace("@@@%%%", "--");
- latex.replace("@@%%", "-");
-
- latex.replace("+", "PLUS");
-
- if(at_flag.contains("/@"))
+ for(QString token : tokens)
  {
-  tsom.replace("-@", "@");
-  tsom.replace("---", "--");
-  tsom.replace("--", "-");
+  QString latex = latex_command_name_transforms_.value(token, token);
+
+  QString tsom = latex;
+
+  // //  should this be optional?
+  latex.replace("-@", "@");
+  latex.replace("---", "@@@%%%");
+  latex.replace("--", "@@%%");
+  latex.replace("-", "");
+  latex.replace("@@@%%%", "--");
+  latex.replace("@@%%", "-");
+
+  latex.replace("+", "PLUS");
+
+  if(at_flag.contains("/@"))
+  {
+   tsom.replace("-@", "@");
+   tsom.replace("---", "--");
+   tsom.replace("--", "-");
+  }
+
+  latex_tokens.push_back(latex);
+  tsom_tokens.push_back(tsom);
  }
 
-
+ QString& ltf = latex_tokens[0];
 
  QRegularExpression num_end("([^\\d].*)(\\d+)");
- QRegularExpressionMatch m = num_end.match(latex);
+ QRegularExpressionMatch m = num_end.match(ltf);
  if(m.hasMatch())
  {
   QString m1 = m.captured(1);
   QString m2 = m.captured(2);
-  latex = m1 + "|" + m2 + "|";
+  ltf = m1 + "|" + m2 + "|";
 
   if(m1 == "s")
     section_command(m2.toUInt());
@@ -383,7 +405,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   pre = pre.mid(1);
   prepend = "GT";
   lprepend = "<GT>";
-  enter_implicit_subparagraph(pre, latex);
+  enter_implicit_subparagraph(pre, ltf);
 
   append = "\n %! (subparagraph)";
 
@@ -393,21 +415,28 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  if(post == ",")
  {
-  streams_.latex_stream() << "\\begin{" << prepend << latex << "}";
+  streams_.latex_stream() << "\\begin{" << prepend << ltf << "}";
   tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + main);
  }
  else
  {
-  streams_.latex_stream() << "\\" << prepend << latex << "{";
+  QString ltl = latex_tokens.takeLast();
+
+  for(QString token : latex_tokens)
+  {
+   streams_.latex_stream() << "\\" << prepend << token << "{}/";
+  }
+
+  streams_.latex_stream() << "\\" << prepend << ltl << "{";
   if(post == ";")
   {
    parse_context_.flags.after_auto_closed_tag_command = true;
    streams_.latex_stream() << "}";
-   current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + main;
+   current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + ltl;
   }
   else if(post == ".")
   {
-   tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + main);
+   tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + ltl);
   }
 
  }
@@ -1347,8 +1376,8 @@ void GTagML_Parse_State::check_close_paragraph()
   if(flag == Paragraph_Bridge_Flags::Double_New_Line)
   {
     streams_.latex("\n\n");
-    streams_.latex("!!!");
-    streams_.latex("\n\n");
+//    streams_.latex("!!!");
+//    streams_.latex("\n\n");
   }
   else if(flag == Paragraph_Bridge_Flags::Single_New_Line)
     streams_.latex("\n");
@@ -1363,11 +1392,23 @@ void GTagML_Parse_State::show_latex()
  //?qDebug() << "\n" << latex_ << "\n";
 }
 
-
 void GTagML_Parse_State::paragraph_continuation()
 {
  //?streams_.latex("% paragraph continuation\n");
+
+//? n8 fl1 = parse_context_.Flags;
+
+// if(parse_context_.flags.auto_paragraph_mode)
+//   qDebug() << "APM1";
+
  parse_context_.flags.paragraph_continuation = false;
+ current_paragraph_bridge_ = 0;
+
+// n8 fl2 = parse_context_.Flags;
+
+// if(parse_context_.flags.auto_paragraph_mode)
+//   qDebug() << "APM2";
+
 }
 
 
@@ -1380,6 +1421,10 @@ void GTagML_Parse_State::auto_close_paragraph()
 
 void GTagML_Parse_State::auto_new_paragraph()
 {
+// QString lat = streams_.get_latex();
+
+// qDebug() << "\n\n lat = " << lat << "\n\n";
+
  auto_new_paragraph("p.1");
 }
 
