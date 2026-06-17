@@ -240,6 +240,8 @@ private:
 
  u2 current_slash_line_plus_count_;
 
+ //?u2 paragraph_continuation_count_;
+
  QPair<u2, u2> pseudo_paragraph_counts_;
 
  QStringList ref_labels_;
@@ -416,6 +418,8 @@ public:
 
  void close_paragraph();
  void check_close_paragraph();
+
+ void paragraph_continuation();
 
  void enter_auto_paragraph_mode();
 
@@ -616,7 +620,7 @@ QString argument, QString parent_tag_type = QString());
  void tag_command_name_transform_entry();
  void tag_command_name_transform_acc(QString text);
  void resolve_tag_command_name_transform();
- void outer_tag_command_leave(QString pre, QString inter, QString post);
+ void outer_tag_command_leave(QString pre, QString inter, QString orig, QString post);
  void auto_closed_tag_command_leave(QString post);
  void prepare_end_document();
 

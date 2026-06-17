@@ -191,14 +191,16 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
  });
 
  add_rule( gtagml_context, "outer-tag-command-leave",
-   " (?<pre> [%+]* ` [\\w`-]+ )* ` (?<inter> [*;]*) (?<post> [\\])}] )"
+   " (?<prior-blank-lines> .blank-lines.*) (?<pre> [%+]* ` [\\w`-]+ )* ` (?<inter> [*;]*) (?<orig> [\\w*-]*) (?<post> [\\])}] )"
    ,[&]
  {
+  QString blanks = p.matched("prior-blank-lines");
   QString pre = p.matched("pre");
   QString inter = p.matched("inter");
+  QString orig = p.matched("orig");
   QString post = p.matched("post");
 
-  parse_state.outer_tag_command_leave(pre, inter, post);
+  parse_state.outer_tag_command_leave(pre, inter, orig, post);
  });
 
  add_rule( gtagml_context, "tag-command-optional-numindexed",
@@ -558,7 +560,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 // -.>
 
- add_rule( gtagml_context, "pseud-paragraph",
+ add_rule( gtagml_context, "pseudo-paragraph",
    " - \\. > "
    ,[&]
  {
@@ -644,6 +646,15 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
   QString symbol = p.matched("symbol");
   QString supp = p.matched("supp");
   parse_state.bulleted_item(symbol, supp);
+ });
+
+
+ add_rule( flags_all_(parse_context ,paragraph_continuation),
+   gtagml_context, "paragraph-continuation",
+   " \\s* \\n .single-space.* \\n"
+   ,[&]
+ {
+  parse_state.paragraph_continuation();
  });
 
 
@@ -807,7 +818,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
 
 
 
- add_rule( gtagml_context, "hyperlink-1",
+ add_rule( gtagml_context, "hyperlink-2",
    " \\[< (?<text> (?: [^>] | >[^\\]])+ ) \\s+ & \\s+ "
    " (?<link> (?: [^>] | >[^\\]])+ ) >\\] "
    ,[&]

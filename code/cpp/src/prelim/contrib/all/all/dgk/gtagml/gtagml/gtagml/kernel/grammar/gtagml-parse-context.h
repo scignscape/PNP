@@ -96,6 +96,7 @@ public:
   flag_(33, after_auto_closed_tag_command)
   flag_(34, inside_tag_command_name_transform)
 
+  flag_(35, paragraph_continuation)
 
  _flags_
 

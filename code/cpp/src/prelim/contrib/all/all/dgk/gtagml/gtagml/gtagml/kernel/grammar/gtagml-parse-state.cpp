@@ -118,7 +118,7 @@ void GTagML_Parse_State::enter_tag_command_parameter(Parameter_Kinds pk, QString
 }
 
 
-void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QString post)
+void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QString orig, QString post)
 {
  reset_primary();
 
@@ -144,48 +144,82 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
  else if(inter.endsWith(";"))
    paragraph_bridge = (u2) Paragraph_Bridge_Flags::Normal + 1;
 
+ bool orig_star = false;
+ bool orig_no_star = false;
+
+ if(orig.endsWith("*"))
+ {
+//?  paragraph_bridge = (u2) Paragraph_Bridge_Flags::Double_New_Line + 1;
+  orig_star = true;
+  orig.chop(1);
+ }
 
  QStringList pres = pre.split("`");
  pre = pres.takeFirst();
 
- if(pres.size() == 0)
+// if(!orig.isEmpty())
+//   pres.push_back(orig);
+
+ if(pop.startsWith("-`*`"))
  {
-  streams_.latex_stream() << "}";
+  pop = pop.mid(4);
+ }
+
+ if(!orig.isEmpty())
+ {
+  orig_no_star = !orig_star;
+  if(pop.startsWith(","))
+    streams_.latex_stream() << "\n%\n\\end{" + pop.mid(1) + "}\n";
+ }
+ else
+ {
+  if(pres.size() == 0)
+  {
+   streams_.latex("}");
 
 //  if(no_auto_paragraph_flag.endsWith("*"))
 //  {
 //   streams_.latex_stream() << "\n";
 //   set_paragraph_bridge_ = 1;
 //  }
- }
- else
- {
-  if(pres.size() == 1)
-  {
-   if(pop.startsWith(",<GT>"))
-     streams_.latex_stream() << "\n%\n\\end{GT" + pop.mid(5) + "}\n";
-   else if(pop.startsWith(","))
-     streams_.latex_stream() << "\n%\n\\end{" + pop.mid(1) + "}\n";
-   else
-     streams_.latex_stream() << "}";
   }
+  else
+  {
+   if(pres.size() == 1)
+   {
+    if(pop.startsWith(",<GT>"))
+      streams_.latex_stream() << "\n%\n\\end{GT" + pop.mid(5) + "}\n";
+    else if(pop.startsWith(","))
+      streams_.latex_stream() << "\n%\n\\end{" + pop.mid(1) + "}\n";
+    else
+      streams_.latex_stream() << "}";
+   }
 
 //?
 //  if(no_auto_paragraph_flag.endsWith("*"))
 //    streams_.latex_stream() << "\n";
 
-  if(pre == "+")
-  {
-   leave_subparagraph_with_continue();
-   streams_.latex_stream() << "\n";
-  }
-  else if(pre == "%")
-  {
-   streams_.latex_stream() << " %! (subparagraph ends paragraph)";
-   leave_subparagraph_with_reset();
   }
 
  }
+
+ if(pre == "+" || orig_star)
+ {
+  leave_subparagraph_with_continue();
+
+  if(orig_star)
+    if(parse_context_.flags.auto_paragraph_mode)
+      parse_context_.flags.paragraph_continuation = true;
+
+  //?++paragraph_continuation_count_;
+  streams_.latex_stream() << "\n";
+ }
+ else if(pre == "%" || orig_no_star)
+ {
+  streams_.latex_stream() << " %! (subparagraph ends paragraph)";
+  leave_subparagraph_with_reset();
+ }
+
 
  if(paragraph_bridge)
    set_paragraph_bridge(paragraph_bridge - 1);
@@ -1311,7 +1345,11 @@ void GTagML_Parse_State::check_close_paragraph()
   --current_paragraph_bridge_;
   Paragraph_Bridge_Flags flag = (Paragraph_Bridge_Flags) (current_paragraph_bridge_ & 3);
   if(flag == Paragraph_Bridge_Flags::Double_New_Line)
+  {
     streams_.latex("\n\n");
+    streams_.latex("!!!");
+    streams_.latex("\n\n");
+  }
   else if(flag == Paragraph_Bridge_Flags::Single_New_Line)
     streams_.latex("\n");
   current_paragraph_bridge_ = 0;
@@ -1324,6 +1362,14 @@ void GTagML_Parse_State::show_latex()
 {
  //?qDebug() << "\n" << latex_ << "\n";
 }
+
+
+void GTagML_Parse_State::paragraph_continuation()
+{
+ //?streams_.latex("% paragraph continuation\n");
+ parse_context_.flags.paragraph_continuation = false;
+}
+
 
 void GTagML_Parse_State::auto_close_paragraph()
 {
