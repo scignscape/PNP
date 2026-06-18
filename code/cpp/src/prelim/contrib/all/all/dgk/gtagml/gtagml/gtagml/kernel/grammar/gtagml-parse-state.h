@@ -269,7 +269,19 @@ private:
  QString current_tag_command_name_transform_;
 
  QMap<QString, QString> tag_command_name_transforms_;
- QStringStack tag_command_name_stack_;
+
+ enum class Tag_Command_Name_Flags {
+  Normal, Multi_Transpile
+ };
+
+ ENUM_FLAGS_OP_MACROS(Tag_Command_Name_Flags)
+
+ struct Tag_Command_Name_Info {
+   QString name;
+   Tag_Command_Name_Flags flags;
+ };
+
+ QStack<Tag_Command_Name_Info> tag_command_name_stack_;
 
  QMap<QString, QString> latex_command_name_transforms_;
 

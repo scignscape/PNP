@@ -126,7 +126,12 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
 
  QString no_auto_paragraph_flag;
 
- QString pop = tag_command_name_stack_.pop();
+ Tag_Command_Name_Info pop_info = tag_command_name_stack_.pop();
+ QString pop = pop_info.name;
+
+ u2 pop_parts = 0;
+ if(pop_info.flags & Tag_Command_Name_Flags::Multi_Transpile)
+   pop_parts = pop.count("/") + 1;
 
 //?
  if(pop.contains("`*`"))
@@ -183,7 +188,10 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
  {
   if(pres.size() == 0)
   {
-   streams_.latex("}");
+   if(pop_parts == 0)
+     streams_.latex_stream() << "}";
+   else
+     streams_.latex_stream() << QString(pop_parts, QChar::fromLatin1('}'));
 
 //  if(no_auto_paragraph_flag.endsWith("*"))
 //  {
@@ -199,8 +207,11 @@ void GTagML_Parse_State::outer_tag_command_leave(QString pre, QString inter, QSt
       streams_.latex_stream() << "\n%\n\\end{GT" + pop.mid(5) + "}\n";
     else if(pop.startsWith(","))
       streams_.latex_stream() << "\n%\n\\end{" + pop.mid(1) + "}\n";
-    else
+    // //? pop_parts here?
+    else if(pop_parts == 0)
       streams_.latex_stream() << "}";
+    else
+      streams_.latex_stream() << QString(pop_parts, QChar::fromLatin1('}'));
    }
 
 //?
@@ -393,6 +404,11 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
     section_command(m2.toUInt());
  }
 
+ QStringList ltf_parts;
+
+ if(ltf.contains("/"))
+   ltf_parts = ltf.split("/");
+
  QString prepend;
  QString lprepend;
 
@@ -415,10 +431,23 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  if(post == ",")
  {
-  streams_.latex_stream() << "\\begin{" << prepend << ltf << "}";
-  tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + main);
+  if(ltf_parts.isEmpty())
+  {
+   streams_.latex_stream() << "\\begin{" << prepend << ltf << "}";
+   tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + main,
+     Tag_Command_Name_Flags::Normal});
+  }
+  else
+  {
+   for(QString ltfp : ltf_parts)
+   {
+    streams_.latex_stream() << "\\begin{" << prepend << ltfp << "}";
+   }
+   tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + main,
+     Tag_Command_Name_Flags::Multi_Transpile});
+  }
  }
- else
+ else if(ltf_parts.isEmpty())
  {
   QString ltl = latex_tokens.takeLast();
 
@@ -436,7 +465,27 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   }
   else if(post == ".")
   {
-   tag_command_name_stack_.push(no_auto_paragraph_flag + post + lprepend + ltl);
+   tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + ltl,
+     Tag_Command_Name_Flags::Normal});
+  }
+ }
+ else
+ {
+  u1 sz = ltf_parts.size();
+  for(QString ltfp : ltf_parts)
+  {
+   streams_.latex_stream() << "\\" << prepend << ltfp << "{";
+  }
+  if(post == ";")
+  {
+   parse_context_.flags.after_auto_closed_tag_command = true;
+   streams_.latex(QString(sz, QChar::fromLatin1('}')));
+   current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + ltf;
+  }
+  else if(post == ".")
+  {
+   tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + ltf,
+     Tag_Command_Name_Flags::Multi_Transpile});
   }
 
  }
