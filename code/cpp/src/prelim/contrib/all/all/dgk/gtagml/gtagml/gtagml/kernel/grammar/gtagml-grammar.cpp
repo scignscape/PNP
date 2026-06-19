@@ -150,7 +150,7 @@ void GTagML_Grammar::init(GTagML_Parser& p, GTagML_Graph& g, GTagML_Parse_State&
    " (?<outer> [[{(] )  (?<pre> [^\\s\\[\\]`]*) ` "
    " (?<main> (?: [^\\s\\[\\]`,;.] | (?: \\s+ ->> \\s+ ) )+ ) "
    " (?*supl* (?: ` (/- [^\\s\\[\\]`,;.]+ -/) )* ) "
-   " (?<post> [,;.]+ )"
+   " (?<post> [;`] | [,.]+ )"
    " (?<at-flag> /@ )?"
    ,[&] //raw_context, &parse_state, this, &p]
  {

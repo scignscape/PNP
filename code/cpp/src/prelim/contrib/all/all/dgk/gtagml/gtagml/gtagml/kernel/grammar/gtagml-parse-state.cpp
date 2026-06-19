@@ -296,9 +296,23 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 {
  u2 nlcount = blank_lines.count(QLatin1Char('\n'));
 
+ QString return_to_acc;
+ if(main.endsWith("/"))
+ {
+  // //  maybe a kind of endsWith that returns the count of the char at the end
+  if(!main.endsWith("//"))
+  {
+   if(post == "." || post == ",")
+   {
+    main.chop(1);
+    return_to_acc = post;
+   }
+  }
+ }
+
  QString no_auto_paragraph_flag;
 
- qDebug() << "\n\n1= " << streams_.get_latex();
+//? qDebug() << "\n\n1= " << streams_.get_latex();
 
  if(nlcount > 1)
  {
@@ -335,7 +349,9 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  //
  reset_primary();
 
- qDebug() << "\n\n2= " << streams_.get_latex();
+ primary_acc(return_to_acc);
+
+//? qDebug() << "\n\n2= " << streams_.get_latex();
 
  active_encloser_ = outer;
 
@@ -481,25 +497,40 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  else if(ltf_parts.isEmpty())
  {
   QString ltl = latex_tokens.takeLast();
-  convert_double_dollar(ltl);
-
-  for(QString token : latex_tokens)
+  if(latex_tokens.size() > 1 && outer == "(")
   {
-   convert_double_dollar(token);
-   streams_.latex_stream() << "\\" << prepend << token << "{}/";
+   QString ltf = latex_tokens.takeFirst();
+   convert_double_dollar(ltf);
+   for(QString token : latex_tokens)
+   {
+    streams_.latex_stream() << "\\" << prepend << ltf << "{"
+      << token << "}/";
+   }
+   streams_.latex_stream() << "\\" << prepend << ltf << "{"
+     << ltl << "}";
   }
+  else
+  {
+   convert_double_dollar(ltl);
 
-  streams_.latex_stream() << "\\" << prepend << ltl << "{";
-  if(post == ";")
-  {
-   parse_context_.flags.after_auto_closed_tag_command = true;
-   streams_.latex_stream() << "}";
-   current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + ltl;
-  }
-  else if(post == ".")
-  {
-   tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + ltl,
-     Tag_Command_Name_Flags::Normal});
+   for(QString token : latex_tokens)
+   {
+    convert_double_dollar(token);
+    streams_.latex_stream() << "\\" << prepend << token << "{}/";
+   }
+
+   streams_.latex_stream() << "\\" << prepend << ltl << "{";
+   if(post == ";")
+   {
+    parse_context_.flags.after_auto_closed_tag_command = true;
+    streams_.latex_stream() << "}";
+    current_auto_closed_tag_command_ = no_auto_paragraph_flag + lprepend + ltl;
+   }
+   else if(post == ".")
+   {
+    tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + ltl,
+      Tag_Command_Name_Flags::Normal});
+   }
   }
  }
  else
