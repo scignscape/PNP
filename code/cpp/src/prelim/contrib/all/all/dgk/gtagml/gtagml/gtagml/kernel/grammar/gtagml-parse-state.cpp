@@ -298,6 +298,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  QString no_auto_paragraph_flag;
 
+ qDebug() << "\n\n1= " << streams_.get_latex();
+
  if(nlcount > 1)
  {
   if(pre.endsWith("*"))
@@ -312,7 +314,18 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
    }
   }
   else if(parse_context_.flags.auto_paragraph_mode && !pre.endsWith("%"))
-    auto_new_paragraph();
+  {
+   if(tag_command_name_stack_.isEmpty())
+     auto_new_paragraph();
+   else
+   {
+    Tag_Command_Name_Info top_info = tag_command_name_stack_.top();
+    if(top_info.flags & Tag_Command_Name_Flags::Temp_Suppress_Auto_Paragraphs)
+      streams_.latex("\n\n");
+    else
+      auto_new_paragraph();
+   }
+  }
  }
  else if(nlcount == 1)
  {
@@ -321,6 +334,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  //
  reset_primary();
+
+ qDebug() << "\n\n2= " << streams_.get_latex();
 
  active_encloser_ = outer;
 
@@ -363,6 +378,12 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  QStringVector latex_tokens;
  QStringVector tsom_tokens;
 
+ auto convert_double_dollar = [](QString& name)
+ {
+  if(name == "$$")
+    name = "quasi@desc@item";
+ };
+
  for(QString token : tokens)
  {
   QString latex = latex_command_name_transforms_.value(token, token);
@@ -385,6 +406,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
    tsom.replace("---", "--");
    tsom.replace("--", "-");
   }
+
+  convert_double_dollar(latex);
 
   latex_tokens.push_back(latex);
   tsom_tokens.push_back(tsom);
@@ -431,28 +454,38 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
  if(post == ",")
  {
+  Tag_Command_Name_Flags check_Temp_Suppress_Auto_Paragraphs
+    = parse_context_.flags.auto_paragraph_mode?
+    Tag_Command_Name_Flags::Temp_Suppress_Auto_Paragraphs : Tag_Command_Name_Flags::N_A;
+
   if(ltf_parts.isEmpty())
   {
+   convert_double_dollar(ltf);
+
    streams_.latex_stream() << "\\begin{" << prepend << ltf << "}";
    tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + main,
-     Tag_Command_Name_Flags::Normal});
+     check_Temp_Suppress_Auto_Paragraphs | Tag_Command_Name_Flags::Normal});
   }
   else
   {
    for(QString ltfp : ltf_parts)
    {
+    convert_double_dollar(ltfp);
+
     streams_.latex_stream() << "\\begin{" << prepend << ltfp << "}";
    }
    tag_command_name_stack_.push({no_auto_paragraph_flag + post + lprepend + main,
-     Tag_Command_Name_Flags::Multi_Transpile});
+     check_Temp_Suppress_Auto_Paragraphs | Tag_Command_Name_Flags::Multi_Transpile});
   }
  }
  else if(ltf_parts.isEmpty())
  {
   QString ltl = latex_tokens.takeLast();
+  convert_double_dollar(ltl);
 
   for(QString token : latex_tokens)
   {
+   convert_double_dollar(token);
    streams_.latex_stream() << "\\" << prepend << token << "{}/";
   }
 
@@ -474,6 +507,8 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
   u1 sz = ltf_parts.size();
   for(QString ltfp : ltf_parts)
   {
+   convert_double_dollar(ltfp);
+
    streams_.latex_stream() << "\\" << prepend << ltfp << "{";
   }
   if(post == ";")

@@ -271,7 +271,7 @@ private:
  QMap<QString, QString> tag_command_name_transforms_;
 
  enum class Tag_Command_Name_Flags {
-  Normal, Multi_Transpile
+   N_A = 0, Normal = 1, Multi_Transpile = 2, Temp_Suppress_Auto_Paragraphs = 4
  };
 
  ENUM_FLAGS_OP_MACROS(Tag_Command_Name_Flags)
