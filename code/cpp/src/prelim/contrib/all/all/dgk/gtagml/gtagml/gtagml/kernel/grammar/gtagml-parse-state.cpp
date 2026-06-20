@@ -416,6 +416,20 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
 
   latex.replace("+", "PLUS");
 
+  if(latex != tsom) // i.e., latex has changed
+  {
+   latex.replace("0", "ZERO");
+   latex.replace("1", "ONE");
+   latex.replace("2", "TWO");
+   latex.replace("3", "THREE");
+   latex.replace("4", "FOUR");
+   latex.replace("5", "FIVE");
+   latex.replace("6", "SIX");
+   latex.replace("7", "SEVEN");
+   latex.replace("8", "EIGHT");
+   latex.replace("9", "NINE");
+  }
+
   if(at_flag.contains("/@"))
   {
    tsom.replace("-@", "@");
@@ -497,7 +511,7 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
  else if(ltf_parts.isEmpty())
  {
   QString ltl = latex_tokens.takeLast();
-  if(latex_tokens.size() > 1 && outer == "(")
+  if(latex_tokens.size() > 1 && post == "`")
   {
    QString ltf = latex_tokens.takeFirst();
    convert_double_dollar(ltf);
@@ -508,6 +522,12 @@ void GTagML_Parse_State::outer_tag_command_entry(QString blank_lines,
    }
    streams_.latex_stream() << "\\" << prepend << ltf << "{"
      << ltl << "}";
+
+   QString next_char = parser_->skip(1);
+   if(next_char != ")" && next_char != "]")
+   {
+    // //  problem?
+   }
   }
   else
   {
