@@ -2124,7 +2124,7 @@ the possibility that a compiler could manipulate
 procedures in such contexts to support multiple 
 interfaces, depending on the call site.  That 
 is, a procedure could be engineered to 
-to work on a value/object */either/* passed 
+do work on a value/object */either/* passed 
 by reference, or constructed on the heap prior 
 to the main body, or constructed (wherever the 
 caller wants) via placement new.  This idea 
