@@ -3318,8 +3318,8 @@ magnitudes as size, time, temperature, and so on.
         <p id="Para-122">Consider the case of <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>2D</abbrev></styled-content> graphics. There are many (e.g.)
 <styled-content style-type="emph-acronym" style="color:rgb(2, 37, 48)"><abbrev>C++</abbrev></styled-content> graphics and image libraries, and they are inconsistent
 with respect to what the horizontal and vertical axes are
-called, as well as which quantity comes first in a pair.
-is constructed either by naming two points (diagonally-opposed
+called, as well as which quantity comes first in a pair 
+&#x2014; constructed either by naming two points (diagonally-opposed
 corners) or by giving one point and two scalar values representing
 width and height. <styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">QPoints</styled-content> are integer pairs (<styled-content style-type="emph-symbol" style="color:rgb(93, 129, 194)">QPointF</styled-content> is floating-point instead)
 in <styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">x</styled-content>-then-<styled-content style-type="emph-highlight" style="color:rgb(168, 30, 35)">y</styled-content> order. Here the dimensions are conceptualized

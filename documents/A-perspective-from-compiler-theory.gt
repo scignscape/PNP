@@ -2231,7 +2231,7 @@ latter case the callee is orchestrated to call placement
 new prior to its main execution).  Conversely, if a Janus channel 
 is present but empty, the compiler expects the callee 
 to allocate on the heap (again, perhaps prior to its 
-running its actual implementation block) and push that 
+running an actual implementation block) and push that 
 into the Janus, to serve as a return value.
 
 My overarching point is that, for procedures whose signatures include  
@@ -2632,8 +2632,8 @@ magnitudes as size, time, temperature, and so on.
 Consider the case of ;/2D/ graphics.  There are many (e.g.)
 ;/C++/ graphics and image libraries, and they are inconsistent 
 with respect to what the horizontal and vertical axes are 
-called, as well as which quantity comes first in a pair.  
-is constructed either by naming two points (diagonally-opposed 
+called, as well as which quantity comes first in a pair 
+%-- constructed either by naming two points (diagonally-opposed 
 corners) or by giving one point and two scalar values representing 
 width and height.  ;;/QPoints/ are integer pairs (;;/QPointF/ is floating-point instead) 
 in ,,/x/-then-,,/y/ order.  Here the dimensions are conceptualized 
